@@ -1,0 +1,62 @@
+{
+  "name": "Factory",
+  "desc": "",
+  "methods": [
+    {
+      "name": "createApplication",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "createPool",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "getProgram",
+      "args": [],
+      "returns": {
+        "type": "byte[]"
+      }
+    },
+    {
+      "name": "MANAGER_updatePoolContractProgram",
+      "args": [
+        {
+          "name": "programSize",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "MANAGER_writePoolContractProgram",
+      "args": [
+        {
+          "name": "offset",
+          "type": "uint64"
+        },
+        {
+          "name": "data",
+          "type": "byte[]"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "hasPoolApprovalProgram",
+      "args": [],
+      "returns": {
+        "type": "bool"
+      }
+    }
+  ]
+}

@@ -1,18 +1,32 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies */
+/* eslint-disable no-console, import/no-extraneous-dependencies, no-await-in-loop, import/no-unresolved, no-return-assign */
 import * as algokit from '@algorandfoundation/algokit-utils';
 import { OnSchemaBreak, OnUpdate } from '@algorandfoundation/algokit-utils/types/app';
 import dotenv from 'dotenv';
 
+import algosdk from 'algosdk';
+import LookupTransactionByID from 'algosdk/dist/types/client/v2/indexer/lookupTransactionByID';
+import { TransactionResponse } from 'algosdk/dist/types/client/v2/indexer';
+import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount';
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
 import { TokenClient, TokenFactory } from '../contracts/clients/TokenClient';
-import { BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
-import {AlgoAmount} from "@algorandfoundation/algokit-utils/types/amount";
+import { BalancedPoolV2Client, BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
 
 dotenv.config();
 
 const algorand = algokit.AlgorandClient.defaultLocalNet();
+const indexer = new algosdk.Indexer('', 'http://localhost', 8980);
 
 export const account = algorand.account.fromMnemonic(process.env.ACCOUNT_MNEMONIC!);
+
+async function optIn(assetID: bigint) {
+  await algorand.send.assetTransfer({
+    sender: account.addr,
+    signer: account.signer,
+    receiver: account.addr,
+    assetId: assetID,
+    amount: BigInt(0),
+  });
+}
 
 export async function updatePoolProgram(adminFactory: FactoryClient, program: Uint8Array) {
   const resultTxn = await adminFactory.send.managerUpdatePoolContractProgram({
@@ -41,6 +55,60 @@ export async function writePoolProgram(factoryClient: FactoryClient, program: Ui
   console.log('TXs IDs: ', resultTxn.txIds);
 }
 
+// eslint-disable-next-line consistent-return
+async function withRetry(fn: CallableFunction, max = 10, delay = 3000): Promise<LookupTransactionByID | undefined> {
+  for (let i = 0; i < max; i += 1) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i === max - 1) throw err;
+
+      console.log('Tx not found retrying in 3 second...');
+      await new Promise((r) => {
+        setTimeout(r, delay);
+      });
+    }
+  }
+}
+
+export async function poolSetup(FACTORY_APP_ID: bigint, POOL_ID: bigint, assetIds: bigint[], weights: bigint[]) {
+  const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
+    appId: FACTORY_APP_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const poolClient = algorand.client.getTypedAppClientById(BalancedPoolV2Client, {
+    appId: POOL_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  await algorand.send.payment({
+    sender: account.addr,
+    signer: account,
+    receiver: poolClient.appAddress,
+    amount: (1_000_000).microAlgo(),
+  });
+
+  console.log('Init Pool with params:', assetIds, weights);
+
+  const group = factoryClient.newGroup();
+  group.initPool({
+    args: {
+      poolId: POOL_ID,
+      assetIds,
+      weights,
+    },
+    maxFee: AlgoAmount.MicroAlgo(1_000_000),
+  });
+  const result = await group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+  console.log('TXs Ids:', result.txIds);
+  console.log('LP Token ID', result.returns);
+
+  await optIn(result.returns[0]);
+}
+
 export async function factorySetup(APP_ID: bigint) {
   const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
     appId: APP_ID,
@@ -59,7 +127,7 @@ export async function factorySetup(APP_ID: bigint) {
     sender: account.addr,
     signer: account,
     receiver: factoryClient.appAddress,
-    amount: (1_000_000).microAlgo(),
+    amount: (10_000_000).microAlgo(),
   });
 
   await updatePoolProgram(factoryClient, balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
@@ -67,34 +135,23 @@ export async function factorySetup(APP_ID: bigint) {
 
   const poolGroup = factoryClient.newGroup();
   poolGroup.createPool();
-  const result = await poolGroup.send({ populateAppCallResources: true });
+  const result = await poolGroup.send({ populateAppCallResources: true, maxRoundsToWaitForConfirmation: 4 });
 
   console.log('Balanced Pool Created');
   console.log('TXs IDs', result.txIds);
-}
 
-export async function tokenSetup(APP_ID: bigint) {
-  const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
-    appId: APP_ID,
-    defaultSender: account.addr,
-    defaultSigner: account.signer,
-  });
+  let lookup: TransactionResponse | null = null;
+  await withRetry(async () => (lookup = await indexer.lookupTransactionByID(result.txIds[0]).do()));
 
-  const tx = await algorand.send.payment({
-    sender: account.addr,
-    signer: account,
-    receiver: tokenClient.appAddress,
-    amount: (1_000_000).microAlgo(),
-    extraFee: (1_000).microAlgo(),
-  });
+  if (!lookup) {
+    console.log('sorry i cant :(');
+    throw Error();
+  }
 
-  const result = await tokenClient.send.bootstrap({
-    args: { seed: tx.transaction },
-    populateAppCallResources: true,
-    extraFee: (1_000).microAlgo(),
-  });
+  const inner = (lookup as TransactionResponse).transaction.innerTxns![0];
+  const poolAppId = inner.createdApplicationIndex;
 
-  console.log('[Cuba] Token created, ASSET_ID: ', result.return);
+  return { poolAppId };
 }
 
 export async function deploy(name: string): Promise<bigint> {
@@ -131,10 +188,46 @@ export async function deploy(name: string): Promise<bigint> {
     populateAppCallResources: true,
   });
 
-  console.log('✅ Factory APP_ID IS: ', appDeployer.appId);
-  console.log('✅ Factory APP_ADDRESS IS: ', appDeployer.appAddress.publicKey);
+  console.log('\n\n✅ Factory APP_ID IS: ', appDeployer.appId);
+  console.log('✅ Factory APP_ADDRESS IS: ', algosdk.encodeAddress(appDeployer.appAddress.publicKey));
 
   return appDeployer.appId;
+}
+
+export async function tokenSetup(APP_ID: bigint): Promise<bigint> {
+  const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
+    appId: APP_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const tx = await algorand.send.payment({
+    sender: account.addr,
+    signer: account,
+    receiver: tokenClient.appAddress,
+    amount: (1_000_000).microAlgo(),
+    extraFee: (1_000).microAlgo(),
+  });
+
+  const result = await tokenClient.send.bootstrap({
+    args: { seed: tx.transaction },
+    populateAppCallResources: true,
+    extraFee: (1_000).microAlgo(),
+  });
+
+  const tokenID = result.return!;
+  console.log('✅ Asset created, ASSET_ID IS: ', tokenID);
+  await optIn(tokenID);
+
+  const group = tokenClient.newGroup();
+  group.mint({
+    args: [10_000_000_000],
+    maxFee: (100_000).microAlgo(),
+  });
+
+  await group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+
+  return tokenID;
 }
 
 export async function deployToken(name: string): Promise<bigint> {
@@ -143,7 +236,7 @@ export async function deployToken(name: string): Promise<bigint> {
     defaultSigner: account.signer,
   });
 
-  const factoryApprovalProgram = await tokenFactory.appFactory.compile();
+  const tokenApprovalProgram = await tokenFactory.appFactory.compile();
 
   const appDeployer = await algorand.appDeployer.deploy({
     metadata: {
@@ -154,8 +247,8 @@ export async function deployToken(name: string): Promise<bigint> {
     },
     createParams: {
       sender: account.addr,
-      approvalProgram: factoryApprovalProgram.compiledApproval?.compiledBase64ToBytes!,
-      clearStateProgram: factoryApprovalProgram.compiledClear?.compiledBase64ToBytes!,
+      approvalProgram: tokenApprovalProgram.compiledApproval?.compiledBase64ToBytes!,
+      clearStateProgram: tokenApprovalProgram.compiledClear?.compiledBase64ToBytes!,
       schema: {
         globalInts: 2,
         globalByteSlices: 1,
@@ -171,8 +264,8 @@ export async function deployToken(name: string): Promise<bigint> {
     populateAppCallResources: true,
   });
 
-  console.log('✅ Token APP_ID IS: ', appDeployer.appId);
-  console.log('✅ Token APP_ADDRESS IS: ', appDeployer.appAddress.publicKey);
+  console.log('\n\n✅ Token APP_ID IS: ', appDeployer.appId);
+  console.log('✅ Token APP_ADDRESS IS: ', algosdk.encodeAddress(appDeployer.appAddress.publicKey));
 
   return appDeployer.appId;
 }

@@ -29,10 +29,49 @@
       }
     },
     {
-      "name": "getProgram",
-      "args": [],
+      "name": "initPool",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        },
+        {
+          "name": "assetIds",
+          "type": "uint64[]"
+        },
+        {
+          "name": "weights",
+          "type": "uint64[]"
+        }
+      ],
       "returns": {
-        "type": "byte[]"
+        "type": "uint64"
+      },
+      "actions": {
+        "create": [],
+        "call": [
+          "NoOp"
+        ]
+      }
+    },
+    {
+      "name": "addLiquidity",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        },
+        {
+          "name": "index",
+          "type": "uint64"
+        },
+        {
+          "name": "transferTxn",
+          "type": "axfer"
+        }
+      ],
+      "returns": {
+        "type": "void"
       },
       "actions": {
         "create": [],
@@ -43,6 +82,7 @@
     },
     {
       "name": "MANAGER_updatePoolContractProgram",
+      "desc": "MANAGER Methods",
       "args": [
         {
           "name": "programSize",
@@ -86,6 +126,19 @@
       "args": [],
       "returns": {
         "type": "bool"
+      },
+      "actions": {
+        "create": [],
+        "call": [
+          "NoOp"
+        ]
+      }
+    },
+    {
+      "name": "getProgram",
+      "args": [],
+      "returns": {
+        "type": "byte[]"
       },
       "actions": {
         "create": [],
@@ -156,14 +209,14 @@
             2,
             3,
             4,
-            5
+            5,
+            6
           ]
         },
         {
           "teal": 3,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            6,
             7,
             8,
             9,
@@ -204,58 +257,58 @@
             44,
             45,
             46,
-            47
+            47,
+            48
           ]
         },
         {
           "teal": 15,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            48,
-            49
+            49,
+            50
           ]
         },
         {
           "teal": 16,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            50
+            51
           ]
         },
         {
           "teal": 17,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            51
+            52
           ]
         },
         {
           "teal": 18,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            52
+            53
           ]
         },
         {
           "teal": 19,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            53,
-            54
+            54,
+            55
           ]
         },
         {
           "teal": 20,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            55
+            56
           ]
         },
         {
           "teal": 21,
           "source": "contracts/Factory.algo.ts:4",
           "pc": [
-            56,
             57,
             58,
             59,
@@ -280,7 +333,8 @@
             78,
             79,
             80,
-            81
+            81,
+            82
           ]
         },
         {
@@ -288,167 +342,167 @@
           "source": "contracts/Factory.algo.ts:4",
           "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
           "pc": [
-            82
+            83
           ]
         },
         {
           "teal": 30,
           "source": "contracts/Factory.algo.ts:9",
           "pc": [
-            83,
             84,
-            85
+            85,
+            86
           ]
         },
         {
           "teal": 31,
           "source": "contracts/Factory.algo.ts:9",
           "pc": [
-            86
+            87
           ]
         },
         {
           "teal": 32,
           "source": "contracts/Factory.algo.ts:9",
           "pc": [
-            87
+            88
           ]
         },
         {
           "teal": 36,
           "source": "contracts/Factory.algo.ts:9",
           "pc": [
-            88,
             89,
-            90
+            90,
+            91
           ]
         },
         {
           "teal": 40,
           "source": "contracts/Factory.algo.ts:11",
           "pc": [
-            91
+            92
           ]
         },
         {
           "teal": 41,
           "source": "contracts/Factory.algo.ts:11",
           "pc": [
-            92,
             93,
-            94
+            94,
+            95
           ]
         },
         {
           "teal": 42,
           "source": "contracts/Factory.algo.ts:11",
           "pc": [
-            95,
-            96
+            96,
+            97
           ]
         },
         {
           "teal": 43,
           "source": "contracts/Factory.algo.ts:11",
           "pc": [
-            97
+            98
           ]
         },
         {
           "teal": 44,
           "source": "contracts/Factory.algo.ts:11",
           "pc": [
-            98
+            99
           ]
         },
         {
           "teal": 45,
           "source": "contracts/Factory.algo.ts:9",
           "pc": [
-            99
+            100
           ]
         },
         {
           "teal": 50,
           "source": "contracts/Factory.algo.ts:14",
           "pc": [
-            100,
             101,
-            102
+            102,
+            103
           ]
         },
         {
           "teal": 51,
           "source": "contracts/Factory.algo.ts:14",
           "pc": [
-            103
+            104
           ]
         },
         {
           "teal": 52,
           "source": "contracts/Factory.algo.ts:14",
           "pc": [
-            104
+            105
           ]
         },
         {
           "teal": 56,
           "source": "contracts/Factory.algo.ts:14",
           "pc": [
-            105,
             106,
-            107
+            107,
+            108
           ]
         },
         {
           "teal": 69,
           "source": "contracts/Factory.algo.ts:15",
           "pc": [
-            108
+            109
           ]
         },
         {
           "teal": 70,
           "source": "contracts/Factory.algo.ts:15",
           "pc": [
-            109
+            110
           ]
         },
         {
           "teal": 71,
           "source": "contracts/Factory.algo.ts:15",
           "pc": [
-            110,
-            111
+            111,
+            112
           ]
         },
         {
           "teal": 75,
           "source": "contracts/Factory.algo.ts:16",
           "pc": [
-            112
+            113
           ]
         },
         {
           "teal": 76,
           "source": "contracts/Factory.algo.ts:16",
           "pc": [
-            113,
-            114
+            114,
+            115
           ]
         },
         {
           "teal": 80,
           "source": "contracts/Factory.algo.ts:17",
           "pc": [
-            115
+            116
           ]
         },
         {
           "teal": 81,
           "source": "contracts/Factory.algo.ts:17",
           "pc": [
-            116
+            117
           ]
         },
         {
@@ -456,39 +510,38 @@
           "source": "contracts/Factory.algo.ts:17",
           "errorMessage": "box value does not exist: this.poolContractApprovalProgram.value",
           "pc": [
-            117
+            118
           ]
         },
         {
           "teal": 85,
           "source": "contracts/Factory.algo.ts:17",
           "pc": [
-            118,
-            119
+            119,
+            120
           ]
         },
         {
           "teal": 89,
           "source": "contracts/Factory.algo.ts:18",
           "pc": [
-            120,
             121,
-            122
+            122,
+            123
           ]
         },
         {
           "teal": 90,
           "source": "contracts/Factory.algo.ts:18",
           "pc": [
-            123,
-            124
+            124,
+            125
           ]
         },
         {
           "teal": 94,
           "source": "contracts/Factory.algo.ts:19",
           "pc": [
-            125,
             126
           ]
         },
@@ -598,20 +651,8 @@
           "teal": 128,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            151
-          ]
-        },
-        {
-          "teal": 129,
-          "source": "contracts/Factory.algo.ts:27",
-          "pc": [
-            152
-          ]
-        },
-        {
-          "teal": 130,
-          "source": "contracts/Factory.algo.ts:27",
-          "pc": [
+            151,
+            152,
             153
           ]
         },
@@ -628,20 +669,8 @@
           "teal": 132,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            157
-          ]
-        },
-        {
-          "teal": 133,
-          "source": "contracts/Factory.algo.ts:27",
-          "pc": [
-            158
-          ]
-        },
-        {
-          "teal": 134,
-          "source": "contracts/Factory.algo.ts:27",
-          "pc": [
+            157,
+            158,
             159
           ]
         },
@@ -649,653 +678,1427 @@
           "teal": 135,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            160
+            160,
+            161,
+            162
           ]
         },
         {
           "teal": 136,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            161
+            163
           ]
         },
         {
-          "teal": 137,
+          "teal": 139,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            162
+            164,
+            165,
+            166
+          ]
+        },
+        {
+          "teal": 140,
+          "source": "contracts/Factory.algo.ts:27",
+          "pc": [
+            167
           ]
         },
         {
           "teal": 141,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            163,
-            164,
-            165
-          ]
-        },
-        {
-          "teal": 145,
-          "source": "contracts/Factory.algo.ts:28",
-          "pc": [
-            166
-          ]
-        },
-        {
-          "teal": 146,
-          "source": "contracts/Factory.algo.ts:28",
-          "pc": [
-            167
-          ]
-        },
-        {
-          "teal": 149,
-          "source": "contracts/Factory.algo.ts:28",
-          "errorMessage": "box value does not exist: this.poolContractApprovalProgram.value",
-          "pc": [
             168
           ]
         },
         {
-          "teal": 150,
+          "teal": 142,
           "source": "contracts/Factory.algo.ts:27",
           "pc": [
             169
           ]
         },
         {
-          "teal": 155,
-          "source": "contracts/Factory.algo.ts:31",
+          "teal": 143,
+          "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            170,
-            171,
-            172
+            170
+          ]
+        },
+        {
+          "teal": 144,
+          "source": "contracts/Factory.algo.ts:27",
+          "pc": [
+            171
+          ]
+        },
+        {
+          "teal": 148,
+          "source": "contracts/Factory.algo.ts:27",
+          "pc": [
+            172,
+            173,
+            174
+          ]
+        },
+        {
+          "teal": 155,
+          "source": "contracts/Factory.algo.ts:28",
+          "pc": [
+            175
           ]
         },
         {
           "teal": 156,
-          "source": "contracts/Factory.algo.ts:31",
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
-            173
-          ]
-        },
-        {
-          "teal": 159,
-          "source": "contracts/Factory.algo.ts:31",
-          "pc": [
-            174,
-            175,
             176
           ]
         },
         {
-          "teal": 160,
-          "source": "contracts/Factory.algo.ts:31",
+          "teal": 157,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
-            177
-          ]
-        },
-        {
-          "teal": 161,
-          "source": "contracts/Factory.algo.ts:31",
-          "pc": [
+            177,
             178
           ]
         },
         {
-          "teal": 165,
-          "source": "contracts/Factory.algo.ts:31",
+          "teal": 158,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
             179,
             180,
-            181
-          ]
-        },
-        {
-          "teal": 169,
-          "source": "contracts/Factory.algo.ts:32",
-          "pc": [
+            181,
             182,
-            183
-          ]
-        },
-        {
-          "teal": 170,
-          "source": "contracts/Factory.algo.ts:32",
-          "pc": [
+            183,
             184
           ]
         },
         {
-          "teal": 171,
-          "source": "contracts/Factory.algo.ts:32",
+          "teal": 159,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
-            185
-          ]
-        },
-        {
-          "teal": 172,
-          "source": "contracts/Factory.algo.ts:32",
-          "pc": [
+            185,
             186
           ]
         },
         {
-          "teal": 175,
-          "source": "contracts/Factory.algo.ts:32",
-          "errorMessage": "only the manager can call this method",
+          "teal": 163,
+          "source": "contracts/Factory.algo.ts:29",
           "pc": [
-            187
-          ]
-        },
-        {
-          "teal": 180,
-          "source": "contracts/Factory.algo.ts:34",
-          "pc": [
+            187,
             188
           ]
         },
         {
-          "teal": 181,
-          "source": "contracts/Factory.algo.ts:34",
+          "teal": 164,
+          "source": "contracts/Factory.algo.ts:29",
           "pc": [
-            189
-          ]
-        },
-        {
-          "teal": 182,
-          "source": "contracts/Factory.algo.ts:34",
-          "pc": [
+            189,
             190
           ]
         },
         {
-          "teal": 183,
-          "source": "contracts/Factory.algo.ts:34",
+          "teal": 168,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            191
+            191,
+            192
           ]
         },
         {
-          "teal": 184,
-          "source": "contracts/Factory.algo.ts:34",
+          "teal": 169,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            192,
-            193,
+            193
+          ]
+        },
+        {
+          "teal": 170,
+          "source": "contracts/Factory.algo.ts:30",
+          "pc": [
             194
           ]
         },
         {
-          "teal": 189,
-          "source": "contracts/Factory.algo.ts:35",
+          "teal": 171,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
             195
           ]
         },
         {
-          "teal": 190,
-          "source": "contracts/Factory.algo.ts:35",
+          "teal": 172,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            196,
+            196
+          ]
+        },
+        {
+          "teal": 173,
+          "source": "contracts/Factory.algo.ts:30",
+          "pc": [
             197
           ]
         },
         {
-          "teal": 191,
-          "source": "contracts/Factory.algo.ts:35",
+          "teal": 174,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            198
+            198,
+            199,
+            200
           ]
         },
         {
-          "teal": 192,
-          "source": "contracts/Factory.algo.ts:34",
+          "teal": 175,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            199,
-            200,
             201
           ]
         },
         {
-          "teal": 197,
-          "source": "contracts/Factory.algo.ts:37",
+          "teal": 176,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
             202
           ]
         },
         {
-          "teal": 198,
-          "source": "contracts/Factory.algo.ts:37",
+          "teal": 177,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
             203,
             204
           ]
         },
         {
-          "teal": 199,
-          "source": "contracts/Factory.algo.ts:37",
+          "teal": 178,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            205
-          ]
-        },
-        {
-          "teal": 200,
-          "source": "contracts/Factory.algo.ts:37",
-          "pc": [
+            205,
             206
           ]
         },
         {
-          "teal": 203,
-          "source": "contracts/Factory.algo.ts:31",
+          "teal": 179,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
             207
           ]
         },
         {
-          "teal": 208,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 180,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            208,
-            209,
+            208
+          ]
+        },
+        {
+          "teal": 181,
+          "source": "contracts/Factory.algo.ts:30",
+          "pc": [
+            209
+          ]
+        },
+        {
+          "teal": 182,
+          "source": "contracts/Factory.algo.ts:30",
+          "pc": [
             210
           ]
         },
         {
-          "teal": 209,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 183,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            211,
-            212,
-            213
+            211
           ]
         },
         {
-          "teal": 212,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 184,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            214,
-            215,
+            212,
+            213,
+            214
+          ]
+        },
+        {
+          "teal": 185,
+          "source": "contracts/Factory.algo.ts:30",
+          "pc": [
+            215
+          ]
+        },
+        {
+          "teal": 186,
+          "source": "contracts/Factory.algo.ts:30",
+          "pc": [
             216
           ]
         },
         {
-          "teal": 213,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 187,
+          "source": "contracts/Factory.algo.ts:30",
           "pc": [
-            217
+            217,
+            218
           ]
         },
         {
-          "teal": 216,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 190,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
-            218,
-            219,
-            220
+            219
           ]
         },
         {
-          "teal": 217,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 191,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
+            220,
             221
           ]
         },
         {
-          "teal": 218,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 194,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
             222
           ]
         },
         {
-          "teal": 222,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 195,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
             223,
-            224,
+            224
+          ]
+        },
+        {
+          "teal": 196,
+          "source": "contracts/Factory.algo.ts:28",
+          "pc": [
             225
           ]
         },
         {
-          "teal": 226,
-          "source": "contracts/Factory.algo.ts:42",
+          "teal": 197,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
-            226,
-            227
+            226
           ]
         },
         {
-          "teal": 227,
-          "source": "contracts/Factory.algo.ts:42",
+          "teal": 198,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
+            227,
             228
           ]
         },
         {
-          "teal": 228,
-          "source": "contracts/Factory.algo.ts:42",
+          "teal": 199,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
-            229
-          ]
-        },
-        {
-          "teal": 229,
-          "source": "contracts/Factory.algo.ts:42",
-          "pc": [
-            230
-          ]
-        },
-        {
-          "teal": 232,
-          "source": "contracts/Factory.algo.ts:42",
-          "errorMessage": "only the manager can call this method",
-          "pc": [
+            229,
+            230,
             231
           ]
         },
         {
-          "teal": 236,
-          "source": "contracts/Factory.algo.ts:43",
+          "teal": 200,
+          "source": "contracts/Factory.algo.ts:28",
           "pc": [
             232
           ]
         },
         {
-          "teal": 237,
-          "source": "contracts/Factory.algo.ts:43",
+          "teal": 201,
+          "source": "contracts/Factory.algo.ts:27",
           "pc": [
-            233,
-            234
+            233
           ]
         },
         {
-          "teal": 238,
-          "source": "contracts/Factory.algo.ts:43",
+          "teal": 206,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            235,
+            234,
+            235
+          ]
+        },
+        {
+          "teal": 207,
+          "source": "contracts/Factory.algo.ts:34",
+          "pc": [
             236
           ]
         },
         {
-          "teal": 239,
-          "source": "contracts/Factory.algo.ts:43",
+          "teal": 208,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
             237
           ]
         },
         {
-          "teal": 240,
-          "source": "contracts/Factory.algo.ts:41",
+          "teal": 209,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
             238
           ]
         },
         {
-          "teal": 245,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 210,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            239
+            239,
+            240
           ]
         },
         {
-          "teal": 248,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 211,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            240,
             241,
             242
           ]
         },
         {
-          "teal": 249,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 212,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            243,
-            244,
-            245
+            243
           ]
         },
         {
-          "teal": 250,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 215,
+          "source": "contracts/Factory.algo.ts:34",
+          "errorMessage": "argument 0 (transferTxn) for addLiquidity must be a axfer transaction",
           "pc": [
-            246
+            244
           ]
         },
         {
-          "teal": 251,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 218,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            247,
+            245,
+            246,
+            247
+          ]
+        },
+        {
+          "teal": 219,
+          "source": "contracts/Factory.algo.ts:34",
+          "pc": [
             248
           ]
         },
         {
-          "teal": 252,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 222,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            249
-          ]
-        },
-        {
-          "teal": 253,
-          "source": "contracts/Factory.algo.ts:46",
-          "pc": [
-            250
-          ]
-        },
-        {
-          "teal": 254,
-          "source": "contracts/Factory.algo.ts:46",
-          "pc": [
+            249,
+            250,
             251
           ]
         },
         {
-          "teal": 255,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 223,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
             252
           ]
         },
         {
-          "teal": 256,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 226,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            253
+            253,
+            254,
+            255
           ]
         },
         {
-          "teal": 260,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 227,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            254,
-            255,
             256
           ]
         },
         {
-          "teal": 264,
-          "source": "contracts/Factory.algo.ts:47",
+          "teal": 228,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
             257
           ]
         },
         {
-          "teal": 265,
-          "source": "contracts/Factory.algo.ts:47",
+          "teal": 232,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            258
-          ]
-        },
-        {
-          "teal": 266,
-          "source": "contracts/Factory.algo.ts:47",
-          "pc": [
-            259
-          ]
-        },
-        {
-          "teal": 267,
-          "source": "contracts/Factory.algo.ts:47",
-          "pc": [
+            258,
+            259,
             260
           ]
         },
         {
-          "teal": 268,
-          "source": "contracts/Factory.algo.ts:46",
+          "teal": 241,
+          "source": "contracts/Factory.algo.ts:35",
           "pc": [
             261
           ]
         },
         {
-          "teal": 271,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 242,
+          "source": "contracts/Factory.algo.ts:35",
           "pc": [
-            262,
-            263
+            262
           ]
         },
         {
-          "teal": 272,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 243,
+          "source": "contracts/Factory.algo.ts:35",
           "pc": [
-            264,
+            263,
+            264
+          ]
+        },
+        {
+          "teal": 244,
+          "source": "contracts/Factory.algo.ts:35",
+          "pc": [
             265,
-            266
-          ]
-        },
-        {
-          "teal": 273,
-          "source": "contracts/Factory.algo.ts:4",
-          "pc": [
-            267
-          ]
-        },
-        {
-          "teal": 274,
-          "source": "contracts/Factory.algo.ts:4",
-          "pc": [
+            266,
+            267,
             268,
             269,
             270
           ]
         },
         {
-          "teal": 275,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 245,
+          "source": "contracts/Factory.algo.ts:35",
           "pc": [
             271,
-            272,
+            272
+          ]
+        },
+        {
+          "teal": 249,
+          "source": "contracts/Factory.algo.ts:36",
+          "pc": [
             273,
             274
           ]
         },
         {
-          "teal": 278,
-          "source": "contracts/Factory.algo.ts:4",
-          "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+          "teal": 250,
+          "source": "contracts/Factory.algo.ts:36",
           "pc": [
-            275
+            275,
+            276
           ]
         },
         {
-          "teal": 281,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 254,
+          "source": "contracts/Factory.algo.ts:37",
           "pc": [
-            276,
             277,
-            278,
-            279,
+            278
+          ]
+        },
+        {
+          "teal": 255,
+          "source": "contracts/Factory.algo.ts:37",
+          "pc": [
+            279
+          ]
+        },
+        {
+          "teal": 256,
+          "source": "contracts/Factory.algo.ts:37",
+          "pc": [
             280,
             281
           ]
         },
         {
-          "teal": 282,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 257,
+          "source": "contracts/Factory.algo.ts:37",
           "pc": [
             282,
-            283,
+            283
+          ]
+        },
+        {
+          "teal": 258,
+          "source": "contracts/Factory.algo.ts:37",
+          "pc": [
             284,
-            285,
-            286,
-            287
+            285
           ]
         },
         {
-          "teal": 283,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 259,
+          "source": "contracts/Factory.algo.ts:37",
           "pc": [
-            288,
+            286
+          ]
+        },
+        {
+          "teal": 260,
+          "source": "contracts/Factory.algo.ts:37",
+          "pc": [
+            287,
+            288
+          ]
+        },
+        {
+          "teal": 261,
+          "source": "contracts/Factory.algo.ts:37",
+          "pc": [
             289,
-            290,
+            290
+          ]
+        },
+        {
+          "teal": 262,
+          "source": "contracts/Factory.algo.ts:37",
+          "pc": [
             291,
-            292,
-            293
+            292
           ]
         },
         {
-          "teal": 284,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 263,
+          "source": "contracts/Factory.algo.ts:37",
           "pc": [
-            294,
+            293,
+            294
+          ]
+        },
+        {
+          "teal": 267,
+          "source": "contracts/Factory.algo.ts:38",
+          "pc": [
             295,
-            296,
-            297,
-            298,
-            299
+            296
           ]
         },
         {
-          "teal": 285,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 268,
+          "source": "contracts/Factory.algo.ts:38",
           "pc": [
-            300,
+            297,
+            298
+          ]
+        },
+        {
+          "teal": 269,
+          "source": "contracts/Factory.algo.ts:38",
+          "pc": [
+            299,
+            300
+          ]
+        },
+        {
+          "teal": 273,
+          "source": "contracts/Factory.algo.ts:39",
+          "pc": [
             301,
-            302,
+            302
+          ]
+        },
+        {
+          "teal": 274,
+          "source": "contracts/Factory.algo.ts:39",
+          "pc": [
             303,
-            304,
+            304
+          ]
+        },
+        {
+          "teal": 277,
+          "source": "contracts/Factory.algo.ts:35",
+          "pc": [
             305
           ]
         },
         {
-          "teal": 286,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 278,
+          "source": "contracts/Factory.algo.ts:35",
           "pc": [
             306,
-            307,
+            307
+          ]
+        },
+        {
+          "teal": 281,
+          "source": "contracts/Factory.algo.ts:35",
+          "pc": [
             308
           ]
         },
         {
-          "teal": 287,
-          "source": "contracts/Factory.algo.ts:4",
+          "teal": 282,
+          "source": "contracts/Factory.algo.ts:34",
           "pc": [
-            309,
-            310,
-            311,
-            312,
-            313,
-            314,
-            315,
-            316,
-            317,
-            318,
-            319,
-            320
+            309
           ]
         },
         {
-          "teal": 290,
+          "teal": 287,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            310,
+            311,
+            312
+          ]
+        },
+        {
+          "teal": 288,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            313
+          ]
+        },
+        {
+          "teal": 291,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            314,
+            315,
+            316
+          ]
+        },
+        {
+          "teal": 292,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            317
+          ]
+        },
+        {
+          "teal": 293,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            318
+          ]
+        },
+        {
+          "teal": 299,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            319,
+            320,
+            321
+          ]
+        },
+        {
+          "teal": 303,
+          "source": "contracts/Factory.algo.ts:48",
+          "pc": [
+            322,
+            323
+          ]
+        },
+        {
+          "teal": 304,
+          "source": "contracts/Factory.algo.ts:48",
+          "pc": [
+            324
+          ]
+        },
+        {
+          "teal": 305,
+          "source": "contracts/Factory.algo.ts:48",
+          "pc": [
+            325
+          ]
+        },
+        {
+          "teal": 306,
+          "source": "contracts/Factory.algo.ts:48",
+          "pc": [
+            326
+          ]
+        },
+        {
+          "teal": 309,
+          "source": "contracts/Factory.algo.ts:48",
+          "errorMessage": "only the manager can call this method",
+          "pc": [
+            327
+          ]
+        },
+        {
+          "teal": 314,
+          "source": "contracts/Factory.algo.ts:50",
+          "pc": [
+            328
+          ]
+        },
+        {
+          "teal": 315,
+          "source": "contracts/Factory.algo.ts:50",
+          "pc": [
+            329
+          ]
+        },
+        {
+          "teal": 316,
+          "source": "contracts/Factory.algo.ts:50",
+          "pc": [
+            330
+          ]
+        },
+        {
+          "teal": 317,
+          "source": "contracts/Factory.algo.ts:50",
+          "pc": [
+            331
+          ]
+        },
+        {
+          "teal": 318,
+          "source": "contracts/Factory.algo.ts:50",
+          "pc": [
+            332,
+            333,
+            334
+          ]
+        },
+        {
+          "teal": 323,
+          "source": "contracts/Factory.algo.ts:51",
+          "pc": [
+            335
+          ]
+        },
+        {
+          "teal": 324,
+          "source": "contracts/Factory.algo.ts:51",
+          "pc": [
+            336,
+            337
+          ]
+        },
+        {
+          "teal": 325,
+          "source": "contracts/Factory.algo.ts:51",
+          "pc": [
+            338
+          ]
+        },
+        {
+          "teal": 326,
+          "source": "contracts/Factory.algo.ts:50",
+          "pc": [
+            339,
+            340,
+            341
+          ]
+        },
+        {
+          "teal": 331,
+          "source": "contracts/Factory.algo.ts:53",
+          "pc": [
+            342
+          ]
+        },
+        {
+          "teal": 332,
+          "source": "contracts/Factory.algo.ts:53",
+          "pc": [
+            343,
+            344
+          ]
+        },
+        {
+          "teal": 333,
+          "source": "contracts/Factory.algo.ts:53",
+          "pc": [
+            345
+          ]
+        },
+        {
+          "teal": 334,
+          "source": "contracts/Factory.algo.ts:53",
+          "pc": [
+            346
+          ]
+        },
+        {
+          "teal": 337,
+          "source": "contracts/Factory.algo.ts:47",
+          "pc": [
+            347
+          ]
+        },
+        {
+          "teal": 342,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            348,
+            349,
+            350
+          ]
+        },
+        {
+          "teal": 343,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            351,
+            352,
+            353
+          ]
+        },
+        {
+          "teal": 346,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            354,
+            355,
+            356
+          ]
+        },
+        {
+          "teal": 347,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            357
+          ]
+        },
+        {
+          "teal": 350,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            358,
+            359,
+            360
+          ]
+        },
+        {
+          "teal": 351,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            361
+          ]
+        },
+        {
+          "teal": 352,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            362
+          ]
+        },
+        {
+          "teal": 356,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            363,
+            364,
+            365
+          ]
+        },
+        {
+          "teal": 360,
+          "source": "contracts/Factory.algo.ts:58",
+          "pc": [
+            366,
+            367
+          ]
+        },
+        {
+          "teal": 361,
+          "source": "contracts/Factory.algo.ts:58",
+          "pc": [
+            368
+          ]
+        },
+        {
+          "teal": 362,
+          "source": "contracts/Factory.algo.ts:58",
+          "pc": [
+            369
+          ]
+        },
+        {
+          "teal": 363,
+          "source": "contracts/Factory.algo.ts:58",
+          "pc": [
+            370
+          ]
+        },
+        {
+          "teal": 366,
+          "source": "contracts/Factory.algo.ts:58",
+          "errorMessage": "only the manager can call this method",
+          "pc": [
+            371
+          ]
+        },
+        {
+          "teal": 370,
+          "source": "contracts/Factory.algo.ts:59",
+          "pc": [
+            372
+          ]
+        },
+        {
+          "teal": 371,
+          "source": "contracts/Factory.algo.ts:59",
+          "pc": [
+            373,
+            374
+          ]
+        },
+        {
+          "teal": 372,
+          "source": "contracts/Factory.algo.ts:59",
+          "pc": [
+            375,
+            376
+          ]
+        },
+        {
+          "teal": 373,
+          "source": "contracts/Factory.algo.ts:59",
+          "pc": [
+            377
+          ]
+        },
+        {
+          "teal": 374,
+          "source": "contracts/Factory.algo.ts:57",
+          "pc": [
+            378
+          ]
+        },
+        {
+          "teal": 379,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            379
+          ]
+        },
+        {
+          "teal": 382,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            380,
+            381,
+            382
+          ]
+        },
+        {
+          "teal": 383,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            383,
+            384,
+            385
+          ]
+        },
+        {
+          "teal": 384,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            386
+          ]
+        },
+        {
+          "teal": 385,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            387,
+            388
+          ]
+        },
+        {
+          "teal": 386,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            389
+          ]
+        },
+        {
+          "teal": 387,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            390
+          ]
+        },
+        {
+          "teal": 388,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            391
+          ]
+        },
+        {
+          "teal": 389,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            392
+          ]
+        },
+        {
+          "teal": 390,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            393
+          ]
+        },
+        {
+          "teal": 394,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            394,
+            395,
+            396
+          ]
+        },
+        {
+          "teal": 398,
+          "source": "contracts/Factory.algo.ts:63",
+          "pc": [
+            397
+          ]
+        },
+        {
+          "teal": 399,
+          "source": "contracts/Factory.algo.ts:63",
+          "pc": [
+            398
+          ]
+        },
+        {
+          "teal": 400,
+          "source": "contracts/Factory.algo.ts:63",
+          "pc": [
+            399
+          ]
+        },
+        {
+          "teal": 401,
+          "source": "contracts/Factory.algo.ts:63",
+          "pc": [
+            400
+          ]
+        },
+        {
+          "teal": 402,
+          "source": "contracts/Factory.algo.ts:62",
+          "pc": [
+            401
+          ]
+        },
+        {
+          "teal": 407,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            402
+          ]
+        },
+        {
+          "teal": 410,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            403,
+            404,
+            405
+          ]
+        },
+        {
+          "teal": 411,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            406
+          ]
+        },
+        {
+          "teal": 412,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            407
+          ]
+        },
+        {
+          "teal": 413,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            408
+          ]
+        },
+        {
+          "teal": 414,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            409,
+            410,
+            411
+          ]
+        },
+        {
+          "teal": 415,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            412
+          ]
+        },
+        {
+          "teal": 416,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            413
+          ]
+        },
+        {
+          "teal": 417,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            414
+          ]
+        },
+        {
+          "teal": 418,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            415
+          ]
+        },
+        {
+          "teal": 419,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            416
+          ]
+        },
+        {
+          "teal": 420,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            417
+          ]
+        },
+        {
+          "teal": 424,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            418,
+            419,
+            420
+          ]
+        },
+        {
+          "teal": 428,
+          "source": "contracts/Factory.algo.ts:67",
+          "pc": [
+            421
+          ]
+        },
+        {
+          "teal": 429,
+          "source": "contracts/Factory.algo.ts:67",
+          "pc": [
+            422
+          ]
+        },
+        {
+          "teal": 432,
+          "source": "contracts/Factory.algo.ts:67",
+          "errorMessage": "box value does not exist: this.poolContractApprovalProgram.value",
+          "pc": [
+            423
+          ]
+        },
+        {
+          "teal": 433,
+          "source": "contracts/Factory.algo.ts:66",
+          "pc": [
+            424
+          ]
+        },
+        {
+          "teal": 436,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            425,
+            426
+          ]
+        },
+        {
+          "teal": 437,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            427,
+            428,
+            429
+          ]
+        },
+        {
+          "teal": 438,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            430
+          ]
+        },
+        {
+          "teal": 439,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            431,
+            432,
+            433
+          ]
+        },
+        {
+          "teal": 440,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            434,
+            435,
+            436,
+            437
+          ]
+        },
+        {
+          "teal": 443,
+          "source": "contracts/Factory.algo.ts:4",
+          "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+          "pc": [
+            438
+          ]
+        },
+        {
+          "teal": 446,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            439,
+            440,
+            441,
+            442,
+            443,
+            444
+          ]
+        },
+        {
+          "teal": 447,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            445,
+            446,
+            447,
+            448,
+            449,
+            450
+          ]
+        },
+        {
+          "teal": 448,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            451,
+            452,
+            453,
+            454,
+            455,
+            456
+          ]
+        },
+        {
+          "teal": 449,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            457,
+            458,
+            459,
+            460,
+            461,
+            462
+          ]
+        },
+        {
+          "teal": 450,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            463,
+            464,
+            465,
+            466,
+            467,
+            468
+          ]
+        },
+        {
+          "teal": 451,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            469,
+            470,
+            471,
+            472,
+            473,
+            474
+          ]
+        },
+        {
+          "teal": 452,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            475,
+            476,
+            477,
+            478,
+            479,
+            480
+          ]
+        },
+        {
+          "teal": 453,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            481,
+            482,
+            483
+          ]
+        },
+        {
+          "teal": 454,
+          "source": "contracts/Factory.algo.ts:4",
+          "pc": [
+            484,
+            485,
+            486,
+            487,
+            488,
+            489,
+            490,
+            491,
+            492,
+            493,
+            494,
+            495,
+            496,
+            497,
+            498,
+            499
+          ]
+        },
+        {
+          "teal": 457,
           "source": "contracts/Factory.algo.ts:4",
           "errorMessage": "this contract does not implement the given ABI method for call NoOp",
           "pc": [
-            321
+            500
           ]
         }
       ],
@@ -1307,11 +2110,11 @@
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxIDAgNgpieXRlY2Jsb2NrIDB4NzA2ZjZmNmM1ZjYxNzA3MDcyNmY3NjYxNmM1ZjcwNzI2ZjY3NzI2MTZkIDB4NmQ2MTZlNjE2NzY1NzIgMHhiODQ0N2IzNiAweDE1MWY3Yzc1CgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjEwNi4yCi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9hbGdvcmFuZGZvdW5kYXRpb24vVEVBTFNjcmlwdAoKLy8gVGhpcyBjb250cmFjdCBpcyBjb21wbGlhbnQgd2l0aCBhbmQvb3IgaW1wbGVtZW50cyB0aGUgZm9sbG93aW5nIEFSQ3M6IFsgQVJDNCBdCgovLyBUaGUgZm9sbG93aW5nIHRlbiBsaW5lcyBvZiBURUFMIGhhbmRsZSBpbml0aWFsIHByb2dyYW0gZmxvdwovLyBUaGlzIHBhdHRlcm4gaXMgdXNlZCB0byBtYWtlIGl0IGVhc3kgZm9yIGFueW9uZSB0byBwYXJzZSB0aGUgc3RhcnQgb2YgdGhlIHByb2dyYW0gYW5kIGRldGVybWluZSBpZiBhIHNwZWNpZmljIGFjdGlvbiBpcyBhbGxvd2VkCi8vIEhlcmUsIGFjdGlvbiByZWZlcnMgdG8gdGhlIE9uQ29tcGxldGUgaW4gY29tYmluYXRpb24gd2l0aCB3aGV0aGVyIHRoZSBhcHAgaXMgYmVpbmcgY3JlYXRlZCBvciBjYWxsZWQKLy8gRXZlcnkgcG9zc2libGUgYWN0aW9uIGZvciB0aGlzIGNvbnRyYWN0IGlzIHJlcHJlc2VudGVkIGluIHRoZSBzd2l0Y2ggc3RhdGVtZW50Ci8vIElmIHRoZSBhY3Rpb24gaXMgbm90IGltcGxlbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIipOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnRjIDIgLy8gNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKmNyZWF0ZV9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRAoKKk5PVF9JTVBMRU1FTlRFRDoKCS8vIFRoZSByZXF1ZXN0ZWQgYWN0aW9uIGlzIG5vdCBpbXBsZW1lbnRlZCBpbiB0aGlzIGNvbnRyYWN0LiBBcmUgeW91IHVzaW5nIHRoZSBjb3JyZWN0IE9uQ29tcGxldGU/IERpZCB5b3Ugc2V0IHlvdXIgYXBwIElEPwoJZXJyCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJLy8gZXhlY3V0ZSBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oKTogdm9pZApjcmVhdGVBcHBsaWNhdGlvbjoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTEKCS8vIHRoaXMubWFuYWdlci52YWx1ZSA9IHRoaXMuYXBwLmNyZWF0b3IKCWJ5dGVjIDEgLy8gICJtYW5hZ2VyIgoJdHhuYSBBcHBsaWNhdGlvbnMgMAoJYXBwX3BhcmFtc19nZXQgQXBwQ3JlYXRvcgoJcG9wCglhcHBfZ2xvYmFsX3B1dAoJcmV0c3ViCgovLyBjcmVhdGVQb29sKCl2b2lkCiphYmlfcm91dGVfY3JlYXRlUG9vbDoKCS8vIGV4ZWN1dGUgY3JlYXRlUG9vbCgpdm9pZAoJY2FsbHN1YiBjcmVhdGVQb29sCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBjcmVhdGVQb29sKCk6IHZvaWQKY3JlYXRlUG9vbDoKCXByb3RvIDAgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTUKCS8vIHNlbmRBcHBDYWxsKHsKCS8vICAgICAgIG9uQ29tcGxldGlvbjogT25Db21wbGV0aW9uLk5vT3AsCgkvLyAgICAgICBhcHByb3ZhbFByb2dyYW06IHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLnZhbHVlLAoJLy8gICAgICAgY2xlYXJTdGF0ZVByb2dyYW06IEJhbGFuY2VkUG9vbFYyLmNsZWFyUHJvZ3JhbSgpLAoJLy8gICAgICAgZ2xvYmFsTnVtVWludDogQmFsYW5jZWRQb29sVjIuc2NoZW1hLmdsb2JhbC5udW1VaW50LAoJLy8gICAgICAgZ2xvYmFsTnVtQnl0ZVNsaWNlOiBCYWxhbmNlZFBvb2xWMi5zY2hlbWEuZ2xvYmFsLm51bUJ5dGVTbGljZSwKCS8vICAgICAgIGV4dHJhUHJvZ3JhbVBhZ2VzOiAzLAoJLy8gICAgICAgYXBwbGljYXRpb25BcmdzOiBbbWV0aG9kKCdjcmVhdGVBcHBsaWNhdGlvbigpdm9pZCcpXSwKCS8vICAgICAgIGZlZTogMTAwXzAwMCwKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50YyAyIC8vICBhcHBsCglpdHhuX2ZpZWxkIFR5cGVFbnVtCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxNgoJLy8gb25Db21wbGV0aW9uOiBPbkNvbXBsZXRpb24uTm9PcAoJaW50YyAxIC8vICBOb09wCglpdHhuX2ZpZWxkIE9uQ29tcGxldGlvbgoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTcKCS8vIGFwcHJvdmFsUHJvZ3JhbTogdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0udmFsdWUKCWJ5dGVjIDAgLy8gICJwb29sX2FwcHJvdmFsX3Byb2dyYW0iCglib3hfZ2V0CgoJLy8gYm94IHZhbHVlIGRvZXMgbm90IGV4aXN0OiB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS52YWx1ZQoJYXNzZXJ0CglpdHhuX2ZpZWxkIEFwcHJvdmFsUHJvZ3JhbQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTgKCS8vIGNsZWFyU3RhdGVQcm9ncmFtOiBCYWxhbmNlZFBvb2xWMi5jbGVhclByb2dyYW0oKQoJcHVzaGJ5dGVzIDB4MGEKCWl0eG5fZmllbGQgQ2xlYXJTdGF0ZVByb2dyYW0KCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjE5CgkvLyBnbG9iYWxOdW1VaW50OiBCYWxhbmNlZFBvb2xWMi5zY2hlbWEuZ2xvYmFsLm51bVVpbnQKCXB1c2hpbnQgMgoJaXR4bl9maWVsZCBHbG9iYWxOdW1VaW50CgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoyMAoJLy8gZ2xvYmFsTnVtQnl0ZVNsaWNlOiBCYWxhbmNlZFBvb2xWMi5zY2hlbWEuZ2xvYmFsLm51bUJ5dGVTbGljZQoJaW50YyAwIC8vIDEKCWl0eG5fZmllbGQgR2xvYmFsTnVtQnl0ZVNsaWNlCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoyMQoJLy8gZXh0cmFQcm9ncmFtUGFnZXM6IDMKCXB1c2hpbnQgMwoJaXR4bl9maWVsZCBFeHRyYVByb2dyYW1QYWdlcwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MjIKCS8vIGFwcGxpY2F0aW9uQXJnczogW21ldGhvZCgnY3JlYXRlQXBwbGljYXRpb24oKXZvaWQnKV0KCWJ5dGVjIDIgLy8gIG1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MjMKCS8vIGZlZTogMTAwXzAwMAoJcHVzaGludCAxMDBfMDAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKLy8gZ2V0UHJvZ3JhbSgpYnl0ZVtdCiphYmlfcm91dGVfZ2V0UHJvZ3JhbToKCS8vIFRoZSBBQkkgcmV0dXJuIHByZWZpeAoJYnl0ZWMgMyAvLyAweDE1MWY3Yzc1CgoJLy8gZXhlY3V0ZSBnZXRQcm9ncmFtKClieXRlW10KCWNhbGxzdWIgZ2V0UHJvZ3JhbQoJZHVwCglsZW4KCWl0b2IKCWV4dHJhY3QgNiAyCglzd2FwCgljb25jYXQKCWNvbmNhdAoJbG9nCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBnZXRQcm9ncmFtKCk6IGJ5dGVzCmdldFByb2dyYW06Cglwcm90byAwIDEKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjI4CgkvLyByZXR1cm4gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0udmFsdWU7CglieXRlYyAwIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJYm94X2dldAoKCS8vIGJveCB2YWx1ZSBkb2VzIG5vdCBleGlzdDogdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0udmFsdWUKCWFzc2VydAoJcmV0c3ViCgovLyBNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0odWludDY0KXZvaWQKKmFiaV9yb3V0ZV9NQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW06CgkvLyBwcm9ncmFtU2l6ZTogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0odWludDY0KXZvaWQKCWNhbGxzdWIgTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0ocHJvZ3JhbVNpemU6IHVpbnQ2NCk6IHZvaWQKTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtOgoJcHJvdG8gMSAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMgoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5tYW5hZ2VyLnZhbHVlLCAnb25seSB0aGUgbWFuYWdlciBjYW4gY2FsbCB0aGlzIG1ldGhvZCcpCgl0eG4gU2VuZGVyCglieXRlYyAxIC8vICAibWFuYWdlciIKCWFwcF9nbG9iYWxfZ2V0Cgk9PQoKCS8vIG9ubHkgdGhlIG1hbmFnZXIgY2FuIGNhbGwgdGhpcyBtZXRob2QKCWFzc2VydAoKCS8vICppZjBfY29uZGl0aW9uCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjM0CgkvLyB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS5leGlzdHMKCWJ5dGVjIDAgLy8gICJwb29sX2FwcHJvdmFsX3Byb2dyYW0iCglib3hfbGVuCglzd2FwCglwb3AKCWJ6ICppZjBfZWxzZQoKCS8vICppZjBfY29uc2VxdWVudAoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozNQoJLy8gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0ucmVzaXplKHByb2dyYW1TaXplKQoJYnl0ZWMgMCAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWZyYW1lX2RpZyAtMSAvLyBwcm9ncmFtU2l6ZTogdWludDY0Cglib3hfcmVzaXplCgliICppZjBfZW5kCgoqaWYwX2Vsc2U6CgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjM3CgkvLyB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS5jcmVhdGUocHJvZ3JhbVNpemUpCglieXRlYyAwIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJZnJhbWVfZGlnIC0xIC8vIHByb2dyYW1TaXplOiB1aW50NjQKCWJveF9jcmVhdGUKCXBvcAoKKmlmMF9lbmQ6CglyZXRzdWIKCi8vIE1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCxieXRlW10pdm9pZAoqYWJpX3JvdXRlX01BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtOgoJLy8gZGF0YTogYnl0ZVtdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglleHRyYWN0IDIgMAoKCS8vIG9mZnNldDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQsYnl0ZVtdKXZvaWQKCWNhbGxzdWIgTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0KCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIE1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKG9mZnNldDogdWludDY0LCBkYXRhOiBieXRlcyk6IHZvaWQKTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW06Cglwcm90byAyIDAKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjQyCgkvLyBhc3NlcnQodGhpcy50eG4uc2VuZGVyID09PSB0aGlzLm1hbmFnZXIudmFsdWUsICdvbmx5IHRoZSBtYW5hZ2VyIGNhbiBjYWxsIHRoaXMgbWV0aG9kJykKCXR4biBTZW5kZXIKCWJ5dGVjIDEgLy8gICJtYW5hZ2VyIgoJYXBwX2dsb2JhbF9nZXQKCT09CgoJLy8gb25seSB0aGUgbWFuYWdlciBjYW4gY2FsbCB0aGlzIG1ldGhvZAoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo0MwoJLy8gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0ucmVwbGFjZShvZmZzZXQsIGRhdGEpCglieXRlYyAwIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJZnJhbWVfZGlnIC0xIC8vIG9mZnNldDogdWludDY0CglmcmFtZV9kaWcgLTIgLy8gZGF0YTogYnl0ZXMKCWJveF9yZXBsYWNlCglyZXRzdWIKCi8vIGhhc1Bvb2xBcHByb3ZhbFByb2dyYW0oKWJvb2wKKmFiaV9yb3V0ZV9oYXNQb29sQXBwcm92YWxQcm9ncmFtOgoJLy8gVGhlIEFCSSByZXR1cm4gcHJlZml4CglieXRlYyAzIC8vIDB4MTUxZjdjNzUKCgkvLyBleGVjdXRlIGhhc1Bvb2xBcHByb3ZhbFByb2dyYW0oKWJvb2wKCWNhbGxzdWIgaGFzUG9vbEFwcHJvdmFsUHJvZ3JhbQoJcHVzaGJ5dGVzIDB4MDAKCWludGMgMSAvLyAwCgl1bmNvdmVyIDIKCXNldGJpdAoJY29uY2F0Cglsb2cKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGhhc1Bvb2xBcHByb3ZhbFByb2dyYW0oKTogYm9vbGVhbgpoYXNQb29sQXBwcm92YWxQcm9ncmFtOgoJcHJvdG8gMCAxCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo0NwoJLy8gcmV0dXJuIHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLmV4aXN0czsKCWJ5dGVjIDAgLy8gICJwb29sX2FwcHJvdmFsX3Byb2dyYW0iCglib3hfbGVuCglzd2FwCglwb3AKCXJldHN1YgoKKmNyZWF0ZV9Ob09wOgoJdHhuIE51bUFwcEFyZ3MKCWJ6ICphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWJ5dGVjIDIgLy8gIG1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNyZWF0ZSBOb09wCgllcnIKCipjYWxsX05vT3A6CglwdXNoYnl0ZXMgMHg0MjU4OGUwOSAvLyBtZXRob2QgImNyZWF0ZVBvb2woKXZvaWQiCglwdXNoYnl0ZXMgMHgxNDVhNDAwNCAvLyBtZXRob2QgImdldFByb2dyYW0oKWJ5dGVbXSIKCXB1c2hieXRlcyAweDA5OWU1Y2ZkIC8vIG1ldGhvZCAiTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCl2b2lkIgoJcHVzaGJ5dGVzIDB4YTRiNTAzYzEgLy8gbWV0aG9kICJNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQsYnl0ZVtdKXZvaWQiCglwdXNoYnl0ZXMgMHg3MzMzOGVmYSAvLyBtZXRob2QgImhhc1Bvb2xBcHByb3ZhbFByb2dyYW0oKWJvb2wiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2NyZWF0ZVBvb2wgKmFiaV9yb3V0ZV9nZXRQcm9ncmFtICphYmlfcm91dGVfTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtICphYmlfcm91dGVfTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0gKmFiaV9yb3V0ZV9oYXNQb29sQXBwcm92YWxQcm9ncmFtCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgTm9PcAoJZXJy",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxIDAgNiA4CmJ5dGVjYmxvY2sgMHg3MDZmNmY2YzVmNjE3MDcwNzI2Zjc2NjE2YzVmNzA3MjZmNjc3MjYxNmQgMHg2ZDYxNmU2MTY3NjU3MiAweDE1MWY3Yzc1IDB4Yjg0NDdiMzYKCi8vIFRoaXMgVEVBTCB3YXMgZ2VuZXJhdGVkIGJ5IFRFQUxTY3JpcHQgdjAuMTA2LjIKLy8gaHR0cHM6Ly9naXRodWIuY29tL2FsZ29yYW5kZm91bmRhdGlvbi9URUFMU2NyaXB0CgovLyBUaGlzIGNvbnRyYWN0IGlzIGNvbXBsaWFudCB3aXRoIGFuZC9vciBpbXBsZW1lbnRzIHRoZSBmb2xsb3dpbmcgQVJDczogWyBBUkM0IF0KCi8vIFRoZSBmb2xsb3dpbmcgdGVuIGxpbmVzIG9mIFRFQUwgaGFuZGxlIGluaXRpYWwgcHJvZ3JhbSBmbG93Ci8vIFRoaXMgcGF0dGVybiBpcyB1c2VkIHRvIG1ha2UgaXQgZWFzeSBmb3IgYW55b25lIHRvIHBhcnNlIHRoZSBzdGFydCBvZiB0aGUgcHJvZ3JhbSBhbmQgZGV0ZXJtaW5lIGlmIGEgc3BlY2lmaWMgYWN0aW9uIGlzIGFsbG93ZWQKLy8gSGVyZSwgYWN0aW9uIHJlZmVycyB0byB0aGUgT25Db21wbGV0ZSBpbiBjb21iaW5hdGlvbiB3aXRoIHdoZXRoZXIgdGhlIGFwcCBpcyBiZWluZyBjcmVhdGVkIG9yIGNhbGxlZAovLyBFdmVyeSBwb3NzaWJsZSBhY3Rpb24gZm9yIHRoaXMgY29udHJhY3QgaXMgcmVwcmVzZW50ZWQgaW4gdGhlIHN3aXRjaCBzdGF0ZW1lbnQKLy8gSWYgdGhlIGFjdGlvbiBpcyBub3QgaW1wbGVtZW50ZWQgaW4gdGhlIGNvbnRyYWN0LCBpdHMgcmVzcGVjdGl2ZSBicmFuY2ggd2lsbCBiZSAiKk5PVF9JTVBMRU1FTlRFRCIgd2hpY2gganVzdCBjb250YWlucyAiZXJyIgp0eG4gQXBwbGljYXRpb25JRAohCmludGMgMiAvLyA2CioKdHhuIE9uQ29tcGxldGlvbgorCnN3aXRjaCAqY2FsbF9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqY3JlYXRlX05vT3AgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVECgoqTk9UX0lNUExFTUVOVEVEOgoJLy8gVGhlIHJlcXVlc3RlZCBhY3Rpb24gaXMgbm90IGltcGxlbWVudGVkIGluIHRoaXMgY29udHJhY3QuIEFyZSB5b3UgdXNpbmcgdGhlIGNvcnJlY3QgT25Db21wbGV0ZT8gRGlkIHlvdSBzZXQgeW91ciBhcHAgSUQ/CgllcnIKCi8vIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCiphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb246CgkvLyBleGVjdXRlIGNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkCgljYWxsc3ViIGNyZWF0ZUFwcGxpY2F0aW9uCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpOiB2b2lkCmNyZWF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMQoJLy8gdGhpcy5tYW5hZ2VyLnZhbHVlID0gdGhpcy5hcHAuY3JlYXRvcgoJYnl0ZWMgMSAvLyAgIm1hbmFnZXIiCgl0eG5hIEFwcGxpY2F0aW9ucyAwCglhcHBfcGFyYW1zX2dldCBBcHBDcmVhdG9yCglwb3AKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCi8vIGNyZWF0ZVBvb2woKXZvaWQKKmFiaV9yb3V0ZV9jcmVhdGVQb29sOgoJLy8gZXhlY3V0ZSBjcmVhdGVQb29sKCl2b2lkCgljYWxsc3ViIGNyZWF0ZVBvb2wKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGNyZWF0ZVBvb2woKTogdm9pZApjcmVhdGVQb29sOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxNQoJLy8gc2VuZEFwcENhbGwoewoJLy8gICAgICAgb25Db21wbGV0aW9uOiBPbkNvbXBsZXRpb24uTm9PcCwKCS8vICAgICAgIGFwcHJvdmFsUHJvZ3JhbTogdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0udmFsdWUsCgkvLyAgICAgICBjbGVhclN0YXRlUHJvZ3JhbTogQmFsYW5jZWRQb29sVjIuY2xlYXJQcm9ncmFtKCksCgkvLyAgICAgICBnbG9iYWxOdW1VaW50OiBCYWxhbmNlZFBvb2xWMi5zY2hlbWEuZ2xvYmFsLm51bVVpbnQsCgkvLyAgICAgICBnbG9iYWxOdW1CeXRlU2xpY2U6IEJhbGFuY2VkUG9vbFYyLnNjaGVtYS5nbG9iYWwubnVtQnl0ZVNsaWNlLAoJLy8gICAgICAgZXh0cmFQcm9ncmFtUGFnZXM6IDMsCgkvLyAgICAgICBhcHBsaWNhdGlvbkFyZ3M6IFttZXRob2QoJ2NyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkJyldLAoJLy8gICAgICAgZmVlOiAxMDBfMDAwLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnRjIDIgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjE2CgkvLyBvbkNvbXBsZXRpb246IE9uQ29tcGxldGlvbi5Ob09wCglpbnRjIDEgLy8gIE5vT3AKCWl0eG5fZmllbGQgT25Db21wbGV0aW9uCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxNwoJLy8gYXBwcm92YWxQcm9ncmFtOiB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS52YWx1ZQoJYnl0ZWMgMCAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWJveF9nZXQKCgkvLyBib3ggdmFsdWUgZG9lcyBub3QgZXhpc3Q6IHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLnZhbHVlCglhc3NlcnQKCWl0eG5fZmllbGQgQXBwcm92YWxQcm9ncmFtCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxOAoJLy8gY2xlYXJTdGF0ZVByb2dyYW06IEJhbGFuY2VkUG9vbFYyLmNsZWFyUHJvZ3JhbSgpCglwdXNoYnl0ZXMgMHgwYQoJaXR4bl9maWVsZCBDbGVhclN0YXRlUHJvZ3JhbQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTkKCS8vIGdsb2JhbE51bVVpbnQ6IEJhbGFuY2VkUG9vbFYyLnNjaGVtYS5nbG9iYWwubnVtVWludAoJaW50YyAwIC8vIDEKCWl0eG5fZmllbGQgR2xvYmFsTnVtVWludAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MjAKCS8vIGdsb2JhbE51bUJ5dGVTbGljZTogQmFsYW5jZWRQb29sVjIuc2NoZW1hLmdsb2JhbC5udW1CeXRlU2xpY2UKCWludGMgMCAvLyAxCglpdHhuX2ZpZWxkIEdsb2JhbE51bUJ5dGVTbGljZQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MjEKCS8vIGV4dHJhUHJvZ3JhbVBhZ2VzOiAzCglwdXNoaW50IDMKCWl0eG5fZmllbGQgRXh0cmFQcm9ncmFtUGFnZXMKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjIyCgkvLyBhcHBsaWNhdGlvbkFyZ3M6IFttZXRob2QoJ2NyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkJyldCglieXRlYyAzIC8vICBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjIzCgkvLyBmZWU6IDEwMF8wMDAKCXB1c2hpbnQgMTAwXzAwMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglyZXRzdWIKCi8vIGluaXRQb29sKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSl1aW50NjQKKmFiaV9yb3V0ZV9pbml0UG9vbDoKCS8vIFRoZSBBQkkgcmV0dXJuIHByZWZpeAoJYnl0ZWMgMiAvLyAweDE1MWY3Yzc1CgoJLy8gd2VpZ2h0czogdWludDY0W10KCXR4bmEgQXBwbGljYXRpb25BcmdzIDMKCWV4dHJhY3QgMiAwCgoJLy8gYXNzZXRJZHM6IHVpbnQ2NFtdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglleHRyYWN0IDIgMAoKCS8vIHBvb2xJRDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBpbml0UG9vbCh1aW50NjQsdWludDY0W10sdWludDY0W10pdWludDY0CgljYWxsc3ViIGluaXRQb29sCglpdG9iCgljb25jYXQKCWxvZwoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gaW5pdFBvb2wocG9vbElEOiBBcHBJRCwgYXNzZXRJZHM6IEFzc2V0SURbXSwgd2VpZ2h0czogdWludDY0W10pOiBBc3NldElECmluaXRQb29sOgoJcHJvdG8gMyAxCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoyOAoJLy8gcmV0dXJuIHNlbmRNZXRob2RDYWxsPHR5cGVvZiBCYWxhbmNlZFBvb2xWMi5wcm90b3R5cGUuYm9vdHN0cmFwLCBBc3NldElEPih7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiBwb29sSUQsCgkvLyAgICAgICBtZXRob2RBcmdzOiBbYXNzZXRJZHMsIHdlaWdodHNdLAoJLy8gICAgIH0pOwoJaXR4bl9iZWdpbgoJaW50YyAyIC8vICBhcHBsCglpdHhuX2ZpZWxkIFR5cGVFbnVtCglwdXNoYnl0ZXMgMHhlNjM1ZmRiNSAvLyBtZXRob2QgImJvb3RzdHJhcCh1aW50NjRbXSx1aW50NjRbXSl1aW50NjQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MjkKCS8vIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRAoJZnJhbWVfZGlnIC0xIC8vIHBvb2xJRDogQXBwSUQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25JRAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzAKCS8vIG1ldGhvZEFyZ3M6IFthc3NldElkcywgd2VpZ2h0c10KCWZyYW1lX2RpZyAtMiAvLyBhc3NldElkczogQXNzZXRJRFtdCglkdXAKCWxlbgoJaW50YyAzIC8vIDgKCS8KCWl0b2IKCWV4dHJhY3QgNiAyCglzd2FwCgljb25jYXQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCglmcmFtZV9kaWcgLTMgLy8gd2VpZ2h0czogdWludDY0W10KCWR1cAoJbGVuCglpbnRjIDMgLy8gOAoJLwoJaXRvYgoJZXh0cmFjdCA2IDIKCXN3YXAKCWNvbmNhdAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnRjIDEgLy8gMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglpdHhuIE51bUxvZ3MKCWludGMgMCAvLyAxCgktCglpdHhuYXMgTG9ncwoJZXh0cmFjdCA0IDAKCWJ0b2kKCXJldHN1YgoKLy8gYWRkTGlxdWlkaXR5KHVpbnQ2NCx1aW50NjQsYXhmZXIpdm9pZAoqYWJpX3JvdXRlX2FkZExpcXVpZGl0eToKCS8vIHRyYW5zZmVyVHhuOiBheGZlcgoJdHhuIEdyb3VwSW5kZXgKCWludGMgMCAvLyAxCgktCglkdXAKCWd0eG5zIFR5cGVFbnVtCglwdXNoaW50IDQgLy8gYXhmZXIKCT09CgoJLy8gYXJndW1lbnQgMCAodHJhbnNmZXJUeG4pIGZvciBhZGRMaXF1aWRpdHkgbXVzdCBiZSBhIGF4ZmVyIHRyYW5zYWN0aW9uCglhc3NlcnQKCgkvLyBpbmRleDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgoJLy8gcG9vbElEOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIGFkZExpcXVpZGl0eSh1aW50NjQsdWludDY0LGF4ZmVyKXZvaWQKCWNhbGxzdWIgYWRkTGlxdWlkaXR5CglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBhZGRMaXF1aWRpdHkocG9vbElEOiBBcHBJRCwgaW5kZXg6IHVpbnQ2NCwgdHJhbnNmZXJUeG46IEFzc2V0VHJhbnNmZXJUeG4pOiB2b2lkCmFkZExpcXVpZGl0eToKCXByb3RvIDMgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzUKCS8vIHNlbmRNZXRob2RDYWxsPHR5cGVvZiBCYWxhbmNlZFBvb2xWMi5wcm90b3R5cGUuYWRkTGlxdWlkaXR5Pih7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiBwb29sSUQsCgkvLyAgICAgICBtZXRob2RBcmdzOiBbaW5kZXgsIHRyYW5zZmVyVHhuLmFzc2V0QW1vdW50LCB0cmFuc2ZlclR4bi5zZW5kZXJdLAoJLy8gICAgICAgYXNzZXRzOiBbdHJhbnNmZXJUeG4ueGZlckFzc2V0XSwKCS8vICAgICAgIGFwcGxpY2F0aW9uczogW3Bvb2xJRF0sCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludGMgMiAvLyAgYXBwbAoJaXR4bl9maWVsZCBUeXBlRW51bQoJcHVzaGJ5dGVzIDB4YWJkZjdlMTUgLy8gbWV0aG9kICJhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxhZGRyZXNzKXZvaWQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzYKCS8vIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRAoJZnJhbWVfZGlnIC0xIC8vIHBvb2xJRDogQXBwSUQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25JRAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzcKCS8vIG1ldGhvZEFyZ3M6IFtpbmRleCwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnQsIHRyYW5zZmVyVHhuLnNlbmRlcl0KCWZyYW1lX2RpZyAtMiAvLyBpbmRleDogdWludDY0CglpdG9iCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoJZnJhbWVfZGlnIC0zIC8vIHRyYW5zZmVyVHhuOiBBc3NldFRyYW5zZmVyVHhuCglndHhucyBBc3NldEFtb3VudAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMyAvLyB0cmFuc2ZlclR4bjogQXNzZXRUcmFuc2ZlclR4bgoJZ3R4bnMgU2VuZGVyCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzgKCS8vIGFzc2V0czogW3RyYW5zZmVyVHhuLnhmZXJBc3NldF0KCWZyYW1lX2RpZyAtMyAvLyB0cmFuc2ZlclR4bjogQXNzZXRUcmFuc2ZlclR4bgoJZ3R4bnMgWGZlckFzc2V0CglpdHhuX2ZpZWxkIEFzc2V0cwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzkKCS8vIGFwcGxpY2F0aW9uczogW3Bvb2xJRF0KCWZyYW1lX2RpZyAtMSAvLyBwb29sSUQ6IEFwcElECglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9ucwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMSAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKLy8gTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCl2b2lkCiphYmlfcm91dGVfTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtOgoJLy8gcHJvZ3JhbVNpemU6IHVpbnQ2NAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoKCS8vIGV4ZWN1dGUgTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCl2b2lkCgljYWxsc3ViIE1BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbQoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHByb2dyYW1TaXplOiB1aW50NjQpOiB2b2lkCi8vCi8vIE1BTkFHRVIgTWV0aG9kcwpNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW06Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjQ4CgkvLyBhc3NlcnQodGhpcy50eG4uc2VuZGVyID09PSB0aGlzLm1hbmFnZXIudmFsdWUsICdvbmx5IHRoZSBtYW5hZ2VyIGNhbiBjYWxsIHRoaXMgbWV0aG9kJykKCXR4biBTZW5kZXIKCWJ5dGVjIDEgLy8gICJtYW5hZ2VyIgoJYXBwX2dsb2JhbF9nZXQKCT09CgoJLy8gb25seSB0aGUgbWFuYWdlciBjYW4gY2FsbCB0aGlzIG1ldGhvZAoJYXNzZXJ0CgoJLy8gKmlmMF9jb25kaXRpb24KCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTAKCS8vIHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLmV4aXN0cwoJYnl0ZWMgMCAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWJveF9sZW4KCXN3YXAKCXBvcAoJYnogKmlmMF9lbHNlCgoJLy8gKmlmMF9jb25zZXF1ZW50CgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjUxCgkvLyB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS5yZXNpemUocHJvZ3JhbVNpemUpCglieXRlYyAwIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJZnJhbWVfZGlnIC0xIC8vIHByb2dyYW1TaXplOiB1aW50NjQKCWJveF9yZXNpemUKCWIgKmlmMF9lbmQKCippZjBfZWxzZToKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTMKCS8vIHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLmNyZWF0ZShwcm9ncmFtU2l6ZSkKCWJ5dGVjIDAgLy8gICJwb29sX2FwcHJvdmFsX3Byb2dyYW0iCglmcmFtZV9kaWcgLTEgLy8gcHJvZ3JhbVNpemU6IHVpbnQ2NAoJYm94X2NyZWF0ZQoJcG9wCgoqaWYwX2VuZDoKCXJldHN1YgoKLy8gTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0odWludDY0LGJ5dGVbXSl2b2lkCiphYmlfcm91dGVfTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW06CgkvLyBkYXRhOiBieXRlW10KCXR4bmEgQXBwbGljYXRpb25BcmdzIDIKCWV4dHJhY3QgMiAwCgoJLy8gb2Zmc2V0OiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIE1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCxieXRlW10pdm9pZAoJY2FsbHN1YiBNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbQoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0ob2Zmc2V0OiB1aW50NjQsIGRhdGE6IGJ5dGVzKTogdm9pZApNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbToKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTgKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMubWFuYWdlci52YWx1ZSwgJ29ubHkgdGhlIG1hbmFnZXIgY2FuIGNhbGwgdGhpcyBtZXRob2QnKQoJdHhuIFNlbmRlcgoJYnl0ZWMgMSAvLyAgIm1hbmFnZXIiCglhcHBfZ2xvYmFsX2dldAoJPT0KCgkvLyBvbmx5IHRoZSBtYW5hZ2VyIGNhbiBjYWxsIHRoaXMgbWV0aG9kCglhc3NlcnQKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjU5CgkvLyB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS5yZXBsYWNlKG9mZnNldCwgZGF0YSkKCWJ5dGVjIDAgLy8gICJwb29sX2FwcHJvdmFsX3Byb2dyYW0iCglmcmFtZV9kaWcgLTEgLy8gb2Zmc2V0OiB1aW50NjQKCWZyYW1lX2RpZyAtMiAvLyBkYXRhOiBieXRlcwoJYm94X3JlcGxhY2UKCXJldHN1YgoKLy8gaGFzUG9vbEFwcHJvdmFsUHJvZ3JhbSgpYm9vbAoqYWJpX3JvdXRlX2hhc1Bvb2xBcHByb3ZhbFByb2dyYW06CgkvLyBUaGUgQUJJIHJldHVybiBwcmVmaXgKCWJ5dGVjIDIgLy8gMHgxNTFmN2M3NQoKCS8vIGV4ZWN1dGUgaGFzUG9vbEFwcHJvdmFsUHJvZ3JhbSgpYm9vbAoJY2FsbHN1YiBoYXNQb29sQXBwcm92YWxQcm9ncmFtCglwdXNoYnl0ZXMgMHgwMAoJaW50YyAxIC8vIDAKCXVuY292ZXIgMgoJc2V0Yml0Cgljb25jYXQKCWxvZwoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gaGFzUG9vbEFwcHJvdmFsUHJvZ3JhbSgpOiBib29sZWFuCmhhc1Bvb2xBcHByb3ZhbFByb2dyYW06Cglwcm90byAwIDEKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjYzCgkvLyByZXR1cm4gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0uZXhpc3RzOwoJYnl0ZWMgMCAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWJveF9sZW4KCXN3YXAKCXBvcAoJcmV0c3ViCgovLyBnZXRQcm9ncmFtKClieXRlW10KKmFiaV9yb3V0ZV9nZXRQcm9ncmFtOgoJLy8gVGhlIEFCSSByZXR1cm4gcHJlZml4CglieXRlYyAyIC8vIDB4MTUxZjdjNzUKCgkvLyBleGVjdXRlIGdldFByb2dyYW0oKWJ5dGVbXQoJY2FsbHN1YiBnZXRQcm9ncmFtCglkdXAKCWxlbgoJaXRvYgoJZXh0cmFjdCA2IDIKCXN3YXAKCWNvbmNhdAoJY29uY2F0Cglsb2cKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGdldFByb2dyYW0oKTogYnl0ZXMKZ2V0UHJvZ3JhbToKCXByb3RvIDAgMQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NjcKCS8vIHJldHVybiB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS52YWx1ZTsKCWJ5dGVjIDAgLy8gICJwb29sX2FwcHJvdmFsX3Byb2dyYW0iCglib3hfZ2V0CgoJLy8gYm94IHZhbHVlIGRvZXMgbm90IGV4aXN0OiB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS52YWx1ZQoJYXNzZXJ0CglyZXRzdWIKCipjcmVhdGVfTm9PcDoKCXR4biBOdW1BcHBBcmdzCglieiAqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCglieXRlYyAzIC8vICBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9jcmVhdGVBcHBsaWNhdGlvbgoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjcmVhdGUgTm9PcAoJZXJyCgoqY2FsbF9Ob09wOgoJcHVzaGJ5dGVzIDB4NDI1ODhlMDkgLy8gbWV0aG9kICJjcmVhdGVQb29sKCl2b2lkIgoJcHVzaGJ5dGVzIDB4YTFlYjMwMjAgLy8gbWV0aG9kICJpbml0UG9vbCh1aW50NjQsdWludDY0W10sdWludDY0W10pdWludDY0IgoJcHVzaGJ5dGVzIDB4NzlhZDI5ODggLy8gbWV0aG9kICJhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxheGZlcil2b2lkIgoJcHVzaGJ5dGVzIDB4MDk5ZTVjZmQgLy8gbWV0aG9kICJNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0odWludDY0KXZvaWQiCglwdXNoYnl0ZXMgMHhhNGI1MDNjMSAvLyBtZXRob2QgIk1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCxieXRlW10pdm9pZCIKCXB1c2hieXRlcyAweDczMzM4ZWZhIC8vIG1ldGhvZCAiaGFzUG9vbEFwcHJvdmFsUHJvZ3JhbSgpYm9vbCIKCXB1c2hieXRlcyAweDE0NWE0MDA0IC8vIG1ldGhvZCAiZ2V0UHJvZ3JhbSgpYnl0ZVtdIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9jcmVhdGVQb29sICphYmlfcm91dGVfaW5pdFBvb2wgKmFiaV9yb3V0ZV9hZGRMaXF1aWRpdHkgKmFiaV9yb3V0ZV9NQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0gKmFiaV9yb3V0ZV9NQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbSAqYWJpX3JvdXRlX2hhc1Bvb2xBcHByb3ZhbFByb2dyYW0gKmFiaV9yb3V0ZV9nZXRQcm9ncmFtCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgTm9PcAoJZXJy",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "byteCode": {
-    "approval": "CiADAQAGJgQVcG9vbF9hcHByb3ZhbF9wcm9ncmFtB21hbmFnZXIEuER7NgQVH3x1MRgUJAsxGQiNDADCAAAAAAAAAAAAAAC0AAAAAAAAAAAAAACIAAIiQ4oAACk2MgByB0hniYgAAiJDigAAsSSyECOyGSi+RLIegAEKsh+BArI0IrI1gQOyOCqyGoGgjQayAbOJK4gADEkVFlcGAkxQULAiQ4oAASi+RIk2GgEXiAACIkOKAQAxAClkEkQovUxIQQAHKIv/00IABSiL/7lIiTYaAlcCADYaAReIAAIiQ4oCADEAKWQSRCiL/4v+u4kriAALgAEAI08CVFCwIkOKAAEovUxIiTEbQf9IKjYaAI4B/0AAgARCWI4JgAQUWkAEgAQJnlz9gASktQPBgARzM476NhoAjgX/I/9S/2n/j/+uAA==",
+    "approval": "CiAEAQAGCCYEFXBvb2xfYXBwcm92YWxfcHJvZ3JhbQdtYW5hZ2VyBBUffHUEuER7NjEYFCQLMRkIjQwBZAAAAAAAAAAAAAABVgAAAAAAAAAAAAAAiAACIkOKAAApNjIAcgdIZ4mIAAIiQ4oAALEkshAjshkovkSyHoABCrIfIrI0IrI1gQOyOCuyGoGgjQayAbOJKjYaA1cCADYaAlcCADYaAReIAAUWULAiQ4oDAbEkshCABOY1/bWyGov/shiL/kkVJQoWVwYCTFCyGov9SRUlChZXBgJMULIaI7IBs7Q7IgnFOlcEABeJMRYiCUk4EIEEEkQ2GgIXNhoBF4gAAiJDigMAsSSyEIAEq99+FbIai/+yGIv+FrIai/04EhayGov9OACyGov9OBGyMIv/sjIjsgGziTYaAReIAAIiQ4oBADEAKWQSRCi9TEhBAAcoi//TQgAFKIv/uUiJNhoCVwIANhoBF4gAAiJDigIAMQApZBJEKIv/i/67iSqIAAuAAQAjTwJUULAiQ4oAASi9TEiJKogADEkVFlcGAkxQULAiQ4oAASi+RIkxG0H+pis2GgCOAf6eAIAEQliOCYAEoeswIIAEea0piIAECZ5c/YAEpLUDwYAEczOO+oAEFFpABDYaAI4H/nH+n/72/0L/aP+H/54A",
     "clear": "Cg=="
   },
   "compilerInfo": {

@@ -11,7 +11,7 @@ export class BalancedPoolV2 extends Contract {
 
   balances = BoxMap<AssetID, uint64>({ prefix: 'balances_' });
 
-  totalAssets = GlobalStateKey<uint64>({ key: 'totalAssets' });
+  provided = BoxMap<Address, uint64[]>({ prefix: 'provided_' });
 
   token = GlobalStateKey<AssetID>({ key: 'token' });
 
@@ -20,9 +20,120 @@ export class BalancedPoolV2 extends Contract {
     this.manager.value = this.app.creator;
   }
 
-  addToken(index: uint64, assetID: AssetID, weight: uint64) {
-    this.assets(index + 1).value = assetID;
-    this.weights(index + 1).value = weight;
+  bootstrap(assetIds: AssetID[], weights: uint64[]): AssetID {
+    this.assertIsManager();
+    let total = 0;
+
+    for (let i = 0; i < assetIds.length; i += 1) {
+      this.addToken(i, assetIds[i], weights[i]);
+      total += weights[i];
+    }
+
+    assert(total === SCALE, 'Weights must sum to 1');
+    this.createToken();
+
+    return this.token.value;
+  }
+
+  /**
+   * Provide Liquidity to the pool proportionally to the weights
+   */
+  addLiquidity(index: uint64, amount: uint64, sender: Address) {
+    assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
+    const assetId = this.assets(index).value;
+    log('Asset ID => ' + itob(assetId));
+
+    this.optIn(assetId);
+
+    this.balances(assetId).value += amount;
+
+    if (!this.provided(sender).exists) {
+      this.provided(sender).create(64);
+    }
+
+    this.provided(this.txn.sender).value[index] = amount;
+
+    /*
+    let totalLiquidity = 0;
+
+    // Tutte le tx prima di questa
+    for (let i = 0; i < this.txnGroup.length - 1; i += 1) {
+      verifyAssetTransferTxn(this.txnGroup[i], {
+        xferAsset: this.assets(i).value,
+        assetReceiver: this.app.address,
+      });
+    }
+
+    for (let i = 1; i < this.txnGroup.length; i += 1) {
+      const assetId = this.txnGroup[i].xferAsset;
+      const amount = this.txnGroup[i].assetAmount;
+
+      const weight = this.weights(i).value;
+      this.balances(assetId).value += amount;
+
+      totalLiquidity += (amount * SCALE) / weight;
+    }
+
+    sendAssetTransfer({
+      xferAsset: this.token.value,
+      assetAmount: totalLiquidity,
+      assetReceiver: this.txn.sender,
+      assetSender: this.app.address,
+    });
+
+    return totalLiquidity; */
+  }
+
+  optIn(assetId: AssetID): void {
+    if (this.app.address.isOptedInToAsset(assetId)) {
+      return;
+    }
+
+    sendAssetTransfer({
+      assetReceiver: this.app.address,
+      xferAsset: assetId,
+      assetAmount: 0,
+    });
+  }
+
+  private addToken(index: uint64, assetID: AssetID, weight: uint64): void {
+    if (!this.assets(index).exists) {
+      this.assets(index).create(8);
+    }
+
+    if (!this.weights(index).exists) {
+      this.weights(index).create(8);
+    }
+
+    if (!this.balances(assetID).exists) {
+      this.balances(assetID).create(8);
+    }
+
+    this.assets(index).value = assetID;
+    this.weights(index).value = weight;
+    this.balances(assetID).value = 0;
+  }
+
+  private createToken() {
+    assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
+
+    if (this.token.value === AssetID.zeroIndex) {
+      this.token.value = sendAssetCreation({
+        configAssetTotal: 10 ** 16,
+        configAssetDecimals: 6,
+        configAssetReserve: this.app.address,
+        configAssetManager: this.app.address,
+        configAssetClawback: globals.zeroAddress,
+        configAssetFreeze: globals.zeroAddress,
+        configAssetDefaultFrozen: 0,
+        configAssetName: 'BalancedPool-' + itob(this.app.id),
+        configAssetUnitName: 'LP',
+      });
+    }
+  }
+
+  private assertIsManager() {
+    assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
   }
 
   /**

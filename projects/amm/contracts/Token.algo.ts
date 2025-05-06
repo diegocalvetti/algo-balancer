@@ -47,7 +47,7 @@ export class Token extends Contract {
       assetReceiver: this.txn.sender,
       assetAmount: amount,
       xferAsset: this.token.value,
-      sender: this.txn.sender,
+      sender: this.app.address,
     });
   }
 

@@ -17,14 +17,48 @@
       }
     },
     {
-      "name": "getProgram",
-      "args": [],
+      "name": "initPool",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        },
+        {
+          "name": "assetIds",
+          "type": "uint64[]"
+        },
+        {
+          "name": "weights",
+          "type": "uint64[]"
+        }
+      ],
       "returns": {
-        "type": "byte[]"
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "addLiquidity",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        },
+        {
+          "name": "index",
+          "type": "uint64"
+        },
+        {
+          "name": "transferTxn",
+          "type": "axfer"
+        }
+      ],
+      "returns": {
+        "type": "void"
       }
     },
     {
       "name": "MANAGER_updatePoolContractProgram",
+      "desc": "MANAGER Methods",
       "args": [
         {
           "name": "programSize",
@@ -56,6 +90,13 @@
       "args": [],
       "returns": {
         "type": "bool"
+      }
+    },
+    {
+      "name": "getProgram",
+      "args": [],
+      "returns": {
+        "type": "byte[]"
       }
     }
   ]

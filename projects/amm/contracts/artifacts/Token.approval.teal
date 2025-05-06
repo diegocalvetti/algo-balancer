@@ -223,7 +223,7 @@ mint:
 	//       assetReceiver: this.txn.sender,
 	//       assetAmount: amount,
 	//       xferAsset: this.token.value,
-	//       sender: this.txn.sender,
+	//       sender: this.app.address,
 	//     })
 	itxn_begin
 	intc 2 //  axfer
@@ -246,8 +246,8 @@ mint:
 	itxn_field XferAsset
 
 	// contracts/Token.algo.ts:50
-	// sender: this.txn.sender
-	txn Sender
+	// sender: this.app.address
+	global CurrentApplicationAddress
 	itxn_field Sender
 
 	// Fee field not set, defaulting to 0

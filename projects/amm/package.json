@@ -7,20 +7,22 @@
     "compile-contract": "tealscript contracts/*.algo.ts contracts/artifacts",
     "generate-components": "algokit-generate-component contracts/artifacts/AmmPool.arc32.json contracts/artifacts/components",
     "build": "npm run compile-contract && npm run generate-client",
-    "deploy": "npx ts-node script/deploy.ts",
+    "execute": "npx ts-node script/execute.ts",
     "test": "npm run build && jest",
     "lint": "eslint . --ext .ts",
     "fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^8.0.0",
-    "algosdk": "^3.0"
+    "algosdk": "^3.0",
+    "inquirer": "^12.6.0"
   },
   "devDependencies": {
     "@algorandfoundation/algokit-client-generator": "^4.0.0",
     "@algorandfoundation/tealscript": "latest",
     "@jest/globals": "^29.5.0",
     "@joe-p/algokit-generate-component": "^0.2.0",
+    "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.32.0 || ^8.2.0",
@@ -32,6 +34,7 @@
     "jest": "^29.5.0",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.0",
-    "typescript": "5.0.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.2"
   }
 }

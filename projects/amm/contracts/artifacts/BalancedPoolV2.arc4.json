@@ -10,18 +10,47 @@
       }
     },
     {
-      "name": "addToken",
+      "name": "bootstrap",
+      "args": [
+        {
+          "name": "assetIds",
+          "type": "uint64[]"
+        },
+        {
+          "name": "weights",
+          "type": "uint64[]"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "addLiquidity",
+      "desc": "Provide Liquidity to the pool proportionally to the weights",
       "args": [
         {
           "name": "index",
           "type": "uint64"
         },
         {
-          "name": "assetID",
+          "name": "amount",
           "type": "uint64"
         },
         {
-          "name": "weight",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "optIn",
+      "args": [
+        {
+          "name": "assetId",
           "type": "uint64"
         }
       ],

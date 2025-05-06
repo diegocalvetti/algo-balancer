@@ -24,9 +24,25 @@ export class Factory extends Contract {
     });
   }
 
-  getProgram(): bytes {
-    return this.poolContractApprovalProgram.value;
+  initPool(poolID: AppID, assetIds: AssetID[], weights: uint64[]): AssetID {
+    return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
+      applicationID: poolID,
+      methodArgs: [assetIds, weights],
+    });
   }
+
+  addLiquidity(poolID: AppID, index: uint64, transferTxn: AssetTransferTxn) {
+    sendMethodCall<typeof BalancedPoolV2.prototype.addLiquidity>({
+      applicationID: poolID,
+      methodArgs: [index, transferTxn.assetAmount, transferTxn.sender],
+      assets: [transferTxn.xferAsset],
+      applications: [poolID],
+    });
+  }
+
+  /**
+   * MANAGER Methods
+   */
 
   MANAGER_updatePoolContractProgram(programSize: uint64): void {
     assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
@@ -45,5 +61,9 @@ export class Factory extends Contract {
 
   hasPoolApprovalProgram(): boolean {
     return this.poolContractApprovalProgram.exists;
+  }
+
+  getProgram(): bytes {
+    return this.poolContractApprovalProgram.value;
   }
 }

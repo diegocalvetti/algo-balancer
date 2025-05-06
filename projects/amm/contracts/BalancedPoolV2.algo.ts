@@ -5,8 +5,6 @@ const SCALE = 1_000_000;
 export class BalancedPoolV2 extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
-  assets = BoxMap<uint64, AssetID>({ prefix: 'assets_' });
-
   weights = BoxMap<uint64, uint64>({ prefix: 'weights_' });
 
   balances = BoxMap<AssetID, uint64>({ prefix: 'balances_' });
@@ -14,6 +12,8 @@ export class BalancedPoolV2 extends Contract {
   provided = BoxMap<Address, uint64[]>({ prefix: 'provided_' });
 
   token = GlobalStateKey<AssetID>({ key: 'token' });
+
+  assets = GlobalStateKey<AssetID[]>({ key: 'assets' });
 
   @allow.bareCreate('NoOp')
   createApplication() {
@@ -29,6 +29,8 @@ export class BalancedPoolV2 extends Contract {
       total += weights[i];
     }
 
+    this.assets.value = assetIds;
+
     assert(total === SCALE, 'Weights must sum to 1');
     this.createToken();
 
@@ -40,9 +42,10 @@ export class BalancedPoolV2 extends Contract {
    */
   addLiquidity(index: uint64, amount: uint64, sender: Address) {
     assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
-    const assetId = this.assets(index).value;
+    const assetId = this.assets.value[index];
     log('Asset ID => ' + itob(assetId));
 
+    /*
     this.optIn(assetId);
 
     this.balances(assetId).value += amount;
@@ -52,6 +55,7 @@ export class BalancedPoolV2 extends Contract {
     }
 
     this.provided(this.txn.sender).value[index] = amount;
+    */
 
     /*
     let totalLiquidity = 0;
@@ -97,10 +101,6 @@ export class BalancedPoolV2 extends Contract {
   }
 
   private addToken(index: uint64, assetID: AssetID, weight: uint64): void {
-    if (!this.assets(index).exists) {
-      this.assets(index).create(8);
-    }
-
     if (!this.weights(index).exists) {
       this.weights(index).create(8);
     }
@@ -109,7 +109,6 @@ export class BalancedPoolV2 extends Contract {
       this.balances(assetID).create(8);
     }
 
-    this.assets(index).value = assetID;
     this.weights(index).value = weight;
     this.balances(assetID).value = 0;
   }

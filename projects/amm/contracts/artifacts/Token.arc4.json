@@ -13,6 +13,14 @@
       "name": "bootstrap",
       "args": [
         {
+          "name": "name",
+          "type": "byte[]"
+        },
+        {
+          "name": "unit",
+          "type": "byte[]"
+        },
+        {
           "name": "seed",
           "type": "pay"
         }

@@ -35,8 +35,6 @@ export class Factory extends Contract {
     sendMethodCall<typeof BalancedPoolV2.prototype.addLiquidity>({
       applicationID: poolID,
       methodArgs: [index, transferTxn.assetAmount, transferTxn.sender],
-      assets: [transferTxn.xferAsset],
-      applications: [poolID],
     });
   }
 

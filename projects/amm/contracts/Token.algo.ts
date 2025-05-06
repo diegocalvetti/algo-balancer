@@ -15,12 +15,12 @@ export class Token extends Contract {
     this.total_supply.value = 0;
   }
 
-  bootstrap(seed: PayTxn): AssetID {
+  bootstrap(name: bytes, unit: bytes, seed: PayTxn): AssetID {
     assert(this.token.value === AssetID.zeroIndex, 'application has already been bootstrapped');
     assert(seed.amount >= 300_000, 'amount minimum not met');
     assert(seed.receiver === this.app.address, 'receiver not app address');
 
-    this.createToken();
+    this.createToken(name, unit);
 
     sendAssetTransfer({
       xferAsset: this.token.value,
@@ -51,7 +51,7 @@ export class Token extends Contract {
     });
   }
 
-  private createToken() {
+  private createToken(name: bytes, unit: bytes) {
     this.token.value = sendAssetCreation({
       configAssetTotal: TOTAL_SUPPLY,
       configAssetDecimals: 6,
@@ -60,8 +60,8 @@ export class Token extends Contract {
       configAssetClawback: globals.zeroAddress,
       configAssetFreeze: globals.zeroAddress,
       configAssetDefaultFrozen: 0,
-      configAssetName: 'Cuba',
-      configAssetUnitName: 'Cuba',
+      configAssetName: name,
+      configAssetUnitName: unit,
     });
   }
 }

@@ -194,7 +194,23 @@ export async function deploy(name: string): Promise<bigint> {
   return appDeployer.appId;
 }
 
-export async function tokenSetup(APP_ID: bigint): Promise<bigint> {
+export async function mintToken(APP_ID: bigint, amount: bigint) {
+  const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
+    appId: APP_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const group = tokenClient.newGroup();
+  group.mint({
+    args: [amount],
+    maxFee: (100_000).microAlgo(),
+  });
+
+  await group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+}
+
+export async function tokenSetup(APP_ID: bigint, name: string, unit: string): Promise<bigint> {
   const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
     appId: APP_ID,
     defaultSender: account.addr,
@@ -209,8 +225,9 @@ export async function tokenSetup(APP_ID: bigint): Promise<bigint> {
     extraFee: (1_000).microAlgo(),
   });
 
+  const encoder = new TextEncoder();
   const result = await tokenClient.send.bootstrap({
-    args: { seed: tx.transaction },
+    args: { name: encoder.encode(name), unit: encoder.encode(unit), seed: tx.transaction },
     populateAppCallResources: true,
     extraFee: (1_000).microAlgo(),
   });
@@ -219,13 +236,7 @@ export async function tokenSetup(APP_ID: bigint): Promise<bigint> {
   console.log('✅ Asset created, ASSET_ID IS: ', tokenID);
   await optIn(tokenID);
 
-  const group = tokenClient.newGroup();
-  group.mint({
-    args: [10_000_000_000],
-    maxFee: (100_000).microAlgo(),
-  });
-
-  await group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+  await mintToken(APP_ID, BigInt(1_000_000));
 
   return tokenID;
 }

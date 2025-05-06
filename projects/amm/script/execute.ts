@@ -1,12 +1,18 @@
-/* eslint-disable no-console, no-case-declarations, import/no-extraneous-dependencies */
+/* eslint-disable no-console, no-case-declarations, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
 import inquirer from 'inquirer';
 import path from 'node:path';
 import fs from 'node:fs';
-import { deploy, deployToken, factorySetup, poolSetup, tokenSetup } from '../utils/bootstrap';
-import {addLiquidity} from "../utils/amm";
+import { deploy, deployToken, factorySetup, mintToken, poolSetup, tokenSetup } from '../utils/bootstrap';
+import { addLiquidity } from '../utils/amm';
 
-export type BootstrapResult = { FACTORY_ID: bigint; POOL_ID: bigint; TOKENS: bigint[] };
-type Commands = 'Create some Tokens' | 'Deploy & Bootstrap Factory' | 'Write & Deploy Pool' | 'Add Liquidity' | 'Quit';
+export type BootstrapResult = { FACTORY_ID: bigint; POOL_ID: bigint; TOKENS: bigint[]; TOKENS_APP: bigint[] };
+type Commands =
+  | 'Create some Tokens'
+  | 'Mint some Tokens'
+  | 'Deploy & Bootstrap Factory'
+  | 'Write & Deploy Pool'
+  | 'Add Liquidity'
+  | 'Quit';
 
 function title(text: string): void {
   console.log(`************* ${text.toUpperCase()} ************* `);
@@ -55,15 +61,34 @@ async function run(command: Commands): Promise<boolean> {
   switch (command) {
     case 'Create some Tokens': {
       const pepperAppID = await deployToken(`Pepper_${new Date().toString()}`);
-      const pepperID = await tokenSetup(pepperAppID);
+      const pepperID = await tokenSetup(pepperAppID, 'Pepper', 'PPR');
 
       const cabbageAppID = await deployToken(`Cabbage_${new Date().toString()}`);
-      const cabbageID = await tokenSetup(cabbageAppID);
+      const cabbageID = await tokenSetup(cabbageAppID, 'Cabbage', 'CBG');
 
       await storeResult('bootstrap', {
+        TOKENS_APP: [pepperAppID, cabbageAppID],
         TOKENS: [pepperID, cabbageID],
       });
 
+      break;
+    }
+    case 'Mint some Tokens': {
+      const { rawAmount } = await inquirer.prompt([
+        {
+          type: 'number',
+          name: 'rawAmount',
+          message: 'How many tokens do you want?',
+          default: 100,
+        },
+      ]);
+      const amount = BigInt(rawAmount * 10 ** 6);
+
+      const { TOKENS_APP } = await retrieveResult<BootstrapResult>('bootstrap');
+
+      for (const token of TOKENS_APP) {
+        await mintToken(token, amount);
+      }
       break;
     }
     case 'Deploy & Bootstrap Factory': {
@@ -85,7 +110,27 @@ async function run(command: Commands): Promise<boolean> {
       await poolSetup(bootstrap.FACTORY_ID, bootstrap.POOL_ID, bootstrap.TOKENS, weights);
       break;
     case 'Add Liquidity':
-      await addLiquidity();
+      const { TOKENS } = await retrieveResult<BootstrapResult>('bootstrap');
+
+      const { token, amount } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'token',
+          message: 'Which token?',
+          choices: TOKENS.map((v) => v.toString()),
+        },
+        {
+          type: 'number',
+          name: 'amount',
+          message: 'How much?',
+          default: 100,
+        },
+      ]);
+
+      const tokenId = BigInt(parseInt(token, 10));
+      await addLiquidity(tokenId, amount);
+
+      console.log(`${amount} unit of token ${tokenId} provided`);
       break;
     case 'Quit':
       return true;
@@ -104,7 +149,14 @@ async function main() {
       type: 'list',
       name: 'command',
       message: 'How do you want to procede?',
-      choices: ['Create some Tokens', 'Deploy & Bootstrap Factory', 'Write & Deploy Pool', 'Add Liquidity', 'Quit'],
+      choices: [
+        'Create some Tokens',
+        'Mint some Tokens',
+        'Deploy & Bootstrap Factory',
+        'Write & Deploy Pool',
+        'Add Liquidity',
+        'Quit',
+      ],
     },
   ]);
 

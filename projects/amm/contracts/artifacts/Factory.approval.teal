@@ -96,7 +96,7 @@ createPool:
 
 	// contracts/Factory.algo.ts:20
 	// globalNumByteSlice: BalancedPoolV2.schema.global.numByteSlice
-	intc 0 // 1
+	pushint 2
 	itxn_field GlobalNumByteSlice
 
 	// contracts/Factory.algo.ts:21
@@ -235,8 +235,6 @@ addLiquidity:
 	// sendMethodCall<typeof BalancedPoolV2.prototype.addLiquidity>({
 	//       applicationID: poolID,
 	//       methodArgs: [index, transferTxn.assetAmount, transferTxn.sender],
-	//       assets: [transferTxn.xferAsset],
-	//       applications: [poolID],
 	//     })
 	itxn_begin
 	intc 2 //  appl
@@ -261,17 +259,6 @@ addLiquidity:
 	frame_dig -3 // transferTxn: AssetTransferTxn
 	gtxns Sender
 	itxn_field ApplicationArgs
-
-	// contracts/Factory.algo.ts:38
-	// assets: [transferTxn.xferAsset]
-	frame_dig -3 // transferTxn: AssetTransferTxn
-	gtxns XferAsset
-	itxn_field Assets
-
-	// contracts/Factory.algo.ts:39
-	// applications: [poolID]
-	frame_dig -1 // poolID: AppID
-	itxn_field Applications
 
 	// Fee field not set, defaulting to 0
 	intc 1 // 0
@@ -298,7 +285,7 @@ addLiquidity:
 MANAGER_updatePoolContractProgram:
 	proto 1 0
 
-	// contracts/Factory.algo.ts:48
+	// contracts/Factory.algo.ts:46
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 1 //  "manager"
@@ -309,7 +296,7 @@ MANAGER_updatePoolContractProgram:
 	assert
 
 	// *if0_condition
-	// contracts/Factory.algo.ts:50
+	// contracts/Factory.algo.ts:48
 	// this.poolContractApprovalProgram.exists
 	bytec 0 //  "pool_approval_program"
 	box_len
@@ -318,7 +305,7 @@ MANAGER_updatePoolContractProgram:
 	bz *if0_else
 
 	// *if0_consequent
-	// contracts/Factory.algo.ts:51
+	// contracts/Factory.algo.ts:49
 	// this.poolContractApprovalProgram.resize(programSize)
 	bytec 0 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
@@ -326,7 +313,7 @@ MANAGER_updatePoolContractProgram:
 	b *if0_end
 
 *if0_else:
-	// contracts/Factory.algo.ts:53
+	// contracts/Factory.algo.ts:51
 	// this.poolContractApprovalProgram.create(programSize)
 	bytec 0 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
@@ -355,7 +342,7 @@ MANAGER_updatePoolContractProgram:
 MANAGER_writePoolContractProgram:
 	proto 2 0
 
-	// contracts/Factory.algo.ts:58
+	// contracts/Factory.algo.ts:56
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 1 //  "manager"
@@ -365,7 +352,7 @@ MANAGER_writePoolContractProgram:
 	// only the manager can call this method
 	assert
 
-	// contracts/Factory.algo.ts:59
+	// contracts/Factory.algo.ts:57
 	// this.poolContractApprovalProgram.replace(offset, data)
 	bytec 0 //  "pool_approval_program"
 	frame_dig -1 // offset: uint64
@@ -393,7 +380,7 @@ MANAGER_writePoolContractProgram:
 hasPoolApprovalProgram:
 	proto 0 1
 
-	// contracts/Factory.algo.ts:63
+	// contracts/Factory.algo.ts:61
 	// return this.poolContractApprovalProgram.exists;
 	bytec 0 //  "pool_approval_program"
 	box_len
@@ -423,7 +410,7 @@ hasPoolApprovalProgram:
 getProgram:
 	proto 0 1
 
-	// contracts/Factory.algo.ts:67
+	// contracts/Factory.algo.ts:65
 	// return this.poolContractApprovalProgram.value;
 	bytec 0 //  "pool_approval_program"
 	box_get

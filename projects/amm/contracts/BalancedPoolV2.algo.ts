@@ -1,19 +1,23 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
+const TOTAL_LP_SUPPLY = 10 ** 16;
+const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
 const SCALE = 1_000_000;
 
 export class BalancedPoolV2 extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
+  token = GlobalStateKey<AssetID>({ key: 'token' });
+
+  assets = GlobalStateKey<AssetID[]>({ key: 'assets' });
+
   weights = BoxMap<uint64, uint64>({ prefix: 'weights_' });
 
   balances = BoxMap<AssetID, uint64>({ prefix: 'balances_' });
 
-  provided = BoxMap<Address, uint64[]>({ prefix: 'provided_' });
+  provided = BoxMap<Address, uint64[]>({ prefix: 'provided_', dynamicSize: true });
 
-  token = GlobalStateKey<AssetID>({ key: 'token' });
-
-  assets = GlobalStateKey<AssetID[]>({ key: 'assets' });
+  minRatios = BoxMap<Address, uint64>({ prefix: 'minratio_' });
 
   @allow.bareCreate('NoOp')
   createApplication() {
@@ -38,54 +42,63 @@ export class BalancedPoolV2 extends Contract {
   }
 
   /**
-   * Provide Liquidity to the pool proportionally to the weights
+   * Provide Liquidity to the pool
    */
   addLiquidity(index: uint64, amount: uint64, sender: Address) {
     assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
     const assetId = this.assets.value[index];
     log('Asset ID => ' + itob(assetId));
 
-    /*
     this.optIn(assetId);
-
     this.balances(assetId).value += amount;
 
     if (!this.provided(sender).exists) {
       this.provided(sender).create(64);
     }
 
-    this.provided(this.txn.sender).value[index] = amount;
-    */
+    this.provided(sender).value[index] += amount;
 
-    /*
-    let totalLiquidity = 0;
+    const newMinRatio = this.computeLP(sender, index);
 
-    // Tutte le tx prima di questa
-    for (let i = 0; i < this.txnGroup.length - 1; i += 1) {
-      verifyAssetTransferTxn(this.txnGroup[i], {
-        xferAsset: this.assets(i).value,
-        assetReceiver: this.app.address,
-      });
+    if (!this.minRatios(sender).exists) {
+      this.minRatios(sender).create(8);
+      this.minRatios(sender).value = newMinRatio;
+      // eslint-disable-next-line eqeqeq
+    } else if (this.minRatios(sender).value == 0) {
+      this.minRatios(sender).value = newMinRatio;
+    } else {
+      const currentMin = this.minRatios(sender).value;
+
+      if (newMinRatio < currentMin) {
+        this.minRatios(sender).value = newMinRatio;
+      }
+    }
+  }
+
+  computeLiquidity(sender: Address) {
+    const minRatio = this.minRatios(sender).value;
+
+    assert(minRatio > 0, 'computed ratio is zero');
+
+    let amount = AMOUNT_LP_DEPLOYER;
+    if (this.token.value.reserve.assetBalance(this.token.value) !== TOTAL_LP_SUPPLY) {
+      const issued = this.token.value.total - this.token.value.reserve.assetBalance(this.token.value);
+      amount = wideRatio([issued, minRatio], [SCALE]);
     }
 
-    for (let i = 1; i < this.txnGroup.length; i += 1) {
-      const assetId = this.txnGroup[i].xferAsset;
-      const amount = this.txnGroup[i].assetAmount;
+    assert(amount > 0, 'computed LP amount is zero');
 
-      const weight = this.weights(i).value;
-      this.balances(assetId).value += amount;
+    this.minRatios(sender).value = 0;
 
-      totalLiquidity += (amount * SCALE) / weight;
+    for (let i = 0; i < this.provided(sender).value.length; i += 1) {
+      this.provided(sender).value[i] = 0;
     }
 
     sendAssetTransfer({
+      assetReceiver: sender,
+      assetAmount: amount,
       xferAsset: this.token.value,
-      assetAmount: totalLiquidity,
-      assetReceiver: this.txn.sender,
-      assetSender: this.app.address,
     });
-
-    return totalLiquidity; */
   }
 
   optIn(assetId: AssetID): void {
@@ -114,18 +127,16 @@ export class BalancedPoolV2 extends Contract {
   }
 
   private createToken() {
-    assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
-
     if (this.token.value === AssetID.zeroIndex) {
       this.token.value = sendAssetCreation({
-        configAssetTotal: 10 ** 16,
+        configAssetTotal: TOTAL_LP_SUPPLY,
         configAssetDecimals: 6,
         configAssetReserve: this.app.address,
         configAssetManager: this.app.address,
         configAssetClawback: globals.zeroAddress,
         configAssetFreeze: globals.zeroAddress,
         configAssetDefaultFrozen: 0,
-        configAssetName: 'BalancedPool-' + itob(this.app.id),
+        configAssetName: 'BalancedPool-' + this.app.id.toString(),
         configAssetUnitName: 'LP',
       });
     }
@@ -179,6 +190,20 @@ export class BalancedPoolV2 extends Contract {
     const lnX = this.ln(x);
     const ylnX = (y * lnX) / SCALE; // y * ln(x)
     return this.exp(ylnX); // e^(y ln x) = x^y
+  }
+
+  private computeLP(sender: Address, index: uint64): uint64 {
+    const assetId = this.assets.value[index];
+    const weight = this.weights(index).value;
+    const poolBalance = this.balances(assetId).value;
+    const providedAmount = this.provided(sender).value[index];
+
+    if (providedAmount <= 0) {
+      return 0;
+    }
+
+    const ratio = wideRatio([providedAmount, SCALE], [poolBalance]);
+    return wideRatio([ratio, weight], [SCALE]);
   }
 
   private calcOut(

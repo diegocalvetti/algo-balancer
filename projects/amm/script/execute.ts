@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 import path from 'node:path';
 import fs from 'node:fs';
 import { deploy, deployToken, factorySetup, mintToken, poolSetup, tokenSetup } from '../utils/bootstrap';
-import { addLiquidity } from '../utils/amm';
+import { addLiquidity, computeLiquidity } from '../utils/amm';
 
 export type BootstrapResult = { FACTORY_ID: bigint; POOL_ID: bigint; TOKENS: bigint[]; TOKENS_APP: bigint[] };
 type Commands =
@@ -12,6 +12,7 @@ type Commands =
   | 'Deploy & Bootstrap Factory'
   | 'Write & Deploy Pool'
   | 'Add Liquidity'
+  | 'Compute Liquidity'
   | 'Quit';
 
 function title(text: string): void {
@@ -66,9 +67,12 @@ async function run(command: Commands): Promise<boolean> {
       const cabbageAppID = await deployToken(`Cabbage_${new Date().toString()}`);
       const cabbageID = await tokenSetup(cabbageAppID, 'Cabbage', 'CBG');
 
+      const fennelAppID = await deployToken(`Fennel_${new Date().toString()}`);
+      const fennelID = await tokenSetup(fennelAppID, 'Fennel', 'FNL');
+
       await storeResult('bootstrap', {
-        TOKENS_APP: [pepperAppID, cabbageAppID],
-        TOKENS: [pepperID, cabbageID],
+        TOKENS_APP: [pepperAppID, cabbageAppID, fennelAppID],
+        TOKENS: [pepperID, cabbageID, fennelID],
       });
 
       break;
@@ -105,7 +109,7 @@ async function run(command: Commands): Promise<boolean> {
     case 'Write & Deploy Pool':
       const bootstrap = await retrieveResult<BootstrapResult>('bootstrap');
 
-      const weights = bootstrap.TOKENS.map(() => BigInt((1 / bootstrap.TOKENS.length) * 1e6));
+      const weights = [1 / 2, 1 / 4, 1 / 4].map((n) => BigInt(n * 1e6));
 
       await poolSetup(bootstrap.FACTORY_ID, bootstrap.POOL_ID, bootstrap.TOKENS, weights);
       break;
@@ -132,6 +136,11 @@ async function run(command: Commands): Promise<boolean> {
 
       console.log(`${amount} unit of token ${tokenId} provided`);
       break;
+    case 'Compute Liquidity':
+      await computeLiquidity();
+
+      console.log(`LP calculations done`);
+      break;
     case 'Quit':
       return true;
     default:
@@ -155,6 +164,7 @@ async function main() {
         'Deploy & Bootstrap Factory',
         'Write & Deploy Pool',
         'Add Liquidity',
+        'Compute Liquidity',
         'Quit',
       ],
     },

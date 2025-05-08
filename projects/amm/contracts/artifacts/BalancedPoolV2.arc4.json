@@ -27,7 +27,7 @@
     },
     {
       "name": "addLiquidity",
-      "desc": "Provide Liquidity to the pool proportionally to the weights",
+      "desc": "Provide Liquidity to the pool",
       "args": [
         {
           "name": "index",
@@ -37,6 +37,18 @@
           "name": "amount",
           "type": "uint64"
         },
+        {
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "computeLiquidity",
+      "args": [
         {
           "name": "sender",
           "type": "address"

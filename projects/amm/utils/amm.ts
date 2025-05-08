@@ -1,4 +1,4 @@
-/* eslint-disable no-console, import/no-extraneous-dependencies, no-await-in-loop, import/no-unresolved, no-return-assign */
+/* eslint-disable no-console, import/no-extraneous-dependencies, no-await-in-loop, import/no-unresolved, import/no-cycle, no-return-assign */
 import * as algokit from '@algorandfoundation/algokit-utils';
 import dotenv from 'dotenv';
 
@@ -78,10 +78,7 @@ export const addLiquidity = async (token: bigint, amount: number) => {
   await opt.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
 
   const assets = (await getPoolAssets(POOL_ID))!;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const index = assets.indexOf(token);
-  console.log(assets, token, index);
 
   addLiquidityGroup.addLiquidity({
     args: [POOL_ID, index, assetTransferTxn],
@@ -92,5 +89,27 @@ export const addLiquidity = async (token: bigint, amount: number) => {
     suppressLog: false,
     populateAppCallResources: true,
     coverAppCallInnerTransactionFees: true,
+  });
+};
+
+export const computeLiquidity = async () => {
+  const { POOL_ID, FACTORY_ID } = await retrieveResult<BootstrapResult>('bootstrap');
+
+  const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
+    appId: FACTORY_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const computeLiquidityGroup = factoryClient.newGroup();
+  computeLiquidityGroup.computeLiquidity({
+    args: [POOL_ID],
+    maxFee: (100_000).microAlgo(),
+  });
+
+  await computeLiquidityGroup.send({
+    populateAppCallResources: true,
+    coverAppCallInnerTransactionFees: true,
+    suppressLog: true,
   });
 };

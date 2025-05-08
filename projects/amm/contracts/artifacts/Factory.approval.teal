@@ -268,6 +268,50 @@ addLiquidity:
 	itxn_submit
 	retsub
 
+// computeLiquidity(uint64)void
+*abi_route_computeLiquidity:
+	// poolID: uint64
+	txna ApplicationArgs 1
+	btoi
+
+	// execute computeLiquidity(uint64)void
+	callsub computeLiquidity
+	intc 0 // 1
+	return
+
+// computeLiquidity(poolID: AppID): void
+computeLiquidity:
+	proto 1 0
+
+	// contracts/Factory.algo.ts:42
+	// sendMethodCall<typeof BalancedPoolV2.prototype.computeLiquidity>({
+	//       applicationID: poolID,
+	//       methodArgs: [this.txn.sender],
+	//     })
+	itxn_begin
+	intc 2 //  appl
+	itxn_field TypeEnum
+	pushbytes 0xc35f0f19 // method "computeLiquidity(address)void"
+	itxn_field ApplicationArgs
+
+	// contracts/Factory.algo.ts:43
+	// applicationID: poolID
+	frame_dig -1 // poolID: AppID
+	itxn_field ApplicationID
+
+	// contracts/Factory.algo.ts:44
+	// methodArgs: [this.txn.sender]
+	txn Sender
+	itxn_field ApplicationArgs
+
+	// Fee field not set, defaulting to 0
+	intc 1 // 0
+	itxn_field Fee
+
+	// Submit inner transaction
+	itxn_submit
+	retsub
+
 // MANAGER_updatePoolContractProgram(uint64)void
 *abi_route_MANAGER_updatePoolContractProgram:
 	// programSize: uint64
@@ -285,7 +329,7 @@ addLiquidity:
 MANAGER_updatePoolContractProgram:
 	proto 1 0
 
-	// contracts/Factory.algo.ts:46
+	// contracts/Factory.algo.ts:52
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 1 //  "manager"
@@ -296,7 +340,7 @@ MANAGER_updatePoolContractProgram:
 	assert
 
 	// *if0_condition
-	// contracts/Factory.algo.ts:48
+	// contracts/Factory.algo.ts:54
 	// this.poolContractApprovalProgram.exists
 	bytec 0 //  "pool_approval_program"
 	box_len
@@ -305,7 +349,7 @@ MANAGER_updatePoolContractProgram:
 	bz *if0_else
 
 	// *if0_consequent
-	// contracts/Factory.algo.ts:49
+	// contracts/Factory.algo.ts:55
 	// this.poolContractApprovalProgram.resize(programSize)
 	bytec 0 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
@@ -313,7 +357,7 @@ MANAGER_updatePoolContractProgram:
 	b *if0_end
 
 *if0_else:
-	// contracts/Factory.algo.ts:51
+	// contracts/Factory.algo.ts:57
 	// this.poolContractApprovalProgram.create(programSize)
 	bytec 0 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
@@ -342,7 +386,7 @@ MANAGER_updatePoolContractProgram:
 MANAGER_writePoolContractProgram:
 	proto 2 0
 
-	// contracts/Factory.algo.ts:56
+	// contracts/Factory.algo.ts:62
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 1 //  "manager"
@@ -352,7 +396,7 @@ MANAGER_writePoolContractProgram:
 	// only the manager can call this method
 	assert
 
-	// contracts/Factory.algo.ts:57
+	// contracts/Factory.algo.ts:63
 	// this.poolContractApprovalProgram.replace(offset, data)
 	bytec 0 //  "pool_approval_program"
 	frame_dig -1 // offset: uint64
@@ -380,7 +424,7 @@ MANAGER_writePoolContractProgram:
 hasPoolApprovalProgram:
 	proto 0 1
 
-	// contracts/Factory.algo.ts:61
+	// contracts/Factory.algo.ts:67
 	// return this.poolContractApprovalProgram.exists;
 	bytec 0 //  "pool_approval_program"
 	box_len
@@ -410,7 +454,7 @@ hasPoolApprovalProgram:
 getProgram:
 	proto 0 1
 
-	// contracts/Factory.algo.ts:65
+	// contracts/Factory.algo.ts:71
 	// return this.poolContractApprovalProgram.value;
 	bytec 0 //  "pool_approval_program"
 	box_get
@@ -433,12 +477,13 @@ getProgram:
 	pushbytes 0x42588e09 // method "createPool()void"
 	pushbytes 0xa1eb3020 // method "initPool(uint64,uint64[],uint64[])uint64"
 	pushbytes 0x79ad2988 // method "addLiquidity(uint64,uint64,axfer)void"
+	pushbytes 0x99b40816 // method "computeLiquidity(uint64)void"
 	pushbytes 0x099e5cfd // method "MANAGER_updatePoolContractProgram(uint64)void"
 	pushbytes 0xa4b503c1 // method "MANAGER_writePoolContractProgram(uint64,byte[])void"
 	pushbytes 0x73338efa // method "hasPoolApprovalProgram()bool"
 	pushbytes 0x145a4004 // method "getProgram()byte[]"
 	txna ApplicationArgs 0
-	match *abi_route_createPool *abi_route_initPool *abi_route_addLiquidity *abi_route_MANAGER_updatePoolContractProgram *abi_route_MANAGER_writePoolContractProgram *abi_route_hasPoolApprovalProgram *abi_route_getProgram
+	match *abi_route_createPool *abi_route_initPool *abi_route_addLiquidity *abi_route_computeLiquidity *abi_route_MANAGER_updatePoolContractProgram *abi_route_MANAGER_writePoolContractProgram *abi_route_hasPoolApprovalProgram *abi_route_getProgram
 
 	// this contract does not implement the given ABI method for call NoOp
 	err

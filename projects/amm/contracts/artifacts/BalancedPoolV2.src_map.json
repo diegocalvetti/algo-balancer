@@ -1,14 +1,14 @@
 [
   {
     "teal": 1,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
       0
     ]
   },
   {
     "teal": 2,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
       1,
       2,
@@ -19,16 +19,16 @@
       7,
       8,
       9,
-      10
+      10,
+      11,
+      12,
+      13
     ]
   },
   {
     "teal": 3,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
-      11,
-      12,
-      13,
       14,
       15,
       16,
@@ -68,58 +68,16 @@
       50,
       51,
       52,
-      53
-    ]
-  },
-  {
-    "teal": 15,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
+      53,
       54,
-      55
-    ]
-  },
-  {
-    "teal": 16,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
-      56
-    ]
-  },
-  {
-    "teal": 17,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
+      55,
+      56,
       57,
-      58
-    ]
-  },
-  {
-    "teal": 18,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
-      59
-    ]
-  },
-  {
-    "teal": 19,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
+      58,
+      59,
       60,
-      61
-    ]
-  },
-  {
-    "teal": 20,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
-      62
-    ]
-  },
-  {
-    "teal": 21,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "pc": [
+      61,
+      62,
       63,
       64,
       65,
@@ -142,909 +100,836 @@
       82,
       83,
       84,
-      85,
+      85
+    ]
+  },
+  {
+    "teal": 15,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
       86,
-      87,
+      87
+    ]
+  },
+  {
+    "teal": 16,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
       88
     ]
   },
   {
-    "teal": 25,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
+    "teal": 17,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
-      89
+      89,
+      90
     ]
   },
   {
-    "teal": 30,
-    "source": "contracts/BalancedPoolV2.algo.ts:18",
+    "teal": 18,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
-      90,
-      91,
-      92
+      91
     ]
   },
   {
-    "teal": 31,
-    "source": "contracts/BalancedPoolV2.algo.ts:18",
+    "teal": 19,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
+      92,
       93
     ]
   },
   {
-    "teal": 32,
-    "source": "contracts/BalancedPoolV2.algo.ts:18",
+    "teal": 20,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
       94
     ]
   },
   {
-    "teal": 36,
-    "source": "contracts/BalancedPoolV2.algo.ts:18",
+    "teal": 21,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
     "pc": [
       95,
       96,
-      97
-    ]
-  },
-  {
-    "teal": 40,
-    "source": "contracts/BalancedPoolV2.algo.ts:20",
-    "pc": [
+      97,
       98,
-      99
-    ]
-  },
-  {
-    "teal": 41,
-    "source": "contracts/BalancedPoolV2.algo.ts:20",
-    "pc": [
+      99,
       100,
       101,
-      102
-    ]
-  },
-  {
-    "teal": 42,
-    "source": "contracts/BalancedPoolV2.algo.ts:20",
-    "pc": [
+      102,
       103,
-      104
-    ]
-  },
-  {
-    "teal": 43,
-    "source": "contracts/BalancedPoolV2.algo.ts:20",
-    "pc": [
-      105
-    ]
-  },
-  {
-    "teal": 44,
-    "source": "contracts/BalancedPoolV2.algo.ts:20",
-    "pc": [
-      106
-    ]
-  },
-  {
-    "teal": 45,
-    "source": "contracts/BalancedPoolV2.algo.ts:18",
-    "pc": [
-      107
-    ]
-  },
-  {
-    "teal": 50,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
-    "pc": [
+      104,
+      105,
+      106,
+      107,
       108,
       109,
       110,
       111,
       112,
-      113
-    ]
-  },
-  {
-    "teal": 53,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
-    "pc": [
+      113,
       114,
       115,
-      116
-    ]
-  },
-  {
-    "teal": 54,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
-    "pc": [
+      116,
       117,
       118,
-      119
+      119,
+      120
     ]
   },
   {
-    "teal": 57,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 25,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "errorMessage": "The requested action is not implemented in this contract. Are you using the correct OnComplete? Did you set your app ID?",
     "pc": [
-      120,
-      121,
-      122
+      121
     ]
   },
   {
-    "teal": 58,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 30,
+    "source": "contracts/BalancedPoolV2.algo.ts:22",
     "pc": [
+      122,
       123,
-      124,
+      124
+    ]
+  },
+  {
+    "teal": 31,
+    "source": "contracts/BalancedPoolV2.algo.ts:22",
+    "pc": [
       125
     ]
   },
   {
-    "teal": 61,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 32,
+    "source": "contracts/BalancedPoolV2.algo.ts:22",
     "pc": [
-      126,
-      127,
-      128
+      126
     ]
   },
   {
-    "teal": 62,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 36,
+    "source": "contracts/BalancedPoolV2.algo.ts:22",
     "pc": [
+      127,
+      128,
       129
     ]
   },
   {
-    "teal": 63,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 40,
+    "source": "contracts/BalancedPoolV2.algo.ts:24",
     "pc": [
-      130
-    ]
-  },
-  {
-    "teal": 64,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
-    "pc": [
+      130,
       131
     ]
   },
   {
-    "teal": 65,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 41,
+    "source": "contracts/BalancedPoolV2.algo.ts:24",
     "pc": [
-      132
+      132,
+      133,
+      134
     ]
   },
   {
-    "teal": 66,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 42,
+    "source": "contracts/BalancedPoolV2.algo.ts:24",
     "pc": [
-      133
-    ]
-  },
-  {
-    "teal": 70,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
-    "pc": [
-      134,
       135,
       136
     ]
   },
   {
-    "teal": 73,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 43,
+    "source": "contracts/BalancedPoolV2.algo.ts:24",
     "pc": [
       137
     ]
   },
   {
-    "teal": 74,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 44,
+    "source": "contracts/BalancedPoolV2.algo.ts:24",
     "pc": [
       138
     ]
   },
   {
-    "teal": 78,
-    "source": "contracts/BalancedPoolV2.algo.ts:24",
+    "teal": 45,
+    "source": "contracts/BalancedPoolV2.algo.ts:22",
     "pc": [
-      139,
-      140,
-      141
+      139
     ]
   },
   {
-    "teal": 82,
-    "source": "contracts/BalancedPoolV2.algo.ts:25",
-    "pc": [
-      142
-    ]
-  },
-  {
-    "teal": 83,
-    "source": "contracts/BalancedPoolV2.algo.ts:25",
-    "pc": [
-      143,
-      144
-    ]
-  },
-  {
-    "teal": 87,
+    "teal": 50,
     "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
+      140,
+      141,
+      142,
+      143,
+      144,
       145
     ]
   },
   {
-    "teal": 88,
+    "teal": 53,
     "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
       146,
-      147
+      147,
+      148
     ]
   },
   {
-    "teal": 93,
+    "teal": 54,
     "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      148,
-      149
-    ]
-  },
-  {
-    "teal": 94,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
-    "pc": [
+      149,
       150,
       151
     ]
   },
   {
-    "teal": 95,
+    "teal": 57,
     "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      152
-    ]
-  },
-  {
-    "teal": 96,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
-    "pc": [
-      153
-    ]
-  },
-  {
-    "teal": 97,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
-    "pc": [
+      152,
+      153,
       154
     ]
   },
   {
-    "teal": 98,
+    "teal": 58,
     "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      155
-    ]
-  },
-  {
-    "teal": 99,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
-    "pc": [
+      155,
       156,
-      157,
-      158
+      157
     ]
   },
   {
-    "teal": 103,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 61,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
+      158,
       159,
       160
     ]
   },
   {
-    "teal": 104,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 62,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      161,
+      161
+    ]
+  },
+  {
+    "teal": 63,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "pc": [
       162
     ]
   },
   {
-    "teal": 105,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 64,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
       163
     ]
   },
   {
-    "teal": 106,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 65,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      164,
+      164
+    ]
+  },
+  {
+    "teal": 66,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "pc": [
       165
     ]
   },
   {
-    "teal": 107,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 70,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      166
-    ]
-  },
-  {
-    "teal": 108,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
-      167
-    ]
-  },
-  {
-    "teal": 109,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
+      166,
+      167,
       168
     ]
   },
   {
-    "teal": 110,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 73,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      169,
+      169
+    ]
+  },
+  {
+    "teal": 74,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "pc": [
       170
     ]
   },
   {
-    "teal": 111,
+    "teal": 78,
     "source": "contracts/BalancedPoolV2.algo.ts:28",
     "pc": [
-      171
-    ]
-  },
-  {
-    "teal": 112,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
-      172
-    ]
-  },
-  {
-    "teal": 113,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
+      171,
+      172,
       173
     ]
   },
   {
-    "teal": 114,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 82,
+    "source": "contracts/BalancedPoolV2.algo.ts:29",
     "pc": [
       174
     ]
   },
   {
-    "teal": 115,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 83,
+    "source": "contracts/BalancedPoolV2.algo.ts:29",
     "pc": [
       175,
       176
     ]
   },
   {
-    "teal": 116,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 87,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      177,
-      178
+      177
     ]
   },
   {
-    "teal": 117,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 88,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
+      178,
       179
     ]
   },
   {
-    "teal": 118,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 93,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
       180,
       181
     ]
   },
   {
-    "teal": 119,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 94,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      182
-    ]
-  },
-  {
-    "teal": 120,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
+      182,
       183
     ]
   },
   {
-    "teal": 121,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 95,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
       184
     ]
   },
   {
-    "teal": 122,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 96,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      185,
+      185
+    ]
+  },
+  {
+    "teal": 97,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
+    "pc": [
       186
     ]
   },
   {
-    "teal": 123,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 98,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
       187
     ]
   },
   {
-    "teal": 124,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 99,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      188
-    ]
-  },
-  {
-    "teal": 125,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
-      189
-    ]
-  },
-  {
-    "teal": 126,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
-    "pc": [
+      188,
+      189,
       190
     ]
   },
   {
-    "teal": 127,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 103,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       191,
       192
     ]
   },
   {
-    "teal": 128,
-    "source": "contracts/BalancedPoolV2.algo.ts:28",
+    "teal": 104,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       193,
-      194,
+      194
+    ]
+  },
+  {
+    "teal": 105,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "pc": [
       195
     ]
   },
   {
-    "teal": 132,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 106,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       196,
       197
     ]
   },
   {
-    "teal": 133,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 107,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      198,
+      198
+    ]
+  },
+  {
+    "teal": 108,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "pc": [
       199
     ]
   },
   {
-    "teal": 134,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 109,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      200,
-      201
+      200
     ]
   },
   {
-    "teal": 135,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 110,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
+      201,
       202
     ]
   },
   {
-    "teal": 136,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 111,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      203,
+      203
+    ]
+  },
+  {
+    "teal": 112,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "pc": [
       204
     ]
   },
   {
-    "teal": 137,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 113,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       205
     ]
   },
   {
-    "teal": 138,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 114,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       206
     ]
   },
   {
-    "teal": 139,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 115,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      207
+      207,
+      208
     ]
   },
   {
-    "teal": 140,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 116,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      208,
-      209
-    ]
-  },
-  {
-    "teal": 141,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
-    "pc": [
+      209,
       210
     ]
   },
   {
-    "teal": 142,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 117,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       211
     ]
   },
   {
-    "teal": 143,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 118,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      212
-    ]
-  },
-  {
-    "teal": 144,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
-    "pc": [
+      212,
       213
     ]
   },
   {
-    "teal": 145,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 119,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       214
     ]
   },
   {
-    "teal": 146,
-    "source": "contracts/BalancedPoolV2.algo.ts:29",
+    "teal": 120,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      215,
+      215
+    ]
+  },
+  {
+    "teal": 121,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "pc": [
       216
     ]
   },
   {
-    "teal": 151,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "teal": 122,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       217,
       218
     ]
   },
   {
-    "teal": 152,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "teal": 123,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       219
     ]
   },
   {
-    "teal": 153,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "teal": 124,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       220
     ]
   },
   {
-    "teal": 154,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "teal": 125,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
-      221,
+      221
+    ]
+  },
+  {
+    "teal": 126,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "pc": [
       222
     ]
   },
   {
-    "teal": 155,
-    "source": "contracts/BalancedPoolV2.algo.ts:27",
+    "teal": 127,
+    "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
       223,
-      224,
-      225
+      224
     ]
   },
   {
-    "teal": 160,
+    "teal": 128,
     "source": "contracts/BalancedPoolV2.algo.ts:32",
     "pc": [
+      225,
       226,
       227
     ]
   },
   {
-    "teal": 161,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 132,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       228,
       229
     ]
   },
   {
-    "teal": 162,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 133,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
-      230
-    ]
-  },
-  {
-    "teal": 163,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
-    "pc": [
+      230,
       231
     ]
   },
   {
-    "teal": 164,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 134,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
-      232
-    ]
-  },
-  {
-    "teal": 165,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
-    "pc": [
+      232,
       233
     ]
   },
   {
-    "teal": 166,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 135,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       234
     ]
   },
   {
-    "teal": 167,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 136,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       235,
-      236,
+      236
+    ]
+  },
+  {
+    "teal": 137,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
+    "pc": [
       237
     ]
   },
   {
-    "teal": 168,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 138,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       238
     ]
   },
   {
-    "teal": 169,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 139,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       239
     ]
   },
   {
-    "teal": 170,
-    "source": "contracts/BalancedPoolV2.algo.ts:32",
+    "teal": 140,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
-      240
+      240,
+      241
     ]
   },
   {
-    "teal": 174,
-    "source": "contracts/BalancedPoolV2.algo.ts:34",
+    "teal": 141,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
-      241,
       242
     ]
   },
   {
-    "teal": 175,
-    "source": "contracts/BalancedPoolV2.algo.ts:34",
+    "teal": 142,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       243
     ]
   },
   {
-    "teal": 176,
-    "source": "contracts/BalancedPoolV2.algo.ts:34",
+    "teal": 143,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       244
     ]
   },
   {
-    "teal": 179,
-    "source": "contracts/BalancedPoolV2.algo.ts:34",
-    "errorMessage": "Weights must sum to 1",
+    "teal": 144,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
       245
     ]
   },
   {
-    "teal": 183,
-    "source": "contracts/BalancedPoolV2.algo.ts:35",
+    "teal": 145,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
     "pc": [
-      246,
+      246
+    ]
+  },
+  {
+    "teal": 146,
+    "source": "contracts/BalancedPoolV2.algo.ts:33",
+    "pc": [
       247,
       248
     ]
   },
   {
-    "teal": 187,
-    "source": "contracts/BalancedPoolV2.algo.ts:37",
+    "teal": 151,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      249
-    ]
-  },
-  {
-    "teal": 188,
-    "source": "contracts/BalancedPoolV2.algo.ts:37",
-    "pc": [
+      249,
       250
     ]
   },
   {
-    "teal": 191,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 152,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      251,
+      251
+    ]
+  },
+  {
+    "teal": 153,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
+    "pc": [
       252
     ]
   },
   {
-    "teal": 194,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 154,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
       253,
       254
     ]
   },
   {
-    "teal": 195,
-    "source": "contracts/BalancedPoolV2.algo.ts:23",
+    "teal": 155,
+    "source": "contracts/BalancedPoolV2.algo.ts:31",
     "pc": [
-      255
-    ]
-  },
-  {
-    "teal": 200,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
-    "pc": [
+      255,
       256,
-      257,
-      258
+      257
     ]
   },
   {
-    "teal": 201,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 160,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
+      258,
       259
     ]
   },
   {
-    "teal": 202,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 161,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
-      260
+      260,
+      261
     ]
   },
   {
-    "teal": 203,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 162,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
-      261,
       262
     ]
   },
   {
-    "teal": 204,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 163,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
       263
     ]
   },
   {
-    "teal": 207,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
-    "errorMessage": "argument 0 (sender) for addLiquidity must be a address",
+    "teal": 164,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
       264
     ]
   },
   {
-    "teal": 210,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 165,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
-      265,
-      266,
-      267
+      265
     ]
   },
   {
-    "teal": 211,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 166,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
-      268
+      266
     ]
   },
   {
-    "teal": 214,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 167,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
-      269,
-      270,
+      267,
+      268,
+      269
+    ]
+  },
+  {
+    "teal": 168,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
+    "pc": [
+      270
+    ]
+  },
+  {
+    "teal": 169,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
+    "pc": [
       271
     ]
   },
   {
-    "teal": 215,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 170,
+    "source": "contracts/BalancedPoolV2.algo.ts:36",
     "pc": [
       272
     ]
   },
   {
-    "teal": 218,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 174,
+    "source": "contracts/BalancedPoolV2.algo.ts:38",
     "pc": [
       273,
-      274,
+      274
+    ]
+  },
+  {
+    "teal": 175,
+    "source": "contracts/BalancedPoolV2.algo.ts:38",
+    "pc": [
       275
     ]
   },
   {
-    "teal": 219,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 176,
+    "source": "contracts/BalancedPoolV2.algo.ts:38",
     "pc": [
       276
     ]
   },
   {
-    "teal": 220,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 179,
+    "source": "contracts/BalancedPoolV2.algo.ts:38",
+    "errorMessage": "Weights must sum to 1",
     "pc": [
       277
     ]
   },
   {
-    "teal": 226,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 183,
+    "source": "contracts/BalancedPoolV2.algo.ts:39",
     "pc": [
       278,
       279,
@@ -1052,1125 +937,1279 @@
     ]
   },
   {
-    "teal": 229,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
+    "teal": 187,
+    "source": "contracts/BalancedPoolV2.algo.ts:41",
     "pc": [
       281
     ]
   },
   {
-    "teal": 233,
-    "source": "contracts/BalancedPoolV2.algo.ts:44",
+    "teal": 188,
+    "source": "contracts/BalancedPoolV2.algo.ts:41",
     "pc": [
       282
     ]
   },
   {
-    "teal": 234,
-    "source": "contracts/BalancedPoolV2.algo.ts:44",
+    "teal": 191,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      283
-    ]
-  },
-  {
-    "teal": 235,
-    "source": "contracts/BalancedPoolV2.algo.ts:44",
-    "pc": [
+      283,
       284
     ]
   },
   {
-    "teal": 236,
-    "source": "contracts/BalancedPoolV2.algo.ts:44",
+    "teal": 194,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      285
-    ]
-  },
-  {
-    "teal": 239,
-    "source": "contracts/BalancedPoolV2.algo.ts:44",
-    "errorMessage": "pool not bootstrapped",
-    "pc": [
+      285,
       286
     ]
   },
   {
-    "teal": 243,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 195,
+    "source": "contracts/BalancedPoolV2.algo.ts:27",
     "pc": [
-      287,
-      288
+      287
     ]
   },
   {
-    "teal": 244,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 200,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      289
+      288,
+      289,
+      290
     ]
   },
   {
-    "teal": 245,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 201,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      290,
-      291,
+      291
+    ]
+  },
+  {
+    "teal": 202,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
+    "pc": [
       292
     ]
   },
   {
-    "teal": 246,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 203,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
       293,
       294
     ]
   },
   {
-    "teal": 247,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 204,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
       295
     ]
   },
   {
-    "teal": 248,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 207,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
+    "errorMessage": "argument 0 (sender) for addLiquidity must be a address",
     "pc": [
-      296,
-      297
+      296
     ]
   },
   {
-    "teal": 249,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 210,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      298
-    ]
-  },
-  {
-    "teal": 250,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
-    "pc": [
+      297,
+      298,
       299
     ]
   },
   {
-    "teal": 251,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 211,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
       300
     ]
   },
   {
-    "teal": 252,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 214,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
       301,
-      302
-    ]
-  },
-  {
-    "teal": 253,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
-    "pc": [
+      302,
       303
     ]
   },
   {
-    "teal": 254,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 215,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
       304
     ]
   },
   {
-    "teal": 255,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 218,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      305
+      305,
+      306,
+      307
     ]
   },
   {
-    "teal": 256,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
+    "teal": 219,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      306
-    ]
-  },
-  {
-    "teal": 257,
-    "source": "contracts/BalancedPoolV2.algo.ts:45",
-    "pc": [
-      307,
       308
     ]
   },
   {
-    "teal": 261,
-    "source": "contracts/BalancedPoolV2.algo.ts:46",
+    "teal": 220,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      309,
+      309
+    ]
+  },
+  {
+    "teal": 226,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
+    "pc": [
       310,
       311,
-      312,
-      313,
+      312
+    ]
+  },
+  {
+    "teal": 229,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
+    "pc": [
+      313
+    ]
+  },
+  {
+    "teal": 230,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
+    "pc": [
       314,
-      315,
-      316,
-      317,
-      318,
-      319,
-      320,
+      315
+    ]
+  },
+  {
+    "teal": 234,
+    "source": "contracts/BalancedPoolV2.algo.ts:48",
+    "pc": [
+      316
+    ]
+  },
+  {
+    "teal": 235,
+    "source": "contracts/BalancedPoolV2.algo.ts:48",
+    "pc": [
+      317
+    ]
+  },
+  {
+    "teal": 236,
+    "source": "contracts/BalancedPoolV2.algo.ts:48",
+    "pc": [
+      318
+    ]
+  },
+  {
+    "teal": 237,
+    "source": "contracts/BalancedPoolV2.algo.ts:48",
+    "pc": [
+      319
+    ]
+  },
+  {
+    "teal": 240,
+    "source": "contracts/BalancedPoolV2.algo.ts:48",
+    "errorMessage": "pool not bootstrapped",
+    "pc": [
+      320
+    ]
+  },
+  {
+    "teal": 244,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
+    "pc": [
       321,
       322
     ]
   },
   {
-    "teal": 262,
-    "source": "contracts/BalancedPoolV2.algo.ts:46",
+    "teal": 245,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
-      323,
-      324
+      323
     ]
   },
   {
-    "teal": 263,
-    "source": "contracts/BalancedPoolV2.algo.ts:46",
+    "teal": 246,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
-      325
-    ]
-  },
-  {
-    "teal": 264,
-    "source": "contracts/BalancedPoolV2.algo.ts:46",
-    "pc": [
+      324,
+      325,
       326
     ]
   },
   {
-    "teal": 265,
-    "source": "contracts/BalancedPoolV2.algo.ts:46",
+    "teal": 247,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
-      327
-    ]
-  },
-  {
-    "teal": 266,
-    "source": "contracts/BalancedPoolV2.algo.ts:43",
-    "pc": [
+      327,
       328
     ]
   },
   {
-    "teal": 271,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 248,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
-      329,
+      329
+    ]
+  },
+  {
+    "teal": 249,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
+    "pc": [
       330,
       331
     ]
   },
   {
-    "teal": 272,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 250,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
       332
     ]
   },
   {
-    "teal": 275,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 251,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
-      333,
-      334,
-      335
+      333
     ]
   },
   {
-    "teal": 276,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 252,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
+      334
+    ]
+  },
+  {
+    "teal": 253,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
+    "pc": [
+      335,
       336
     ]
   },
   {
-    "teal": 277,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 254,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
       337
     ]
   },
   {
-    "teal": 281,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 255,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
-      338,
-      339,
+      338
+    ]
+  },
+  {
+    "teal": 256,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
+    "pc": [
+      339
+    ]
+  },
+  {
+    "teal": 257,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
+    "pc": [
       340
     ]
   },
   {
-    "teal": 286,
-    "source": "contracts/BalancedPoolV2.algo.ts:92",
+    "teal": 258,
+    "source": "contracts/BalancedPoolV2.algo.ts:49",
     "pc": [
       341,
       342
     ]
   },
   {
-    "teal": 287,
-    "source": "contracts/BalancedPoolV2.algo.ts:92",
+    "teal": 262,
+    "source": "contracts/BalancedPoolV2.algo.ts:50",
     "pc": [
       343,
-      344
-    ]
-  },
-  {
-    "teal": 288,
-    "source": "contracts/BalancedPoolV2.algo.ts:92",
-    "pc": [
+      344,
       345,
-      346
-    ]
-  },
-  {
-    "teal": 289,
-    "source": "contracts/BalancedPoolV2.algo.ts:92",
-    "pc": [
-      347
-    ]
-  },
-  {
-    "teal": 290,
-    "source": "contracts/BalancedPoolV2.algo.ts:92",
-    "pc": [
-      348
-    ]
-  },
-  {
-    "teal": 291,
-    "source": "contracts/BalancedPoolV2.algo.ts:92",
-    "pc": [
+      346,
+      347,
+      348,
       349,
       350,
-      351
-    ]
-  },
-  {
-    "teal": 296,
-    "source": "contracts/BalancedPoolV2.algo.ts:93",
-    "pc": [
-      352
-    ]
-  },
-  {
-    "teal": 305,
-    "source": "contracts/BalancedPoolV2.algo.ts:96",
-    "pc": [
-      353
-    ]
-  },
-  {
-    "teal": 306,
-    "source": "contracts/BalancedPoolV2.algo.ts:96",
-    "pc": [
+      351,
+      352,
+      353,
       354,
-      355
+      355,
+      356
     ]
   },
   {
-    "teal": 307,
-    "source": "contracts/BalancedPoolV2.algo.ts:96",
+    "teal": 263,
+    "source": "contracts/BalancedPoolV2.algo.ts:50",
     "pc": [
-      356,
-      357
+      357,
+      358
     ]
   },
   {
-    "teal": 311,
-    "source": "contracts/BalancedPoolV2.algo.ts:97",
+    "teal": 264,
+    "source": "contracts/BalancedPoolV2.algo.ts:50",
     "pc": [
-      358,
       359
     ]
   },
   {
-    "teal": 312,
-    "source": "contracts/BalancedPoolV2.algo.ts:97",
+    "teal": 265,
+    "source": "contracts/BalancedPoolV2.algo.ts:50",
     "pc": [
-      360,
+      360
+    ]
+  },
+  {
+    "teal": 266,
+    "source": "contracts/BalancedPoolV2.algo.ts:50",
+    "pc": [
       361
     ]
   },
   {
-    "teal": 316,
-    "source": "contracts/BalancedPoolV2.algo.ts:98",
+    "teal": 270,
+    "source": "contracts/BalancedPoolV2.algo.ts:52",
     "pc": [
       362,
       363
     ]
   },
   {
-    "teal": 317,
-    "source": "contracts/BalancedPoolV2.algo.ts:98",
+    "teal": 271,
+    "source": "contracts/BalancedPoolV2.algo.ts:52",
     "pc": [
       364,
-      365
-    ]
-  },
-  {
-    "teal": 321,
-    "source": "contracts/BalancedPoolV2.algo.ts:99",
-    "pc": [
+      365,
       366
     ]
   },
   {
-    "teal": 322,
-    "source": "contracts/BalancedPoolV2.algo.ts:99",
+    "teal": 275,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
       367,
       368
     ]
   },
   {
-    "teal": 325,
-    "source": "contracts/BalancedPoolV2.algo.ts:96",
+    "teal": 276,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
-      369
+      369,
+      370
     ]
   },
   {
-    "teal": 326,
-    "source": "contracts/BalancedPoolV2.algo.ts:96",
+    "teal": 277,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
-      370,
       371
     ]
   },
   {
-    "teal": 329,
-    "source": "contracts/BalancedPoolV2.algo.ts:96",
+    "teal": 278,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
       372
     ]
   },
   {
-    "teal": 330,
-    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "teal": 279,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
       373
     ]
   },
   {
-    "teal": 334,
-    "source": "contracts/BalancedPoolV2.algo.ts:103",
+    "teal": 282,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
+    "errorMessage": "box value does not exist: this.balances(assetId).value",
     "pc": [
-      374,
-      375,
-      376
+      374
     ]
   },
   {
-    "teal": 339,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 283,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
+      375
+    ]
+  },
+  {
+    "teal": 284,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
+    "pc": [
+      376,
       377
     ]
   },
   {
-    "teal": 340,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 285,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
-      378,
-      379
+      378
     ]
   },
   {
-    "teal": 341,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 286,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
+      379,
       380
     ]
   },
   {
-    "teal": 342,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 287,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
-      381
-    ]
-  },
-  {
-    "teal": 343,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
-    "pc": [
+      381,
       382
     ]
   },
   {
-    "teal": 344,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 288,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
       383
     ]
   },
   {
-    "teal": 345,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 289,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
       384
     ]
   },
   {
-    "teal": 346,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 290,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
       385
     ]
   },
   {
-    "teal": 347,
-    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "teal": 291,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
     "pc": [
-      386,
-      387,
+      386
+    ]
+  },
+  {
+    "teal": 292,
+    "source": "contracts/BalancedPoolV2.algo.ts:53",
+    "pc": [
+      387
+    ]
+  },
+  {
+    "teal": 297,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
+    "pc": [
       388
     ]
   },
   {
-    "teal": 352,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 298,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
-      389
+      389,
+      390
     ]
   },
   {
-    "teal": 353,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 299,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
-      390,
       391
     ]
   },
   {
-    "teal": 354,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 300,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
       392
     ]
   },
   {
-    "teal": 355,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 301,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
       393
     ]
   },
   {
-    "teal": 356,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 302,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
       394
     ]
   },
   {
-    "teal": 357,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 303,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
       395
     ]
   },
   {
-    "teal": 358,
-    "source": "contracts/BalancedPoolV2.algo.ts:105",
+    "teal": 304,
+    "source": "contracts/BalancedPoolV2.algo.ts:55",
     "pc": [
-      396
+      396,
+      397,
+      398
     ]
   },
   {
-    "teal": 364,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
+    "teal": 309,
+    "source": "contracts/BalancedPoolV2.algo.ts:56",
     "pc": [
-      397
-    ]
-  },
-  {
-    "teal": 365,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
-    "pc": [
-      398,
       399
     ]
   },
   {
-    "teal": 366,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
+    "teal": 310,
+    "source": "contracts/BalancedPoolV2.algo.ts:56",
     "pc": [
-      400
-    ]
-  },
-  {
-    "teal": 367,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
-    "pc": [
+      400,
       401
     ]
   },
   {
-    "teal": 368,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
+    "teal": 311,
+    "source": "contracts/BalancedPoolV2.algo.ts:56",
     "pc": [
       402
     ]
   },
   {
-    "teal": 369,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
+    "teal": 312,
+    "source": "contracts/BalancedPoolV2.algo.ts:56",
     "pc": [
-      403
-    ]
-  },
-  {
-    "teal": 370,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
-    "pc": [
+      403,
       404
     ]
   },
   {
-    "teal": 371,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
+    "teal": 313,
+    "source": "contracts/BalancedPoolV2.algo.ts:56",
     "pc": [
       405
     ]
   },
   {
-    "teal": 372,
-    "source": "contracts/BalancedPoolV2.algo.ts:108",
+    "teal": 314,
+    "source": "contracts/BalancedPoolV2.algo.ts:56",
     "pc": [
-      406,
-      407,
-      408
+      406
     ]
   },
   {
-    "teal": 377,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "teal": 319,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
+      407
+    ]
+  },
+  {
+    "teal": 320,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
+      408,
       409
     ]
   },
   {
-    "teal": 378,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "teal": 321,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      410,
+      410
+    ]
+  },
+  {
+    "teal": 322,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       411
     ]
   },
   {
-    "teal": 379,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "teal": 325,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "errorMessage": "box value does not exist: this.provided(sender).value",
     "pc": [
       412
     ]
   },
   {
-    "teal": 380,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "teal": 326,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      413
-    ]
-  },
-  {
-    "teal": 381,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
-    "pc": [
-      414
-    ]
-  },
-  {
-    "teal": 382,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
-    "pc": [
+      413,
+      414,
       415
     ]
   },
   {
-    "teal": 383,
-    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "teal": 327,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      416
-    ]
-  },
-  {
-    "teal": 388,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
-    "pc": [
+      416,
       417
     ]
   },
   {
-    "teal": 389,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
+    "teal": 328,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      418,
-      419
+      418
     ]
   },
   {
-    "teal": 390,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
+    "teal": 329,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
+      419,
       420
     ]
   },
   {
-    "teal": 391,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
+    "teal": 330,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       421
     ]
   },
   {
-    "teal": 392,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
+    "teal": 331,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      422,
+      422
+    ]
+  },
+  {
+    "teal": 332,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       423
     ]
   },
   {
-    "teal": 393,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
+    "teal": 333,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      424
-    ]
-  },
-  {
-    "teal": 394,
-    "source": "contracts/BalancedPoolV2.algo.ts:112",
-    "pc": [
+      424,
       425
     ]
   },
   {
-    "teal": 398,
-    "source": "contracts/BalancedPoolV2.algo.ts:113",
+    "teal": 334,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       426
     ]
   },
   {
-    "teal": 399,
-    "source": "contracts/BalancedPoolV2.algo.ts:113",
+    "teal": 335,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      427,
-      428
+      427
     ]
   },
   {
-    "teal": 400,
-    "source": "contracts/BalancedPoolV2.algo.ts:113",
+    "teal": 336,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
+      428,
       429
     ]
   },
   {
-    "teal": 401,
-    "source": "contracts/BalancedPoolV2.algo.ts:113",
+    "teal": 337,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       430
     ]
   },
   {
-    "teal": 402,
-    "source": "contracts/BalancedPoolV2.algo.ts:113",
+    "teal": 338,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      431,
-      432,
+      431
+    ]
+  },
+  {
+    "teal": 341,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "errorMessage": "box value does not exist: this.provided(sender).value",
+    "pc": [
+      432
+    ]
+  },
+  {
+    "teal": 342,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       433,
       434,
-      435,
+      435
+    ]
+  },
+  {
+    "teal": 343,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       436,
-      437,
-      438,
+      437
+    ]
+  },
+  {
+    "teal": 344,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
+      438
+    ]
+  },
+  {
+    "teal": 345,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       439,
       440
     ]
   },
   {
-    "teal": 403,
-    "source": "contracts/BalancedPoolV2.algo.ts:113",
+    "teal": 346,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       441
     ]
   },
   {
-    "teal": 404,
-    "source": "contracts/BalancedPoolV2.algo.ts:103",
+    "teal": 347,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       442
     ]
   },
   {
-    "teal": 408,
-    "source": "contracts/BalancedPoolV2.algo.ts:116",
+    "teal": 348,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      443,
+      443
+    ]
+  },
+  {
+    "teal": 349,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       444,
       445
     ]
   },
   {
-    "teal": 412,
-    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "teal": 350,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      446,
+      446
+    ]
+  },
+  {
+    "teal": 351,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       447
     ]
   },
   {
-    "teal": 413,
-    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "teal": 352,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      448,
+      448
+    ]
+  },
+  {
+    "teal": 353,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       449
     ]
   },
   {
-    "teal": 414,
-    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "teal": 354,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      450
-    ]
-  },
-  {
-    "teal": 415,
-    "source": "contracts/BalancedPoolV2.algo.ts:117",
-    "pc": [
+      450,
       451
     ]
   },
   {
-    "teal": 418,
-    "source": "contracts/BalancedPoolV2.algo.ts:117",
-    "errorMessage": "only the manager can call this method",
+    "teal": 355,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       452
     ]
   },
   {
-    "teal": 423,
-    "source": "contracts/BalancedPoolV2.algo.ts:119",
+    "teal": 356,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       453
     ]
   },
   {
-    "teal": 424,
-    "source": "contracts/BalancedPoolV2.algo.ts:119",
+    "teal": 357,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       454
     ]
   },
   {
-    "teal": 425,
-    "source": "contracts/BalancedPoolV2.algo.ts:119",
+    "teal": 358,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       455
     ]
   },
   {
-    "teal": 426,
-    "source": "contracts/BalancedPoolV2.algo.ts:119",
+    "teal": 359,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      456
+      456,
+      457
     ]
   },
   {
-    "teal": 427,
-    "source": "contracts/BalancedPoolV2.algo.ts:119",
+    "teal": 360,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      457,
-      458,
+      458
+    ]
+  },
+  {
+    "teal": 361,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       459
     ]
   },
   {
-    "teal": 442,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 362,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       460
     ]
   },
   {
-    "teal": 443,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 363,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       461
     ]
   },
   {
-    "teal": 444,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 364,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      462,
+      462
+    ]
+  },
+  {
+    "teal": 365,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       463
     ]
   },
   {
-    "teal": 445,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 366,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      464,
+      464
+    ]
+  },
+  {
+    "teal": 367,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       465
     ]
   },
   {
-    "teal": 449,
-    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "teal": 368,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      466,
+      466
+    ]
+  },
+  {
+    "teal": 369,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       467
     ]
   },
   {
-    "teal": 450,
-    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "teal": 370,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
       468,
-      469
-    ]
-  },
-  {
-    "teal": 451,
-    "source": "contracts/BalancedPoolV2.algo.ts:121",
-    "pc": [
+      469,
       470
     ]
   },
   {
-    "teal": 452,
-    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "teal": 371,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      471,
+      471
+    ]
+  },
+  {
+    "teal": 372,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
+    "pc": [
       472
     ]
   },
   {
-    "teal": 456,
-    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "teal": 373,
+    "source": "contracts/BalancedPoolV2.algo.ts:59",
     "pc": [
-      473,
-      474
+      473
     ]
   },
   {
-    "teal": 457,
-    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "teal": 377,
+    "source": "contracts/BalancedPoolV2.algo.ts:61",
     "pc": [
-      475,
-      476
+      474,
+      475
     ]
   },
   {
-    "teal": 461,
-    "source": "contracts/BalancedPoolV2.algo.ts:123",
+    "teal": 378,
+    "source": "contracts/BalancedPoolV2.algo.ts:61",
     "pc": [
-      477,
-      478
+      476,
+      477
     ]
   },
   {
-    "teal": 462,
-    "source": "contracts/BalancedPoolV2.algo.ts:123",
+    "teal": 379,
+    "source": "contracts/BalancedPoolV2.algo.ts:61",
     "pc": [
+      478,
       479,
       480
     ]
   },
   {
-    "teal": 466,
-    "source": "contracts/BalancedPoolV2.algo.ts:124",
+    "teal": 380,
+    "source": "contracts/BalancedPoolV2.algo.ts:61",
     "pc": [
       481,
       482
     ]
   },
   {
-    "teal": 467,
-    "source": "contracts/BalancedPoolV2.algo.ts:124",
+    "teal": 385,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
     "pc": [
-      483,
-      484
+      483
     ]
   },
   {
-    "teal": 471,
-    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "teal": 386,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
     "pc": [
-      485,
+      484,
+      485
+    ]
+  },
+  {
+    "teal": 387,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
+    "pc": [
       486
     ]
   },
   {
-    "teal": 472,
-    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "teal": 388,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
     "pc": [
-      487,
+      487
+    ]
+  },
+  {
+    "teal": 389,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
+    "pc": [
       488
     ]
   },
   {
-    "teal": 476,
-    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "teal": 390,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
     "pc": [
-      489,
+      489
+    ]
+  },
+  {
+    "teal": 391,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
+    "pc": [
       490
     ]
   },
   {
-    "teal": 477,
-    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "teal": 392,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
     "pc": [
       491,
-      492
-    ]
-  },
-  {
-    "teal": 481,
-    "source": "contracts/BalancedPoolV2.algo.ts:127",
-    "pc": [
+      492,
       493
     ]
   },
   {
-    "teal": 482,
-    "source": "contracts/BalancedPoolV2.algo.ts:127",
+    "teal": 397,
+    "source": "contracts/BalancedPoolV2.algo.ts:64",
     "pc": [
-      494,
-      495
+      494
     ]
   },
   {
-    "teal": 486,
-    "source": "contracts/BalancedPoolV2.algo.ts:128",
+    "teal": 398,
+    "source": "contracts/BalancedPoolV2.algo.ts:64",
     "pc": [
-      496,
-      497,
-      498,
-      499,
-      500,
-      501,
+      495,
+      496
+    ]
+  },
+  {
+    "teal": 399,
+    "source": "contracts/BalancedPoolV2.algo.ts:64",
+    "pc": [
+      497
+    ]
+  },
+  {
+    "teal": 400,
+    "source": "contracts/BalancedPoolV2.algo.ts:64",
+    "pc": [
+      498
+    ]
+  },
+  {
+    "teal": 401,
+    "source": "contracts/BalancedPoolV2.algo.ts:64",
+    "pc": [
+      499
+    ]
+  },
+  {
+    "teal": 402,
+    "source": "contracts/BalancedPoolV2.algo.ts:64",
+    "pc": [
+      500
+    ]
+  },
+  {
+    "teal": 406,
+    "source": "contracts/BalancedPoolV2.algo.ts:65",
+    "pc": [
+      501
+    ]
+  },
+  {
+    "teal": 407,
+    "source": "contracts/BalancedPoolV2.algo.ts:65",
+    "pc": [
       502,
-      503,
-      504,
+      503
+    ]
+  },
+  {
+    "teal": 408,
+    "source": "contracts/BalancedPoolV2.algo.ts:65",
+    "pc": [
+      504
+    ]
+  },
+  {
+    "teal": 409,
+    "source": "contracts/BalancedPoolV2.algo.ts:65",
+    "pc": [
       505,
-      506,
-      507,
-      508,
+      506
+    ]
+  },
+  {
+    "teal": 410,
+    "source": "contracts/BalancedPoolV2.algo.ts:65",
+    "pc": [
+      507
+    ]
+  },
+  {
+    "teal": 411,
+    "source": "contracts/BalancedPoolV2.algo.ts:65",
+    "pc": [
+      508
+    ]
+  },
+  {
+    "teal": 412,
+    "source": "contracts/BalancedPoolV2.algo.ts:63",
+    "pc": [
       509,
-      510
+      510,
+      511
     ]
   },
   {
-    "teal": 487,
-    "source": "contracts/BalancedPoolV2.algo.ts:128",
+    "teal": 417,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
-      511,
-      512,
-      513
+      512
     ]
   },
   {
-    "teal": 488,
-    "source": "contracts/BalancedPoolV2.algo.ts:128",
+    "teal": 418,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
+      513,
       514
     ]
   },
   {
-    "teal": 489,
-    "source": "contracts/BalancedPoolV2.algo.ts:128",
+    "teal": 419,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
       515
     ]
   },
   {
-    "teal": 490,
-    "source": "contracts/BalancedPoolV2.algo.ts:128",
+    "teal": 420,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
-      516,
+      516
+    ]
+  },
+  {
+    "teal": 423,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
+    "errorMessage": "box value does not exist: this.minRatios(sender).value",
+    "pc": [
       517
     ]
   },
   {
-    "teal": 494,
-    "source": "contracts/BalancedPoolV2.algo.ts:129",
+    "teal": 424,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
-      518,
-      519,
-      520,
-      521
+      518
     ]
   },
   {
-    "teal": 495,
-    "source": "contracts/BalancedPoolV2.algo.ts:129",
+    "teal": 425,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
+      519
+    ]
+  },
+  {
+    "teal": 426,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
+    "pc": [
+      520
+    ]
+  },
+  {
+    "teal": 427,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
+    "pc": [
+      521,
       522,
       523
     ]
   },
   {
-    "teal": 498,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 432,
+    "source": "contracts/BalancedPoolV2.algo.ts:68",
     "pc": [
       524
     ]
   },
   {
-    "teal": 499,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 433,
+    "source": "contracts/BalancedPoolV2.algo.ts:68",
     "pc": [
       525,
       526
     ]
   },
   {
-    "teal": 502,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 434,
+    "source": "contracts/BalancedPoolV2.algo.ts:68",
     "pc": [
       527
     ]
   },
   {
-    "teal": 503,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 435,
+    "source": "contracts/BalancedPoolV2.algo.ts:68",
     "pc": [
       528,
       529
     ]
   },
   {
-    "teal": 504,
-    "source": "contracts/BalancedPoolV2.algo.ts:120",
+    "teal": 436,
+    "source": "contracts/BalancedPoolV2.algo.ts:68",
     "pc": [
       530
     ]
   },
   {
-    "teal": 507,
-    "source": "contracts/BalancedPoolV2.algo.ts:116",
+    "teal": 437,
+    "source": "contracts/BalancedPoolV2.algo.ts:68",
     "pc": [
       531
     ]
   },
   {
-    "teal": 511,
-    "source": "contracts/BalancedPoolV2.algo.ts:134",
+    "teal": 438,
+    "source": "contracts/BalancedPoolV2.algo.ts:67",
     "pc": [
       532,
       533,
@@ -2178,1083 +2217,1245 @@
     ]
   },
   {
-    "teal": 515,
-    "source": "contracts/BalancedPoolV2.algo.ts:135",
+    "teal": 443,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
     "pc": [
-      535,
-      536
+      535
     ]
   },
   {
-    "teal": 516,
-    "source": "contracts/BalancedPoolV2.algo.ts:135",
+    "teal": 444,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
     "pc": [
-      537,
+      536,
+      537
+    ]
+  },
+  {
+    "teal": 445,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
+    "pc": [
       538
     ]
   },
   {
-    "teal": 517,
-    "source": "contracts/BalancedPoolV2.algo.ts:135",
+    "teal": 446,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
     "pc": [
       539
     ]
   },
   {
-    "teal": 518,
-    "source": "contracts/BalancedPoolV2.algo.ts:135",
+    "teal": 449,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
+    "errorMessage": "box value does not exist: this.minRatios(sender).value",
     "pc": [
       540
     ]
   },
   {
-    "teal": 521,
-    "source": "contracts/BalancedPoolV2.algo.ts:135",
-    "errorMessage": "only the manager can call this method",
+    "teal": 450,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
     "pc": [
       541
     ]
   },
   {
-    "teal": 522,
-    "source": "contracts/BalancedPoolV2.algo.ts:134",
+    "teal": 451,
+    "source": "contracts/BalancedPoolV2.algo.ts:70",
     "pc": [
-      542
+      542,
+      543
     ]
   },
   {
-    "teal": 528,
-    "source": "contracts/BalancedPoolV2.algo.ts:141",
+    "teal": 456,
+    "source": "contracts/BalancedPoolV2.algo.ts:72",
     "pc": [
-      543,
       544,
       545
     ]
   },
   {
-    "teal": 531,
-    "source": "contracts/BalancedPoolV2.algo.ts:141",
+    "teal": 457,
+    "source": "contracts/BalancedPoolV2.algo.ts:72",
     "pc": [
-      546
+      546,
+      547
     ]
   },
   {
-    "teal": 532,
-    "source": "contracts/BalancedPoolV2.algo.ts:141",
+    "teal": 458,
+    "source": "contracts/BalancedPoolV2.algo.ts:72",
     "pc": [
-      547,
       548
     ]
   },
   {
-    "teal": 536,
-    "source": "contracts/BalancedPoolV2.algo.ts:142",
+    "teal": 459,
+    "source": "contracts/BalancedPoolV2.algo.ts:72",
     "pc": [
       549,
-      550
-    ]
-  },
-  {
-    "teal": 537,
-    "source": "contracts/BalancedPoolV2.algo.ts:142",
-    "pc": [
+      550,
       551
     ]
   },
   {
-    "teal": 538,
-    "source": "contracts/BalancedPoolV2.algo.ts:142",
+    "teal": 464,
+    "source": "contracts/BalancedPoolV2.algo.ts:73",
     "pc": [
       552
     ]
   },
   {
-    "teal": 541,
-    "source": "contracts/BalancedPoolV2.algo.ts:142",
-    "errorMessage": "log undefined for x ≤ 0",
+    "teal": 465,
+    "source": "contracts/BalancedPoolV2.algo.ts:73",
     "pc": [
-      553
+      553,
+      554
     ]
   },
   {
-    "teal": 545,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 466,
+    "source": "contracts/BalancedPoolV2.algo.ts:73",
     "pc": [
-      554,
       555
     ]
   },
   {
-    "teal": 546,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 467,
+    "source": "contracts/BalancedPoolV2.algo.ts:73",
     "pc": [
-      556
-    ]
-  },
-  {
-    "teal": 547,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
-    "pc": [
+      556,
       557
     ]
   },
   {
-    "teal": 548,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 468,
+    "source": "contracts/BalancedPoolV2.algo.ts:73",
     "pc": [
       558
     ]
   },
   {
-    "teal": 549,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 469,
+    "source": "contracts/BalancedPoolV2.algo.ts:73",
     "pc": [
       559
     ]
   },
   {
-    "teal": 550,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 474,
+    "source": "contracts/BalancedPoolV2.algo.ts:47",
     "pc": [
-      560,
-      561
+      560
     ]
   },
   {
-    "teal": 551,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 479,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      562
+      561,
+      562,
+      563
     ]
   },
   {
-    "teal": 552,
-    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "teal": 480,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      563,
       564
     ]
   },
   {
-    "teal": 556,
-    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "teal": 481,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      565,
-      566
+      565
     ]
   },
   {
-    "teal": 557,
-    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "teal": 482,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      567,
+      566,
+      567
+    ]
+  },
+  {
+    "teal": 483,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
+    "pc": [
       568
     ]
   },
   {
-    "teal": 561,
-    "source": "contracts/BalancedPoolV2.algo.ts:147",
+    "teal": 486,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
+    "errorMessage": "argument 0 (sender) for computeLiquidity must be a address",
     "pc": [
-      569,
-      570
+      569
     ]
   },
   {
-    "teal": 562,
-    "source": "contracts/BalancedPoolV2.algo.ts:147",
+    "teal": 489,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
+      570,
       571,
       572
     ]
   },
   {
-    "teal": 566,
-    "source": "contracts/BalancedPoolV2.algo.ts:148",
+    "teal": 490,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
       573
     ]
   },
   {
-    "teal": 567,
-    "source": "contracts/BalancedPoolV2.algo.ts:148",
+    "teal": 491,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      574,
-      575
+      574
     ]
   },
   {
-    "teal": 571,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 495,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
+      575,
       576,
       577
     ]
   },
   {
-    "teal": 572,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 498,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      578,
-      579
+      578
     ]
   },
   {
-    "teal": 577,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 499,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
-      580,
+      579,
+      580
+    ]
+  },
+  {
+    "teal": 503,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
+    "pc": [
       581
     ]
   },
   {
-    "teal": 578,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 504,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
     "pc": [
       582,
       583
     ]
   },
   {
-    "teal": 579,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 505,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
     "pc": [
       584
     ]
   },
   {
-    "teal": 580,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 506,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
     "pc": [
-      585,
-      586,
+      585
+    ]
+  },
+  {
+    "teal": 509,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
+    "errorMessage": "box value does not exist: this.minRatios(sender).value",
+    "pc": [
+      586
+    ]
+  },
+  {
+    "teal": 510,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
+    "pc": [
       587
     ]
   },
   {
-    "teal": 584,
-    "source": "contracts/BalancedPoolV2.algo.ts:151",
+    "teal": 511,
+    "source": "contracts/BalancedPoolV2.algo.ts:79",
     "pc": [
       588,
       589
     ]
   },
   {
-    "teal": 585,
-    "source": "contracts/BalancedPoolV2.algo.ts:151",
+    "teal": 515,
+    "source": "contracts/BalancedPoolV2.algo.ts:81",
     "pc": [
       590,
       591
     ]
   },
   {
-    "teal": 586,
-    "source": "contracts/BalancedPoolV2.algo.ts:151",
+    "teal": 516,
+    "source": "contracts/BalancedPoolV2.algo.ts:81",
     "pc": [
       592
     ]
   },
   {
-    "teal": 587,
-    "source": "contracts/BalancedPoolV2.algo.ts:151",
+    "teal": 517,
+    "source": "contracts/BalancedPoolV2.algo.ts:81",
     "pc": [
       593
     ]
   },
   {
-    "teal": 588,
-    "source": "contracts/BalancedPoolV2.algo.ts:151",
+    "teal": 520,
+    "source": "contracts/BalancedPoolV2.algo.ts:81",
+    "errorMessage": "computed ratio is zero",
     "pc": [
       594
     ]
   },
   {
-    "teal": 589,
-    "source": "contracts/BalancedPoolV2.algo.ts:151",
+    "teal": 524,
+    "source": "contracts/BalancedPoolV2.algo.ts:4",
     "pc": [
       595,
-      596
-    ]
-  },
-  {
-    "teal": 593,
-    "source": "contracts/BalancedPoolV2.algo.ts:152",
-    "pc": [
+      596,
       597,
       598
     ]
   },
   {
-    "teal": 594,
-    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "teal": 525,
+    "source": "contracts/BalancedPoolV2.algo.ts:4",
     "pc": [
       599,
       600
     ]
   },
   {
-    "teal": 595,
-    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "teal": 526,
+    "source": "contracts/BalancedPoolV2.algo.ts:4",
     "pc": [
-      601
+      601,
+      602
     ]
   },
   {
-    "teal": 596,
-    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "teal": 527,
+    "source": "contracts/BalancedPoolV2.algo.ts:4",
     "pc": [
-      602,
       603
     ]
   },
   {
-    "teal": 600,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 528,
+    "source": "contracts/BalancedPoolV2.algo.ts:4",
     "pc": [
-      604,
-      605
+      604
     ]
   },
   {
-    "teal": 601,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 529,
+    "source": "contracts/BalancedPoolV2.algo.ts:83",
     "pc": [
-      606,
-      607,
+      605,
+      606
+    ]
+  },
+  {
+    "teal": 534,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
+    "pc": [
+      607
+    ]
+  },
+  {
+    "teal": 535,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
+    "pc": [
       608
     ]
   },
   {
-    "teal": 602,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 536,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
     "pc": [
       609,
       610
     ]
   },
   {
-    "teal": 603,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 537,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
     "pc": [
-      611,
+      611
+    ]
+  },
+  {
+    "teal": 538,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
+    "pc": [
       612
     ]
   },
   {
-    "teal": 604,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 539,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
     "pc": [
       613
     ]
   },
   {
-    "teal": 605,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 540,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
     "pc": [
       614,
-      615,
+      615
+    ]
+  },
+  {
+    "teal": 541,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
+    "pc": [
       616
     ]
   },
   {
-    "teal": 608,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 542,
+    "source": "contracts/BalancedPoolV2.algo.ts:3",
     "pc": [
       617,
       618
     ]
   },
   {
-    "teal": 609,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 543,
+    "source": "contracts/BalancedPoolV2.algo.ts:3",
     "pc": [
       619,
       620
     ]
   },
   {
-    "teal": 610,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 544,
+    "source": "contracts/BalancedPoolV2.algo.ts:3",
     "pc": [
       621
     ]
   },
   {
-    "teal": 613,
-    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "teal": 545,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
     "pc": [
-      622,
-      623
+      622
     ]
   },
   {
-    "teal": 617,
-    "source": "contracts/BalancedPoolV2.algo.ts:154",
+    "teal": 546,
+    "source": "contracts/BalancedPoolV2.algo.ts:84",
     "pc": [
+      623,
       624,
       625
     ]
   },
   {
-    "teal": 618,
-    "source": "contracts/BalancedPoolV2.algo.ts:154",
+    "teal": 551,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
       626
     ]
   },
   {
-    "teal": 619,
-    "source": "contracts/BalancedPoolV2.algo.ts:154",
+    "teal": 552,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
-      627,
-      628
+      627
     ]
   },
   {
-    "teal": 624,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 553,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
-      629,
+      628,
+      629
+    ]
+  },
+  {
+    "teal": 554,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
+    "pc": [
       630
     ]
   },
   {
-    "teal": 625,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 555,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
       631
     ]
   },
   {
-    "teal": 626,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 556,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
       632
     ]
   },
   {
-    "teal": 627,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 557,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
       633,
       634
     ]
   },
   {
-    "teal": 628,
-    "source": "contracts/BalancedPoolV2.algo.ts:150",
+    "teal": 558,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
-      635,
-      636,
+      635
+    ]
+  },
+  {
+    "teal": 559,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
+    "pc": [
+      636
+    ]
+  },
+  {
+    "teal": 560,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
+    "pc": [
       637
     ]
   },
   {
-    "teal": 633,
-    "source": "contracts/BalancedPoolV2.algo.ts:157",
+    "teal": 561,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
       638,
       639
     ]
   },
   {
-    "teal": 636,
-    "source": "contracts/BalancedPoolV2.algo.ts:141",
+    "teal": 562,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
-      640,
+      640
+    ]
+  },
+  {
+    "teal": 563,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
+    "pc": [
       641
     ]
   },
   {
-    "teal": 639,
-    "source": "contracts/BalancedPoolV2.algo.ts:141",
+    "teal": 564,
+    "source": "contracts/BalancedPoolV2.algo.ts:85",
     "pc": [
       642,
       643
     ]
   },
   {
-    "teal": 640,
-    "source": "contracts/BalancedPoolV2.algo.ts:141",
+    "teal": 568,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
-      644
+      644,
+      645
     ]
   },
   {
-    "teal": 646,
-    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "teal": 569,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
-      645,
       646,
       647
     ]
   },
   {
-    "teal": 649,
-    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "teal": 570,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
       648
     ]
   },
   {
-    "teal": 650,
-    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "teal": 571,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
-      649,
+      649
+    ]
+  },
+  {
+    "teal": 572,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
+    "pc": [
       650
     ]
   },
   {
-    "teal": 654,
-    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "teal": 573,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
       651
     ]
   },
   {
-    "teal": 655,
-    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "teal": 574,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
-      652,
+      652
+    ]
+  },
+  {
+    "teal": 575,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
+    "pc": [
       653
     ]
   },
   {
-    "teal": 659,
-    "source": "contracts/BalancedPoolV2.algo.ts:165",
+    "teal": 576,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
       654
     ]
   },
   {
-    "teal": 660,
-    "source": "contracts/BalancedPoolV2.algo.ts:165",
+    "teal": 577,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
-      655,
+      655
+    ]
+  },
+  {
+    "teal": 580,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
+    "errorMessage": "wideRatio failed",
+    "pc": [
       656
     ]
   },
   {
-    "teal": 664,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 581,
+    "source": "contracts/BalancedPoolV2.algo.ts:86",
     "pc": [
-      657
+      657,
+      658
     ]
   },
   {
-    "teal": 665,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 586,
+    "source": "contracts/BalancedPoolV2.algo.ts:89",
     "pc": [
-      658,
-      659
+      659,
+      660
     ]
   },
   {
-    "teal": 670,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 587,
+    "source": "contracts/BalancedPoolV2.algo.ts:89",
     "pc": [
-      660,
       661
     ]
   },
   {
-    "teal": 671,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 588,
+    "source": "contracts/BalancedPoolV2.algo.ts:89",
     "pc": [
-      662,
+      662
+    ]
+  },
+  {
+    "teal": 591,
+    "source": "contracts/BalancedPoolV2.algo.ts:89",
+    "errorMessage": "computed LP amount is zero",
+    "pc": [
       663
     ]
   },
   {
-    "teal": 672,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 595,
+    "source": "contracts/BalancedPoolV2.algo.ts:91",
     "pc": [
       664
     ]
   },
   {
-    "teal": 673,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 596,
+    "source": "contracts/BalancedPoolV2.algo.ts:91",
     "pc": [
       665,
-      666,
+      666
+    ]
+  },
+  {
+    "teal": 597,
+    "source": "contracts/BalancedPoolV2.algo.ts:91",
+    "pc": [
       667
     ]
   },
   {
-    "teal": 677,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 598,
+    "source": "contracts/BalancedPoolV2.algo.ts:91",
     "pc": [
       668,
       669
     ]
   },
   {
-    "teal": 678,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 599,
+    "source": "contracts/BalancedPoolV2.algo.ts:91",
     "pc": [
-      670,
+      670
+    ]
+  },
+  {
+    "teal": 603,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
+    "pc": [
       671
     ]
   },
   {
-    "teal": 679,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 604,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      672
+      672,
+      673
     ]
   },
   {
-    "teal": 680,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 609,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      673,
-      674
-    ]
-  },
-  {
-    "teal": 681,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
-    "pc": [
+      674,
       675
     ]
   },
   {
-    "teal": 682,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 610,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
       676
     ]
   },
   {
-    "teal": 683,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 611,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      677
+      677,
+      678
     ]
   },
   {
-    "teal": 684,
-    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "teal": 612,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      678,
       679
     ]
   },
   {
-    "teal": 688,
-    "source": "contracts/BalancedPoolV2.algo.ts:169",
+    "teal": 613,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      680,
+      680
+    ]
+  },
+  {
+    "teal": 616,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
+    "errorMessage": "box value does not exist: this.provided(sender).value",
+    "pc": [
       681
     ]
   },
   {
-    "teal": 689,
-    "source": "contracts/BalancedPoolV2.algo.ts:169",
+    "teal": 617,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
       682,
-      683
-    ]
-  },
-  {
-    "teal": 690,
-    "source": "contracts/BalancedPoolV2.algo.ts:169",
-    "pc": [
+      683,
       684
     ]
   },
   {
-    "teal": 691,
-    "source": "contracts/BalancedPoolV2.algo.ts:169",
+    "teal": 618,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      685,
+      685
+    ]
+  },
+  {
+    "teal": 619,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
+    "pc": [
       686
     ]
   },
   {
-    "teal": 696,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 620,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      687,
+      687
+    ]
+  },
+  {
+    "teal": 621,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
+    "pc": [
       688
     ]
   },
   {
-    "teal": 697,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 622,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
-      689
+      689,
+      690,
+      691
     ]
   },
   {
-    "teal": 698,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 626,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      690
-    ]
-  },
-  {
-    "teal": 699,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
-    "pc": [
-      691,
       692
     ]
   },
   {
-    "teal": 700,
-    "source": "contracts/BalancedPoolV2.algo.ts:167",
+    "teal": 627,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       693,
-      694,
+      694
+    ]
+  },
+  {
+    "teal": 628,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       695
     ]
   },
   {
-    "teal": 705,
-    "source": "contracts/BalancedPoolV2.algo.ts:172",
+    "teal": 629,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      696,
+      696
+    ]
+  },
+  {
+    "teal": 632,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "errorMessage": "box value does not exist: this.provided(sender).value",
+    "pc": [
       697
     ]
   },
   {
-    "teal": 708,
-    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "teal": 633,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       698,
-      699
+      699,
+      700
     ]
   },
   {
-    "teal": 711,
-    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "teal": 634,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      700,
-      701
-    ]
-  },
-  {
-    "teal": 712,
-    "source": "contracts/BalancedPoolV2.algo.ts:163",
-    "pc": [
+      701,
       702
     ]
   },
   {
-    "teal": 718,
-    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "teal": 635,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      703,
+      703
+    ]
+  },
+  {
+    "teal": 636,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       704,
       705
     ]
   },
   {
-    "teal": 721,
-    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "teal": 637,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       706
     ]
   },
   {
-    "teal": 722,
-    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "teal": 638,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       707
     ]
   },
   {
-    "teal": 726,
-    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "teal": 639,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      708,
-      709
+      708
     ]
   },
   {
-    "teal": 727,
-    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "teal": 640,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      710,
-      711,
-      712
+      709,
+      710
     ]
   },
   {
-    "teal": 728,
-    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "teal": 641,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      713,
+      711
+    ]
+  },
+  {
+    "teal": 642,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
+      712,
+      713
+    ]
+  },
+  {
+    "teal": 643,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       714
     ]
   },
   {
-    "teal": 732,
-    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "teal": 644,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      715,
-      716
+      715
     ]
   },
   {
-    "teal": 733,
-    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "teal": 645,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      717,
+      716,
+      717
+    ]
+  },
+  {
+    "teal": 646,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       718
     ]
   },
   {
-    "teal": 734,
-    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "teal": 647,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       719
     ]
   },
   {
-    "teal": 735,
-    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "teal": 648,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       720
     ]
   },
   {
-    "teal": 736,
-    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "teal": 649,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       721
     ]
   },
   {
-    "teal": 737,
-    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "teal": 650,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      722,
+      722
+    ]
+  },
+  {
+    "teal": 651,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       723
     ]
   },
   {
-    "teal": 741,
-    "source": "contracts/BalancedPoolV2.algo.ts:181",
+    "teal": 652,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      724,
+      724
+    ]
+  },
+  {
+    "teal": 653,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       725
     ]
   },
   {
-    "teal": 742,
-    "source": "contracts/BalancedPoolV2.algo.ts:181",
+    "teal": 654,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      726,
-      727,
-      728
+      726
     ]
   },
   {
-    "teal": 745,
-    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "teal": 655,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
+      727
+    ]
+  },
+  {
+    "teal": 656,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
+      728,
       729,
       730
     ]
   },
   {
-    "teal": 748,
-    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "teal": 657,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
-      731,
+      731
+    ]
+  },
+  {
+    "teal": 658,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
+    "pc": [
       732
     ]
   },
   {
-    "teal": 749,
-    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "teal": 659,
+    "source": "contracts/BalancedPoolV2.algo.ts:94",
     "pc": [
       733
     ]
   },
   {
-    "teal": 753,
-    "source": "contracts/BalancedPoolV2.algo.ts:184",
+    "teal": 664,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
       734,
-      735,
+      735
+    ]
+  },
+  {
+    "teal": 665,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
+    "pc": [
       736
     ]
   },
   {
-    "teal": 756,
-    "source": "contracts/BalancedPoolV2.algo.ts:184",
+    "teal": 666,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
       737
     ]
   },
   {
-    "teal": 757,
-    "source": "contracts/BalancedPoolV2.algo.ts:184",
+    "teal": 667,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
       738,
       739
     ]
   },
   {
-    "teal": 761,
-    "source": "contracts/BalancedPoolV2.algo.ts:193",
+    "teal": 668,
+    "source": "contracts/BalancedPoolV2.algo.ts:93",
     "pc": [
       740,
-      741
+      741,
+      742
     ]
   },
   {
-    "teal": 762,
-    "source": "contracts/BalancedPoolV2.algo.ts:193",
+    "teal": 677,
+    "source": "contracts/BalancedPoolV2.algo.ts:97",
     "pc": [
-      742,
-      743,
+      743
+    ]
+  },
+  {
+    "teal": 678,
+    "source": "contracts/BalancedPoolV2.algo.ts:97",
+    "pc": [
       744,
       745
     ]
   },
   {
-    "teal": 763,
-    "source": "contracts/BalancedPoolV2.algo.ts:193",
+    "teal": 679,
+    "source": "contracts/BalancedPoolV2.algo.ts:97",
     "pc": [
-      746
-    ]
-  },
-  {
-    "teal": 764,
-    "source": "contracts/BalancedPoolV2.algo.ts:193",
-    "pc": [
+      746,
       747
     ]
   },
   {
-    "teal": 765,
-    "source": "contracts/BalancedPoolV2.algo.ts:193",
+    "teal": 683,
+    "source": "contracts/BalancedPoolV2.algo.ts:98",
     "pc": [
-      748
+      748,
+      749
     ]
   },
   {
-    "teal": 766,
-    "source": "contracts/BalancedPoolV2.algo.ts:193",
+    "teal": 684,
+    "source": "contracts/BalancedPoolV2.algo.ts:98",
     "pc": [
-      749,
-      750
+      750,
+      751
     ]
   },
   {
-    "teal": 770,
-    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "teal": 688,
+    "source": "contracts/BalancedPoolV2.algo.ts:99",
     "pc": [
-      751,
-      752
+      752,
+      753
     ]
   },
   {
-    "teal": 771,
-    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "teal": 689,
+    "source": "contracts/BalancedPoolV2.algo.ts:99",
     "pc": [
-      753,
-      754
+      754,
+      755
     ]
   },
   {
-    "teal": 772,
-    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "teal": 693,
+    "source": "contracts/BalancedPoolV2.algo.ts:100",
     "pc": [
-      755,
       756
     ]
   },
   {
-    "teal": 773,
-    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "teal": 694,
+    "source": "contracts/BalancedPoolV2.algo.ts:100",
     "pc": [
       757
     ]
   },
   {
-    "teal": 774,
-    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "teal": 695,
+    "source": "contracts/BalancedPoolV2.algo.ts:100",
     "pc": [
-      758
+      758,
+      759
     ]
   },
   {
-    "teal": 775,
-    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "teal": 698,
+    "source": "contracts/BalancedPoolV2.algo.ts:97",
     "pc": [
-      759,
       760
     ]
   },
   {
-    "teal": 779,
-    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "teal": 699,
+    "source": "contracts/BalancedPoolV2.algo.ts:97",
     "pc": [
       761,
       762
     ]
   },
   {
-    "teal": 780,
-    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "teal": 702,
+    "source": "contracts/BalancedPoolV2.algo.ts:97",
     "pc": [
       763
     ]
   },
   {
-    "teal": 781,
-    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "teal": 703,
+    "source": "contracts/BalancedPoolV2.algo.ts:78",
     "pc": [
       764
     ]
   },
   {
-    "teal": 782,
-    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "teal": 708,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
     "pc": [
       765,
-      766
-    ]
-  },
-  {
-    "teal": 783,
-    "source": "contracts/BalancedPoolV2.algo.ts:198",
-    "pc": [
+      766,
       767
     ]
   },
   {
-    "teal": 784,
-    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "teal": 709,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
     "pc": [
-      768,
-      769
+      768
     ]
   },
   {
-    "teal": 788,
-    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "teal": 712,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
     "pc": [
+      769,
       770,
       771
     ]
   },
   {
-    "teal": 789,
-    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "teal": 713,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
     "pc": [
-      772,
+      772
+    ]
+  },
+  {
+    "teal": 714,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "pc": [
       773
     ]
   },
   {
-    "teal": 790,
-    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "teal": 718,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
     "pc": [
       774,
       775,
@@ -3262,208 +3463,3019 @@
     ]
   },
   {
-    "teal": 791,
-    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "teal": 723,
+    "source": "contracts/BalancedPoolV2.algo.ts:105",
     "pc": [
       777,
       778
     ]
   },
   {
-    "teal": 795,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
+    "teal": 724,
+    "source": "contracts/BalancedPoolV2.algo.ts:105",
     "pc": [
       779,
       780
     ]
   },
   {
-    "teal": 796,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
+    "teal": 725,
+    "source": "contracts/BalancedPoolV2.algo.ts:105",
     "pc": [
-      781
+      781,
+      782
     ]
   },
   {
-    "teal": 797,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
+    "teal": 726,
+    "source": "contracts/BalancedPoolV2.algo.ts:105",
     "pc": [
-      782,
       783
     ]
   },
   {
-    "teal": 798,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
+    "teal": 727,
+    "source": "contracts/BalancedPoolV2.algo.ts:105",
     "pc": [
       784
     ]
   },
   {
-    "teal": 799,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
+    "teal": 728,
+    "source": "contracts/BalancedPoolV2.algo.ts:105",
     "pc": [
-      785
-    ]
-  },
-  {
-    "teal": 800,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
-    "pc": [
-      786
-    ]
-  },
-  {
-    "teal": 801,
-    "source": "contracts/BalancedPoolV2.algo.ts:203",
-    "pc": [
+      785,
+      786,
       787
     ]
   },
   {
-    "teal": 804,
-    "source": "contracts/BalancedPoolV2.algo.ts:184",
+    "teal": 733,
+    "source": "contracts/BalancedPoolV2.algo.ts:106",
     "pc": [
-      788,
+      788
+    ]
+  },
+  {
+    "teal": 742,
+    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "pc": [
       789
     ]
   },
   {
-    "teal": 807,
-    "source": "contracts/BalancedPoolV2.algo.ts:184",
+    "teal": 743,
+    "source": "contracts/BalancedPoolV2.algo.ts:109",
     "pc": [
       790,
       791
     ]
   },
   {
-    "teal": 808,
-    "source": "contracts/BalancedPoolV2.algo.ts:184",
+    "teal": 744,
+    "source": "contracts/BalancedPoolV2.algo.ts:109",
     "pc": [
-      792
+      792,
+      793
     ]
   },
   {
-    "teal": 811,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 748,
+    "source": "contracts/BalancedPoolV2.algo.ts:110",
     "pc": [
-      793,
-      794
+      794,
+      795
     ]
   },
   {
-    "teal": 812,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 749,
+    "source": "contracts/BalancedPoolV2.algo.ts:110",
     "pc": [
-      795,
       796,
       797
     ]
   },
   {
-    "teal": 813,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 753,
+    "source": "contracts/BalancedPoolV2.algo.ts:111",
     "pc": [
       798,
-      799,
+      799
+    ]
+  },
+  {
+    "teal": 754,
+    "source": "contracts/BalancedPoolV2.algo.ts:111",
+    "pc": [
       800,
-      801,
-      802,
-      803
+      801
     ]
   },
   {
-    "teal": 814,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 758,
+    "source": "contracts/BalancedPoolV2.algo.ts:112",
     "pc": [
-      804,
-      805,
-      806
+      802
     ]
   },
   {
-    "teal": 815,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 759,
+    "source": "contracts/BalancedPoolV2.algo.ts:112",
     "pc": [
-      807,
-      808,
-      809,
-      810
+      803,
+      804
     ]
   },
   {
-    "teal": 818,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+    "teal": 762,
+    "source": "contracts/BalancedPoolV2.algo.ts:109",
     "pc": [
-      811
+      805
     ]
   },
   {
-    "teal": 821,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 763,
+    "source": "contracts/BalancedPoolV2.algo.ts:109",
     "pc": [
-      812,
+      806,
+      807
+    ]
+  },
+  {
+    "teal": 766,
+    "source": "contracts/BalancedPoolV2.algo.ts:109",
+    "pc": [
+      808
+    ]
+  },
+  {
+    "teal": 767,
+    "source": "contracts/BalancedPoolV2.algo.ts:104",
+    "pc": [
+      809
+    ]
+  },
+  {
+    "teal": 771,
+    "source": "contracts/BalancedPoolV2.algo.ts:116",
+    "pc": [
+      810,
+      811,
+      812
+    ]
+  },
+  {
+    "teal": 776,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
       813,
-      814,
+      814
+    ]
+  },
+  {
+    "teal": 777,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
       815,
-      816,
+      816
+    ]
+  },
+  {
+    "teal": 778,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
       817
     ]
   },
   {
-    "teal": 822,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 779,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
     "pc": [
-      818,
-      819,
-      820,
-      821,
-      822,
-      823
+      818
     ]
   },
   {
-    "teal": 823,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 780,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
     "pc": [
+      819
+    ]
+  },
+  {
+    "teal": 781,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
+      820
+    ]
+  },
+  {
+    "teal": 782,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
+      821
+    ]
+  },
+  {
+    "teal": 783,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
+      822
+    ]
+  },
+  {
+    "teal": 784,
+    "source": "contracts/BalancedPoolV2.algo.ts:117",
+    "pc": [
+      823,
       824,
-      825,
+      825
+    ]
+  },
+  {
+    "teal": 789,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
+    "pc": [
       826,
-      827,
+      827
+    ]
+  },
+  {
+    "teal": 790,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
+    "pc": [
       828,
       829
     ]
   },
   {
-    "teal": 824,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 791,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
     "pc": [
-      830,
-      831,
+      830
+    ]
+  },
+  {
+    "teal": 792,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
+    "pc": [
+      831
+    ]
+  },
+  {
+    "teal": 793,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
+    "pc": [
       832
     ]
   },
   {
-    "teal": 825,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
+    "teal": 794,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
     "pc": [
-      833,
-      834,
+      833
+    ]
+  },
+  {
+    "teal": 795,
+    "source": "contracts/BalancedPoolV2.algo.ts:118",
+    "pc": [
+      834
+    ]
+  },
+  {
+    "teal": 801,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
       835,
-      836,
+      836
+    ]
+  },
+  {
+    "teal": 802,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
       837,
-      838,
-      839,
+      838
+    ]
+  },
+  {
+    "teal": 803,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
+      839
+    ]
+  },
+  {
+    "teal": 804,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
       840
     ]
   },
   {
-    "teal": 828,
-    "source": "contracts/BalancedPoolV2.algo.ts:5",
-    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
+    "teal": 805,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
     "pc": [
       841
+    ]
+  },
+  {
+    "teal": 806,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
+      842
+    ]
+  },
+  {
+    "teal": 807,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
+      843
+    ]
+  },
+  {
+    "teal": 808,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
+      844
+    ]
+  },
+  {
+    "teal": 809,
+    "source": "contracts/BalancedPoolV2.algo.ts:121",
+    "pc": [
+      845,
+      846,
+      847
+    ]
+  },
+  {
+    "teal": 814,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      848,
+      849
+    ]
+  },
+  {
+    "teal": 815,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      850,
+      851
+    ]
+  },
+  {
+    "teal": 816,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      852
+    ]
+  },
+  {
+    "teal": 817,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      853
+    ]
+  },
+  {
+    "teal": 818,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      854
+    ]
+  },
+  {
+    "teal": 819,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      855
+    ]
+  },
+  {
+    "teal": 820,
+    "source": "contracts/BalancedPoolV2.algo.ts:122",
+    "pc": [
+      856
+    ]
+  },
+  {
+    "teal": 825,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      857,
+      858
+    ]
+  },
+  {
+    "teal": 826,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      859,
+      860
+    ]
+  },
+  {
+    "teal": 827,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      861
+    ]
+  },
+  {
+    "teal": 828,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      862
+    ]
+  },
+  {
+    "teal": 829,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      863,
+      864
+    ]
+  },
+  {
+    "teal": 830,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      865
+    ]
+  },
+  {
+    "teal": 831,
+    "source": "contracts/BalancedPoolV2.algo.ts:125",
+    "pc": [
+      866
+    ]
+  },
+  {
+    "teal": 835,
+    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "pc": [
+      867,
+      868
+    ]
+  },
+  {
+    "teal": 836,
+    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "pc": [
+      869,
+      870
+    ]
+  },
+  {
+    "teal": 837,
+    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "pc": [
+      871
+    ]
+  },
+  {
+    "teal": 838,
+    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "pc": [
+      872
+    ]
+  },
+  {
+    "teal": 839,
+    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "pc": [
+      873,
+      874
+    ]
+  },
+  {
+    "teal": 840,
+    "source": "contracts/BalancedPoolV2.algo.ts:126",
+    "pc": [
+      875
+    ]
+  },
+  {
+    "teal": 841,
+    "source": "contracts/BalancedPoolV2.algo.ts:116",
+    "pc": [
+      876
+    ]
+  },
+  {
+    "teal": 845,
+    "source": "contracts/BalancedPoolV2.algo.ts:129",
+    "pc": [
+      877,
+      878,
+      879
+    ]
+  },
+  {
+    "teal": 850,
+    "source": "contracts/BalancedPoolV2.algo.ts:130",
+    "pc": [
+      880
+    ]
+  },
+  {
+    "teal": 851,
+    "source": "contracts/BalancedPoolV2.algo.ts:130",
+    "pc": [
+      881
+    ]
+  },
+  {
+    "teal": 852,
+    "source": "contracts/BalancedPoolV2.algo.ts:130",
+    "pc": [
+      882
+    ]
+  },
+  {
+    "teal": 853,
+    "source": "contracts/BalancedPoolV2.algo.ts:130",
+    "pc": [
+      883
+    ]
+  },
+  {
+    "teal": 854,
+    "source": "contracts/BalancedPoolV2.algo.ts:130",
+    "pc": [
+      884,
+      885,
+      886
+    ]
+  },
+  {
+    "teal": 869,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      887
+    ]
+  },
+  {
+    "teal": 870,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      888
+    ]
+  },
+  {
+    "teal": 871,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      889,
+      890
+    ]
+  },
+  {
+    "teal": 872,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      891,
+      892
+    ]
+  },
+  {
+    "teal": 876,
+    "source": "contracts/BalancedPoolV2.algo.ts:3",
+    "pc": [
+      893,
+      894
+    ]
+  },
+  {
+    "teal": 877,
+    "source": "contracts/BalancedPoolV2.algo.ts:3",
+    "pc": [
+      895,
+      896
+    ]
+  },
+  {
+    "teal": 878,
+    "source": "contracts/BalancedPoolV2.algo.ts:3",
+    "pc": [
+      897
+    ]
+  },
+  {
+    "teal": 879,
+    "source": "contracts/BalancedPoolV2.algo.ts:132",
+    "pc": [
+      898,
+      899
+    ]
+  },
+  {
+    "teal": 883,
+    "source": "contracts/BalancedPoolV2.algo.ts:133",
+    "pc": [
+      900,
+      901
+    ]
+  },
+  {
+    "teal": 884,
+    "source": "contracts/BalancedPoolV2.algo.ts:133",
+    "pc": [
+      902,
+      903
+    ]
+  },
+  {
+    "teal": 888,
+    "source": "contracts/BalancedPoolV2.algo.ts:134",
+    "pc": [
+      904,
+      905
+    ]
+  },
+  {
+    "teal": 889,
+    "source": "contracts/BalancedPoolV2.algo.ts:134",
+    "pc": [
+      906,
+      907
+    ]
+  },
+  {
+    "teal": 893,
+    "source": "contracts/BalancedPoolV2.algo.ts:135",
+    "pc": [
+      908,
+      909
+    ]
+  },
+  {
+    "teal": 894,
+    "source": "contracts/BalancedPoolV2.algo.ts:135",
+    "pc": [
+      910,
+      911
+    ]
+  },
+  {
+    "teal": 898,
+    "source": "contracts/BalancedPoolV2.algo.ts:136",
+    "pc": [
+      912,
+      913
+    ]
+  },
+  {
+    "teal": 899,
+    "source": "contracts/BalancedPoolV2.algo.ts:136",
+    "pc": [
+      914,
+      915
+    ]
+  },
+  {
+    "teal": 903,
+    "source": "contracts/BalancedPoolV2.algo.ts:137",
+    "pc": [
+      916,
+      917
+    ]
+  },
+  {
+    "teal": 904,
+    "source": "contracts/BalancedPoolV2.algo.ts:137",
+    "pc": [
+      918,
+      919
+    ]
+  },
+  {
+    "teal": 908,
+    "source": "contracts/BalancedPoolV2.algo.ts:138",
+    "pc": [
+      920
+    ]
+  },
+  {
+    "teal": 909,
+    "source": "contracts/BalancedPoolV2.algo.ts:138",
+    "pc": [
+      921,
+      922
+    ]
+  },
+  {
+    "teal": 913,
+    "source": "contracts/BalancedPoolV2.algo.ts:139",
+    "pc": [
+      923,
+      924,
+      925,
+      926,
+      927,
+      928,
+      929,
+      930,
+      931,
+      932,
+      933,
+      934,
+      935,
+      936,
+      937
+    ]
+  },
+  {
+    "teal": 914,
+    "source": "contracts/BalancedPoolV2.algo.ts:139",
+    "pc": [
+      938,
+      939,
+      940
+    ]
+  },
+  {
+    "teal": 915,
+    "source": "contracts/BalancedPoolV2.algo.ts:139",
+    "pc": [
+      941,
+      942,
+      943
+    ]
+  },
+  {
+    "teal": 916,
+    "source": "contracts/BalancedPoolV2.algo.ts:139",
+    "pc": [
+      944
+    ]
+  },
+  {
+    "teal": 917,
+    "source": "contracts/BalancedPoolV2.algo.ts:139",
+    "pc": [
+      945,
+      946
+    ]
+  },
+  {
+    "teal": 921,
+    "source": "contracts/BalancedPoolV2.algo.ts:140",
+    "pc": [
+      947,
+      948,
+      949,
+      950
+    ]
+  },
+  {
+    "teal": 922,
+    "source": "contracts/BalancedPoolV2.algo.ts:140",
+    "pc": [
+      951,
+      952
+    ]
+  },
+  {
+    "teal": 925,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      953
+    ]
+  },
+  {
+    "teal": 926,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      954,
+      955
+    ]
+  },
+  {
+    "teal": 929,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      956
+    ]
+  },
+  {
+    "teal": 930,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      957,
+      958
+    ]
+  },
+  {
+    "teal": 931,
+    "source": "contracts/BalancedPoolV2.algo.ts:131",
+    "pc": [
+      959
+    ]
+  },
+  {
+    "teal": 934,
+    "source": "contracts/BalancedPoolV2.algo.ts:129",
+    "pc": [
+      960
+    ]
+  },
+  {
+    "teal": 938,
+    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "pc": [
+      961,
+      962,
+      963
+    ]
+  },
+  {
+    "teal": 942,
+    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "pc": [
+      964,
+      965
+    ]
+  },
+  {
+    "teal": 943,
+    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "pc": [
+      966,
+      967
+    ]
+  },
+  {
+    "teal": 944,
+    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "pc": [
+      968
+    ]
+  },
+  {
+    "teal": 945,
+    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "pc": [
+      969
+    ]
+  },
+  {
+    "teal": 948,
+    "source": "contracts/BalancedPoolV2.algo.ts:146",
+    "errorMessage": "only the manager can call this method",
+    "pc": [
+      970
+    ]
+  },
+  {
+    "teal": 949,
+    "source": "contracts/BalancedPoolV2.algo.ts:145",
+    "pc": [
+      971
+    ]
+  },
+  {
+    "teal": 955,
+    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "pc": [
+      972,
+      973,
+      974
+    ]
+  },
+  {
+    "teal": 958,
+    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "pc": [
+      975
+    ]
+  },
+  {
+    "teal": 959,
+    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "pc": [
+      976,
+      977
+    ]
+  },
+  {
+    "teal": 963,
+    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "pc": [
+      978,
+      979
+    ]
+  },
+  {
+    "teal": 964,
+    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "pc": [
+      980
+    ]
+  },
+  {
+    "teal": 965,
+    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "pc": [
+      981
+    ]
+  },
+  {
+    "teal": 968,
+    "source": "contracts/BalancedPoolV2.algo.ts:153",
+    "errorMessage": "log undefined for x ≤ 0",
+    "pc": [
+      982
+    ]
+  },
+  {
+    "teal": 972,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      983,
+      984
+    ]
+  },
+  {
+    "teal": 973,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      985
+    ]
+  },
+  {
+    "teal": 974,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      986
+    ]
+  },
+  {
+    "teal": 975,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      987
+    ]
+  },
+  {
+    "teal": 976,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      988
+    ]
+  },
+  {
+    "teal": 977,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      989,
+      990
+    ]
+  },
+  {
+    "teal": 978,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      991
+    ]
+  },
+  {
+    "teal": 979,
+    "source": "contracts/BalancedPoolV2.algo.ts:156",
+    "pc": [
+      992,
+      993
+    ]
+  },
+  {
+    "teal": 983,
+    "source": "contracts/BalancedPoolV2.algo.ts:157",
+    "pc": [
+      994,
+      995
+    ]
+  },
+  {
+    "teal": 984,
+    "source": "contracts/BalancedPoolV2.algo.ts:157",
+    "pc": [
+      996,
+      997
+    ]
+  },
+  {
+    "teal": 988,
+    "source": "contracts/BalancedPoolV2.algo.ts:158",
+    "pc": [
+      998,
+      999
+    ]
+  },
+  {
+    "teal": 989,
+    "source": "contracts/BalancedPoolV2.algo.ts:158",
+    "pc": [
+      1000,
+      1001
+    ]
+  },
+  {
+    "teal": 993,
+    "source": "contracts/BalancedPoolV2.algo.ts:159",
+    "pc": [
+      1002
+    ]
+  },
+  {
+    "teal": 994,
+    "source": "contracts/BalancedPoolV2.algo.ts:159",
+    "pc": [
+      1003,
+      1004
+    ]
+  },
+  {
+    "teal": 998,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1005,
+      1006
+    ]
+  },
+  {
+    "teal": 999,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1007,
+      1008
+    ]
+  },
+  {
+    "teal": 1004,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1009,
+      1010
+    ]
+  },
+  {
+    "teal": 1005,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1011,
+      1012
+    ]
+  },
+  {
+    "teal": 1006,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1013
+    ]
+  },
+  {
+    "teal": 1007,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1014,
+      1015,
+      1016
+    ]
+  },
+  {
+    "teal": 1011,
+    "source": "contracts/BalancedPoolV2.algo.ts:162",
+    "pc": [
+      1017,
+      1018
+    ]
+  },
+  {
+    "teal": 1012,
+    "source": "contracts/BalancedPoolV2.algo.ts:162",
+    "pc": [
+      1019,
+      1020
+    ]
+  },
+  {
+    "teal": 1013,
+    "source": "contracts/BalancedPoolV2.algo.ts:162",
+    "pc": [
+      1021
+    ]
+  },
+  {
+    "teal": 1014,
+    "source": "contracts/BalancedPoolV2.algo.ts:162",
+    "pc": [
+      1022
+    ]
+  },
+  {
+    "teal": 1015,
+    "source": "contracts/BalancedPoolV2.algo.ts:162",
+    "pc": [
+      1023
+    ]
+  },
+  {
+    "teal": 1016,
+    "source": "contracts/BalancedPoolV2.algo.ts:162",
+    "pc": [
+      1024,
+      1025
+    ]
+  },
+  {
+    "teal": 1020,
+    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "pc": [
+      1026,
+      1027
+    ]
+  },
+  {
+    "teal": 1021,
+    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "pc": [
+      1028,
+      1029
+    ]
+  },
+  {
+    "teal": 1022,
+    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "pc": [
+      1030
+    ]
+  },
+  {
+    "teal": 1023,
+    "source": "contracts/BalancedPoolV2.algo.ts:163",
+    "pc": [
+      1031,
+      1032
+    ]
+  },
+  {
+    "teal": 1027,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1033,
+      1034
+    ]
+  },
+  {
+    "teal": 1028,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1035,
+      1036,
+      1037
+    ]
+  },
+  {
+    "teal": 1029,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1038,
+      1039
+    ]
+  },
+  {
+    "teal": 1030,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1040,
+      1041
+    ]
+  },
+  {
+    "teal": 1031,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1042
+    ]
+  },
+  {
+    "teal": 1032,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1043,
+      1044,
+      1045
+    ]
+  },
+  {
+    "teal": 1035,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1046,
+      1047
+    ]
+  },
+  {
+    "teal": 1036,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1048,
+      1049
+    ]
+  },
+  {
+    "teal": 1037,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1050
+    ]
+  },
+  {
+    "teal": 1040,
+    "source": "contracts/BalancedPoolV2.algo.ts:164",
+    "pc": [
+      1051,
+      1052
+    ]
+  },
+  {
+    "teal": 1044,
+    "source": "contracts/BalancedPoolV2.algo.ts:165",
+    "pc": [
+      1053,
+      1054
+    ]
+  },
+  {
+    "teal": 1045,
+    "source": "contracts/BalancedPoolV2.algo.ts:165",
+    "pc": [
+      1055
+    ]
+  },
+  {
+    "teal": 1046,
+    "source": "contracts/BalancedPoolV2.algo.ts:165",
+    "pc": [
+      1056,
+      1057
+    ]
+  },
+  {
+    "teal": 1051,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1058,
+      1059
+    ]
+  },
+  {
+    "teal": 1052,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1060
+    ]
+  },
+  {
+    "teal": 1053,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1061
+    ]
+  },
+  {
+    "teal": 1054,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1062,
+      1063
+    ]
+  },
+  {
+    "teal": 1055,
+    "source": "contracts/BalancedPoolV2.algo.ts:161",
+    "pc": [
+      1064,
+      1065,
+      1066
+    ]
+  },
+  {
+    "teal": 1060,
+    "source": "contracts/BalancedPoolV2.algo.ts:168",
+    "pc": [
+      1067,
+      1068
+    ]
+  },
+  {
+    "teal": 1063,
+    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "pc": [
+      1069,
+      1070
+    ]
+  },
+  {
+    "teal": 1066,
+    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "pc": [
+      1071,
+      1072
+    ]
+  },
+  {
+    "teal": 1067,
+    "source": "contracts/BalancedPoolV2.algo.ts:152",
+    "pc": [
+      1073
+    ]
+  },
+  {
+    "teal": 1073,
+    "source": "contracts/BalancedPoolV2.algo.ts:174",
+    "pc": [
+      1074,
+      1075,
+      1076
+    ]
+  },
+  {
+    "teal": 1076,
+    "source": "contracts/BalancedPoolV2.algo.ts:174",
+    "pc": [
+      1077
+    ]
+  },
+  {
+    "teal": 1077,
+    "source": "contracts/BalancedPoolV2.algo.ts:174",
+    "pc": [
+      1078,
+      1079
+    ]
+  },
+  {
+    "teal": 1081,
+    "source": "contracts/BalancedPoolV2.algo.ts:175",
+    "pc": [
+      1080
+    ]
+  },
+  {
+    "teal": 1082,
+    "source": "contracts/BalancedPoolV2.algo.ts:175",
+    "pc": [
+      1081,
+      1082
+    ]
+  },
+  {
+    "teal": 1086,
+    "source": "contracts/BalancedPoolV2.algo.ts:176",
+    "pc": [
+      1083
+    ]
+  },
+  {
+    "teal": 1087,
+    "source": "contracts/BalancedPoolV2.algo.ts:176",
+    "pc": [
+      1084,
+      1085
+    ]
+  },
+  {
+    "teal": 1091,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1086
+    ]
+  },
+  {
+    "teal": 1092,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1087,
+      1088
+    ]
+  },
+  {
+    "teal": 1097,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1089,
+      1090
+    ]
+  },
+  {
+    "teal": 1098,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1091,
+      1092
+    ]
+  },
+  {
+    "teal": 1099,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1093
+    ]
+  },
+  {
+    "teal": 1100,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1094,
+      1095,
+      1096
+    ]
+  },
+  {
+    "teal": 1104,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1097,
+      1098
+    ]
+  },
+  {
+    "teal": 1105,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1099,
+      1100
+    ]
+  },
+  {
+    "teal": 1106,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1101
+    ]
+  },
+  {
+    "teal": 1107,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1102,
+      1103
+    ]
+  },
+  {
+    "teal": 1108,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1104
+    ]
+  },
+  {
+    "teal": 1109,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1105
+    ]
+  },
+  {
+    "teal": 1110,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1106
+    ]
+  },
+  {
+    "teal": 1111,
+    "source": "contracts/BalancedPoolV2.algo.ts:179",
+    "pc": [
+      1107,
+      1108
+    ]
+  },
+  {
+    "teal": 1115,
+    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "pc": [
+      1109,
+      1110
+    ]
+  },
+  {
+    "teal": 1116,
+    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "pc": [
+      1111,
+      1112
+    ]
+  },
+  {
+    "teal": 1117,
+    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "pc": [
+      1113
+    ]
+  },
+  {
+    "teal": 1118,
+    "source": "contracts/BalancedPoolV2.algo.ts:180",
+    "pc": [
+      1114,
+      1115
+    ]
+  },
+  {
+    "teal": 1123,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1116,
+      1117
+    ]
+  },
+  {
+    "teal": 1124,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1118
+    ]
+  },
+  {
+    "teal": 1125,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1119
+    ]
+  },
+  {
+    "teal": 1126,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1120,
+      1121
+    ]
+  },
+  {
+    "teal": 1127,
+    "source": "contracts/BalancedPoolV2.algo.ts:178",
+    "pc": [
+      1122,
+      1123,
+      1124
+    ]
+  },
+  {
+    "teal": 1132,
+    "source": "contracts/BalancedPoolV2.algo.ts:183",
+    "pc": [
+      1125,
+      1126
+    ]
+  },
+  {
+    "teal": 1135,
+    "source": "contracts/BalancedPoolV2.algo.ts:174",
+    "pc": [
+      1127,
+      1128
+    ]
+  },
+  {
+    "teal": 1138,
+    "source": "contracts/BalancedPoolV2.algo.ts:174",
+    "pc": [
+      1129,
+      1130
+    ]
+  },
+  {
+    "teal": 1139,
+    "source": "contracts/BalancedPoolV2.algo.ts:174",
+    "pc": [
+      1131
+    ]
+  },
+  {
+    "teal": 1145,
+    "source": "contracts/BalancedPoolV2.algo.ts:189",
+    "pc": [
+      1132,
+      1133,
+      1134
+    ]
+  },
+  {
+    "teal": 1148,
+    "source": "contracts/BalancedPoolV2.algo.ts:189",
+    "pc": [
+      1135
+    ]
+  },
+  {
+    "teal": 1149,
+    "source": "contracts/BalancedPoolV2.algo.ts:189",
+    "pc": [
+      1136
+    ]
+  },
+  {
+    "teal": 1153,
+    "source": "contracts/BalancedPoolV2.algo.ts:190",
+    "pc": [
+      1137,
+      1138
+    ]
+  },
+  {
+    "teal": 1154,
+    "source": "contracts/BalancedPoolV2.algo.ts:190",
+    "pc": [
+      1139,
+      1140,
+      1141
+    ]
+  },
+  {
+    "teal": 1155,
+    "source": "contracts/BalancedPoolV2.algo.ts:190",
+    "pc": [
+      1142,
+      1143
+    ]
+  },
+  {
+    "teal": 1159,
+    "source": "contracts/BalancedPoolV2.algo.ts:191",
+    "pc": [
+      1144,
+      1145
+    ]
+  },
+  {
+    "teal": 1160,
+    "source": "contracts/BalancedPoolV2.algo.ts:191",
+    "pc": [
+      1146,
+      1147
+    ]
+  },
+  {
+    "teal": 1161,
+    "source": "contracts/BalancedPoolV2.algo.ts:191",
+    "pc": [
+      1148
+    ]
+  },
+  {
+    "teal": 1162,
+    "source": "contracts/BalancedPoolV2.algo.ts:191",
+    "pc": [
+      1149
+    ]
+  },
+  {
+    "teal": 1163,
+    "source": "contracts/BalancedPoolV2.algo.ts:191",
+    "pc": [
+      1150
+    ]
+  },
+  {
+    "teal": 1164,
+    "source": "contracts/BalancedPoolV2.algo.ts:191",
+    "pc": [
+      1151,
+      1152
+    ]
+  },
+  {
+    "teal": 1168,
+    "source": "contracts/BalancedPoolV2.algo.ts:192",
+    "pc": [
+      1153,
+      1154
+    ]
+  },
+  {
+    "teal": 1169,
+    "source": "contracts/BalancedPoolV2.algo.ts:192",
+    "pc": [
+      1155,
+      1156,
+      1157
+    ]
+  },
+  {
+    "teal": 1172,
+    "source": "contracts/BalancedPoolV2.algo.ts:189",
+    "pc": [
+      1158,
+      1159
+    ]
+  },
+  {
+    "teal": 1175,
+    "source": "contracts/BalancedPoolV2.algo.ts:189",
+    "pc": [
+      1160,
+      1161
+    ]
+  },
+  {
+    "teal": 1176,
+    "source": "contracts/BalancedPoolV2.algo.ts:189",
+    "pc": [
+      1162
+    ]
+  },
+  {
+    "teal": 1180,
+    "source": "contracts/BalancedPoolV2.algo.ts:195",
+    "pc": [
+      1163,
+      1164,
+      1165
+    ]
+  },
+  {
+    "teal": 1183,
+    "source": "contracts/BalancedPoolV2.algo.ts:195",
+    "pc": [
+      1166
+    ]
+  },
+  {
+    "teal": 1184,
+    "source": "contracts/BalancedPoolV2.algo.ts:195",
+    "pc": [
+      1167,
+      1168
+    ]
+  },
+  {
+    "teal": 1188,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1169,
+      1170
+    ]
+  },
+  {
+    "teal": 1189,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1171
+    ]
+  },
+  {
+    "teal": 1190,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1172,
+      1173,
+      1174
+    ]
+  },
+  {
+    "teal": 1191,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1175,
+      1176
+    ]
+  },
+  {
+    "teal": 1192,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1177
+    ]
+  },
+  {
+    "teal": 1193,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1178,
+      1179
+    ]
+  },
+  {
+    "teal": 1194,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1180
+    ]
+  },
+  {
+    "teal": 1195,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1181
+    ]
+  },
+  {
+    "teal": 1196,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1182
+    ]
+  },
+  {
+    "teal": 1197,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1183,
+      1184
+    ]
+  },
+  {
+    "teal": 1198,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1185
+    ]
+  },
+  {
+    "teal": 1199,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1186
+    ]
+  },
+  {
+    "teal": 1200,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1187
+    ]
+  },
+  {
+    "teal": 1201,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1188
+    ]
+  },
+  {
+    "teal": 1202,
+    "source": "contracts/BalancedPoolV2.algo.ts:196",
+    "pc": [
+      1189,
+      1190
+    ]
+  },
+  {
+    "teal": 1206,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1191,
+      1192
+    ]
+  },
+  {
+    "teal": 1207,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1193,
+      1194
+    ]
+  },
+  {
+    "teal": 1208,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1195
+    ]
+  },
+  {
+    "teal": 1209,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1196
+    ]
+  },
+  {
+    "teal": 1210,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1197
+    ]
+  },
+  {
+    "teal": 1213,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "errorMessage": "box value does not exist: this.weights(index).value",
+    "pc": [
+      1198
+    ]
+  },
+  {
+    "teal": 1214,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1199
+    ]
+  },
+  {
+    "teal": 1215,
+    "source": "contracts/BalancedPoolV2.algo.ts:197",
+    "pc": [
+      1200,
+      1201
+    ]
+  },
+  {
+    "teal": 1219,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1202,
+      1203
+    ]
+  },
+  {
+    "teal": 1220,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1204,
+      1205
+    ]
+  },
+  {
+    "teal": 1221,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1206
+    ]
+  },
+  {
+    "teal": 1222,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1207
+    ]
+  },
+  {
+    "teal": 1223,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1208
+    ]
+  },
+  {
+    "teal": 1226,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "errorMessage": "box value does not exist: this.balances(assetId).value",
+    "pc": [
+      1209
+    ]
+  },
+  {
+    "teal": 1227,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1210
+    ]
+  },
+  {
+    "teal": 1228,
+    "source": "contracts/BalancedPoolV2.algo.ts:198",
+    "pc": [
+      1211,
+      1212
+    ]
+  },
+  {
+    "teal": 1232,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1213
+    ]
+  },
+  {
+    "teal": 1233,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1214,
+      1215
+    ]
+  },
+  {
+    "teal": 1234,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1216
+    ]
+  },
+  {
+    "teal": 1235,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1217
+    ]
+  },
+  {
+    "teal": 1238,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "errorMessage": "box value does not exist: this.provided(sender).value",
+    "pc": [
+      1218
+    ]
+  },
+  {
+    "teal": 1239,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1219,
+      1220,
+      1221
+    ]
+  },
+  {
+    "teal": 1240,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1222,
+      1223
+    ]
+  },
+  {
+    "teal": 1241,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1224
+    ]
+  },
+  {
+    "teal": 1242,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1225,
+      1226
+    ]
+  },
+  {
+    "teal": 1243,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1227
+    ]
+  },
+  {
+    "teal": 1244,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1228
+    ]
+  },
+  {
+    "teal": 1245,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1229
+    ]
+  },
+  {
+    "teal": 1246,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1230,
+      1231
+    ]
+  },
+  {
+    "teal": 1247,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1232
+    ]
+  },
+  {
+    "teal": 1248,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1233
+    ]
+  },
+  {
+    "teal": 1249,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1234
+    ]
+  },
+  {
+    "teal": 1250,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1235
+    ]
+  },
+  {
+    "teal": 1251,
+    "source": "contracts/BalancedPoolV2.algo.ts:199",
+    "pc": [
+      1236,
+      1237
+    ]
+  },
+  {
+    "teal": 1256,
+    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "pc": [
+      1238,
+      1239
+    ]
+  },
+  {
+    "teal": 1257,
+    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "pc": [
+      1240
+    ]
+  },
+  {
+    "teal": 1258,
+    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "pc": [
+      1241
+    ]
+  },
+  {
+    "teal": 1259,
+    "source": "contracts/BalancedPoolV2.algo.ts:201",
+    "pc": [
+      1242,
+      1243,
+      1244
+    ]
+  },
+  {
+    "teal": 1264,
+    "source": "contracts/BalancedPoolV2.algo.ts:202",
+    "pc": [
+      1245
+    ]
+  },
+  {
+    "teal": 1265,
+    "source": "contracts/BalancedPoolV2.algo.ts:202",
+    "pc": [
+      1246,
+      1247,
+      1248
+    ]
+  },
+  {
+    "teal": 1270,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1249,
+      1250
+    ]
+  },
+  {
+    "teal": 1271,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1251
+    ]
+  },
+  {
+    "teal": 1272,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1252
+    ]
+  },
+  {
+    "teal": 1273,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1253
+    ]
+  },
+  {
+    "teal": 1274,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1254,
+      1255
+    ]
+  },
+  {
+    "teal": 1275,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1256
+    ]
+  },
+  {
+    "teal": 1276,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1257
+    ]
+  },
+  {
+    "teal": 1277,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1258
+    ]
+  },
+  {
+    "teal": 1278,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1259
+    ]
+  },
+  {
+    "teal": 1279,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1260
+    ]
+  },
+  {
+    "teal": 1282,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "errorMessage": "wideRatio failed",
+    "pc": [
+      1261
+    ]
+  },
+  {
+    "teal": 1283,
+    "source": "contracts/BalancedPoolV2.algo.ts:205",
+    "pc": [
+      1262,
+      1263
+    ]
+  },
+  {
+    "teal": 1287,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1264,
+      1265
+    ]
+  },
+  {
+    "teal": 1288,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1266,
+      1267
+    ]
+  },
+  {
+    "teal": 1289,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1268
+    ]
+  },
+  {
+    "teal": 1290,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1269
+    ]
+  },
+  {
+    "teal": 1291,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1270
+    ]
+  },
+  {
+    "teal": 1292,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1271
+    ]
+  },
+  {
+    "teal": 1293,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1272
+    ]
+  },
+  {
+    "teal": 1294,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1273
+    ]
+  },
+  {
+    "teal": 1295,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1274
+    ]
+  },
+  {
+    "teal": 1296,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "pc": [
+      1275
+    ]
+  },
+  {
+    "teal": 1299,
+    "source": "contracts/BalancedPoolV2.algo.ts:206",
+    "errorMessage": "wideRatio failed",
+    "pc": [
+      1276
+    ]
+  },
+  {
+    "teal": 1303,
+    "source": "contracts/BalancedPoolV2.algo.ts:195",
+    "pc": [
+      1277,
+      1278
+    ]
+  },
+  {
+    "teal": 1306,
+    "source": "contracts/BalancedPoolV2.algo.ts:195",
+    "pc": [
+      1279,
+      1280
+    ]
+  },
+  {
+    "teal": 1307,
+    "source": "contracts/BalancedPoolV2.algo.ts:195",
+    "pc": [
+      1281
+    ]
+  },
+  {
+    "teal": 1311,
+    "source": "contracts/BalancedPoolV2.algo.ts:209",
+    "pc": [
+      1282,
+      1283,
+      1284
+    ]
+  },
+  {
+    "teal": 1314,
+    "source": "contracts/BalancedPoolV2.algo.ts:209",
+    "pc": [
+      1285
+    ]
+  },
+  {
+    "teal": 1315,
+    "source": "contracts/BalancedPoolV2.algo.ts:209",
+    "pc": [
+      1286,
+      1287
+    ]
+  },
+  {
+    "teal": 1319,
+    "source": "contracts/BalancedPoolV2.algo.ts:218",
+    "pc": [
+      1288,
+      1289
+    ]
+  },
+  {
+    "teal": 1320,
+    "source": "contracts/BalancedPoolV2.algo.ts:218",
+    "pc": [
+      1290,
+      1291,
+      1292,
+      1293
+    ]
+  },
+  {
+    "teal": 1321,
+    "source": "contracts/BalancedPoolV2.algo.ts:218",
+    "pc": [
+      1294
+    ]
+  },
+  {
+    "teal": 1322,
+    "source": "contracts/BalancedPoolV2.algo.ts:218",
+    "pc": [
+      1295
+    ]
+  },
+  {
+    "teal": 1323,
+    "source": "contracts/BalancedPoolV2.algo.ts:218",
+    "pc": [
+      1296
+    ]
+  },
+  {
+    "teal": 1324,
+    "source": "contracts/BalancedPoolV2.algo.ts:218",
+    "pc": [
+      1297,
+      1298
+    ]
+  },
+  {
+    "teal": 1328,
+    "source": "contracts/BalancedPoolV2.algo.ts:221",
+    "pc": [
+      1299,
+      1300
+    ]
+  },
+  {
+    "teal": 1329,
+    "source": "contracts/BalancedPoolV2.algo.ts:221",
+    "pc": [
+      1301,
+      1302
+    ]
+  },
+  {
+    "teal": 1330,
+    "source": "contracts/BalancedPoolV2.algo.ts:221",
+    "pc": [
+      1303,
+      1304
+    ]
+  },
+  {
+    "teal": 1331,
+    "source": "contracts/BalancedPoolV2.algo.ts:221",
+    "pc": [
+      1305
+    ]
+  },
+  {
+    "teal": 1332,
+    "source": "contracts/BalancedPoolV2.algo.ts:221",
+    "pc": [
+      1306
+    ]
+  },
+  {
+    "teal": 1333,
+    "source": "contracts/BalancedPoolV2.algo.ts:221",
+    "pc": [
+      1307,
+      1308
+    ]
+  },
+  {
+    "teal": 1337,
+    "source": "contracts/BalancedPoolV2.algo.ts:223",
+    "pc": [
+      1309,
+      1310
+    ]
+  },
+  {
+    "teal": 1338,
+    "source": "contracts/BalancedPoolV2.algo.ts:223",
+    "pc": [
+      1311
+    ]
+  },
+  {
+    "teal": 1339,
+    "source": "contracts/BalancedPoolV2.algo.ts:223",
+    "pc": [
+      1312
+    ]
+  },
+  {
+    "teal": 1340,
+    "source": "contracts/BalancedPoolV2.algo.ts:223",
+    "pc": [
+      1313,
+      1314
+    ]
+  },
+  {
+    "teal": 1341,
+    "source": "contracts/BalancedPoolV2.algo.ts:223",
+    "pc": [
+      1315
+    ]
+  },
+  {
+    "teal": 1342,
+    "source": "contracts/BalancedPoolV2.algo.ts:223",
+    "pc": [
+      1316,
+      1317
+    ]
+  },
+  {
+    "teal": 1346,
+    "source": "contracts/BalancedPoolV2.algo.ts:226",
+    "pc": [
+      1318,
+      1319
+    ]
+  },
+  {
+    "teal": 1347,
+    "source": "contracts/BalancedPoolV2.algo.ts:226",
+    "pc": [
+      1320,
+      1321
+    ]
+  },
+  {
+    "teal": 1348,
+    "source": "contracts/BalancedPoolV2.algo.ts:226",
+    "pc": [
+      1322,
+      1323,
+      1324
+    ]
+  },
+  {
+    "teal": 1349,
+    "source": "contracts/BalancedPoolV2.algo.ts:226",
+    "pc": [
+      1325,
+      1326
+    ]
+  },
+  {
+    "teal": 1353,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1327,
+      1328
+    ]
+  },
+  {
+    "teal": 1354,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1329
+    ]
+  },
+  {
+    "teal": 1355,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1330,
+      1331
+    ]
+  },
+  {
+    "teal": 1356,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1332
+    ]
+  },
+  {
+    "teal": 1357,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1333
+    ]
+  },
+  {
+    "teal": 1358,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1334
+    ]
+  },
+  {
+    "teal": 1359,
+    "source": "contracts/BalancedPoolV2.algo.ts:228",
+    "pc": [
+      1335
+    ]
+  },
+  {
+    "teal": 1362,
+    "source": "contracts/BalancedPoolV2.algo.ts:209",
+    "pc": [
+      1336,
+      1337
+    ]
+  },
+  {
+    "teal": 1365,
+    "source": "contracts/BalancedPoolV2.algo.ts:209",
+    "pc": [
+      1338,
+      1339
+    ]
+  },
+  {
+    "teal": 1366,
+    "source": "contracts/BalancedPoolV2.algo.ts:209",
+    "pc": [
+      1340
+    ]
+  },
+  {
+    "teal": 1369,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1341,
+      1342
+    ]
+  },
+  {
+    "teal": 1370,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1343,
+      1344,
+      1345
+    ]
+  },
+  {
+    "teal": 1371,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1346,
+      1347,
+      1348,
+      1349,
+      1350,
+      1351
+    ]
+  },
+  {
+    "teal": 1372,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1352,
+      1353,
+      1354
+    ]
+  },
+  {
+    "teal": 1373,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1355,
+      1356,
+      1357,
+      1358
+    ]
+  },
+  {
+    "teal": 1376,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+    "pc": [
+      1359
+    ]
+  },
+  {
+    "teal": 1379,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1360,
+      1361,
+      1362,
+      1363,
+      1364,
+      1365
+    ]
+  },
+  {
+    "teal": 1380,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1366,
+      1367,
+      1368,
+      1369,
+      1370,
+      1371
+    ]
+  },
+  {
+    "teal": 1381,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1372,
+      1373,
+      1374,
+      1375,
+      1376,
+      1377
+    ]
+  },
+  {
+    "teal": 1382,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1378,
+      1379,
+      1380,
+      1381,
+      1382,
+      1383
+    ]
+  },
+  {
+    "teal": 1383,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1384,
+      1385,
+      1386
+    ]
+  },
+  {
+    "teal": 1384,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1387,
+      1388,
+      1389,
+      1390,
+      1391,
+      1392,
+      1393,
+      1394,
+      1395,
+      1396
+    ]
+  },
+  {
+    "teal": 1387,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
+    "pc": [
+      1397
+    ]
+  },
+  {
+    "teal": 1390,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1398,
+      1399,
+      1400
+    ]
+  },
+  {
+    "teal": 1391,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1401,
+      1402,
+      1403,
+      1404,
+      1405,
+      1406,
+      1407,
+      1408,
+      1409,
+      1410,
+      1411,
+      1412
+    ]
+  },
+  {
+    "teal": 1392,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1413,
+      1414
+    ]
+  },
+  {
+    "teal": 1393,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1415
+    ]
+  },
+  {
+    "teal": 1394,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1416
+    ]
+  },
+  {
+    "teal": 1395,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1417
+    ]
+  },
+  {
+    "teal": 1396,
+    "source": "contracts/BalancedPoolV2.algo.ts:7"
+  },
+  {
+    "teal": 1399,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1418,
+      1419,
+      1420
+    ]
+  },
+  {
+    "teal": 1400,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1421,
+      1422
+    ]
+  },
+  {
+    "teal": 1401,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1423
+    ]
+  },
+  {
+    "teal": 1402,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1424
+    ]
+  },
+  {
+    "teal": 1403,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1425,
+      1426,
+      1427
+    ]
+  },
+  {
+    "teal": 1404,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1428,
+      1429,
+      1430
+    ]
+  },
+  {
+    "teal": 1405,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1431
+    ]
+  },
+  {
+    "teal": 1408,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1432,
+      1433
+    ]
+  },
+  {
+    "teal": 1409,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1434,
+      1435
+    ]
+  },
+  {
+    "teal": 1410,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1436
+    ]
+  },
+  {
+    "teal": 1411,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1437
+    ]
+  },
+  {
+    "teal": 1412,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1438
+    ]
+  },
+  {
+    "teal": 1413,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1439,
+      1440,
+      1441
+    ]
+  },
+  {
+    "teal": 1414,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1442,
+      1443
+    ]
+  },
+  {
+    "teal": 1415,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1444,
+      1445
+    ]
+  },
+  {
+    "teal": 1416,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1446
+    ]
+  },
+  {
+    "teal": 1417,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1447,
+      1448,
+      1449
+    ]
+  },
+  {
+    "teal": 1418,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1450,
+      1451,
+      1452
+    ]
+  },
+  {
+    "teal": 1421,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1453
+    ]
+  },
+  {
+    "teal": 1424,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1454,
+      1455
+    ]
+  },
+  {
+    "teal": 1425,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1456,
+      1457
+    ]
+  },
+  {
+    "teal": 1426,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1458
+    ]
+  },
+  {
+    "teal": 1427,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1459,
+      1460,
+      1461
+    ]
+  },
+  {
+    "teal": 1428,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1462
+    ]
+  },
+  {
+    "teal": 1429,
+    "source": "contracts/BalancedPoolV2.algo.ts:7",
+    "pc": [
+      1463
     ]
   }
 ]

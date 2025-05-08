@@ -57,6 +57,18 @@
       }
     },
     {
+      "name": "computeLiquidity",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "MANAGER_updatePoolContractProgram",
       "desc": "MANAGER Methods",
       "args": [

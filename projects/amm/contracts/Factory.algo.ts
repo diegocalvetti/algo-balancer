@@ -38,6 +38,12 @@ export class Factory extends Contract {
     });
   }
 
+  computeLiquidity(poolID: AppID) {
+    sendMethodCall<typeof BalancedPoolV2.prototype.computeLiquidity>({
+      applicationID: poolID,
+      methodArgs: [this.txn.sender],
+    });
+  }
   /**
    * MANAGER Methods
    */

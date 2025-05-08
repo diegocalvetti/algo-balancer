@@ -3,17 +3,23 @@ import inquirer from 'inquirer';
 import path from 'node:path';
 import fs from 'node:fs';
 import { deploy, deployToken, factorySetup, mintToken, poolSetup, tokenSetup } from '../utils/bootstrap';
-import { addLiquidity, computeLiquidity } from '../utils/amm';
+import { addLiquidity, computeLiquidity, swap } from '../utils/amm';
 
 export type BootstrapResult = { FACTORY_ID: bigint; POOL_ID: bigint; TOKENS: bigint[]; TOKENS_APP: bigint[] };
-type Commands =
-  | 'Create some Tokens'
-  | 'Mint some Tokens'
-  | 'Deploy & Bootstrap Factory'
-  | 'Write & Deploy Pool'
-  | 'Add Liquidity'
-  | 'Compute Liquidity'
-  | 'Quit';
+
+const choices = [
+  'Create some Tokens',
+  'Mint some Tokens',
+  'Deploy & Bootstrap Factory',
+  'Write & Deploy Pool',
+  'Add Liquidity',
+  'Compute Liquidity',
+  'Swap',
+  'Quit',
+] as const;
+let currentChoice = 0;
+
+type Commands = (typeof choices)[number];
 
 function title(text: string): void {
   console.log(`************* ${text.toUpperCase()} ************* `);
@@ -58,6 +64,7 @@ async function storeResult(filename: string, data: object): Promise<void> {
 
 async function run(command: Commands): Promise<boolean> {
   title(command);
+  const { FACTORY_ID, POOL_ID, TOKENS } = await retrieveResult<BootstrapResult>('bootstrap');
 
   switch (command) {
     case 'Create some Tokens': {
@@ -83,7 +90,7 @@ async function run(command: Commands): Promise<boolean> {
           type: 'number',
           name: 'rawAmount',
           message: 'How many tokens do you want?',
-          default: 100,
+          default: 10_000,
         },
       ]);
       const amount = BigInt(rawAmount * 10 ** 6);
@@ -107,15 +114,11 @@ async function run(command: Commands): Promise<boolean> {
       break;
     }
     case 'Write & Deploy Pool':
-      const bootstrap = await retrieveResult<BootstrapResult>('bootstrap');
-
       const weights = [1 / 2, 1 / 4, 1 / 4].map((n) => BigInt(n * 1e6));
 
-      await poolSetup(bootstrap.FACTORY_ID, bootstrap.POOL_ID, bootstrap.TOKENS, weights);
+      await poolSetup(FACTORY_ID, POOL_ID, TOKENS, weights);
       break;
     case 'Add Liquidity':
-      const { TOKENS } = await retrieveResult<BootstrapResult>('bootstrap');
-
       const { token, amount } = await inquirer.prompt([
         {
           type: 'list',
@@ -141,11 +144,41 @@ async function run(command: Commands): Promise<boolean> {
 
       console.log(`LP calculations done`);
       break;
+    case 'Swap':
+      const { tokenIn, amountIn, tokenOut } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'tokenIn',
+          message: 'Which token do you want to put in?',
+          choices: TOKENS.map((v) => v.toString()),
+        },
+        {
+          type: 'number',
+          name: 'amountIn',
+          message: 'How much?',
+          default: 100,
+        },
+        {
+          type: 'list',
+          name: 'tokenOut',
+          message: 'Which token do you want to swap for?',
+          choices: TOKENS.map((v) => v.toString()),
+        },
+      ]);
+
+      const tokenInID = BigInt(parseInt(tokenIn, 10));
+      const tokenOutID = BigInt(parseInt(tokenOut, 10));
+      await swap(FACTORY_ID, POOL_ID, tokenInID, tokenOutID, amountIn);
+
+      console.log('Swapped!');
+      break;
     case 'Quit':
       return true;
     default:
       console.log('This command does not exists');
   }
+
+  currentChoice = choices.indexOf(command);
 
   return false;
 }
@@ -158,19 +191,13 @@ async function main() {
       type: 'list',
       name: 'command',
       message: 'How do you want to procede?',
-      choices: [
-        'Create some Tokens',
-        'Mint some Tokens',
-        'Deploy & Bootstrap Factory',
-        'Write & Deploy Pool',
-        'Add Liquidity',
-        'Compute Liquidity',
-        'Quit',
-      ],
+      default: choices[currentChoice],
+      choices,
     },
   ]);
 
   const stop = await run(command);
   if (!stop) await main();
 }
+
 main().catch(console.error);

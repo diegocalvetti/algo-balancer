@@ -6,11 +6,18 @@ export class Factory extends Contract {
 
   poolContractApprovalProgram = BoxKey<bytes>({ key: 'pool_approval_program' });
 
+  /**
+   * createApplication method called at creation
+   */
   @allow.bareCreate('NoOp')
   createApplication() {
     this.manager.value = this.app.creator;
   }
 
+  /**
+   * Deploy the pool contract, compiled teal of the contract
+   * must be loaded in poolContractApprovalProgram
+   */
   createPool() {
     sendAppCall({
       onCompletion: OnCompletion.NoOp,
@@ -24,6 +31,12 @@ export class Factory extends Contract {
     });
   }
 
+  /**
+   * Initialize the pool with the given assets & weights
+   * @param {AppID} poolID - Pool App ID
+   * @param {AssetID[]} assetIds
+   * @param {uint64[]} weights
+   */
   initPool(poolID: AppID, assetIds: AssetID[], weights: uint64[]): AssetID {
     return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
       applicationID: poolID,
@@ -31,6 +44,12 @@ export class Factory extends Contract {
     });
   }
 
+  /**
+   * Add one token as liquidity to the pool
+   * @param {AppID} poolID - Pool App ID
+   * @param {uint64} index - the index
+   * @param {AssetTransferTxn} transferTxn - transfer tx of the token, receiver must be the pool account
+   */
   addLiquidity(poolID: AppID, index: uint64, transferTxn: AssetTransferTxn) {
     sendMethodCall<typeof BalancedPoolV2.prototype.addLiquidity>({
       applicationID: poolID,
@@ -38,18 +57,30 @@ export class Factory extends Contract {
     });
   }
 
+  /**
+   * Compute the liquidity for the sender and send the expected LP
+   * @param {AppID} poolID - Pool App ID
+   */
   computeLiquidity(poolID: AppID) {
     sendMethodCall<typeof BalancedPoolV2.prototype.computeLiquidity>({
       applicationID: poolID,
       methodArgs: [this.txn.sender],
     });
   }
-  /**
-   * MANAGER Methods
-   */
+
+  swap(poolID: AppID, from: uint64, to: uint64, transferTxn: AssetTransferTxn) {
+    sendMethodCall<typeof BalancedPoolV2.prototype.swap>({
+      applicationID: poolID,
+      methodArgs: [this.txn.sender, from, to, transferTxn.assetAmount],
+    });
+  }
+
+  /** ******************* */
+  /**       MANAGER       */
+  /** ******************* */
 
   MANAGER_updatePoolContractProgram(programSize: uint64): void {
-    assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
+    this.assertIsManager();
 
     if (this.poolContractApprovalProgram.exists) {
       this.poolContractApprovalProgram.resize(programSize);
@@ -59,15 +90,16 @@ export class Factory extends Contract {
   }
 
   MANAGER_writePoolContractProgram(offset: uint64, data: bytes): void {
-    assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
+    this.assertIsManager();
+
     this.poolContractApprovalProgram.replace(offset, data);
   }
 
-  hasPoolApprovalProgram(): boolean {
-    return this.poolContractApprovalProgram.exists;
-  }
+  /** ******************* */
+  /**     SUBROUTINES     */
+  /** ******************* */
 
-  getProgram(): bytes {
-    return this.poolContractApprovalProgram.value;
+  private assertIsManager() {
+    assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
   }
 }

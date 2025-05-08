@@ -4,6 +4,7 @@
   "methods": [
     {
       "name": "createApplication",
+      "desc": "createApplication method called at creation",
       "args": [],
       "returns": {
         "type": "void"
@@ -11,14 +12,17 @@
     },
     {
       "name": "bootstrap",
+      "desc": "Bootstrap the pool by assigning assets and weights, create the LP tokens",
       "args": [
         {
           "name": "assetIds",
-          "type": "uint64[]"
+          "type": "uint64[]",
+          "desc": "assets of the pool"
         },
         {
           "name": "weights",
-          "type": "uint64[]"
+          "type": "uint64[]",
+          "desc": "weights of the pool\n uint64 - LP Token created ID"
         }
       ],
       "returns": {
@@ -27,19 +31,22 @@
     },
     {
       "name": "addLiquidity",
-      "desc": "Provide Liquidity to the pool",
+      "desc": "Provide one token liquidity to the pool",
       "args": [
         {
           "name": "index",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "index of the token in the pool"
         },
         {
           "name": "amount",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "amount of token sent"
         },
         {
           "name": "sender",
-          "type": "address"
+          "type": "address",
+          "desc": "the sender"
         }
       ],
       "returns": {
@@ -48,10 +55,36 @@
     },
     {
       "name": "computeLiquidity",
+      "desc": "Compute the liquidity for the given sender based on the state\nin the contract",
+      "args": [
+        {
+          "name": "sender",
+          "type": "address",
+          "desc": "the sender"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "swap",
       "args": [
         {
           "name": "sender",
           "type": "address"
+        },
+        {
+          "name": "from",
+          "type": "uint64"
+        },
+        {
+          "name": "to",
+          "type": "uint64"
+        },
+        {
+          "name": "amount",
+          "type": "uint64"
         }
       ],
       "returns": {
@@ -63,7 +96,8 @@
       "args": [
         {
           "name": "assetId",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "asset to opt-in\n why?"
         }
       ],
       "returns": {

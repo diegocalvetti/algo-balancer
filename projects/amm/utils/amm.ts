@@ -6,7 +6,7 @@ import algosdk from 'algosdk';
 import { BootstrapResult, retrieveResult } from '../script/execute';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { BalancedPoolV2Client } from '../contracts/clients/BalancedPoolV2Client';
-import { account } from './bootstrap';
+import {account, getTxInfo} from './bootstrap';
 
 dotenv.config();
 
@@ -112,4 +112,54 @@ export const computeLiquidity = async () => {
     coverAppCallInnerTransactionFees: true,
     suppressLog: true,
   });
+};
+
+export const swap = async (FACTORY_ID: bigint, POOL_ID: bigint, from: bigint, to: bigint, amount: number) => {
+  const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
+    appId: FACTORY_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const poolClient = algorand.client.getTypedAppClientById(BalancedPoolV2Client, {
+    appId: POOL_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const suggestedParams = await algorand.getSuggestedParams();
+
+  const assetTransferTxn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+    sender: account.addr,
+    suggestedParams,
+    receiver: poolClient.appAddress,
+    amount: BigInt(amount * 10 ** 6),
+    assetIndex: from,
+  });
+
+  const addLiquidityGroup = factoryClient.newGroup();
+
+  const assets = (await getPoolAssets(POOL_ID))!;
+  const indexFrom = assets.indexOf(from);
+  const indexTo = assets.indexOf(to);
+
+  addLiquidityGroup.swap({
+    args: [POOL_ID, indexFrom, indexTo, assetTransferTxn],
+    maxFee: (1_000_000).microAlgo(),
+  });
+
+  const res = await addLiquidityGroup.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+  const tx = await getTxInfo(res.txIds[1]);
+
+  function decodeUint64(buf: Uint8Array): bigint {
+    let result = BigInt(0);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const byte of buf) {
+      // eslint-disable-next-line no-bitwise
+      result = (result << BigInt(8)) + BigInt(byte);
+    }
+    return result;
+  }
+
+  console.log(tx.transaction.innerTxns![0].logs!.map((el: Uint8Array) => decodeUint64(el)));
 };

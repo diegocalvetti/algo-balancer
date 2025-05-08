@@ -71,6 +71,18 @@ async function withRetry(fn: CallableFunction, max = 10, delay = 3000): Promise<
   }
 }
 
+export async function getTxInfo(txId: string): Promise<TransactionResponse> {
+  let lookup: TransactionResponse | null = null;
+  await withRetry(async () => (lookup = await indexer.lookupTransactionByID(txId).do()));
+
+  if (!lookup) {
+    console.log('sorry i cant :(');
+    throw Error();
+  }
+
+  return lookup as TransactionResponse;
+}
+
 export async function poolSetup(FACTORY_APP_ID: bigint, POOL_ID: bigint, assetIds: bigint[], weights: bigint[]) {
   const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
     appId: FACTORY_APP_ID,
@@ -140,13 +152,7 @@ export async function factorySetup(APP_ID: bigint) {
   console.log('Balanced Pool Created');
   console.log('TXs IDs', result.txIds);
 
-  let lookup: TransactionResponse | null = null;
-  await withRetry(async () => (lookup = await indexer.lookupTransactionByID(result.txIds[0]).do()));
-
-  if (!lookup) {
-    console.log('sorry i cant :(');
-    throw Error();
-  }
+  const lookup = await getTxInfo(result.txIds[0]);
 
   const inner = (lookup as TransactionResponse).transaction.innerTxns![0];
   const poolAppId = inner.createdApplicationIndex;

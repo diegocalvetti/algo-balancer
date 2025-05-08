@@ -4,6 +4,8 @@ const TOTAL_LP_SUPPLY = 10 ** 16;
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
 const SCALE = 1_000_000;
 
+type SignedUint64 = { negative: boolean; value: uint64 };
+
 export class BalancedPoolV2 extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
@@ -19,11 +21,20 @@ export class BalancedPoolV2 extends Contract {
 
   minRatios = BoxMap<Address, uint64>({ prefix: 'minratio_' });
 
+  /**
+   * createApplication method called at creation
+   */
   @allow.bareCreate('NoOp')
   createApplication() {
     this.manager.value = this.app.creator;
   }
 
+  /**
+   * Bootstrap the pool by assigning assets and weights, create the LP tokens
+   * @param {AssetID[]} assetIds - assets of the pool
+   * @param {uint64[]} weights - weights of the pool
+   * @return uint64 - LP Token created ID
+   */
   bootstrap(assetIds: AssetID[], weights: uint64[]): AssetID {
     this.assertIsManager();
     let total = 0;
@@ -42,9 +53,13 @@ export class BalancedPoolV2 extends Contract {
   }
 
   /**
-   * Provide Liquidity to the pool
+   * Provide one token liquidity to the pool
+   * @param {uint64} index - index of the token in the pool
+   * @param {uint64} amount - amount of token sent
+   * @param {Address} sender - the sender
    */
   addLiquidity(index: uint64, amount: uint64, sender: Address) {
+    this.assertIsManager();
     assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
     const assetId = this.assets.value[index];
     log('Asset ID => ' + itob(assetId));
@@ -75,7 +90,13 @@ export class BalancedPoolV2 extends Contract {
     }
   }
 
+  /**
+   * Compute the liquidity for the given sender based on the state
+   * in the contract
+   * @param sender - the sender
+   */
   computeLiquidity(sender: Address) {
+    this.assertIsManager();
     const minRatio = this.minRatios(sender).value;
 
     assert(minRatio > 0, 'computed ratio is zero');
@@ -101,6 +122,41 @@ export class BalancedPoolV2 extends Contract {
     });
   }
 
+  swap(sender: Address, from: uint64, to: uint64, amount: uint64) {
+    assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
+
+    const assetIn = this.assets.value[from];
+    const assetOut = this.assets.value[to];
+
+    const balanceIn = this.balances(assetIn).value;
+    const balanceOut = this.balances(assetOut).value;
+
+    const weightIn = this.weights(from).value;
+    const weightOut = this.weights(to).value;
+
+    log(itob(balanceIn));
+    log(itob(balanceOut));
+    log(itob(weightIn));
+    log(itob(weightOut));
+
+    const amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
+
+    log(itob(amountOut));
+
+    this.balances(assetIn).value = balanceIn + amount;
+    this.balances(assetOut).value = balanceOut - amountOut;
+
+    sendAssetTransfer({
+      assetReceiver: sender,
+      assetAmount: amountOut,
+      xferAsset: assetOut,
+    });
+  }
+
+  /**
+   * @param assetId asset to opt-in
+   * @todo why?
+   */
   optIn(assetId: AssetID): void {
     if (this.app.address.isOptedInToAsset(assetId)) {
       return;
@@ -113,6 +169,14 @@ export class BalancedPoolV2 extends Contract {
     });
   }
 
+  /** ******************* */
+  /**     SUBROUTINES     */
+  /** ******************* */
+
+  /**
+   * Add a token setting balances and weights associated
+   * in their box
+   */
   private addToken(index: uint64, assetID: AssetID, weight: uint64): void {
     if (!this.weights(index).exists) {
       this.weights(index).create(8);
@@ -126,7 +190,10 @@ export class BalancedPoolV2 extends Contract {
     this.balances(assetID).value = 0;
   }
 
-  private createToken() {
+  /**
+   * Create the LP tokens for this pool
+   */
+  private createToken(): void {
     if (this.token.value === AssetID.zeroIndex) {
       this.token.value = sendAssetCreation({
         configAssetTotal: TOTAL_LP_SUPPLY,
@@ -142,56 +209,74 @@ export class BalancedPoolV2 extends Contract {
     }
   }
 
-  private assertIsManager() {
+  /**
+   * Assert the tx sender is the manager
+   */
+  private assertIsManager(): void {
     assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
   }
 
-  /**
-   * Approximate ln(x) using the Mercator series expansion
-   */
-  private ln(x: uint64): uint64 {
+  private lnWithSign(x: uint64): uint64[] {
     assert(x > 0, 'log undefined for x ≤ 0');
 
-    // (x - 1) / x  →  (x - SCALE) * SCALE / x
-    const z = ((x - SCALE) * SCALE) / x;
+    let negative: uint64 = 0;
+    let z: uint64;
+
+    if (x < SCALE) {
+      negative = 1;
+      const invX = wideRatio([SCALE, SCALE], [x]);
+      z = wideRatio([invX - SCALE, SCALE], [invX]);
+    } else {
+      z = wideRatio([x - SCALE, SCALE], [x]);
+    }
+
     let result = z;
     let term = z;
     let neg = false;
 
-    for (let i = 2; i <= 10; i = i + 1) {
-      term = (term * z) / SCALE;
-      const delta = term / i;
+    for (let i = 2; i <= 5; i = i + 1) {
+      term = wideRatio([term, z], [SCALE]);
+      const delta = wideRatio([term], [i]);
       result = neg ? result - delta : result + delta;
       neg = !neg;
     }
 
-    return result;
+    return [negative, result];
   }
 
-  /**
-   * Approximate e^x using the Taylor series expansion
-   */
   private exp(x: uint64): uint64 {
     let result = SCALE;
     let term = SCALE;
 
     for (let i = 1; i <= 10; i = i + 1) {
-      term = (term * x) / (i * SCALE);
+      term = wideRatio([term, x], [i * SCALE]);
       result += term;
     }
 
     return result;
   }
 
-  /**
-   * Approximate x^y by computing e^(y ln x)
-   */
   private pow(x: uint64, y: uint64): uint64 {
-    const lnX = this.ln(x);
-    const ylnX = (y * lnX) / SCALE; // y * ln(x)
-    return this.exp(ylnX); // e^(y ln x) = x^y
+    if (x === 0) return 0;
+
+    const lnXResult = this.lnWithSign(x);
+    const negativeLn = lnXResult[0];
+    const lnX = lnXResult[1];
+
+    const ylnX = wideRatio([y, lnX], [SCALE]);
+
+    const expResult = this.exp(ylnX);
+
+    if (negativeLn === 1) {
+      return wideRatio([SCALE, SCALE], [expResult]);
+    }
+
+    return expResult;
   }
 
+  /**
+   * Compute the ratio of the given token respect to the total balance of the pool
+   */
   private computeLP(sender: Address, index: uint64): uint64 {
     const assetId = this.assets.value[index];
     const weight = this.weights(index).value;
@@ -215,16 +300,19 @@ export class BalancedPoolV2 extends Contract {
   ): uint64 {
     const fee = 1_000;
 
-    const amountInWithFee = (amountIn * (SCALE - fee)) / SCALE;
+    const amountInWithFee = wideRatio([amountIn, SCALE - fee], [SCALE]);
 
     // x / (x + Dx - f)
-    const ratio = balanceIn / (balanceIn + amountInWithFee);
+    const ratio = wideRatio([balanceIn, SCALE], [balanceIn + amountInWithFee]);
 
-    const power = (weightIn * SCALE) / weightOut;
+    const power = wideRatio([weightIn, SCALE], [weightOut]);
+
+    log(itob(ratio));
+    log(itob(power));
 
     // output = balanceOut * (1 - ratio^power)
     const ratioPow = this.pow(ratio, power);
 
-    return (balanceOut * (SCALE - ratioPow)) / SCALE;
+    return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
   }
 }

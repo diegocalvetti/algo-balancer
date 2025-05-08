@@ -4,6 +4,7 @@
   "methods": [
     {
       "name": "createApplication",
+      "desc": "createApplication method called at creation",
       "args": [],
       "returns": {
         "type": "void"
@@ -11,6 +12,7 @@
     },
     {
       "name": "createPool",
+      "desc": "Deploy the pool contract, compiled teal of the contract\nmust be loaded in poolContractApprovalProgram",
       "args": [],
       "returns": {
         "type": "void"
@@ -18,10 +20,12 @@
     },
     {
       "name": "initPool",
+      "desc": "Initialize the pool with the given assets & weights",
       "args": [
         {
           "name": "poolID",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "Pool App ID"
         },
         {
           "name": "assetIds",
@@ -38,13 +42,55 @@
     },
     {
       "name": "addLiquidity",
+      "desc": "Add one token as liquidity to the pool",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64",
+          "desc": "Pool App ID"
+        },
+        {
+          "name": "index",
+          "type": "uint64",
+          "desc": "the index"
+        },
+        {
+          "name": "transferTxn",
+          "type": "axfer",
+          "desc": "transfer tx of the token, receiver must be the pool account"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "computeLiquidity",
+      "desc": "Compute the liquidity for the sender and send the expected LP",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64",
+          "desc": "Pool App ID"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "swap",
       "args": [
         {
           "name": "poolID",
           "type": "uint64"
         },
         {
-          "name": "index",
+          "name": "from",
+          "type": "uint64"
+        },
+        {
+          "name": "to",
           "type": "uint64"
         },
         {
@@ -57,20 +103,8 @@
       }
     },
     {
-      "name": "computeLiquidity",
-      "args": [
-        {
-          "name": "poolID",
-          "type": "uint64"
-        }
-      ],
-      "returns": {
-        "type": "void"
-      }
-    },
-    {
       "name": "MANAGER_updatePoolContractProgram",
-      "desc": "MANAGER Methods",
+      "desc": "*******************",
       "args": [
         {
           "name": "programSize",
@@ -95,20 +129,6 @@
       ],
       "returns": {
         "type": "void"
-      }
-    },
-    {
-      "name": "hasPoolApprovalProgram",
-      "args": [],
-      "returns": {
-        "type": "bool"
-      }
-    },
-    {
-      "name": "getProgram",
-      "args": [],
-      "returns": {
-        "type": "byte[]"
       }
     }
   ]

@@ -64,7 +64,7 @@
         }
       ],
       "returns": {
-        "type": "void"
+        "type": "uint64"
       }
     },
     {
@@ -85,6 +85,7 @@
     },
     {
       "name": "swap",
+      "desc": "Swap the token from for the token to",
       "args": [
         {
           "name": "sender",
@@ -104,7 +105,7 @@
         }
       ],
       "returns": {
-        "type": "void"
+        "type": "uint64"
       }
     },
     {

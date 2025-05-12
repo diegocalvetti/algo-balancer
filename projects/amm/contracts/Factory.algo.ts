@@ -1,10 +1,18 @@
 import { Contract } from '@algorandfoundation/tealscript';
 import { BalancedPoolV2 } from './BalancedPoolV2.algo';
 
+type Pool = {
+  id: AppID;
+  assets: AssetID[];
+  weights: uint64[];
+};
+
 export class Factory extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
   poolContractApprovalProgram = BoxKey<bytes>({ key: 'pool_approval_program' });
+
+  pools = BoxMap<bytes32, Pool>({ prefix: 'pools_' });
 
   /**
    * createApplication method called at creation
@@ -38,6 +46,14 @@ export class Factory extends Contract {
    * @param {uint64[]} weights
    */
   initPool(poolID: AppID, assetIds: AssetID[], weights: uint64[]): AssetID {
+    // @todo check assetIds in in-order
+
+    const hash = this.getPoolHash(assetIds, weights);
+
+    if (!this.pools(hash).exists) {
+      this.pools(hash).value = { id: poolID, assets: assetIds, weights: weights };
+    }
+
     return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
       applicationID: poolID,
       methodArgs: [assetIds, weights],
@@ -75,14 +91,14 @@ export class Factory extends Contract {
     });
   }
 
-  swap(poolID: AppID, from: uint64, to: uint64, transferTxn: AssetTransferTxn) {
-    sendMethodCall<typeof BalancedPoolV2.prototype.swap>({
+  swap(poolID: AppID, from: uint64, to: uint64, transferTxn: AssetTransferTxn): uint64 {
+    return sendMethodCall<typeof BalancedPoolV2.prototype.swap>({
       applicationID: poolID,
       methodArgs: [this.txn.sender, from, to, transferTxn.assetAmount],
     });
   }
 
-  opUp() {}
+  opUp(): void {}
 
   /** ******************* */
   /**       MANAGER       */
@@ -108,7 +124,18 @@ export class Factory extends Contract {
   /**     SUBROUTINES     */
   /** ******************* */
 
-  private assertIsManager() {
+  private assertIsManager(): void {
     assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
+  }
+
+  private getPoolHash(assetIds: AssetID[], weights: uint64[]): bytes32 {
+    let parts: bytes = '';
+
+    for (let i = 0; i < assetIds.length; i += 1) {
+      parts += itob(assetIds[i]);
+      parts += itob(weights[i]);
+    }
+
+    return sha512_256(parts);
   }
 }

@@ -38,16 +38,18 @@ export class BalancedPoolV2 extends Contract {
    */
   bootstrap(assetIds: AssetID[], weights: uint64[]): AssetID {
     this.assertIsManager();
-    let total = 0;
+    assert(assetIds.length >= 2, 'At least 2 tokens needed');
+    assert(assetIds.length === weights.length, 'Weights and Assets length must be the same');
+    let sumOfWeights = 0;
 
     for (let i = 0; i < assetIds.length; i += 1) {
       this.addToken(i, assetIds[i], weights[i]);
-      total += weights[i];
+      sumOfWeights += weights[i];
     }
 
     this.assets.value = assetIds;
 
-    assert(total === SCALE, 'Weights must sum to 1');
+    assert(sumOfWeights === SCALE, 'Weights must sum to 1');
     this.createToken();
 
     return this.token.value;
@@ -61,7 +63,8 @@ export class BalancedPoolV2 extends Contract {
    */
   addLiquidity(index: uint64, amount: uint64, sender: Address) {
     this.assertIsManager();
-    assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
+    this.assertIsBootstrapped();
+
     const assetId = this.assets.value[index];
     log('Asset ID => ' + itob(assetId));
 
@@ -98,7 +101,10 @@ export class BalancedPoolV2 extends Contract {
    * in the contract
    * @param sender - the sender
    */
-  getLiquidity(sender: Address) {
+  getLiquidity(sender: Address): uint64 {
+    this.assertIsManager();
+    this.assertIsBootstrapped();
+
     const provided = this.provided(sender).value;
     let totalAssets = 0;
     for (let i = 0; i < provided.length; i += 1) {
@@ -130,21 +136,23 @@ export class BalancedPoolV2 extends Contract {
       assetAmount: amount,
       xferAsset: this.token.value,
     });
+
+    return amount;
   }
 
   burnLiquidity(sender: Address, amountLP: uint64) {
-    assert(amountLP > 0, 'must burn positive amount');
+    this.assertIsManager();
+    this.assertIsBootstrapped();
+    assert(amountLP > 0, 'Must burn positive amount');
 
-    const totalLPTokens = this.totalLP();
-    assert(totalLPTokens > 0, 'no LP tokens in circulation');
-
+    const totalLP = this.totalLP();
     const numAssets = this.assets.value.length;
 
     for (let i = 0; i < numAssets; i += 1) {
       const assetId = this.assets.value[i];
       const poolBalance = this.balances(assetId).value;
 
-      const assetAmount = wideRatio([amountLP, poolBalance], [totalLPTokens]);
+      const assetAmount = wideRatio([amountLP, poolBalance], [totalLP]);
 
       this.balances(assetId).value = poolBalance - assetAmount;
 
@@ -158,37 +166,16 @@ export class BalancedPoolV2 extends Contract {
     this.burned.value += amountLP;
   }
 
-  private computeAllAssetsLiquidity(sender: Address): uint64 {
-    const totalAssets = this.assets.value.length;
-    let minRatio = SCALE;
-
-    increaseOpcodeBudget();
-
-    for (let i = 0; i < totalAssets; i += 1) {
-      const assetId = this.assets.value[i];
-      const poolBalance = this.balances(assetId).value;
-      const providedAmount = this.provided(sender).value[i];
-
-      assert(poolBalance > 0, 'Pool balance must be > 0');
-      assert(providedAmount > 0, 'Missing one asset contribution');
-
-      const ratio = wideRatio([providedAmount, SCALE], [poolBalance]);
-
-      if (ratio < minRatio) {
-        minRatio = ratio;
-      }
-    }
-
-    const poolLPBalance = this.token.value.reserve.assetBalance(this.token.value);
-    return wideRatio([poolLPBalance, minRatio], [SCALE]);
-  }
-
-  private totalLP(): uint64 {
-    return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
-  }
-
-  swap(sender: Address, from: uint64, to: uint64, amount: uint64) {
-    assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
+  /**
+   * Swap the token from for the token to
+   * @param {Address} sender
+   * @param {uint64} from
+   * @param {uint64} to
+   * @param {uint64} amount
+   */
+  swap(sender: Address, from: uint64, to: uint64, amount: uint64): uint64 {
+    this.assertIsManager();
+    this.assertIsBootstrapped();
 
     const assetIn = this.assets.value[from];
     const assetOut = this.assets.value[to];
@@ -216,6 +203,8 @@ export class BalancedPoolV2 extends Contract {
       assetAmount: amountOut,
       xferAsset: assetOut,
     });
+
+    return amountOut;
   }
 
   /**
@@ -279,6 +268,10 @@ export class BalancedPoolV2 extends Contract {
    */
   private assertIsManager(): void {
     assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
+  }
+
+  private assertIsBootstrapped(): void {
+    assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
   }
 
   private lnWithSign(x: uint64): uint64[] {
@@ -364,5 +357,34 @@ export class BalancedPoolV2 extends Contract {
     const ratioPow = this.pow(ratio, power);
 
     return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
+  }
+
+  private computeAllAssetsLiquidity(sender: Address): uint64 {
+    const totalAssets = this.assets.value.length;
+    let minRatio = SCALE;
+
+    increaseOpcodeBudget();
+
+    for (let i = 0; i < totalAssets; i += 1) {
+      const assetId = this.assets.value[i];
+      const poolBalance = this.balances(assetId).value;
+      const providedAmount = this.provided(sender).value[i];
+
+      assert(poolBalance > 0, 'Pool balance must be > 0');
+      assert(providedAmount > 0, 'Missing one asset contribution');
+
+      const ratio = wideRatio([providedAmount, SCALE], [poolBalance]);
+
+      if (ratio < minRatio) {
+        minRatio = ratio;
+      }
+    }
+
+    const poolLPBalance = this.token.value.reserve.assetBalance(this.token.value);
+    return wideRatio([poolLPBalance, minRatio], [SCALE]);
+  }
+
+  private totalLP(): uint64 {
+    return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
   }
 }

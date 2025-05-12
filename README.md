@@ -1,22 +1,25 @@
-# amm
+# 🧮 Algokit AMM Balancer
 
-Welcome to your new AlgoKit project!
+This project is an experimental [AlgoKit](https://github.com/algorandfoundation/algokit-cli)-based smart contract implementing a **Balancer-inspired Automated Market Maker (AMM)** on Algorand.
 
-This is your workspace root. A `workspace` in AlgoKit is an orchestrated collection of standalone projects (backends, smart contracts, frontend apps and etc).
+It allows the creation of multi-asset liquidity pools with weighted assets, LP token minting, and proportional burning mechanics.
 
-By default, `projects_root_path` parameter is set to `projects`. Which instructs AlgoKit CLI to create a new directory under `projects` directory when new project is instantiated via `algokit init` at the root of the workspace.
+> ⚠️ This project is a technical prototype and not production-ready.
+
+---
+
+##  Features
+
+- **Weighted Liquidity Pools** — Create pools with arbitrary weights (e.g. 80/20, 50/50, etc.)
+- **LP Token Minting**
+  - Proportional multi-asset contribution (Balancer-style)
+  - Single-asset liquidity support (simulates internal swap penalty)
+- **Token Swapping** — Constant mean market maker logic with weight-aware pricing
+- **Liquidity Burn** — Burn LP tokens to redeem a proportional share of all pool assets
+---
+
+This root directory is an orchestrated collection of standalone projects (backends, smart contracts, frontend apps and etc).
 
 ## Getting Started
 
 To get started refer to `README.md` files in respective sub-projects in the `projects` directory.
-
-To learn more about algokit, visit [documentation](https://github.com/algorandfoundation/algokit-cli/blob/main/docs/algokit.md).
-
-### GitHub Codespaces
-
-To get started execute:
-
-1. `algokit generate devcontainer` - invoking this command from the root of this repository will create a `devcontainer.json` file with all the configuration needed to run this project in a GitHub codespace. [Run the repository inside a codespace](https://docs.github.com/en/codespaces/getting-started/quickstart) to get started.
-2. `algokit init` - invoke this command inside a github codespace to launch an interactive wizard to guide you through the process of creating a new AlgoKit project
-
-Powered by [Copier templates](https://copier.readthedocs.io/en/stable/).

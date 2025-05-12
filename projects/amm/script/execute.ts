@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-case-declarations, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
+/* eslint-disable no-console, no-case-declarations, import/no-cycle, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
 import inquirer from 'inquirer';
 import path from 'node:path';
 import fs from 'node:fs';

@@ -3,9 +3,15 @@ import inquirer from 'inquirer';
 import path from 'node:path';
 import fs from 'node:fs';
 import { deploy, deployToken, factorySetup, mintToken, poolSetup, tokenSetup } from '../utils/bootstrap';
-import { addLiquidity, computeLiquidity, swap } from '../utils/amm';
+import { addLiquidity, burnLiquidity, computeLiquidity, swap } from '../utils/amm';
 
-export type BootstrapResult = { FACTORY_ID: bigint; POOL_ID: bigint; TOKENS: bigint[]; TOKENS_APP: bigint[] };
+export type BootstrapResult = {
+  FACTORY_ID: bigint;
+  POOL_ID: bigint;
+  LP_TOKEN_ID: bigint;
+  TOKENS: bigint[];
+  TOKENS_APP: bigint[];
+};
 
 const choices = [
   'Create some Tokens',
@@ -14,6 +20,7 @@ const choices = [
   'Write & Deploy Pool',
   'Add Liquidity',
   'Compute Liquidity',
+  'Burn Liquidity',
   'Swap',
   'Quit',
 ] as const;
@@ -116,7 +123,9 @@ async function run(command: Commands): Promise<boolean> {
     case 'Write & Deploy Pool':
       const weights = [1 / 2, 1 / 4, 1 / 4].map((n) => BigInt(n * 1e6));
 
-      await poolSetup(FACTORY_ID, POOL_ID, TOKENS, weights);
+      const LP_TOKEN_ID = await poolSetup(FACTORY_ID, POOL_ID, TOKENS, weights);
+
+      await storeResult('bootstrap', { LP_TOKEN_ID });
       break;
     case 'Add Liquidity':
       const { token, amount } = await inquirer.prompt([
@@ -143,6 +152,20 @@ async function run(command: Commands): Promise<boolean> {
       await computeLiquidity();
 
       console.log(`LP calculations done`);
+      break;
+    case 'Burn Liquidity':
+      const { amountLP } = await inquirer.prompt([
+        {
+          type: 'number',
+          name: 'amountLP',
+          message: 'How much?',
+          default: 100,
+        },
+      ]);
+
+      await burnLiquidity(amountLP);
+
+      console.log(`LP burned`);
       break;
     case 'Swap':
       const { tokenIn, amountIn, tokenOut } = await inquirer.prompt([

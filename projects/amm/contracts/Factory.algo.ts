@@ -61,10 +61,17 @@ export class Factory extends Contract {
    * Compute the liquidity for the sender and send the expected LP
    * @param {AppID} poolID - Pool App ID
    */
-  computeLiquidity(poolID: AppID) {
-    sendMethodCall<typeof BalancedPoolV2.prototype.computeLiquidity>({
+  getLiquidity(poolID: AppID) {
+    sendMethodCall<typeof BalancedPoolV2.prototype.getLiquidity>({
       applicationID: poolID,
       methodArgs: [this.txn.sender],
+    });
+  }
+
+  burnLiquidity(poolID: AppID, transferTxn: AssetTransferTxn) {
+    sendMethodCall<typeof BalancedPoolV2.prototype.burnLiquidity>({
+      applicationID: poolID,
+      methodArgs: [this.txn.sender, transferTxn.assetAmount],
     });
   }
 
@@ -74,6 +81,8 @@ export class Factory extends Contract {
       methodArgs: [this.txn.sender, from, to, transferTxn.assetAmount],
     });
   }
+
+  opUp() {}
 
   /** ******************* */
   /**       MANAGER       */

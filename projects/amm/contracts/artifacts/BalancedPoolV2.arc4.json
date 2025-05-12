@@ -54,13 +54,29 @@
       }
     },
     {
-      "name": "computeLiquidity",
+      "name": "getLiquidity",
       "desc": "Compute the liquidity for the given sender based on the state\nin the contract",
       "args": [
         {
           "name": "sender",
           "type": "address",
           "desc": "the sender"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "burnLiquidity",
+      "args": [
+        {
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "name": "amountLP",
+          "type": "uint64"
         }
       ],
       "returns": {

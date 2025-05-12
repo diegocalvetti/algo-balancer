@@ -65,13 +65,29 @@
       }
     },
     {
-      "name": "computeLiquidity",
+      "name": "getLiquidity",
       "desc": "Compute the liquidity for the sender and send the expected LP",
       "args": [
         {
           "name": "poolID",
           "type": "uint64",
           "desc": "Pool App ID"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "burnLiquidity",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        },
+        {
+          "name": "transferTxn",
+          "type": "axfer"
         }
       ],
       "returns": {
@@ -98,6 +114,13 @@
           "type": "axfer"
         }
       ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "opUp",
+      "args": [],
       "returns": {
         "type": "void"
       }

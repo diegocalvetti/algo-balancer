@@ -4,12 +4,12 @@ const TOTAL_LP_SUPPLY = 10 ** 16;
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
 const SCALE = 1_000_000;
 
-type SignedUint64 = { negative: boolean; value: uint64 };
-
 export class BalancedPoolV2 extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
   token = GlobalStateKey<AssetID>({ key: 'token' });
+
+  burned = GlobalStateKey<uint64>({ key: 'burned' });
 
   assets = GlobalStateKey<AssetID[]>({ key: 'assets' });
 
@@ -27,6 +27,7 @@ export class BalancedPoolV2 extends Contract {
   @allow.bareCreate('NoOp')
   createApplication() {
     this.manager.value = this.app.creator;
+    this.burned.value = 0;
   }
 
   /**
@@ -73,6 +74,7 @@ export class BalancedPoolV2 extends Contract {
 
     this.provided(sender).value[index] += amount;
 
+    /*
     const newMinRatio = this.computeLP(sender, index);
 
     if (!this.minRatios(sender).exists) {
@@ -88,6 +90,7 @@ export class BalancedPoolV2 extends Contract {
         this.minRatios(sender).value = newMinRatio;
       }
     }
+     */
   }
 
   /**
@@ -95,21 +98,28 @@ export class BalancedPoolV2 extends Contract {
    * in the contract
    * @param sender - the sender
    */
-  computeLiquidity(sender: Address) {
-    this.assertIsManager();
-    const minRatio = this.minRatios(sender).value;
-
-    assert(minRatio > 0, 'computed ratio is zero');
-
-    let amount = AMOUNT_LP_DEPLOYER;
-    if (this.token.value.reserve.assetBalance(this.token.value) !== TOTAL_LP_SUPPLY) {
-      const issued = this.token.value.total - this.token.value.reserve.assetBalance(this.token.value);
-      amount = wideRatio([issued, minRatio], [SCALE]);
+  getLiquidity(sender: Address) {
+    const provided = this.provided(sender).value;
+    let totalAssets = 0;
+    for (let i = 0; i < provided.length; i += 1) {
+      if (provided[i] > 0) {
+        totalAssets += 1;
+      }
     }
 
-    assert(amount > 0, 'computed LP amount is zero');
+    let amount: uint64 = 0;
 
-    this.minRatios(sender).value = 0;
+    if (this.totalLP() === 0) {
+      // First deployer
+      amount = AMOUNT_LP_DEPLOYER;
+    } else if (totalAssets === this.assets.value.length) {
+      // All tokens provided
+      amount = this.computeAllAssetsLiquidity(sender);
+    } else if (totalAssets === 1) {
+      // Only one token provided
+    } else {
+      // Partial multi-token
+    }
 
     for (let i = 0; i < this.provided(sender).value.length; i += 1) {
       this.provided(sender).value[i] = 0;
@@ -120,6 +130,61 @@ export class BalancedPoolV2 extends Contract {
       assetAmount: amount,
       xferAsset: this.token.value,
     });
+  }
+
+  burnLiquidity(sender: Address, amountLP: uint64) {
+    assert(amountLP > 0, 'must burn positive amount');
+
+    const totalLPTokens = this.totalLP();
+    assert(totalLPTokens > 0, 'no LP tokens in circulation');
+
+    const numAssets = this.assets.value.length;
+
+    for (let i = 0; i < numAssets; i += 1) {
+      const assetId = this.assets.value[i];
+      const poolBalance = this.balances(assetId).value;
+
+      const assetAmount = wideRatio([amountLP, poolBalance], [totalLPTokens]);
+
+      this.balances(assetId).value = poolBalance - assetAmount;
+
+      sendAssetTransfer({
+        assetReceiver: sender,
+        assetAmount: assetAmount,
+        xferAsset: assetId,
+      });
+    }
+
+    this.burned.value += amountLP;
+  }
+
+  private computeAllAssetsLiquidity(sender: Address): uint64 {
+    const totalAssets = this.assets.value.length;
+    let minRatio = SCALE;
+
+    increaseOpcodeBudget();
+
+    for (let i = 0; i < totalAssets; i += 1) {
+      const assetId = this.assets.value[i];
+      const poolBalance = this.balances(assetId).value;
+      const providedAmount = this.provided(sender).value[i];
+
+      assert(poolBalance > 0, 'Pool balance must be > 0');
+      assert(providedAmount > 0, 'Missing one asset contribution');
+
+      const ratio = wideRatio([providedAmount, SCALE], [poolBalance]);
+
+      if (ratio < minRatio) {
+        minRatio = ratio;
+      }
+    }
+
+    const poolLPBalance = this.token.value.reserve.assetBalance(this.token.value);
+    return wideRatio([poolLPBalance, minRatio], [SCALE]);
+  }
+
+  private totalLP(): uint64 {
+    return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
   }
 
   swap(sender: Address, from: uint64, to: uint64, amount: uint64) {
@@ -174,7 +239,7 @@ export class BalancedPoolV2 extends Contract {
   /** ******************* */
 
   /**
-   * Add a token setting balances and weights associated
+   * Add a token by setting balances and weights associated
    * in their box
    */
   private addToken(index: uint64, assetID: AssetID, weight: uint64): void {
@@ -234,7 +299,9 @@ export class BalancedPoolV2 extends Contract {
     let term = z;
     let neg = false;
 
-    for (let i = 2; i <= 5; i = i + 1) {
+    increaseOpcodeBudget();
+
+    for (let i = 2; i <= 10; i = i + 1) {
       term = wideRatio([term, z], [SCALE]);
       const delta = wideRatio([term], [i]);
       result = neg ? result - delta : result + delta;
@@ -272,23 +339,6 @@ export class BalancedPoolV2 extends Contract {
     }
 
     return expResult;
-  }
-
-  /**
-   * Compute the ratio of the given token respect to the total balance of the pool
-   */
-  private computeLP(sender: Address, index: uint64): uint64 {
-    const assetId = this.assets.value[index];
-    const weight = this.weights(index).value;
-    const poolBalance = this.balances(assetId).value;
-    const providedAmount = this.provided(sender).value[index];
-
-    if (providedAmount <= 0) {
-      return 0;
-    }
-
-    const ratio = wideRatio([providedAmount, SCALE], [poolBalance]);
-    return wideRatio([ratio, weight], [SCALE]);
   }
 
   private calcOut(

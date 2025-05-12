@@ -6,7 +6,7 @@ import algosdk from 'algosdk';
 import { BootstrapResult, retrieveResult } from '../script/execute';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { BalancedPoolV2Client } from '../contracts/clients/BalancedPoolV2Client';
-import {account, getTxInfo} from './bootstrap';
+import { account, getTxInfo } from './bootstrap';
 
 dotenv.config();
 
@@ -102,8 +102,50 @@ export const computeLiquidity = async () => {
   });
 
   const computeLiquidityGroup = factoryClient.newGroup();
-  computeLiquidityGroup.computeLiquidity({
+  computeLiquidityGroup.getLiquidity({
     args: [POOL_ID],
+    maxFee: (100_000).microAlgo(),
+  });
+
+  await computeLiquidityGroup.send({
+    populateAppCallResources: true,
+    coverAppCallInnerTransactionFees: true,
+    suppressLog: true,
+  });
+};
+
+export const burnLiquidity = async (amount: number) => {
+  const { POOL_ID, FACTORY_ID, LP_TOKEN_ID } = await retrieveResult<BootstrapResult>('bootstrap');
+
+  const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
+    appId: FACTORY_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const poolClient = algorand.client.getTypedAppClientById(BalancedPoolV2Client, {
+    appId: POOL_ID,
+    defaultSender: account.addr,
+    defaultSigner: account.signer,
+  });
+
+  const suggestedParams = await algorand.getSuggestedParams();
+
+  const assetTransferTxn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+    sender: account.addr,
+    suggestedParams,
+    receiver: poolClient.appAddress,
+    amount: BigInt(amount * 10 ** 6),
+    assetIndex: LP_TOKEN_ID,
+  });
+
+  const computeLiquidityGroup = factoryClient.newGroup();
+  computeLiquidityGroup.opUp({
+    args: [],
+    maxFee: (100_000).microAlgo(),
+  });
+  computeLiquidityGroup.burnLiquidity({
+    args: [POOL_ID, assetTransferTxn],
     maxFee: (100_000).microAlgo(),
   });
 

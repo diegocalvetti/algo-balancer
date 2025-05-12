@@ -83,7 +83,12 @@ export async function getTxInfo(txId: string): Promise<TransactionResponse> {
   return lookup as TransactionResponse;
 }
 
-export async function poolSetup(FACTORY_APP_ID: bigint, POOL_ID: bigint, assetIds: bigint[], weights: bigint[]) {
+export async function poolSetup(
+  FACTORY_APP_ID: bigint,
+  POOL_ID: bigint,
+  assetIds: bigint[],
+  weights: bigint[]
+): Promise<bigint> {
   const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
     appId: FACTORY_APP_ID,
     defaultSender: account.addr,
@@ -119,6 +124,8 @@ export async function poolSetup(FACTORY_APP_ID: bigint, POOL_ID: bigint, assetId
   console.log('LP Token ID', result.returns);
 
   await optIn(result.returns[0]);
+
+  return result.returns[0];
 }
 
 export async function factorySetup(APP_ID: bigint) {

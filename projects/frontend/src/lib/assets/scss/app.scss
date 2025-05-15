@@ -1,0 +1,193 @@
+$primary: blue;
+@use "../../../../node_modules/bulma";
+@use "../../../../node_modules/bulma-o-steps/bulma-steps";
+
+$font: "Inter", sans-serif;
+$font-info: "Kanit", serif;
+$bg: rgba(144, 171, 164, 1);
+$bg-dark: rgba(43, 43, 43, 0.99);
+
+$green: rgb(120, 145, 32);
+$green-light: #B5D341;
+
+$text: rgba(239, 239, 239);
+$text-darker: #b3b5bb;
+$white: white;
+$dark: #eeeeee;
+
+html, body {
+  background-color: whitesmoke;
+  margin: 0;
+  height: 100%;
+  font-family: $font;
+}
+
+.has-background-transparent {
+  background: transparent;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.navbar-item {
+  font-family: $font-info;
+
+  &.active {
+    font-weight: 800;
+    font-family: $font-info;
+  }
+}
+
+.label {
+  color: white;
+  font-weight: 600;
+  font-family: $font-info;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 1);
+  user-select: none;
+}
+
+.title {
+  font-family: $font-info;
+  color: white;
+}
+
+.token-select-box {
+  border: solid rgba(0,0,0,0.3) 1px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 5px;
+
+  &:hover {
+    background: lightgray;
+  }
+}
+
+.token-box-container {
+  padding: 5px;
+  margin: 0;
+}
+.token-box {
+  margin-bottom: 0!important;
+  display: flex;
+  border: none;
+  outline: none;
+  box-shadow: none;
+
+  img {
+    width: 64px;
+    height: 64px;
+    margin: auto 0;
+  }
+
+  div {
+    margin: auto 0;
+    margin-left: 32px
+  }
+
+  .icon {
+    opacity: 0;
+    transition: opacity 500ms linear;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  &:hover {
+    background: lightgray;
+
+    .icon {
+      opacity: 1;
+    }
+  }
+}
+.token-box-add {
+  margin: auto;
+  display: flex;
+  border: dashed 2px grey;
+  cursor: pointer;
+
+  &:hover {
+    background: lightgray;
+  }
+}
+
+.token-box-next {
+  background: yellow;
+  cursor: pointer;
+
+  &.is-disabled {
+    background: grey;
+    cursor: default;
+  }
+
+  &:hover:not(.is-disabled) {
+    background: #faff00;
+
+    p {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.token-box-container-weights {
+  padding: 5px;
+  margin: 0;
+  display: flex;
+
+  .input-box {
+    width: 150px;
+    margin: auto 32px auto auto;
+
+    &::after {
+      content: "%";
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      color: black;
+      margin-left: -25px;
+      margin-top: 3px;
+    }
+  }
+  .input{
+    background: rgba(0,0,0,0.11);
+    outline: none;
+    box-shadow: none;
+    color: black;
+    font-weight: 400;
+    font-family: $font-info;
+    font-size: 20px!important;
+    border-radius: 11px;
+    border: none;
+    width: 100%;
+
+    &:read-only {
+      cursor: default;
+    }
+    &::placeholder {
+      color: $text-darker;
+      text-transform: capitalize;
+    }
+  }
+
+}
+
+.is-info {
+  font-family: $font-info;
+  letter-spacing: .4px
+}
+
+.steps:not(.is-hollow) .steps-segment.is-active .steps-marker:not(.is-hollow), .steps:not(.is-hollow) .steps-marker:not(.is-hollow) {
+  background: yellow;
+}
+
+.steps-segment:after {
+  background: yellow;
+}
+
+.steps-content, .steps-marker {
+  font-family: $font-info;
+  letter-spacing: .2px;
+  font-weight: bold;
+  color: black!important;
+}

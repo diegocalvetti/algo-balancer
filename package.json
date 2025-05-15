@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bulma": "^1.0.4",
+    "sass": "^1.88.0",
+    "@algorandfoundation/algokit-utils": "^8.0.0"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.88.0"
+  }
+}

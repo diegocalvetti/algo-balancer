@@ -50,9 +50,9 @@ export class Factory extends Contract {
 
     const hash = this.getPoolHash(assetIds, weights);
 
-    if (!this.pools(hash).exists) {
-      this.pools(hash).value = { id: poolID, assets: assetIds, weights: weights };
-    }
+    assert(!this.pools(hash).exists, 'This pool already exists');
+
+    this.pools(hash).value = { id: poolID, assets: assetIds, weights: weights };
 
     return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
       applicationID: poolID,

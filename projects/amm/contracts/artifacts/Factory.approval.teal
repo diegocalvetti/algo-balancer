@@ -167,9 +167,8 @@ initPool:
 	callsub getPoolHash
 	frame_bury 0 // hash: byte[32]
 
-	// *if0_condition
 	// contracts/Factory.algo.ts:53
-	// !this.pools(hash).exists
+	// assert(!this.pools(hash).exists, 'This pool already exists')
 	bytec 3 //  "pools_"
 	frame_dig 0 // hash: byte[32]
 	concat
@@ -177,10 +176,11 @@ initPool:
 	swap
 	pop
 	!
-	bz *if0_end
 
-	// *if0_consequent
-	// contracts/Factory.algo.ts:54
+	// This pool already exists
+	assert
+
+	// contracts/Factory.algo.ts:55
 	// this.pools(hash).value = { id: poolID, assets: assetIds, weights: weights }
 	bytec 3 //  "pools_"
 	frame_dig 0 // hash: byte[32]
@@ -218,7 +218,6 @@ initPool:
 	concat // concat head and tail
 	box_put
 
-*if0_end:
 	// contracts/Factory.algo.ts:57
 	// return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
 	//       applicationID: poolID,
@@ -582,24 +581,24 @@ MANAGER_updatePoolContractProgram:
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// *if1_condition
+	// *if0_condition
 	// contracts/Factory.algo.ts:110
 	// this.poolContractApprovalProgram.exists
 	bytec 1 //  "pool_approval_program"
 	box_len
 	swap
 	pop
-	bz *if1_else
+	bz *if0_else
 
-	// *if1_consequent
+	// *if0_consequent
 	// contracts/Factory.algo.ts:111
 	// this.poolContractApprovalProgram.resize(programSize)
 	bytec 1 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
 	box_resize
-	b *if1_end
+	b *if0_end
 
-*if1_else:
+*if0_else:
 	// contracts/Factory.algo.ts:113
 	// this.poolContractApprovalProgram.create(programSize)
 	bytec 1 //  "pool_approval_program"
@@ -607,7 +606,7 @@ MANAGER_updatePoolContractProgram:
 	box_create
 	pop
 
-*if1_end:
+*if0_end:
 	retsub
 
 // MANAGER_writePoolContractProgram(uint64,byte[])void

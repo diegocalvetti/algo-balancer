@@ -153,6 +153,23 @@
       "returns": {
         "type": "void"
       }
+    },
+    {
+      "name": "getPool",
+      "readonly": true,
+      "args": [
+        {
+          "name": "assetIds",
+          "type": "uint64[]"
+        },
+        {
+          "name": "weights",
+          "type": "uint64[]"
+        }
+      ],
+      "returns": {
+        "type": "(uint64,uint64[],uint64[])"
+      }
     }
   ]
 }

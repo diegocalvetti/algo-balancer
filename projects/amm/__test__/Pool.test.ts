@@ -1,116 +1,126 @@
-import { describe, test, beforeAll, beforeEach, afterAll } from '@jest/globals';
-
-import algosdk, { AtomicTransactionComposer, TransactionSigner } from 'algosdk';
-import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
+import { describe, test, beforeAll, beforeEach } from '@jest/globals';
 import { Config } from '@algorandfoundation/algokit-utils';
+import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 
-import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
-import { BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
+import { TransactionSigner } from 'algosdk';
+import { FactoryClient } from '../contracts/clients/FactoryClient';
+import { createAndMintToken, mintToken } from '../helpers/token';
+import { addLiquidity, deployAndInitPool, getLiquidity, getPool } from '../helpers/pool';
+import { AssetInfo, getPoolClient, getRandomAccount, optIn } from '../helpers/generic';
 
 const fixture = algorandFixture();
+
 Config.configure({ populateAppCallResources: true });
 
-let appClient: FactoryClient;
-let poolFactory: BalancedPoolV2Factory;
 let sender: string;
 let signer: TransactionSigner;
 
-describe('FactoryManager', () => {
+const FACTORY_ID = 2030;
+let factoryClient: FactoryClient;
+
+let tokens: AssetInfo[];
+let weights: number[];
+
+describe('Pool', () => {
   beforeEach(fixture.beforeEach);
 
   beforeAll(async () => {
     await fixture.beforeEach();
     const { algorand } = fixture;
 
-    fixture.context.testAccount = await fixture.context.generateAccount({ initialFunds: (100).algo() });
-    signer = fixture.context.testAccount.signer;
-    sender = fixture.context.testAccount.addr.toString();
+    const manager = await getRandomAccount(fixture, 100_000);
+    signer = manager.signer;
+    sender = manager.sender;
 
-    poolFactory = new BalancedPoolV2Factory({
-      algorand,
+    factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
+      appId: BigInt(FACTORY_ID),
       defaultSender: sender,
       defaultSigner: signer,
     });
   });
 
-  test('factory_deploy', async () => {
+  test('deploy_pool_50/50', async () => {
     const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
 
-    const factory = new FactoryFactory({
-      algorand,
-      defaultSender: sender,
-      defaultSigner: signer,
-    });
+    // Create some tokens
+    const amount = BigInt(10_000_000);
+    tokens = [await createAndMintToken(manager, 'tokenA', amount), await createAndMintToken(manager, 'tokenB', amount)];
+    weights = [0.5, 0.5];
 
-    const createResult = await factory.send.create.createApplication();
-    appClient = createResult.appClient;
-
-    console.log(`✅ Factory Deployed => ${appClient.appId}`);
+    // Create the pool
+    await deployAndInitPool(factoryClient, manager, tokens, weights);
   });
 
-  test('factory_write_pool_program', async () => {
-    const balancedPoolApprovalProgram = await poolFactory.appFactory.compile();
-    const program = balancedPoolApprovalProgram.compiledApproval?.compiled!;
+  test('get_pool_50/50', async () => {
+    const result = await factoryClient.getPool({
+      args: [tokens.map((el) => el.assetID), weights.map((el) => el * 10 ** 6)],
+    });
 
+    console.log('Pool Found! ID => ', result);
+  });
+
+  test('pool_50/50_get_lp_proportionally', async () => {
     const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
 
-    const tx = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-      sender,
-      receiver: appClient.appAddress,
-      amount: 10e6,
-      suggestedParams: await algorand.getSuggestedParams(),
-    });
+    const poolID = (await getPool(factoryClient, tokens, weights))!;
 
-    const atc = new AtomicTransactionComposer();
-    atc.addTransaction({ txn: tx, signer });
-    await atc.execute(algorand.client.algod, 4);
+    await addLiquidity(factoryClient, manager, poolID, tokens[0].assetID, 0, 100_000);
+    await addLiquidity(factoryClient, manager, poolID, tokens[1].assetID, 1, 100_000);
+    const getLiquidity1Txs = await getLiquidity(factoryClient, manager, poolID);
 
-    await appClient.send.managerUpdatePoolContractProgram({
-      args: [program.length],
-      maxFee: (100_000).microAlgo(),
-      coverAppCallInnerTransactionFees: true,
-      populateAppCallResources: true,
-      sender,
-      signer,
-    });
+    const randomLP = await getRandomAccount(fixture);
+    const poolClient = await getPoolClient(randomLP, poolID);
+    const tokenLpId = await poolClient.getToken();
 
-    const programBase64 = balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!;
+    await optIn(randomLP, tokenLpId);
+    await optIn(randomLP, tokens[0].assetID);
+    await optIn(randomLP, tokens[1].assetID);
+    await mintToken(randomLP, tokens[0], BigInt(500_000));
+    await mintToken(randomLP, tokens[1], BigInt(500_000));
 
-    const writeGroup = appClient.newGroup();
+    await addLiquidity(factoryClient, randomLP, poolID, tokens[0].assetID, 0, 100_000);
+    await addLiquidity(factoryClient, randomLP, poolID, tokens[1].assetID, 1, 100_000);
+    const getLiquidity2Txs = await getLiquidity(factoryClient, randomLP, poolID);
 
-    for (let i = 0; i < programBase64.length; i += 2000) {
-      writeGroup.managerWritePoolContractProgram({
-        args: {
-          offset: i,
-          data: programBase64.subarray(i, i + 2000),
-        },
-        maxFee: (100_000).microAlgo(),
-        sender,
-        signer,
-      });
-    }
-
-    await writeGroup.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+    console.log(getLiquidity1Txs, getLiquidity2Txs);
   });
 
-  /*
-  test('sum', async () => {
-    const a = 13;
-    const b = 37;
-    const sum = await appClient.send.doMath({ args: { a, b, operation: 'sum' } });
-    expect(sum.return).toBe(BigInt(a + b));
-  });
+  test('pool_33/33/33_get_lp_proportionally', async () => {
+    const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
 
-  test('difference', async () => {
-    const a = 13;
-    const b = 37;
-    const diff = await appClient.send.doMath({ args: { a, b, operation: 'difference' } });
-    expect(diff.return).toBe(BigInt(a >= b ? a - b : b - a));
-  });
+    const amount = BigInt(10_000_000);
+    tokens = [...tokens, await createAndMintToken(manager, 'tokenC', amount)];
+    weights = [1 / 3, 1 / 3, 1 / 3];
 
-  test('hello', async () => {
-    const hello = await appClient.send.hello({ args: { name: 'world!' } });
-    expect(hello.return).toBe('Hello, world!');
+    await deployAndInitPool(factoryClient, manager, tokens, weights);
+
+    const poolID = (await getPool(factoryClient, tokens, weights))!;
+
+    await addLiquidity(factoryClient, manager, poolID, tokens[0].assetID, 0, 100_000);
+    await addLiquidity(factoryClient, manager, poolID, tokens[1].assetID, 1, 100_000);
+    await addLiquidity(factoryClient, manager, poolID, tokens[2].assetID, 2, 100_000);
+    const getLiquidity1Txs = await getLiquidity(factoryClient, manager, poolID);
+
+    const randomLP = await getRandomAccount(fixture);
+    const poolClient = await getPoolClient(randomLP, poolID);
+    const tokenLpId = await poolClient.getToken();
+
+    await optIn(randomLP, tokenLpId);
+    await optIn(randomLP, tokens[0].assetID);
+    await optIn(randomLP, tokens[1].assetID);
+    await optIn(randomLP, tokens[2].assetID);
+    await mintToken(randomLP, tokens[0], BigInt(500_000));
+    await mintToken(randomLP, tokens[1], BigInt(500_000));
+    await mintToken(randomLP, tokens[2], BigInt(500_000));
+
+    await addLiquidity(factoryClient, randomLP, poolID, tokens[0].assetID, 0, 100_000);
+    await addLiquidity(factoryClient, randomLP, poolID, tokens[1].assetID, 1, 200_000);
+    await addLiquidity(factoryClient, randomLP, poolID, tokens[2].assetID, 2, 200_000);
+    const getLiquidity2Txs = await getLiquidity(factoryClient, randomLP, poolID);
+
+    console.log(getLiquidity1Txs, getLiquidity2Txs);
   });
-   */
 });

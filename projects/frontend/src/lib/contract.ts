@@ -29,8 +29,8 @@ export class Contract {
     public appId : number
     public appAddress : Address
 
-    private sender : WalletAccount|null = null
-    private signer : TransactionSigner|null = null
+    public sender : WalletAccount|null = null
+    public signer : TransactionSigner|null = null
     private suggestedParams : any = null
     atc : AtomicTransactionComposer|null = null
 
@@ -48,15 +48,16 @@ export class Contract {
     }
 
     public async tx() {
-        this.sender = walletManager.getWallet(WalletId.LUTE)?.activeAccount!
-        this.signer = walletManager.getWallet(WalletId.LUTE)?.transactionSigner!
+        this.sender = walletManager.getWallet(WalletId.MNEMONIC)?.activeAccount!
+        this.signer = walletManager.getWallet(WalletId.MNEMONIC)?.transactionSigner!
         this.suggestedParams = await this.algod.getTransactionParams().do()
         this.atc = new algosdk.AtomicTransactionComposer()
 
+      console.log(this.sender, this.signer)
         return {
             suggestedParams: this.suggestedParams,
             atc: this.atc,
-            sender: this.sender.address.toString(),
+            sender: this.sender.address,
             signer: this.signer,
             appId: this.appId,
             appAddress: this.appAddress
@@ -74,20 +75,16 @@ export class Contract {
         delete params.fee
         delete params.flatFee
 
-        console.log(walletManager.getWallet(WalletId.LUTE)?.activeAddress!);
-        console.log(JSON.stringify(this.atc, null, 2));
+
         // @ts-ignore
         this.atc.addMethodCall({
             appID: this.appId,
             method: this.contract.getMethodByName(method),
             suggestedParams: this.suggestedParams,
-            sender: walletManager.getWallet(WalletId.LUTE)?.activeAddress!,
+            sender: this.sender.address,
             signer: this.signer,
             ...params,
         })
-
-      console.log(JSON.stringify(this.atc, null, 2));
-
       //this.atc = await prepareGroupForSending(this.atc!, this.algod, {populateAppCallResources: true})
 
         return this;

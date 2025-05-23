@@ -1,16 +1,18 @@
 <script lang="ts">
     import { walletManager } from '$lib/wallet'
     import { onMount } from 'svelte'
-    import { BaseWallet, WalletId } from "@txnlab/use-wallet";
+    import {BaseWallet, NetworkId, WalletId} from "@txnlab/use-wallet";
 
     let account: string | null = null
     export let WALLET : BaseWallet | undefined
 
     onMount(() => {
-        WALLET = walletManager.getWallet(WalletId.LUTE)
+        walletManager.setActiveNetwork(NetworkId.LOCALNET)
+
+        WALLET = walletManager.getWallet(WalletId.MNEMONIC)
         const active = walletManager.activeAccount
         account = active?.address ?? null
-        console.log(active)
+        console.log('active', active)
     })
 
     async function connect() {

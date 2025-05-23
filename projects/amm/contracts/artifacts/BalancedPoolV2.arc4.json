@@ -109,16 +109,11 @@
       }
     },
     {
-      "name": "optIn",
-      "args": [
-        {
-          "name": "assetId",
-          "type": "uint64",
-          "desc": "asset to opt-in\n why?"
-        }
-      ],
+      "name": "getToken",
+      "readonly": true,
+      "args": [],
       "returns": {
-        "type": "void"
+        "type": "uint64"
       }
     }
   ]

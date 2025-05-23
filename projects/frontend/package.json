@@ -27,6 +27,10 @@
 		"buffer": "^6.0.3",
 		"bulma": "^1.0.4",
 		"bulma-o-steps": "^1.1.0",
-		"lute-connect": "^1.6.1"
-	}
+		"lute-connect": "^1.6.1",
+    "@algorandfoundation/algokit-utils": "^8.0.0",
+    "algosdk": "^3.0",
+    "@algorandfoundation/algokit-client-generator": "^4.0.0",
+    "@algorandfoundation/tealscript": "latest"
+  }
 }

@@ -1,112 +1,91 @@
-import { OnSchemaBreak, OnUpdate } from '@algorandfoundation/algokit-utils/types/app';
-import { TokenClient, TokenFactory } from '../contracts/clients/TokenClient';
-import { account } from '../utils/bootstrap';
-import { AlgoParams, AssetInfo, commonAppCallTxParams, optIn } from './generic';
+import { AlgoAmount } from '@algorandfoundation/algokit-utils/types/amount';
+import {
+  AlgoParams,
+  AssetInfo,
+  commonAppCallTxParams,
+  getPoolClient,
+  makeAssetTransferTxn,
+  optIn,
+  pay,
+} from './generic';
+import { getTxInfo } from '../utils/bootstrap';
+import { FactoryClient } from '../contracts/clients/FactoryClient';
 
-async function deploy(config: AlgoParams, name: string): Promise<bigint> {
-  const { algorand, sender, signer } = config;
+export async function getPool(
+  factoryClient: FactoryClient,
+  tokens: AssetInfo[],
+  weights: number[]
+): Promise<bigint | undefined> {
+  const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+  const result = await factoryClient.getPool({
+    args: [tokens.map((el) => el.assetID), weightsFixed],
+  });
+  return result?.id;
+}
+export async function deployAndInitPool(
+  factoryClient: FactoryClient,
+  config: AlgoParams,
+  tokens: AssetInfo[],
+  weights: number[]
+) {
+  const tokenIds = tokens.map((el) => el.assetID);
+  const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
 
-  const tokenFactory = algorand.client.getTypedAppFactory(TokenFactory, {
-    defaultSender: sender,
-    defaultSigner: signer,
+  // Create the pool
+  const result = await factoryClient.send.createPool({ args: [] });
+
+  const tx = await getTxInfo(result.txIds[0]);
+  const poolID = tx.transaction.innerTxns![0].createdApplicationIndex!;
+  const poolClient = await getPoolClient(config, poolID);
+  console.log(`Pool Deployed => ${poolID}`);
+  await pay(config, poolClient.appAddress, 1);
+
+  const initPoolGroup = factoryClient.newGroup();
+
+  initPoolGroup.opUp({
+    ...commonAppCallTxParams(config),
+    args: [],
+  });
+  initPoolGroup.initPool({
+    ...commonAppCallTxParams(config, (500_000).microAlgo()),
+    args: [poolID, tokenIds, weightsFixed],
   });
 
-  const tokenApprovalProgram = await tokenFactory.appFactory.compile();
-
-  const appDeployer = await algorand.appDeployer.deploy({
-    metadata: {
-      name,
-      version: '1.0.0',
-      deletable: false,
-      updatable: true,
-    },
-    createParams: {
-      sender,
-      signer,
-      approvalProgram: tokenApprovalProgram.compiledApproval?.compiledBase64ToBytes!,
-      clearStateProgram: tokenApprovalProgram.compiledClear?.compiledBase64ToBytes!,
-      schema: {
-        globalInts: 2,
-        globalByteSlices: 1,
-        localInts: 0,
-        localByteSlices: 0,
-      },
-      extraProgramPages: 0,
-    },
-    updateParams: { sender: account.addr },
-    deleteParams: { sender: account.addr },
-    onSchemaBreak: OnSchemaBreak.AppendApp,
-    onUpdate: OnUpdate.UpdateApp,
+  const resultInit = await initPoolGroup.send({
     populateAppCallResources: true,
+    coverAppCallInnerTransactionFees: true,
   });
 
-  console.log('\n\n✅ Token APP_ID IS: ', appDeployer.appId);
-
-  return appDeployer.appId;
+  await optIn(config, resultInit.returns[1]!);
 }
 
-async function bootstrap(config: AlgoParams, name: string, tokenAppId: bigint): Promise<AssetInfo> {
-  const { algorand, sender, signer } = config;
+export async function addLiquidity(
+  factoryClient: FactoryClient,
+  config: AlgoParams,
+  poolID: bigint,
+  token: bigint,
+  index: number,
+  amount: number
+) {
+  const poolClient = await getPoolClient(config, poolID);
 
-  const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
-    appId: tokenAppId,
-    defaultSender: sender,
-    defaultSigner: signer,
+  const assetTransferTxn = await makeAssetTransferTxn(config, token, poolClient.appAddress, amount);
+
+  await factoryClient.send.addLiquidity({
+    ...commonAppCallTxParams(config, (1_000_000).microAlgo()),
+    args: [poolID, index, assetTransferTxn],
   });
+}
 
-  const tx = await algorand.send.payment({
-    sender,
-    signer,
-    receiver: tokenClient.appAddress,
-    extraFee: (1_000).microAlgo(),
-    amount: (1_000_000).microAlgo(),
-  });
-
-  const encoder = new TextEncoder();
-  const result = await tokenClient.send.bootstrap({
+export async function getLiquidity(
+  factoryClient: FactoryClient,
+  config: AlgoParams,
+  poolID: bigint
+): Promise<string[]> {
+  const res = await factoryClient.send.getLiquidity({
     ...commonAppCallTxParams(config),
-    args: { name: encoder.encode(name), unit: encoder.encode(name), seed: tx.transaction },
+    args: [poolID],
   });
 
-  return {
-    appID: tokenAppId,
-    assetID: result.return!,
-  };
-}
-
-async function mint(config: AlgoParams, asset: AssetInfo, amount: bigint): Promise<AssetInfo> {
-  const { algorand, sender, signer } = config;
-
-  const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
-    appId: asset.appID,
-    defaultSender: sender,
-    defaultSigner: signer,
-  });
-
-  await optIn(config, asset.assetID);
-
-  await tokenClient.send.mint({
-    args: { amount: amount.algo().microAlgo },
-    ...commonAppCallTxParams(config),
-  });
-
-  return asset;
-}
-
-export async function createToken(config: AlgoParams, name: string) {
-  const tokenAppId = await deploy(config, name);
-  return bootstrap(config, name, tokenAppId);
-}
-
-export async function mintToken(config: AlgoParams, asset: AssetInfo, amount: bigint): Promise<AssetInfo> {
-  return mint(config, asset, amount);
-}
-
-export async function createAndMintToken(config: AlgoParams, name: string, amount: bigint): Promise<AssetInfo> {
-  const token = await createToken(config, name);
-  const assetInfo = await mintToken(config, token, amount);
-  console.log(`[${name}] created => ${token.assetID}`);
-  console.log(`[${name}] minted => ${amount} to ${config.sender}`);
-
-  return assetInfo;
+  return res.txIds;
 }

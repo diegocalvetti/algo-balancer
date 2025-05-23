@@ -43,13 +43,14 @@ export class BalancedPoolV2 extends Contract {
     let sumOfWeights = 0;
 
     for (let i = 0; i < assetIds.length; i += 1) {
+      this.optIn(assetIds[i]);
       this.addToken(i, assetIds[i], weights[i]);
       sumOfWeights += weights[i];
     }
 
     this.assets.value = assetIds;
 
-    assert(sumOfWeights === SCALE, 'Weights must sum to 1');
+    assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1');
     this.createToken();
 
     return this.token.value;
@@ -207,11 +208,7 @@ export class BalancedPoolV2 extends Contract {
     return amountOut;
   }
 
-  /**
-   * @param assetId asset to opt-in
-   * @todo why?
-   */
-  optIn(assetId: AssetID): void {
+  private optIn(assetId: AssetID): void {
     if (this.app.address.isOptedInToAsset(assetId)) {
       return;
     }
@@ -361,7 +358,7 @@ export class BalancedPoolV2 extends Contract {
 
   private computeAllAssetsLiquidity(sender: Address): uint64 {
     const totalAssets = this.assets.value.length;
-    let minRatio = SCALE;
+    let minRatio = 2 ** 63;
 
     increaseOpcodeBudget();
 
@@ -369,22 +366,32 @@ export class BalancedPoolV2 extends Contract {
       const assetId = this.assets.value[i];
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
+      const actualPoolBalance = poolBalance - providedAmount;
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
       assert(providedAmount > 0, 'Missing one asset contribution');
 
-      const ratio = wideRatio([providedAmount, SCALE], [poolBalance]);
+      const ratio = wideRatio([providedAmount, SCALE], [actualPoolBalance]);
 
       if (ratio < minRatio) {
         minRatio = ratio;
       }
     }
 
-    const poolLPBalance = this.token.value.reserve.assetBalance(this.token.value);
-    return wideRatio([poolLPBalance, minRatio], [SCALE]);
+    const totalLP = this.totalLP();
+    return wideRatio([totalLP, minRatio], [SCALE]);
   }
 
   private totalLP(): uint64 {
     return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
+  }
+
+  private absDiff(a: uint64, b: uint64): uint64 {
+    return a > b ? a - b : b - a;
+  }
+
+  @abi.readonly
+  getToken(): AssetID {
+    return this.token.value;
   }
 }

@@ -8,13 +8,6 @@ import {
 
 // Configure networks
 const networks = new NetworkConfigBuilder()
-    .testnet({
-        algod: {
-            baseServer: 'https://testnet-api.algonode.cloud',
-            port: '443',
-            token: ''
-        }
-    })
     .localnet({
         algod: {
             baseServer: 'http://localhost',
@@ -28,9 +21,15 @@ const networks = new NetworkConfigBuilder()
 export const walletManager = new WalletManager({
     // Configure wallets
     wallets: [
-        WalletId.PERA,
+        WalletId.MNEMONIC,
         WalletId.DEFLY,
-        WalletId.LUTE,
+        WalletId.MNEMONIC,
+      {
+        id: WalletId.MNEMONIC,
+        options: {
+          persistToStorage: true,        // Optional: Save mnemonic in localStorage
+        }
+      }
     ],
 
     // Use custom network configurations
@@ -41,6 +40,6 @@ export const walletManager = new WalletManager({
     options: {
         debug: true,
         logLevel: LogLevel.INFO,
-        resetNetwork: false,
+        resetNetwork: true,
     }
 })

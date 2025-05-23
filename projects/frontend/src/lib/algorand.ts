@@ -7,17 +7,25 @@ import algosdk, {Address, AtomicTransactionComposer} from "algosdk";
 import {walletManager} from "$lib/wallet";
 import {WalletId} from "@txnlab/use-wallet";
 import {Contract} from "$lib/contract";
-import {prepareGroupForSending} from "@algorandfoundation/algokit-utils";
+import {AlgorandClient} from "@algorandfoundation/algokit-utils";
 
-const algorand = algokit.AlgorandClient.defaultLocalNet();
+async function getAlgorand() {
+  const sender = walletManager.getWallet(WalletId.MNEMONIC)?.activeAddress!
+  const signer = walletManager.getWallet(WalletId.MNEMONIC)?.transactionSigner!
+
+  const algorand = algokit.AlgorandClient.defaultLocalNet();//.setSigner(sender, signer);
+
+  return { algorand, sender, signer }
+}
 
 type Pool = {id: number, assets: bigint[], weights: bigint[]};
 export type Asset = { id: bigint, name: string, unit: string, weight?: number, icon?: string };
 type DetailedPool = {id: number, assets: Asset[], weights: bigint[]};
 
-const contractFactory = new Contract(algorand.client.algod, algorand.client.indexer, parseInt(BOOTSTRAP.FACTORY_ID), ABI_FACTORY)
 
 export async function getPools(): Promise<DetailedPool[]> {
+  const { algorand } = await getAlgorand();
+
   const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
     appId: BigInt(BOOTSTRAP.FACTORY_ID),
   });
@@ -69,6 +77,7 @@ export async function detailPool(pool: Pool): Promise<DetailedPool> {
 }
 
 export async function detailAsset(assetId: bigint|string, weight: bigint|undefined = undefined): Promise<Asset> {
+  const { algorand } = await getAlgorand();
   if (BigInt(assetId) === BigInt(0)) {
     return {
       id: BigInt(0),
@@ -89,71 +98,9 @@ export async function detailAsset(assetId: bigint|string, weight: bigint|undefin
   }
 }
 
-export async function txCreatePoolTest() {
-  const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
-    appId: BigInt(BOOTSTRAP.FACTORY_ID),
-  });
-
-  /*
-  const group = factoryClient.newGroup();
-  group.createPool({
-    args: [],
-    maxFee: (100_000).microAlgo(),
-    sender: account.addr,
-    signer: account.signer,
-  });
-
-  await group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });*/
-  /*
-
-    const txs = await factoryClient.createTransaction.createPool({
-      args: [],
-      maxFee: (100_000).microAlgo(),
-      sender: account.addr,
-    });
-
-
-    const txs2 = await walletManager.getWallet(WalletId.LUTE)?.signTransactions([txs.transactions[0].toByte()]);
-    console.log(walletManager.getWallet(WalletId.LUTE)?.transactionSigner)
-  */
-  /*
-  const txs = await factoryClient.createTransaction.createPool({
-    args: [],
-    staticFee: (400_000).microAlgo(),
-    sender: account.addr,
-    signer: undefined,
-    boxReferences: ['pool_approval_program'],
-    appReferences: [BigInt(BOOTSTRAP.POOL_ID)]
-  });
-
-  const signed = await walletManager.getWallet(WalletId.LUTE)?.signTransactions([txs.transactions[0].toByte()]);
-
-  // @ts-ignore
-  const { txid } = await algorand.client.algod.sendRawTransaction(signed).do();
-  const result = await waitForConfirmation(txid, 3, algorand.client.algod);
-
-  console.log(result);
-   */
-
-  const wallet = walletManager.getWallet(WalletId.LUTE);
-  const addr = wallet?.activeAddress;
-  const signer = wallet?.transactionSigner;
-
-  const account = algorand.account.setSigner(addr!, signer!).getAccount(addr!);
-  console.log('addr', account.addr);
-
-  const group = factoryClient.newGroup();
-  const comp = group.createPool({
-    args: [],
-    maxFee: (100_000).microAlgo(),
-    sender: account.addr,
-    signer: account.signer,
-  });
-
-  await comp.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true, maxRoundsToWaitForConfirmation: 4 });
-}
-
 export async function txCreatePool(): Promise<bigint|null> {
+  const { algorand } = await getAlgorand();
+  const contractFactory = new Contract(algorand.client.algod, algorand.client.indexer, parseInt(BOOTSTRAP.FACTORY_ID), ABI_FACTORY)
 
   const {atc, appId} = await contractFactory.tx()
   if (!atc) throw Error("Wallet not connected")
@@ -169,52 +116,40 @@ export async function txCreatePool(): Promise<bigint|null> {
 }
 
 export async function txInitPool(poolID: bigint, tokens: bigint[], weights: number[]) {
+  const abiType = algosdk.ABIType.from('uint64[]');
+  const tokensEncoded = abiType.encode(tokens);
+  const weightsEncoded = abiType.encode(weights.map(el => BigInt(el * 10 ** 16 / 100)));
+
+  const { algorand, sender, signer } = await getAlgorand();
+
+  const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
+    appId: BigInt(BOOTSTRAP.FACTORY_ID),
+  });
+
+  await factoryClient.send.initPool({
+    args: [poolID, tokens, weights.map(el => (el/100) * 10 ** 16)],
+    sender, signer,
+    maxFee: (500_000).microAlgo(),
+    coverAppCallInnerTransactionFees: true,
+    populateAppCallResources: true,
+  });
+  /*
   const contractFactory = new Contract(algorand.client.algod, algorand.client.indexer, parseInt(BOOTSTRAP.FACTORY_ID), ABI_FACTORY)
 
   const {atc, appId} = await contractFactory.tx()
   if (!atc) throw Error("Wallet not connected")
 
-  const abiType = algosdk.ABIType.from('uint64[]');
-  const tokensEncoded = abiType.encode(tokens);
-  const weightsEncoded = abiType.encode(weights.map(el => BigInt(el * 10 ** 16 / 100)));
-
-  const sender = walletManager.getWallet(WalletId.LUTE)?.activeAddress!
-  const signer = walletManager.getWallet(WalletId.LUTE)?.transactionSigner!
-
   const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
     appId: BigInt(BOOTSTRAP.FACTORY_ID),
-    defaultSender: sender,
-    defaultSigner: signer,
   });
 
-  const group = factoryClient.newGroup();
-  group.opUp({
-    args: [],
-    sender,
-    signer,
-  });
+  contractFactory.addCall('opUp', {});
 
-  await group.send({ populateAppCallResources: true });
+  const result = await contractFactory.addCall('initPool', {
+    methodArgs: [BigInt(1148), tokensEncoded, weightsEncoded]
+  }).execute();
 
-  /*contractFactory.atc = await prepareGroupForSending(contractFactory.atc!, contractFactory.algod, {
-    populateAppCallResources: true
-  })*/
-  /*
-    contractFactory.addCall('opUp', {})
-    await contractFactory.prepare()
-
-    contractFactory.addCall('initPool', {
-      methodArgs: [poolID, tokensEncoded, weightsEncoded],
-      flatFee: true,
-      fee: 500_000,
-    });
-
-
-  await contractFactory.execute()*/
-  /*
-  const txn = contractFactory.atc?.buildGroup()
-  const newAtc = new AtomicTransactionComposer();
-  newAtc.addTransaction({ txn: txn[0].txn, signer: walletManager.getWallet(WalletId.LUTE)?.transactionSigner! });
-  */
-
+  // @ts-ignore
+  return result ? result.methodResults[0].txInfo.innerTxns[0].applicationIndex : null;
+   */
 }

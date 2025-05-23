@@ -47,6 +47,8 @@ export class Factory extends Contract {
    */
   initPool(poolID: AppID, assetIds: AssetID[], weights: uint64[]): AssetID {
     // @todo check assetIds in in-order
+    assert(assetIds.length >= 2, 'At least 2 tokens needed');
+    assert(assetIds.length === weights.length, 'Weights and Assets length must be the same');
 
     const hash = this.getPoolHash(assetIds, weights);
 
@@ -137,5 +139,11 @@ export class Factory extends Contract {
     }
 
     return sha512_256(parts);
+  }
+
+  @abi.readonly
+  getPool(assetIds: AssetID[], weights: uint64[]): Pool {
+    const hash = this.getPoolHash(assetIds, weights);
+    return this.pools(hash).value;
   }
 }

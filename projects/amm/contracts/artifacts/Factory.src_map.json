@@ -196,128 +196,129 @@
     "teal": 42,
     "source": "contracts/Factory.algo.ts:22",
     "pc": [
-      102
+      102,
+      103
     ]
   },
   {
     "teal": 43,
     "source": "contracts/Factory.algo.ts:22",
     "pc": [
-      103,
       104,
-      105
+      105,
+      106
     ]
   },
   {
     "teal": 44,
     "source": "contracts/Factory.algo.ts:22",
     "pc": [
-      106,
-      107
+      107,
+      108
     ]
   },
   {
     "teal": 45,
     "source": "contracts/Factory.algo.ts:22",
     "pc": [
-      108
+      109
     ]
   },
   {
     "teal": 46,
     "source": "contracts/Factory.algo.ts:22",
     "pc": [
-      109
+      110
     ]
   },
   {
     "teal": 47,
     "source": "contracts/Factory.algo.ts:20",
     "pc": [
-      110
+      111
     ]
   },
   {
     "teal": 52,
     "source": "contracts/Factory.algo.ts:29",
     "pc": [
-      111,
       112,
-      113
+      113,
+      114
     ]
   },
   {
     "teal": 53,
     "source": "contracts/Factory.algo.ts:29",
     "pc": [
-      114
+      115
     ]
   },
   {
     "teal": 54,
     "source": "contracts/Factory.algo.ts:29",
     "pc": [
-      115
+      116
     ]
   },
   {
     "teal": 61,
     "source": "contracts/Factory.algo.ts:29",
     "pc": [
-      116,
       117,
-      118
+      118,
+      119
     ]
   },
   {
     "teal": 74,
     "source": "contracts/Factory.algo.ts:30",
     "pc": [
-      119
+      120
     ]
   },
   {
     "teal": 75,
     "source": "contracts/Factory.algo.ts:30",
     "pc": [
-      120
+      121
     ]
   },
   {
     "teal": 76,
     "source": "contracts/Factory.algo.ts:30",
     "pc": [
-      121,
-      122
+      122,
+      123
     ]
   },
   {
     "teal": 80,
     "source": "contracts/Factory.algo.ts:31",
     "pc": [
-      123
+      124
     ]
   },
   {
     "teal": 81,
     "source": "contracts/Factory.algo.ts:31",
     "pc": [
-      124,
-      125
+      125,
+      126
     ]
   },
   {
     "teal": 85,
     "source": "contracts/Factory.algo.ts:32",
     "pc": [
-      126
+      127
     ]
   },
   {
     "teal": 86,
     "source": "contracts/Factory.algo.ts:32",
     "pc": [
-      127
+      128
     ]
   },
   {
@@ -325,135 +326,134 @@
     "source": "contracts/Factory.algo.ts:32",
     "errorMessage": "box value does not exist: this.poolContractApprovalProgram.value",
     "pc": [
-      128
+      129
     ]
   },
   {
     "teal": 90,
     "source": "contracts/Factory.algo.ts:32",
     "pc": [
-      129,
-      130
+      130,
+      131
     ]
   },
   {
     "teal": 94,
     "source": "contracts/Factory.algo.ts:33",
     "pc": [
-      131,
       132,
-      133
+      133,
+      134
     ]
   },
   {
     "teal": 95,
     "source": "contracts/Factory.algo.ts:33",
     "pc": [
-      134,
-      135
+      135,
+      136
     ]
   },
   {
     "teal": 99,
     "source": "contracts/Factory.algo.ts:34",
     "pc": [
-      136,
-      137
+      137,
+      138
     ]
   },
   {
     "teal": 100,
     "source": "contracts/Factory.algo.ts:34",
     "pc": [
-      138,
-      139
+      139,
+      140
     ]
   },
   {
     "teal": 104,
     "source": "contracts/Factory.algo.ts:35",
     "pc": [
-      140,
-      141
+      141,
+      142
     ]
   },
   {
     "teal": 105,
     "source": "contracts/Factory.algo.ts:35",
     "pc": [
-      142,
-      143
+      143,
+      144
     ]
   },
   {
     "teal": 109,
     "source": "contracts/Factory.algo.ts:36",
     "pc": [
-      144,
-      145
+      145,
+      146
     ]
   },
   {
     "teal": 110,
     "source": "contracts/Factory.algo.ts:36",
     "pc": [
-      146,
-      147
+      147,
+      148
     ]
   },
   {
     "teal": 114,
     "source": "contracts/Factory.algo.ts:37",
     "pc": [
-      148,
-      149
+      149,
+      150
     ]
   },
   {
     "teal": 115,
     "source": "contracts/Factory.algo.ts:37",
     "pc": [
-      150,
-      151
+      151,
+      152
     ]
   },
   {
     "teal": 119,
     "source": "contracts/Factory.algo.ts:38",
     "pc": [
-      152,
       153,
       154,
-      155
+      155,
+      156
     ]
   },
   {
     "teal": 120,
     "source": "contracts/Factory.algo.ts:38",
     "pc": [
-      156,
-      157
+      157,
+      158
     ]
   },
   {
     "teal": 123,
     "source": "contracts/Factory.algo.ts:30",
     "pc": [
-      158
+      159
     ]
   },
   {
     "teal": 124,
     "source": "contracts/Factory.algo.ts:29",
     "pc": [
-      159
+      160
     ]
   },
   {
     "teal": 129,
     "source": "contracts/Factory.algo.ts:48",
     "pc": [
-      160,
       161
     ]
   },
@@ -571,7 +571,7 @@
   },
   {
     "teal": 165,
-    "source": "contracts/Factory.algo.ts:51",
+    "source": "contracts/Factory.algo.ts:50",
     "pc": [
       190,
       191
@@ -579,156 +579,163 @@
   },
   {
     "teal": 166,
-    "source": "contracts/Factory.algo.ts:51",
+    "source": "contracts/Factory.algo.ts:50",
     "pc": [
-      192,
-      193
+      192
     ]
   },
   {
     "teal": 167,
-    "source": "contracts/Factory.algo.ts:51",
+    "source": "contracts/Factory.algo.ts:50",
     "pc": [
-      194,
+      193
+    ]
+  },
+  {
+    "teal": 168,
+    "source": "contracts/Factory.algo.ts:50",
+    "pc": [
+      194
+    ]
+  },
+  {
+    "teal": 169,
+    "source": "contracts/Factory.algo.ts:50",
+    "pc": [
       195,
       196
     ]
   },
   {
-    "teal": 168,
-    "source": "contracts/Factory.algo.ts:51",
+    "teal": 170,
+    "source": "contracts/Factory.algo.ts:50",
     "pc": [
-      197,
-      198
-    ]
-  },
-  {
-    "teal": 172,
-    "source": "contracts/Factory.algo.ts:53",
-    "pc": [
-      199
+      197
     ]
   },
   {
     "teal": 173,
-    "source": "contracts/Factory.algo.ts:53",
+    "source": "contracts/Factory.algo.ts:50",
+    "errorMessage": "At least 2 tokens needed",
     "pc": [
-      200,
+      198
+    ]
+  },
+  {
+    "teal": 177,
+    "source": "contracts/Factory.algo.ts:51",
+    "pc": [
+      199,
+      200
+    ]
+  },
+  {
+    "teal": 178,
+    "source": "contracts/Factory.algo.ts:51",
+    "pc": [
       201
     ]
   },
   {
-    "teal": 174,
-    "source": "contracts/Factory.algo.ts:53",
+    "teal": 179,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
       202
     ]
   },
   {
-    "teal": 175,
-    "source": "contracts/Factory.algo.ts:53",
+    "teal": 180,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
       203
     ]
   },
   {
-    "teal": 176,
-    "source": "contracts/Factory.algo.ts:53",
+    "teal": 181,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
-      204
-    ]
-  },
-  {
-    "teal": 177,
-    "source": "contracts/Factory.algo.ts:53",
-    "pc": [
+      204,
       205
     ]
   },
   {
-    "teal": 178,
-    "source": "contracts/Factory.algo.ts:53",
+    "teal": 182,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
       206
     ]
   },
   {
-    "teal": 181,
-    "source": "contracts/Factory.algo.ts:53",
-    "errorMessage": "This pool already exists",
+    "teal": 183,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
       207
     ]
   },
   {
-    "teal": 185,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 184,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
       208
     ]
   },
   {
-    "teal": 186,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 185,
+    "source": "contracts/Factory.algo.ts:51",
     "pc": [
-      209,
-      210
-    ]
-  },
-  {
-    "teal": 187,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      211
+      209
     ]
   },
   {
     "teal": 188,
-    "source": "contracts/Factory.algo.ts:55",
+    "source": "contracts/Factory.algo.ts:51",
+    "errorMessage": "Weights and Assets length must be the same",
     "pc": [
-      212
-    ]
-  },
-  {
-    "teal": 189,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      213
-    ]
-  },
-  {
-    "teal": 190,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      214
-    ]
-  },
-  {
-    "teal": 191,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      215
+      210
     ]
   },
   {
     "teal": 192,
-    "source": "contracts/Factory.algo.ts:55",
+    "source": "contracts/Factory.algo.ts:53",
     "pc": [
-      216
+      211,
+      212
     ]
   },
   {
     "teal": 193,
-    "source": "contracts/Factory.algo.ts:55",
+    "source": "contracts/Factory.algo.ts:53",
     "pc": [
-      217,
-      218,
-      219,
-      220
+      213,
+      214
     ]
   },
   {
     "teal": 194,
+    "source": "contracts/Factory.algo.ts:53",
+    "pc": [
+      215,
+      216,
+      217
+    ]
+  },
+  {
+    "teal": 195,
+    "source": "contracts/Factory.algo.ts:53",
+    "pc": [
+      218,
+      219
+    ]
+  },
+  {
+    "teal": 199,
+    "source": "contracts/Factory.algo.ts:55",
+    "pc": [
+      220
+    ]
+  },
+  {
+    "teal": 200,
     "source": "contracts/Factory.algo.ts:55",
     "pc": [
       221,
@@ -736,696 +743,739 @@
     ]
   },
   {
-    "teal": 195,
+    "teal": 201,
     "source": "contracts/Factory.algo.ts:55",
     "pc": [
       223
     ]
   },
   {
-    "teal": 196,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      224,
-      225,
-      226
-    ]
-  },
-  {
-    "teal": 197,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      227,
-      228
-    ]
-  },
-  {
-    "teal": 198,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      229
-    ]
-  },
-  {
-    "teal": 199,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      230
-    ]
-  },
-  {
-    "teal": 200,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      231
-    ]
-  },
-  {
-    "teal": 201,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      232
-    ]
-  },
-  {
     "teal": 202,
     "source": "contracts/Factory.algo.ts:55",
     "pc": [
-      233
+      224
     ]
   },
   {
     "teal": 203,
     "source": "contracts/Factory.algo.ts:55",
     "pc": [
-      234,
-      235,
-      236
+      225
     ]
   },
   {
     "teal": 204,
     "source": "contracts/Factory.algo.ts:55",
     "pc": [
-      237
+      226
     ]
   },
   {
     "teal": 205,
     "source": "contracts/Factory.algo.ts:55",
     "pc": [
-      238
+      227
     ]
   },
   {
-    "teal": 206,
+    "teal": 208,
     "source": "contracts/Factory.algo.ts:55",
+    "errorMessage": "This pool already exists",
     "pc": [
+      228
+    ]
+  },
+  {
+    "teal": 212,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      229
+    ]
+  },
+  {
+    "teal": 213,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      230,
+      231
+    ]
+  },
+  {
+    "teal": 214,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      232
+    ]
+  },
+  {
+    "teal": 215,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      233
+    ]
+  },
+  {
+    "teal": 216,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      234
+    ]
+  },
+  {
+    "teal": 217,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      235
+    ]
+  },
+  {
+    "teal": 218,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      236
+    ]
+  },
+  {
+    "teal": 219,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      237
+    ]
+  },
+  {
+    "teal": 220,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      238,
       239,
       240,
       241
     ]
   },
   {
-    "teal": 207,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 221,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
       242,
       243
     ]
   },
   {
-    "teal": 208,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 222,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
       244
     ]
   },
   {
-    "teal": 209,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 223,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      245
-    ]
-  },
-  {
-    "teal": 210,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      246
-    ]
-  },
-  {
-    "teal": 211,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
+      245,
+      246,
       247
     ]
   },
   {
-    "teal": 212,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 224,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      248
+      248,
+      249
     ]
   },
   {
-    "teal": 213,
-    "source": "contracts/Factory.algo.ts:55",
+    "teal": 225,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      249,
-      250,
-      251
-    ]
-  },
-  {
-    "teal": 214,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      252
-    ]
-  },
-  {
-    "teal": 215,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      253
-    ]
-  },
-  {
-    "teal": 216,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      254,
-      255,
-      256
-    ]
-  },
-  {
-    "teal": 217,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      257
-    ]
-  },
-  {
-    "teal": 218,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      258
-    ]
-  },
-  {
-    "teal": 219,
-    "source": "contracts/Factory.algo.ts:55",
-    "pc": [
-      259
+      250
     ]
   },
   {
     "teal": 226,
     "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      260
+      251
     ]
   },
   {
     "teal": 227,
     "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      261
+      252
     ]
   },
   {
     "teal": 228,
     "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      262,
-      263
+      253
     ]
   },
   {
     "teal": 229,
     "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      264,
-      265,
-      266,
-      267,
-      268,
-      269
+      254
     ]
   },
   {
     "teal": 230,
     "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      270,
-      271
+      255,
+      256,
+      257
+    ]
+  },
+  {
+    "teal": 231,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      258
+    ]
+  },
+  {
+    "teal": 232,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      259
+    ]
+  },
+  {
+    "teal": 233,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      260,
+      261,
+      262
     ]
   },
   {
     "teal": 234,
-    "source": "contracts/Factory.algo.ts:58",
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      272,
-      273
+      263,
+      264
     ]
   },
   {
     "teal": 235,
-    "source": "contracts/Factory.algo.ts:58",
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
-      274,
-      275
+      265
+    ]
+  },
+  {
+    "teal": 236,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      266
+    ]
+  },
+  {
+    "teal": 237,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      267
+    ]
+  },
+  {
+    "teal": 238,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      268
     ]
   },
   {
     "teal": 239,
-    "source": "contracts/Factory.algo.ts:59",
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
+      269
+    ]
+  },
+  {
+    "teal": 240,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      270,
+      271,
+      272
+    ]
+  },
+  {
+    "teal": 241,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      273
+    ]
+  },
+  {
+    "teal": 242,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      274
+    ]
+  },
+  {
+    "teal": 243,
+    "source": "contracts/Factory.algo.ts:57",
+    "pc": [
+      275,
       276,
       277
     ]
   },
   {
-    "teal": 240,
-    "source": "contracts/Factory.algo.ts:59",
+    "teal": 244,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
       278
     ]
   },
   {
-    "teal": 241,
-    "source": "contracts/Factory.algo.ts:59",
+    "teal": 245,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
       279
     ]
   },
   {
-    "teal": 242,
-    "source": "contracts/Factory.algo.ts:59",
+    "teal": 246,
+    "source": "contracts/Factory.algo.ts:57",
     "pc": [
       280
-    ]
-  },
-  {
-    "teal": 243,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      281
-    ]
-  },
-  {
-    "teal": 244,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      282
-    ]
-  },
-  {
-    "teal": 245,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      283,
-      284,
-      285
-    ]
-  },
-  {
-    "teal": 246,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      286
-    ]
-  },
-  {
-    "teal": 247,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      287
-    ]
-  },
-  {
-    "teal": 248,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      288,
-      289
-    ]
-  },
-  {
-    "teal": 249,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      290,
-      291
-    ]
-  },
-  {
-    "teal": 250,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      292
-    ]
-  },
-  {
-    "teal": 251,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      293
-    ]
-  },
-  {
-    "teal": 252,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      294
     ]
   },
   {
     "teal": 253,
     "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      295
+      281
     ]
   },
   {
     "teal": 254,
     "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      296
+      282
     ]
   },
   {
     "teal": 255,
     "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      297,
-      298,
-      299
+      283,
+      284
     ]
   },
   {
     "teal": 256,
     "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      300
+      285,
+      286,
+      287,
+      288,
+      289,
+      290
     ]
   },
   {
     "teal": 257,
     "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      301
-    ]
-  },
-  {
-    "teal": 258,
-    "source": "contracts/Factory.algo.ts:59",
-    "pc": [
-      302,
-      303
+      291,
+      292
     ]
   },
   {
     "teal": 261,
-    "source": "contracts/Factory.algo.ts:57",
+    "source": "contracts/Factory.algo.ts:60",
     "pc": [
-      304
+      293,
+      294
     ]
   },
   {
     "teal": 262,
-    "source": "contracts/Factory.algo.ts:57",
+    "source": "contracts/Factory.algo.ts:60",
     "pc": [
+      295,
+      296
+    ]
+  },
+  {
+    "teal": 266,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      297,
+      298
+    ]
+  },
+  {
+    "teal": 267,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      299
+    ]
+  },
+  {
+    "teal": 268,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      300
+    ]
+  },
+  {
+    "teal": 269,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      301
+    ]
+  },
+  {
+    "teal": 270,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      302
+    ]
+  },
+  {
+    "teal": 271,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      303
+    ]
+  },
+  {
+    "teal": 272,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      304,
       305,
       306
     ]
   },
   {
-    "teal": 265,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 273,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
       307
     ]
   },
   {
-    "teal": 266,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 274,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
-      308,
-      309
+      308
     ]
   },
   {
-    "teal": 267,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 275,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
+      309,
       310
     ]
   },
   {
-    "teal": 268,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 276,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
-      311
+      311,
+      312
     ]
   },
   {
-    "teal": 269,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 277,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
-      312,
       313
     ]
   },
   {
-    "teal": 270,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 278,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
-      314,
-      315,
+      314
+    ]
+  },
+  {
+    "teal": 279,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
+      315
+    ]
+  },
+  {
+    "teal": 280,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
       316
     ]
   },
   {
-    "teal": 271,
-    "source": "contracts/Factory.algo.ts:57",
+    "teal": 281,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
       317
     ]
   },
   {
-    "teal": 274,
-    "source": "contracts/Factory.algo.ts:48",
+    "teal": 282,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
       318,
-      319
-    ]
-  },
-  {
-    "teal": 275,
-    "source": "contracts/Factory.algo.ts:48",
-    "pc": [
+      319,
       320
     ]
   },
   {
-    "teal": 280,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 283,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
-      321,
+      321
+    ]
+  },
+  {
+    "teal": 284,
+    "source": "contracts/Factory.algo.ts:61",
+    "pc": [
       322
     ]
   },
   {
-    "teal": 281,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 285,
+    "source": "contracts/Factory.algo.ts:61",
     "pc": [
-      323
-    ]
-  },
-  {
-    "teal": 282,
-    "source": "contracts/Factory.algo.ts:69",
-    "pc": [
+      323,
       324
     ]
   },
   {
-    "teal": 283,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 288,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
       325
     ]
   },
   {
-    "teal": 284,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 289,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
       326,
       327
     ]
   },
   {
-    "teal": 285,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 292,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      328,
-      329
+      328
     ]
   },
   {
-    "teal": 286,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 293,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
+      329,
       330
     ]
   },
   {
-    "teal": 289,
-    "source": "contracts/Factory.algo.ts:69",
-    "errorMessage": "argument 0 (transferTxn) for addLiquidity must be a axfer transaction",
+    "teal": 294,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
       331
     ]
   },
   {
-    "teal": 292,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 295,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      332,
+      332
+    ]
+  },
+  {
+    "teal": 296,
+    "source": "contracts/Factory.algo.ts:59",
+    "pc": [
       333,
       334
     ]
   },
   {
-    "teal": 293,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 297,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      335
+      335,
+      336,
+      337
     ]
   },
   {
-    "teal": 296,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 298,
+    "source": "contracts/Factory.algo.ts:59",
     "pc": [
-      336,
-      337,
       338
     ]
   },
   {
-    "teal": 297,
-    "source": "contracts/Factory.algo.ts:69",
-    "pc": [
-      339
-    ]
-  },
-  {
-    "teal": 300,
-    "source": "contracts/Factory.algo.ts:69",
-    "pc": [
-      340,
-      341,
-      342
-    ]
-  },
-  {
     "teal": 301,
-    "source": "contracts/Factory.algo.ts:69",
+    "source": "contracts/Factory.algo.ts:48",
     "pc": [
-      343
+      339,
+      340
     ]
   },
   {
     "teal": 302,
-    "source": "contracts/Factory.algo.ts:69",
+    "source": "contracts/Factory.algo.ts:48",
+    "pc": [
+      341
+    ]
+  },
+  {
+    "teal": 307,
+    "source": "contracts/Factory.algo.ts:71",
+    "pc": [
+      342,
+      343
+    ]
+  },
+  {
+    "teal": 308,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
       344
     ]
   },
   {
-    "teal": 311,
-    "source": "contracts/Factory.algo.ts:69",
+    "teal": 309,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
-      345,
-      346,
-      347
+      345
     ]
   },
   {
-    "teal": 318,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 310,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
+      346
+    ]
+  },
+  {
+    "teal": 311,
+    "source": "contracts/Factory.algo.ts:71",
+    "pc": [
+      347,
       348
     ]
   },
   {
-    "teal": 319,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 312,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
-      349
+      349,
+      350
     ]
   },
   {
-    "teal": 320,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 313,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
-      350,
       351
     ]
   },
   {
-    "teal": 321,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 316,
+    "source": "contracts/Factory.algo.ts:71",
+    "errorMessage": "argument 0 (transferTxn) for addLiquidity must be a axfer transaction",
     "pc": [
-      352,
-      353,
-      354,
-      355,
-      356,
-      357
+      352
     ]
   },
   {
-    "teal": 322,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 319,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
+      353,
+      354,
+      355
+    ]
+  },
+  {
+    "teal": 320,
+    "source": "contracts/Factory.algo.ts:71",
+    "pc": [
+      356
+    ]
+  },
+  {
+    "teal": 323,
+    "source": "contracts/Factory.algo.ts:71",
+    "pc": [
+      357,
       358,
       359
     ]
   },
   {
-    "teal": 326,
+    "teal": 324,
     "source": "contracts/Factory.algo.ts:71",
     "pc": [
-      360,
-      361
+      360
     ]
   },
   {
     "teal": 327,
     "source": "contracts/Factory.algo.ts:71",
     "pc": [
+      361,
       362,
       363
     ]
   },
   {
-    "teal": 331,
-    "source": "contracts/Factory.algo.ts:72",
+    "teal": 328,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
-      364,
+      364
+    ]
+  },
+  {
+    "teal": 329,
+    "source": "contracts/Factory.algo.ts:71",
+    "pc": [
       365
     ]
   },
   {
-    "teal": 332,
-    "source": "contracts/Factory.algo.ts:72",
+    "teal": 338,
+    "source": "contracts/Factory.algo.ts:71",
     "pc": [
-      366
-    ]
-  },
-  {
-    "teal": 333,
-    "source": "contracts/Factory.algo.ts:72",
-    "pc": [
+      366,
       367,
       368
     ]
   },
   {
-    "teal": 334,
+    "teal": 345,
     "source": "contracts/Factory.algo.ts:72",
     "pc": [
-      369,
+      369
+    ]
+  },
+  {
+    "teal": 346,
+    "source": "contracts/Factory.algo.ts:72",
+    "pc": [
       370
     ]
   },
   {
-    "teal": 335,
+    "teal": 347,
     "source": "contracts/Factory.algo.ts:72",
     "pc": [
       371,
@@ -1433,159 +1483,153 @@
     ]
   },
   {
-    "teal": 336,
+    "teal": 348,
     "source": "contracts/Factory.algo.ts:72",
     "pc": [
-      373
-    ]
-  },
-  {
-    "teal": 337,
-    "source": "contracts/Factory.algo.ts:72",
-    "pc": [
+      373,
       374,
-      375
-    ]
-  },
-  {
-    "teal": 338,
-    "source": "contracts/Factory.algo.ts:72",
-    "pc": [
+      375,
       376,
-      377
+      377,
+      378
     ]
   },
   {
-    "teal": 339,
+    "teal": 349,
     "source": "contracts/Factory.algo.ts:72",
     "pc": [
-      378,
-      379
+      379,
+      380
     ]
   },
   {
-    "teal": 340,
-    "source": "contracts/Factory.algo.ts:72",
+    "teal": 353,
+    "source": "contracts/Factory.algo.ts:73",
     "pc": [
-      380,
-      381
-    ]
-  },
-  {
-    "teal": 343,
-    "source": "contracts/Factory.algo.ts:70",
-    "pc": [
+      381,
       382
     ]
   },
   {
-    "teal": 344,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 354,
+    "source": "contracts/Factory.algo.ts:73",
     "pc": [
       383,
       384
     ]
   },
   {
-    "teal": 347,
-    "source": "contracts/Factory.algo.ts:70",
+    "teal": 358,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      385
-    ]
-  },
-  {
-    "teal": 348,
-    "source": "contracts/Factory.algo.ts:69",
-    "pc": [
+      385,
       386
     ]
   },
   {
-    "teal": 353,
-    "source": "contracts/Factory.algo.ts:80",
+    "teal": 359,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      387,
+      387
+    ]
+  },
+  {
+    "teal": 360,
+    "source": "contracts/Factory.algo.ts:74",
+    "pc": [
       388,
       389
     ]
   },
   {
-    "teal": 354,
-    "source": "contracts/Factory.algo.ts:80",
+    "teal": 361,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      390
+      390,
+      391
     ]
   },
   {
-    "teal": 357,
-    "source": "contracts/Factory.algo.ts:80",
+    "teal": 362,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      391,
       392,
       393
     ]
   },
   {
-    "teal": 358,
-    "source": "contracts/Factory.algo.ts:80",
+    "teal": 363,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
       394
     ]
   },
   {
-    "teal": 359,
-    "source": "contracts/Factory.algo.ts:80",
+    "teal": 364,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      395
+      395,
+      396
     ]
   },
   {
-    "teal": 366,
-    "source": "contracts/Factory.algo.ts:80",
+    "teal": 365,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      396,
       397,
       398
     ]
   },
   {
-    "teal": 373,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 366,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
-      399
-    ]
-  },
-  {
-    "teal": 374,
-    "source": "contracts/Factory.algo.ts:81",
-    "pc": [
+      399,
       400
     ]
   },
   {
-    "teal": 375,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 367,
+    "source": "contracts/Factory.algo.ts:74",
     "pc": [
       401,
       402
     ]
   },
   {
-    "teal": 376,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 370,
+    "source": "contracts/Factory.algo.ts:72",
     "pc": [
-      403,
-      404,
-      405,
-      406,
-      407,
-      408
+      403
     ]
   },
   {
-    "teal": 377,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 371,
+    "source": "contracts/Factory.algo.ts:72",
     "pc": [
+      404,
+      405
+    ]
+  },
+  {
+    "teal": 374,
+    "source": "contracts/Factory.algo.ts:72",
+    "pc": [
+      406
+    ]
+  },
+  {
+    "teal": 375,
+    "source": "contracts/Factory.algo.ts:71",
+    "pc": [
+      407
+    ]
+  },
+  {
+    "teal": 380,
+    "source": "contracts/Factory.algo.ts:82",
+    "pc": [
+      408,
       409,
       410
     ]
@@ -1594,514 +1638,502 @@
     "teal": 381,
     "source": "contracts/Factory.algo.ts:82",
     "pc": [
-      411,
-      412
+      411
     ]
   },
   {
-    "teal": 382,
+    "teal": 384,
     "source": "contracts/Factory.algo.ts:82",
     "pc": [
+      412,
       413,
       414
     ]
   },
   {
-    "teal": 386,
-    "source": "contracts/Factory.algo.ts:83",
+    "teal": 385,
+    "source": "contracts/Factory.algo.ts:82",
     "pc": [
-      415,
+      415
+    ]
+  },
+  {
+    "teal": 386,
+    "source": "contracts/Factory.algo.ts:82",
+    "pc": [
       416
     ]
   },
   {
-    "teal": 387,
-    "source": "contracts/Factory.algo.ts:83",
+    "teal": 393,
+    "source": "contracts/Factory.algo.ts:82",
     "pc": [
       417,
-      418
-    ]
-  },
-  {
-    "teal": 390,
-    "source": "contracts/Factory.algo.ts:81",
-    "pc": [
+      418,
       419
     ]
   },
   {
-    "teal": 391,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 400,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      420,
+      420
+    ]
+  },
+  {
+    "teal": 401,
+    "source": "contracts/Factory.algo.ts:83",
+    "pc": [
       421
     ]
   },
   {
-    "teal": 394,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 402,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      422
+      422,
+      423
     ]
   },
   {
-    "teal": 395,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 403,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      423,
-      424
-    ]
-  },
-  {
-    "teal": 396,
-    "source": "contracts/Factory.algo.ts:81",
-    "pc": [
-      425
-    ]
-  },
-  {
-    "teal": 397,
-    "source": "contracts/Factory.algo.ts:81",
-    "pc": [
-      426
-    ]
-  },
-  {
-    "teal": 398,
-    "source": "contracts/Factory.algo.ts:81",
-    "pc": [
+      424,
+      425,
+      426,
       427,
-      428
+      428,
+      429
     ]
   },
   {
-    "teal": 399,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 404,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      429,
       430,
       431
     ]
   },
   {
-    "teal": 400,
-    "source": "contracts/Factory.algo.ts:81",
+    "teal": 408,
+    "source": "contracts/Factory.algo.ts:84",
     "pc": [
-      432
-    ]
-  },
-  {
-    "teal": 401,
-    "source": "contracts/Factory.algo.ts:80",
-    "pc": [
+      432,
       433
     ]
   },
   {
-    "teal": 406,
-    "source": "contracts/Factory.algo.ts:87",
+    "teal": 409,
+    "source": "contracts/Factory.algo.ts:84",
     "pc": [
       434,
       435
     ]
   },
   {
-    "teal": 407,
-    "source": "contracts/Factory.algo.ts:87",
+    "teal": 413,
+    "source": "contracts/Factory.algo.ts:85",
     "pc": [
-      436
-    ]
-  },
-  {
-    "teal": 408,
-    "source": "contracts/Factory.algo.ts:87",
-    "pc": [
+      436,
       437
     ]
   },
   {
-    "teal": 409,
-    "source": "contracts/Factory.algo.ts:87",
+    "teal": 414,
+    "source": "contracts/Factory.algo.ts:85",
     "pc": [
-      438
+      438,
+      439
     ]
   },
   {
-    "teal": 410,
-    "source": "contracts/Factory.algo.ts:87",
+    "teal": 417,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      439,
       440
     ]
   },
   {
-    "teal": 411,
-    "source": "contracts/Factory.algo.ts:87",
+    "teal": 418,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
       441,
       442
     ]
   },
   {
-    "teal": 412,
-    "source": "contracts/Factory.algo.ts:87",
+    "teal": 421,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
       443
     ]
   },
   {
-    "teal": 415,
-    "source": "contracts/Factory.algo.ts:87",
-    "errorMessage": "argument 0 (transferTxn) for burnLiquidity must be a axfer transaction",
-    "pc": [
-      444
-    ]
-  },
-  {
-    "teal": 418,
-    "source": "contracts/Factory.algo.ts:87",
-    "pc": [
-      445,
-      446,
-      447
-    ]
-  },
-  {
-    "teal": 419,
-    "source": "contracts/Factory.algo.ts:87",
-    "pc": [
-      448
-    ]
-  },
-  {
     "teal": 422,
-    "source": "contracts/Factory.algo.ts:87",
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      449,
-      450,
-      451
+      444,
+      445
     ]
   },
   {
     "teal": 423,
-    "source": "contracts/Factory.algo.ts:87",
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
-      452
+      446
     ]
   },
   {
     "teal": 424,
-    "source": "contracts/Factory.algo.ts:87",
+    "source": "contracts/Factory.algo.ts:83",
+    "pc": [
+      447
+    ]
+  },
+  {
+    "teal": 425,
+    "source": "contracts/Factory.algo.ts:83",
+    "pc": [
+      448,
+      449
+    ]
+  },
+  {
+    "teal": 426,
+    "source": "contracts/Factory.algo.ts:83",
+    "pc": [
+      450,
+      451,
+      452
+    ]
+  },
+  {
+    "teal": 427,
+    "source": "contracts/Factory.algo.ts:83",
     "pc": [
       453
     ]
   },
   {
     "teal": 428,
-    "source": "contracts/Factory.algo.ts:87",
+    "source": "contracts/Factory.algo.ts:82",
     "pc": [
-      454,
+      454
+    ]
+  },
+  {
+    "teal": 433,
+    "source": "contracts/Factory.algo.ts:89",
+    "pc": [
       455,
       456
     ]
   },
   {
-    "teal": 435,
-    "source": "contracts/Factory.algo.ts:88",
+    "teal": 434,
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
       457
     ]
   },
   {
-    "teal": 436,
-    "source": "contracts/Factory.algo.ts:88",
+    "teal": 435,
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
       458
     ]
   },
   {
-    "teal": 437,
-    "source": "contracts/Factory.algo.ts:88",
+    "teal": 436,
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
-      459,
-      460
+      459
+    ]
+  },
+  {
+    "teal": 437,
+    "source": "contracts/Factory.algo.ts:89",
+    "pc": [
+      460,
+      461
     ]
   },
   {
     "teal": 438,
-    "source": "contracts/Factory.algo.ts:88",
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
-      461,
       462,
-      463,
-      464,
-      465,
-      466
+      463
     ]
   },
   {
     "teal": 439,
-    "source": "contracts/Factory.algo.ts:88",
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
+      464
+    ]
+  },
+  {
+    "teal": 442,
+    "source": "contracts/Factory.algo.ts:89",
+    "errorMessage": "argument 0 (transferTxn) for burnLiquidity must be a axfer transaction",
+    "pc": [
+      465
+    ]
+  },
+  {
+    "teal": 445,
+    "source": "contracts/Factory.algo.ts:89",
+    "pc": [
+      466,
       467,
       468
     ]
   },
   {
-    "teal": 443,
+    "teal": 446,
     "source": "contracts/Factory.algo.ts:89",
     "pc": [
-      469,
-      470
+      469
     ]
   },
   {
-    "teal": 444,
+    "teal": 449,
     "source": "contracts/Factory.algo.ts:89",
     "pc": [
+      470,
       471,
       472
     ]
   },
   {
-    "teal": 448,
-    "source": "contracts/Factory.algo.ts:90",
-    "pc": [
-      473,
-      474
-    ]
-  },
-  {
-    "teal": 449,
-    "source": "contracts/Factory.algo.ts:90",
-    "pc": [
-      475,
-      476
-    ]
-  },
-  {
     "teal": 450,
-    "source": "contracts/Factory.algo.ts:90",
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
-      477,
-      478
+      473
     ]
   },
   {
     "teal": 451,
-    "source": "contracts/Factory.algo.ts:90",
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
-      479,
-      480
+      474
     ]
   },
   {
-    "teal": 452,
+    "teal": 455,
+    "source": "contracts/Factory.algo.ts:89",
+    "pc": [
+      475,
+      476,
+      477
+    ]
+  },
+  {
+    "teal": 462,
     "source": "contracts/Factory.algo.ts:90",
     "pc": [
+      478
+    ]
+  },
+  {
+    "teal": 463,
+    "source": "contracts/Factory.algo.ts:90",
+    "pc": [
+      479
+    ]
+  },
+  {
+    "teal": 464,
+    "source": "contracts/Factory.algo.ts:90",
+    "pc": [
+      480,
       481
     ]
   },
   {
-    "teal": 453,
+    "teal": 465,
     "source": "contracts/Factory.algo.ts:90",
     "pc": [
       482,
-      483
-    ]
-  },
-  {
-    "teal": 456,
-    "source": "contracts/Factory.algo.ts:88",
-    "pc": [
-      484
-    ]
-  },
-  {
-    "teal": 457,
-    "source": "contracts/Factory.algo.ts:88",
-    "pc": [
+      483,
+      484,
       485,
-      486
-    ]
-  },
-  {
-    "teal": 460,
-    "source": "contracts/Factory.algo.ts:88",
-    "pc": [
+      486,
       487
     ]
   },
   {
-    "teal": 461,
-    "source": "contracts/Factory.algo.ts:87",
-    "pc": [
-      488
-    ]
-  },
-  {
     "teal": 466,
-    "source": "contracts/Factory.algo.ts:94",
+    "source": "contracts/Factory.algo.ts:90",
     "pc": [
-      489,
-      490
-    ]
-  },
-  {
-    "teal": 469,
-    "source": "contracts/Factory.algo.ts:94",
-    "pc": [
-      491,
-      492
+      488,
+      489
     ]
   },
   {
     "teal": 470,
-    "source": "contracts/Factory.algo.ts:94",
+    "source": "contracts/Factory.algo.ts:91",
     "pc": [
-      493
+      490,
+      491
     ]
   },
   {
     "teal": 471,
-    "source": "contracts/Factory.algo.ts:94",
+    "source": "contracts/Factory.algo.ts:91",
     "pc": [
-      494
+      492,
+      493
     ]
   },
   {
-    "teal": 472,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 475,
+    "source": "contracts/Factory.algo.ts:92",
     "pc": [
+      494,
       495
     ]
   },
   {
-    "teal": 473,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 476,
+    "source": "contracts/Factory.algo.ts:92",
     "pc": [
       496,
       497
     ]
   },
   {
-    "teal": 474,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 477,
+    "source": "contracts/Factory.algo.ts:92",
     "pc": [
       498,
       499
     ]
   },
   {
-    "teal": 475,
-    "source": "contracts/Factory.algo.ts:94",
-    "pc": [
-      500
-    ]
-  },
-  {
     "teal": 478,
-    "source": "contracts/Factory.algo.ts:94",
-    "errorMessage": "argument 0 (transferTxn) for swap must be a axfer transaction",
+    "source": "contracts/Factory.algo.ts:92",
     "pc": [
+      500,
       501
     ]
   },
   {
-    "teal": 481,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 479,
+    "source": "contracts/Factory.algo.ts:92",
     "pc": [
-      502,
+      502
+    ]
+  },
+  {
+    "teal": 480,
+    "source": "contracts/Factory.algo.ts:92",
+    "pc": [
       503,
       504
     ]
   },
   {
-    "teal": 482,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 483,
+    "source": "contracts/Factory.algo.ts:90",
     "pc": [
       505
     ]
   },
   {
-    "teal": 485,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 484,
+    "source": "contracts/Factory.algo.ts:90",
     "pc": [
       506,
-      507,
+      507
+    ]
+  },
+  {
+    "teal": 487,
+    "source": "contracts/Factory.algo.ts:90",
+    "pc": [
       508
     ]
   },
   {
-    "teal": 486,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 488,
+    "source": "contracts/Factory.algo.ts:89",
     "pc": [
       509
     ]
   },
   {
-    "teal": 489,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 493,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      510,
+      510
+    ]
+  },
+  {
+    "teal": 496,
+    "source": "contracts/Factory.algo.ts:96",
+    "pc": [
       511,
       512
     ]
   },
   {
-    "teal": 490,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 497,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
       513
     ]
   },
   {
-    "teal": 493,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 498,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      514,
-      515,
-      516
+      514
     ]
   },
   {
-    "teal": 494,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 499,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
+      515
+    ]
+  },
+  {
+    "teal": 500,
+    "source": "contracts/Factory.algo.ts:96",
+    "pc": [
+      516,
       517
     ]
   },
   {
-    "teal": 495,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 501,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      518
-    ]
-  },
-  {
-    "teal": 496,
-    "source": "contracts/Factory.algo.ts:94",
-    "pc": [
+      518,
       519
     ]
   },
   {
-    "teal": 497,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 502,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
       520
     ]
   },
   {
-    "teal": 498,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 505,
+    "source": "contracts/Factory.algo.ts:96",
+    "errorMessage": "argument 0 (transferTxn) for swap must be a axfer transaction",
     "pc": [
       521
     ]
   },
   {
-    "teal": 502,
-    "source": "contracts/Factory.algo.ts:94",
+    "teal": 508,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
       522,
       523,
@@ -2110,126 +2142,132 @@
   },
   {
     "teal": 509,
-    "source": "contracts/Factory.algo.ts:95",
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
       525
     ]
   },
   {
-    "teal": 510,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 512,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      526
-    ]
-  },
-  {
-    "teal": 511,
-    "source": "contracts/Factory.algo.ts:95",
-    "pc": [
+      526,
       527,
       528
     ]
   },
   {
-    "teal": 512,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 513,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      529,
-      530,
-      531,
-      532,
-      533,
-      534
+      529
     ]
   },
   {
-    "teal": 513,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 516,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      535,
-      536
+      530,
+      531,
+      532
     ]
   },
   {
     "teal": 517,
     "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      537,
-      538
+      533
     ]
   },
   {
-    "teal": 518,
+    "teal": 520,
     "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      539,
-      540
+      534,
+      535,
+      536
+    ]
+  },
+  {
+    "teal": 521,
+    "source": "contracts/Factory.algo.ts:96",
+    "pc": [
+      537
     ]
   },
   {
     "teal": 522,
-    "source": "contracts/Factory.algo.ts:97",
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
-      541,
-      542
+      538
     ]
   },
   {
     "teal": 523,
-    "source": "contracts/Factory.algo.ts:97",
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
+      539
+    ]
+  },
+  {
+    "teal": 524,
+    "source": "contracts/Factory.algo.ts:96",
+    "pc": [
+      540
+    ]
+  },
+  {
+    "teal": 525,
+    "source": "contracts/Factory.algo.ts:96",
+    "pc": [
+      541
+    ]
+  },
+  {
+    "teal": 529,
+    "source": "contracts/Factory.algo.ts:96",
+    "pc": [
+      542,
       543,
       544
     ]
   },
   {
-    "teal": 524,
+    "teal": 536,
     "source": "contracts/Factory.algo.ts:97",
     "pc": [
-      545,
+      545
+    ]
+  },
+  {
+    "teal": 537,
+    "source": "contracts/Factory.algo.ts:97",
+    "pc": [
       546
     ]
   },
   {
-    "teal": 525,
+    "teal": 538,
     "source": "contracts/Factory.algo.ts:97",
     "pc": [
-      547
+      547,
+      548
     ]
   },
   {
-    "teal": 526,
+    "teal": 539,
     "source": "contracts/Factory.algo.ts:97",
     "pc": [
-      548,
-      549
-    ]
-  },
-  {
-    "teal": 527,
-    "source": "contracts/Factory.algo.ts:97",
-    "pc": [
+      549,
       550,
-      551
-    ]
-  },
-  {
-    "teal": 528,
-    "source": "contracts/Factory.algo.ts:97",
-    "pc": [
-      552
-    ]
-  },
-  {
-    "teal": 529,
-    "source": "contracts/Factory.algo.ts:97",
-    "pc": [
+      551,
+      552,
       553,
       554
     ]
   },
   {
-    "teal": 530,
+    "teal": 540,
     "source": "contracts/Factory.algo.ts:97",
     "pc": [
       555,
@@ -2237,471 +2275,458 @@
     ]
   },
   {
-    "teal": 531,
-    "source": "contracts/Factory.algo.ts:97",
+    "teal": 544,
+    "source": "contracts/Factory.algo.ts:98",
     "pc": [
       557,
       558
     ]
   },
   {
-    "teal": 532,
-    "source": "contracts/Factory.algo.ts:97",
+    "teal": 545,
+    "source": "contracts/Factory.algo.ts:98",
     "pc": [
-      559
+      559,
+      560
     ]
   },
   {
-    "teal": 533,
-    "source": "contracts/Factory.algo.ts:97",
+    "teal": 549,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      560,
-      561
-    ]
-  },
-  {
-    "teal": 536,
-    "source": "contracts/Factory.algo.ts:95",
-    "pc": [
+      561,
       562
     ]
   },
   {
-    "teal": 537,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 550,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
       563,
       564
     ]
   },
   {
-    "teal": 540,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 551,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      565
+      565,
+      566
     ]
   },
   {
-    "teal": 541,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 552,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      566,
       567
     ]
   },
   {
-    "teal": 542,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 553,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      568
-    ]
-  },
-  {
-    "teal": 543,
-    "source": "contracts/Factory.algo.ts:95",
-    "pc": [
+      568,
       569
     ]
   },
   {
-    "teal": 544,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 554,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
       570,
       571
     ]
   },
   {
-    "teal": 545,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 555,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      572,
+      572
+    ]
+  },
+  {
+    "teal": 556,
+    "source": "contracts/Factory.algo.ts:99",
+    "pc": [
       573,
       574
     ]
   },
   {
-    "teal": 546,
-    "source": "contracts/Factory.algo.ts:95",
+    "teal": 557,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      575
-    ]
-  },
-  {
-    "teal": 547,
-    "source": "contracts/Factory.algo.ts:94",
-    "pc": [
+      575,
       576
     ]
   },
   {
-    "teal": 552,
-    "source": "contracts/Factory.algo.ts:101",
+    "teal": 558,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
       577,
-      578,
+      578
+    ]
+  },
+  {
+    "teal": 559,
+    "source": "contracts/Factory.algo.ts:99",
+    "pc": [
       579
     ]
   },
   {
-    "teal": 553,
-    "source": "contracts/Factory.algo.ts:101",
+    "teal": 560,
+    "source": "contracts/Factory.algo.ts:99",
     "pc": [
-      580
-    ]
-  },
-  {
-    "teal": 554,
-    "source": "contracts/Factory.algo.ts:101",
-    "pc": [
+      580,
       581
     ]
   },
   {
-    "teal": 558,
-    "source": "contracts/Factory.algo.ts:101",
+    "teal": 563,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
-      582,
+      582
+    ]
+  },
+  {
+    "teal": 564,
+    "source": "contracts/Factory.algo.ts:97",
+    "pc": [
       583,
       584
     ]
   },
   {
-    "teal": 559,
-    "source": "contracts/Factory.algo.ts:101",
+    "teal": 567,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
       585
     ]
   },
   {
-    "teal": 564,
-    "source": "contracts/Factory.algo.ts:107",
+    "teal": 568,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
       586,
-      587,
+      587
+    ]
+  },
+  {
+    "teal": 569,
+    "source": "contracts/Factory.algo.ts:97",
+    "pc": [
       588
     ]
   },
   {
-    "teal": 565,
-    "source": "contracts/Factory.algo.ts:107",
+    "teal": 570,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
       589
     ]
   },
   {
-    "teal": 568,
-    "source": "contracts/Factory.algo.ts:107",
+    "teal": 571,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
       590,
-      591,
-      592
+      591
     ]
   },
   {
-    "teal": 569,
-    "source": "contracts/Factory.algo.ts:107",
+    "teal": 572,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
-      593
-    ]
-  },
-  {
-    "teal": 570,
-    "source": "contracts/Factory.algo.ts:107",
-    "pc": [
+      592,
+      593,
       594
     ]
   },
   {
-    "teal": 578,
-    "source": "contracts/Factory.algo.ts:107",
+    "teal": 573,
+    "source": "contracts/Factory.algo.ts:97",
     "pc": [
-      595,
-      596,
-      597
+      595
     ]
   },
   {
-    "teal": 582,
-    "source": "contracts/Factory.algo.ts:108",
+    "teal": 574,
+    "source": "contracts/Factory.algo.ts:96",
     "pc": [
+      596
+    ]
+  },
+  {
+    "teal": 579,
+    "source": "contracts/Factory.algo.ts:103",
+    "pc": [
+      597,
       598,
-      599,
+      599
+    ]
+  },
+  {
+    "teal": 580,
+    "source": "contracts/Factory.algo.ts:103",
+    "pc": [
       600
     ]
   },
   {
-    "teal": 587,
-    "source": "contracts/Factory.algo.ts:110",
+    "teal": 581,
+    "source": "contracts/Factory.algo.ts:103",
     "pc": [
       601
     ]
   },
   {
-    "teal": 588,
-    "source": "contracts/Factory.algo.ts:110",
+    "teal": 585,
+    "source": "contracts/Factory.algo.ts:103",
     "pc": [
-      602
-    ]
-  },
-  {
-    "teal": 589,
-    "source": "contracts/Factory.algo.ts:110",
-    "pc": [
-      603
-    ]
-  },
-  {
-    "teal": 590,
-    "source": "contracts/Factory.algo.ts:110",
-    "pc": [
+      602,
+      603,
       604
     ]
   },
   {
-    "teal": 591,
-    "source": "contracts/Factory.algo.ts:110",
+    "teal": 586,
+    "source": "contracts/Factory.algo.ts:103",
     "pc": [
-      605,
-      606,
-      607
+      605
     ]
   },
   {
-    "teal": 596,
-    "source": "contracts/Factory.algo.ts:111",
+    "teal": 591,
+    "source": "contracts/Factory.algo.ts:109",
     "pc": [
+      606,
+      607,
       608
     ]
   },
   {
+    "teal": 592,
+    "source": "contracts/Factory.algo.ts:109",
+    "pc": [
+      609
+    ]
+  },
+  {
+    "teal": 595,
+    "source": "contracts/Factory.algo.ts:109",
+    "pc": [
+      610,
+      611,
+      612
+    ]
+  },
+  {
+    "teal": 596,
+    "source": "contracts/Factory.algo.ts:109",
+    "pc": [
+      613
+    ]
+  },
+  {
     "teal": 597,
-    "source": "contracts/Factory.algo.ts:111",
+    "source": "contracts/Factory.algo.ts:109",
     "pc": [
-      609,
-      610
-    ]
-  },
-  {
-    "teal": 598,
-    "source": "contracts/Factory.algo.ts:111",
-    "pc": [
-      611
-    ]
-  },
-  {
-    "teal": 599,
-    "source": "contracts/Factory.algo.ts:110",
-    "pc": [
-      612,
-      613,
       614
     ]
   },
   {
-    "teal": 604,
-    "source": "contracts/Factory.algo.ts:113",
-    "pc": [
-      615
-    ]
-  },
-  {
     "teal": 605,
-    "source": "contracts/Factory.algo.ts:113",
+    "source": "contracts/Factory.algo.ts:109",
     "pc": [
+      615,
       616,
       617
     ]
   },
   {
-    "teal": 606,
-    "source": "contracts/Factory.algo.ts:113",
+    "teal": 609,
+    "source": "contracts/Factory.algo.ts:110",
     "pc": [
-      618
-    ]
-  },
-  {
-    "teal": 607,
-    "source": "contracts/Factory.algo.ts:113",
-    "pc": [
-      619
-    ]
-  },
-  {
-    "teal": 610,
-    "source": "contracts/Factory.algo.ts:107",
-    "pc": [
+      618,
+      619,
       620
     ]
   },
   {
-    "teal": 615,
-    "source": "contracts/Factory.algo.ts:117",
+    "teal": 614,
+    "source": "contracts/Factory.algo.ts:112",
     "pc": [
-      621,
-      622,
-      623
+      621
+    ]
+  },
+  {
+    "teal": 615,
+    "source": "contracts/Factory.algo.ts:112",
+    "pc": [
+      622
     ]
   },
   {
     "teal": 616,
-    "source": "contracts/Factory.algo.ts:117",
+    "source": "contracts/Factory.algo.ts:112",
     "pc": [
-      624,
+      623
+    ]
+  },
+  {
+    "teal": 617,
+    "source": "contracts/Factory.algo.ts:112",
+    "pc": [
+      624
+    ]
+  },
+  {
+    "teal": 618,
+    "source": "contracts/Factory.algo.ts:112",
+    "pc": [
       625,
-      626
-    ]
-  },
-  {
-    "teal": 619,
-    "source": "contracts/Factory.algo.ts:117",
-    "pc": [
-      627,
-      628,
-      629
-    ]
-  },
-  {
-    "teal": 620,
-    "source": "contracts/Factory.algo.ts:117",
-    "pc": [
-      630
+      626,
+      627
     ]
   },
   {
     "teal": 623,
-    "source": "contracts/Factory.algo.ts:117",
+    "source": "contracts/Factory.algo.ts:113",
     "pc": [
-      631,
-      632,
-      633
+      628
     ]
   },
   {
     "teal": 624,
-    "source": "contracts/Factory.algo.ts:117",
+    "source": "contracts/Factory.algo.ts:113",
     "pc": [
-      634
+      629,
+      630
     ]
   },
   {
     "teal": 625,
-    "source": "contracts/Factory.algo.ts:117",
+    "source": "contracts/Factory.algo.ts:113",
+    "pc": [
+      631
+    ]
+  },
+  {
+    "teal": 626,
+    "source": "contracts/Factory.algo.ts:112",
+    "pc": [
+      632,
+      633,
+      634
+    ]
+  },
+  {
+    "teal": 631,
+    "source": "contracts/Factory.algo.ts:115",
     "pc": [
       635
     ]
   },
   {
-    "teal": 629,
-    "source": "contracts/Factory.algo.ts:117",
+    "teal": 632,
+    "source": "contracts/Factory.algo.ts:115",
     "pc": [
       636,
-      637,
-      638
+      637
     ]
   },
   {
     "teal": 633,
-    "source": "contracts/Factory.algo.ts:118",
+    "source": "contracts/Factory.algo.ts:115",
     "pc": [
-      639,
-      640,
-      641
+      638
+    ]
+  },
+  {
+    "teal": 634,
+    "source": "contracts/Factory.algo.ts:115",
+    "pc": [
+      639
     ]
   },
   {
     "teal": 637,
-    "source": "contracts/Factory.algo.ts:120",
+    "source": "contracts/Factory.algo.ts:109",
     "pc": [
-      642
+      640
     ]
   },
   {
-    "teal": 638,
-    "source": "contracts/Factory.algo.ts:120",
+    "teal": 642,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
-      643,
-      644
+      641,
+      642,
+      643
     ]
   },
   {
-    "teal": 639,
-    "source": "contracts/Factory.algo.ts:120",
+    "teal": 643,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
+      644,
       645,
       646
     ]
   },
   {
-    "teal": 640,
-    "source": "contracts/Factory.algo.ts:120",
+    "teal": 646,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
-      647
+      647,
+      648,
+      649
     ]
   },
   {
-    "teal": 641,
-    "source": "contracts/Factory.algo.ts:117",
+    "teal": 647,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
-      648
+      650
     ]
   },
   {
-    "teal": 649,
-    "source": "contracts/Factory.algo.ts:127",
+    "teal": 650,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
-      649,
-      650,
-      651
-    ]
-  },
-  {
-    "teal": 653,
-    "source": "contracts/Factory.algo.ts:128",
-    "pc": [
+      651,
       652,
       653
     ]
   },
   {
-    "teal": 654,
-    "source": "contracts/Factory.algo.ts:128",
+    "teal": 651,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
       654
     ]
   },
   {
-    "teal": 655,
-    "source": "contracts/Factory.algo.ts:128",
+    "teal": 652,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
       655
     ]
   },
   {
     "teal": 656,
-    "source": "contracts/Factory.algo.ts:128",
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
-      656
-    ]
-  },
-  {
-    "teal": 659,
-    "source": "contracts/Factory.algo.ts:128",
-    "errorMessage": "only the manager can call this method",
-    "pc": [
-      657
-    ]
-  },
-  {
-    "teal": 660,
-    "source": "contracts/Factory.algo.ts:127",
-    "pc": [
+      656,
+      657,
       658
     ]
   },
   {
-    "teal": 664,
-    "source": "contracts/Factory.algo.ts:131",
+    "teal": 660,
+    "source": "contracts/Factory.algo.ts:120",
     "pc": [
       659,
       660,
@@ -2709,840 +2734,1135 @@
     ]
   },
   {
-    "teal": 667,
-    "source": "contracts/Factory.algo.ts:131",
+    "teal": 664,
+    "source": "contracts/Factory.algo.ts:122",
     "pc": [
       662
     ]
   },
   {
-    "teal": 668,
-    "source": "contracts/Factory.algo.ts:131",
+    "teal": 665,
+    "source": "contracts/Factory.algo.ts:122",
     "pc": [
-      663
-    ]
-  },
-  {
-    "teal": 672,
-    "source": "contracts/Factory.algo.ts:132",
-    "pc": [
+      663,
       664
     ]
   },
   {
-    "teal": 673,
-    "source": "contracts/Factory.algo.ts:132",
+    "teal": 666,
+    "source": "contracts/Factory.algo.ts:122",
     "pc": [
       665,
       666
     ]
   },
   {
-    "teal": 677,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 667,
+    "source": "contracts/Factory.algo.ts:122",
     "pc": [
       667
     ]
   },
   {
-    "teal": 678,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 668,
+    "source": "contracts/Factory.algo.ts:119",
     "pc": [
-      668,
-      669
+      668
     ]
   },
   {
-    "teal": 683,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 676,
+    "source": "contracts/Factory.algo.ts:129",
     "pc": [
+      669,
       670,
       671
     ]
   },
   {
-    "teal": 684,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 680,
+    "source": "contracts/Factory.algo.ts:130",
     "pc": [
       672,
       673
     ]
   },
   {
-    "teal": 685,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 681,
+    "source": "contracts/Factory.algo.ts:130",
     "pc": [
-      674
-    ]
-  },
-  {
-    "teal": 686,
-    "source": "contracts/Factory.algo.ts:134",
-    "pc": [
+      674,
       675
     ]
   },
   {
-    "teal": 687,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 682,
+    "source": "contracts/Factory.algo.ts:130",
     "pc": [
       676
     ]
   },
   {
-    "teal": 688,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 683,
+    "source": "contracts/Factory.algo.ts:130",
     "pc": [
       677
     ]
   },
   {
-    "teal": 689,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 686,
+    "source": "contracts/Factory.algo.ts:130",
+    "errorMessage": "only the manager can call this method",
     "pc": [
-      678,
-      679,
-      680
+      678
     ]
   },
   {
-    "teal": 693,
-    "source": "contracts/Factory.algo.ts:135",
+    "teal": 687,
+    "source": "contracts/Factory.algo.ts:129",
     "pc": [
+      679
+    ]
+  },
+  {
+    "teal": 691,
+    "source": "contracts/Factory.algo.ts:133",
+    "pc": [
+      680,
       681,
       682
     ]
   },
   {
     "teal": 694,
-    "source": "contracts/Factory.algo.ts:135",
+    "source": "contracts/Factory.algo.ts:133",
     "pc": [
-      683,
-      684
+      683
     ]
   },
   {
     "teal": 695,
-    "source": "contracts/Factory.algo.ts:135",
+    "source": "contracts/Factory.algo.ts:133",
     "pc": [
-      685,
-      686
-    ]
-  },
-  {
-    "teal": 696,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      687
-    ]
-  },
-  {
-    "teal": 697,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      688,
-      689
-    ]
-  },
-  {
-    "teal": 698,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      690
+      684
     ]
   },
   {
     "teal": 699,
-    "source": "contracts/Factory.algo.ts:135",
+    "source": "contracts/Factory.algo.ts:134",
     "pc": [
-      691
+      685
     ]
   },
   {
     "teal": 700,
-    "source": "contracts/Factory.algo.ts:135",
+    "source": "contracts/Factory.algo.ts:134",
     "pc": [
+      686,
+      687
+    ]
+  },
+  {
+    "teal": 704,
+    "source": "contracts/Factory.algo.ts:136",
+    "pc": [
+      688
+    ]
+  },
+  {
+    "teal": 705,
+    "source": "contracts/Factory.algo.ts:136",
+    "pc": [
+      689,
+      690
+    ]
+  },
+  {
+    "teal": 710,
+    "source": "contracts/Factory.algo.ts:136",
+    "pc": [
+      691,
       692
     ]
   },
   {
-    "teal": 701,
-    "source": "contracts/Factory.algo.ts:135",
+    "teal": 711,
+    "source": "contracts/Factory.algo.ts:136",
     "pc": [
       693,
       694
     ]
   },
   {
-    "teal": 702,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      695
-    ]
-  },
-  {
-    "teal": 703,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      696
-    ]
-  },
-  {
-    "teal": 704,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      697
-    ]
-  },
-  {
-    "teal": 705,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      698
-    ]
-  },
-  {
-    "teal": 706,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      699
-    ]
-  },
-  {
-    "teal": 707,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      700
-    ]
-  },
-  {
-    "teal": 708,
-    "source": "contracts/Factory.algo.ts:135",
-    "pc": [
-      701,
-      702
-    ]
-  },
-  {
     "teal": 712,
     "source": "contracts/Factory.algo.ts:136",
     "pc": [
-      703,
-      704
+      695
     ]
   },
   {
     "teal": 713,
     "source": "contracts/Factory.algo.ts:136",
     "pc": [
-      705,
-      706
+      696
     ]
   },
   {
     "teal": 714,
     "source": "contracts/Factory.algo.ts:136",
     "pc": [
-      707,
-      708
+      697
     ]
   },
   {
     "teal": 715,
     "source": "contracts/Factory.algo.ts:136",
     "pc": [
-      709
+      698
     ]
   },
   {
     "teal": 716,
     "source": "contracts/Factory.algo.ts:136",
     "pc": [
-      710,
+      699,
+      700,
+      701
+    ]
+  },
+  {
+    "teal": 720,
+    "source": "contracts/Factory.algo.ts:137",
+    "pc": [
+      702,
+      703
+    ]
+  },
+  {
+    "teal": 721,
+    "source": "contracts/Factory.algo.ts:137",
+    "pc": [
+      704,
+      705
+    ]
+  },
+  {
+    "teal": 722,
+    "source": "contracts/Factory.algo.ts:137",
+    "pc": [
+      706,
+      707
+    ]
+  },
+  {
+    "teal": 723,
+    "source": "contracts/Factory.algo.ts:137",
+    "pc": [
+      708
+    ]
+  },
+  {
+    "teal": 724,
+    "source": "contracts/Factory.algo.ts:137",
+    "pc": [
+      709,
+      710
+    ]
+  },
+  {
+    "teal": 725,
+    "source": "contracts/Factory.algo.ts:137",
+    "pc": [
       711
     ]
   },
   {
-    "teal": 717,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 726,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       712
     ]
   },
   {
-    "teal": 718,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 727,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       713
     ]
   },
   {
-    "teal": 719,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 728,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
-      714
+      714,
+      715
     ]
   },
   {
-    "teal": 720,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 729,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
-      715,
       716
     ]
   },
   {
-    "teal": 721,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 730,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       717
     ]
   },
   {
-    "teal": 722,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 731,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       718
     ]
   },
   {
-    "teal": 723,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 732,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       719
     ]
   },
   {
-    "teal": 724,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 733,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       720
     ]
   },
   {
-    "teal": 725,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 734,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
       721
     ]
   },
   {
-    "teal": 726,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 735,
+    "source": "contracts/Factory.algo.ts:137",
     "pc": [
-      722
+      722,
+      723
     ]
   },
   {
-    "teal": 727,
-    "source": "contracts/Factory.algo.ts:136",
+    "teal": 739,
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      723,
-      724
+      724,
+      725
     ]
   },
   {
-    "teal": 732,
-    "source": "contracts/Factory.algo.ts:134",
+    "teal": 740,
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      725,
-      726
-    ]
-  },
-  {
-    "teal": 733,
-    "source": "contracts/Factory.algo.ts:134",
-    "pc": [
+      726,
       727
     ]
   },
   {
-    "teal": 734,
-    "source": "contracts/Factory.algo.ts:134",
-    "pc": [
-      728
-    ]
-  },
-  {
-    "teal": 735,
-    "source": "contracts/Factory.algo.ts:134",
-    "pc": [
-      729,
-      730
-    ]
-  },
-  {
-    "teal": 736,
-    "source": "contracts/Factory.algo.ts:134",
-    "pc": [
-      731,
-      732,
-      733
-    ]
-  },
-  {
     "teal": 741,
-    "source": "contracts/Factory.algo.ts:139",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      734,
-      735
+      728,
+      729
     ]
   },
   {
     "teal": 742,
-    "source": "contracts/Factory.algo.ts:139",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      736
+      730
+    ]
+  },
+  {
+    "teal": 743,
+    "source": "contracts/Factory.algo.ts:138",
+    "pc": [
+      731,
+      732
+    ]
+  },
+  {
+    "teal": 744,
+    "source": "contracts/Factory.algo.ts:138",
+    "pc": [
+      733
     ]
   },
   {
     "teal": 745,
-    "source": "contracts/Factory.algo.ts:131",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      737,
-      738
+      734
+    ]
+  },
+  {
+    "teal": 746,
+    "source": "contracts/Factory.algo.ts:138",
+    "pc": [
+      735
+    ]
+  },
+  {
+    "teal": 747,
+    "source": "contracts/Factory.algo.ts:138",
+    "pc": [
+      736,
+      737
     ]
   },
   {
     "teal": 748,
-    "source": "contracts/Factory.algo.ts:131",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      739,
-      740
+      738
     ]
   },
   {
     "teal": 749,
-    "source": "contracts/Factory.algo.ts:131",
+    "source": "contracts/Factory.algo.ts:138",
+    "pc": [
+      739
+    ]
+  },
+  {
+    "teal": 750,
+    "source": "contracts/Factory.algo.ts:138",
+    "pc": [
+      740
+    ]
+  },
+  {
+    "teal": 751,
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
       741
     ]
   },
   {
     "teal": 752,
-    "source": "contracts/Factory.algo.ts:10",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      742,
-      743
+      742
     ]
   },
   {
     "teal": 753,
-    "source": "contracts/Factory.algo.ts:10",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      744,
-      745,
-      746
+      743
     ]
   },
   {
     "teal": 754,
-    "source": "contracts/Factory.algo.ts:10",
+    "source": "contracts/Factory.algo.ts:138",
     "pc": [
-      747,
+      744,
+      745
+    ]
+  },
+  {
+    "teal": 759,
+    "source": "contracts/Factory.algo.ts:136",
+    "pc": [
+      746,
+      747
+    ]
+  },
+  {
+    "teal": 760,
+    "source": "contracts/Factory.algo.ts:136",
+    "pc": [
       748
     ]
   },
   {
-    "teal": 755,
-    "source": "contracts/Factory.algo.ts:10",
+    "teal": 761,
+    "source": "contracts/Factory.algo.ts:136",
     "pc": [
-      749,
+      749
+    ]
+  },
+  {
+    "teal": 762,
+    "source": "contracts/Factory.algo.ts:136",
+    "pc": [
       750,
       751
     ]
   },
   {
-    "teal": 756,
-    "source": "contracts/Factory.algo.ts:10",
+    "teal": 763,
+    "source": "contracts/Factory.algo.ts:136",
     "pc": [
       752,
       753,
-      754,
-      755
-    ]
-  },
-  {
-    "teal": 759,
-    "source": "contracts/Factory.algo.ts:10",
-    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
-    "pc": [
-      756
-    ]
-  },
-  {
-    "teal": 762,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      757,
-      758,
-      759,
-      760,
-      761,
-      762
-    ]
-  },
-  {
-    "teal": 763,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      763,
-      764,
-      765,
-      766,
-      767,
-      768
-    ]
-  },
-  {
-    "teal": 764,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      769,
-      770,
-      771,
-      772,
-      773,
-      774
-    ]
-  },
-  {
-    "teal": 765,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      775,
-      776,
-      777,
-      778,
-      779,
-      780
-    ]
-  },
-  {
-    "teal": 766,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      781,
-      782,
-      783,
-      784,
-      785,
-      786
-    ]
-  },
-  {
-    "teal": 767,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      787,
-      788,
-      789,
-      790,
-      791,
-      792
+      754
     ]
   },
   {
     "teal": 768,
-    "source": "contracts/Factory.algo.ts:10",
+    "source": "contracts/Factory.algo.ts:141",
     "pc": [
-      793,
+      755,
+      756
+    ]
+  },
+  {
+    "teal": 769,
+    "source": "contracts/Factory.algo.ts:141",
+    "pc": [
+      757
+    ]
+  },
+  {
+    "teal": 772,
+    "source": "contracts/Factory.algo.ts:133",
+    "pc": [
+      758,
+      759
+    ]
+  },
+  {
+    "teal": 775,
+    "source": "contracts/Factory.algo.ts:133",
+    "pc": [
+      760,
+      761
+    ]
+  },
+  {
+    "teal": 776,
+    "source": "contracts/Factory.algo.ts:133",
+    "pc": [
+      762
+    ]
+  },
+  {
+    "teal": 781,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      763
+    ]
+  },
+  {
+    "teal": 784,
+    "source": "contracts/Factory.algo.ts:145",
+    "pc": [
+      764,
+      765,
+      766
+    ]
+  },
+  {
+    "teal": 785,
+    "source": "contracts/Factory.algo.ts:145",
+    "pc": [
+      767,
+      768,
+      769
+    ]
+  },
+  {
+    "teal": 788,
+    "source": "contracts/Factory.algo.ts:145",
+    "pc": [
+      770,
+      771,
+      772
+    ]
+  },
+  {
+    "teal": 789,
+    "source": "contracts/Factory.algo.ts:145",
+    "pc": [
+      773,
+      774,
+      775
+    ]
+  },
+  {
+    "teal": 792,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      776,
+      777,
+      778
+    ]
+  },
+  {
+    "teal": 793,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      779
+    ]
+  },
+  {
+    "teal": 794,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      780
+    ]
+  },
+  {
+    "teal": 795,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      781
+    ]
+  },
+  {
+    "teal": 796,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      782
+    ]
+  },
+  {
+    "teal": 800,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      783,
+      784,
+      785
+    ]
+  },
+  {
+    "teal": 803,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
+      786
+    ]
+  },
+  {
+    "teal": 807,
+    "source": "contracts/Factory.algo.ts:146",
+    "pc": [
+      787,
+      788
+    ]
+  },
+  {
+    "teal": 808,
+    "source": "contracts/Factory.algo.ts:146",
+    "pc": [
+      789,
+      790
+    ]
+  },
+  {
+    "teal": 809,
+    "source": "contracts/Factory.algo.ts:146",
+    "pc": [
+      791,
+      792,
+      793
+    ]
+  },
+  {
+    "teal": 810,
+    "source": "contracts/Factory.algo.ts:146",
+    "pc": [
       794,
-      795,
-      796,
+      795
+    ]
+  },
+  {
+    "teal": 814,
+    "source": "contracts/Factory.algo.ts:147",
+    "pc": [
+      796
+    ]
+  },
+  {
+    "teal": 815,
+    "source": "contracts/Factory.algo.ts:147",
+    "pc": [
       797,
       798
     ]
   },
   {
-    "teal": 769,
-    "source": "contracts/Factory.algo.ts:10",
+    "teal": 816,
+    "source": "contracts/Factory.algo.ts:147",
     "pc": [
-      799,
-      800,
-      801,
+      799
+    ]
+  },
+  {
+    "teal": 817,
+    "source": "contracts/Factory.algo.ts:147",
+    "pc": [
+      800
+    ]
+  },
+  {
+    "teal": 820,
+    "source": "contracts/Factory.algo.ts:147",
+    "errorMessage": "box value does not exist: this.pools(hash).value",
+    "pc": [
+      801
+    ]
+  },
+  {
+    "teal": 823,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
       802,
-      803,
+      803
+    ]
+  },
+  {
+    "teal": 824,
+    "source": "contracts/Factory.algo.ts:144",
+    "pc": [
       804
     ]
   },
   {
-    "teal": 770,
+    "teal": 827,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
       805,
-      806,
+      806
+    ]
+  },
+  {
+    "teal": 828,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
       807,
       808,
-      809,
-      810
+      809
     ]
   },
   {
-    "teal": 771,
+    "teal": 829,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      811,
+      810,
+      811
+    ]
+  },
+  {
+    "teal": 830,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
       812,
-      813
+      813,
+      814
     ]
   },
   {
-    "teal": 772,
+    "teal": 831,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      814,
       815,
       816,
       817,
-      818,
-      819,
+      818
+    ]
+  },
+  {
+    "teal": 834,
+    "source": "contracts/Factory.algo.ts:10",
+    "errorMessage": "this contract does not implement the given ABI method for create NoOp",
+    "pc": [
+      819
+    ]
+  },
+  {
+    "teal": 837,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
       820,
       821,
       822,
       823,
       824,
-      825,
+      825
+    ]
+  },
+  {
+    "teal": 838,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
       826,
       827,
       828,
       829,
       830,
-      831,
+      831
+    ]
+  },
+  {
+    "teal": 839,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
       832,
-      833
-    ]
-  },
-  {
-    "teal": 775,
-    "source": "contracts/Factory.algo.ts:10",
-    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
-    "pc": [
-      834
-    ]
-  },
-  {
-    "teal": 778,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      833,
+      834,
       835,
       836,
       837
     ]
   },
   {
-    "teal": 779,
+    "teal": 840,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
       838,
-      839
-    ]
-  },
-  {
-    "teal": 780,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      839,
       840,
-      841
+      841,
+      842,
+      843
     ]
   },
   {
-    "teal": 781,
+    "teal": 841,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      842
-    ]
-  },
-  {
-    "teal": 782,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      843,
-      844
-    ]
-  },
-  {
-    "teal": 783,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      844,
       845,
-      846
-    ]
-  },
-  {
-    "teal": 784,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      847
-    ]
-  },
-  {
-    "teal": 787,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      846,
+      847,
       848,
-      849,
-      850
+      849
     ]
   },
   {
-    "teal": 788,
+    "teal": 842,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
+      850,
       851,
-      852
-    ]
-  },
-  {
-    "teal": 789,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      852,
       853,
-      854
-    ]
-  },
-  {
-    "teal": 790,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      854,
       855
     ]
   },
   {
-    "teal": 791,
+    "teal": 843,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
       856,
-      857
-    ]
-  },
-  {
-    "teal": 792,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      857,
       858,
-      859
-    ]
-  },
-  {
-    "teal": 793,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      860
-    ]
-  },
-  {
-    "teal": 794,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      859,
+      860,
       861
     ]
   },
   {
-    "teal": 795,
+    "teal": 844,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
       862,
-      863
+      863,
+      864,
+      865,
+      866,
+      867
     ]
   },
   {
-    "teal": 796,
+    "teal": 845,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      864
-    ]
-  },
-  {
-    "teal": 797,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      865
-    ]
-  },
-  {
-    "teal": 798,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      866
-    ]
-  },
-  {
-    "teal": 799,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      867,
       868,
-      869
-    ]
-  },
-  {
-    "teal": 800,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      869,
       870,
-      871
-    ]
-  },
-  {
-    "teal": 801,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      871,
       872,
       873
     ]
   },
   {
-    "teal": 802,
+    "teal": 846,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      874
-    ]
-  },
-  {
-    "teal": 803,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
-      875
-    ]
-  },
-  {
-    "teal": 804,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      874,
+      875,
       876,
-      877
-    ]
-  },
-  {
-    "teal": 805,
-    "source": "contracts/Factory.algo.ts:10",
-    "pc": [
+      877,
       878,
       879
     ]
   },
   {
-    "teal": 806,
+    "teal": 847,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
       880,
-      881
+      881,
+      882
     ]
   },
   {
-    "teal": 807,
+    "teal": 848,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      882,
-      883
+      883,
+      884,
+      885,
+      886,
+      887,
+      888,
+      889,
+      890,
+      891,
+      892,
+      893,
+      894,
+      895,
+      896,
+      897,
+      898,
+      899,
+      900,
+      901,
+      902,
+      903,
+      904
     ]
   },
   {
-    "teal": 808,
+    "teal": 851,
+    "source": "contracts/Factory.algo.ts:10",
+    "errorMessage": "this contract does not implement the given ABI method for call NoOp",
+    "pc": [
+      905
+    ]
+  },
+  {
+    "teal": 854,
     "source": "contracts/Factory.algo.ts:10",
     "pc": [
-      884
+      906,
+      907,
+      908
+    ]
+  },
+  {
+    "teal": 855,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      909,
+      910
+    ]
+  },
+  {
+    "teal": 856,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      911,
+      912
+    ]
+  },
+  {
+    "teal": 857,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      913
+    ]
+  },
+  {
+    "teal": 858,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      914,
+      915
+    ]
+  },
+  {
+    "teal": 859,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      916,
+      917
+    ]
+  },
+  {
+    "teal": 860,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      918
+    ]
+  },
+  {
+    "teal": 863,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      919,
+      920,
+      921
+    ]
+  },
+  {
+    "teal": 864,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      922,
+      923
+    ]
+  },
+  {
+    "teal": 865,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      924,
+      925
+    ]
+  },
+  {
+    "teal": 866,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      926
+    ]
+  },
+  {
+    "teal": 867,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      927,
+      928
+    ]
+  },
+  {
+    "teal": 868,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      929,
+      930
+    ]
+  },
+  {
+    "teal": 869,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      931
+    ]
+  },
+  {
+    "teal": 870,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      932
+    ]
+  },
+  {
+    "teal": 871,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      933,
+      934
+    ]
+  },
+  {
+    "teal": 872,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      935
+    ]
+  },
+  {
+    "teal": 873,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      936
+    ]
+  },
+  {
+    "teal": 874,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      937
+    ]
+  },
+  {
+    "teal": 875,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      938,
+      939,
+      940
+    ]
+  },
+  {
+    "teal": 876,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      941,
+      942
+    ]
+  },
+  {
+    "teal": 877,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      943,
+      944
+    ]
+  },
+  {
+    "teal": 878,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      945
+    ]
+  },
+  {
+    "teal": 879,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      946
+    ]
+  },
+  {
+    "teal": 880,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      947,
+      948
+    ]
+  },
+  {
+    "teal": 881,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      949,
+      950
+    ]
+  },
+  {
+    "teal": 882,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      951,
+      952
+    ]
+  },
+  {
+    "teal": 883,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      953,
+      954
+    ]
+  },
+  {
+    "teal": 884,
+    "source": "contracts/Factory.algo.ts:10",
+    "pc": [
+      955
     ]
   }
 ]

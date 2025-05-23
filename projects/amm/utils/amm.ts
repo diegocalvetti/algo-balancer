@@ -73,9 +73,10 @@ export const addLiquidity = async (token: bigint, amount: number) => {
     assetIndex: token,
   });
 
-  const opt = poolClient.newGroup();
+  /* const opt = poolClient.newGroup();
   opt.optIn({ args: [token], maxFee: (1_000_000).microAlgo() });
   await opt.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+   */
 
   const assets = (await getPoolAssets(POOL_ID))!;
   const index = assets.indexOf(token);

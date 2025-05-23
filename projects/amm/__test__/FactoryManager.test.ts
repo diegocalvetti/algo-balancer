@@ -1,12 +1,12 @@
-import { describe, test, beforeAll, beforeEach, afterAll } from '@jest/globals';
+import { describe, test, beforeAll, beforeEach } from '@jest/globals';
+
+import { TransactionSigner } from 'algosdk';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { Config } from '@algorandfoundation/algokit-utils';
-import algosdk, { AtomicTransactionComposer, TransactionSigner } from 'algosdk';
-import { after } from 'node:test';
+
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
 import { BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
-import {TransactionResponse} from "algosdk/dist/types/client/v2/indexer";
-import {getTxInfo} from "../utils/bootstrap";
+import { pay } from '../helpers/generic';
 
 const fixture = algorandFixture();
 Config.configure({ populateAppCallResources: true });
@@ -16,7 +16,7 @@ let poolFactory: BalancedPoolV2Factory;
 let sender: string;
 let signer: TransactionSigner;
 
-describe('Factory', () => {
+describe('FactoryManager', () => {
   beforeEach(fixture.beforeEach);
 
   beforeAll(async () => {
@@ -34,12 +34,6 @@ describe('Factory', () => {
     });
   });
 
-  afterAll(async () => {
-    console.log({
-      FACTORY: appClient.appId,
-    });
-  });
-
   test('factory_deploy', async () => {
     const { algorand } = fixture;
 
@@ -53,31 +47,6 @@ describe('Factory', () => {
     appClient = createResult.appClient;
 
     console.log(`✅ Factory Deployed => ${appClient.appId}`);
-    
-    /*
-   const balancedPoolApprovalProgram = await poolFactory.appFactory.compile();
-   const program = balancedPoolApprovalProgram.compiledApproval?.compiled!;
-
-   await appClient.send.managerUpdatePoolContractProgram({
-     args: [program.length],
-     sender,
-     signer,
-   });
-   const programBase64 = balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!;
-
-   const writeGroup = appClient.newGroup();
-
-   for (let i = 0; i < programBase64.length; i += 2000) {
-     writeGroup.managerWritePoolContractProgram({
-       args: {
-         offset: i,
-         data: programBase64.subarray(i, i + 2000),
-       },
-     });
-   }
-
-   await writeGroup.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
-   */
   });
 
   test('factory_write_pool_program', async () => {
@@ -85,17 +54,13 @@ describe('Factory', () => {
     const program = balancedPoolApprovalProgram.compiledApproval?.compiled!;
 
     const { algorand } = fixture;
-
-    const tx = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+    const config = {
+      algorand,
       sender,
-      receiver: appClient.appAddress,
-      amount: 10e6,
-      suggestedParams: await algorand.getSuggestedParams(),
-    });
+      signer,
+    };
 
-    const atc = new AtomicTransactionComposer();
-    atc.addTransaction({ txn: tx, signer });
-    await atc.execute(algorand.client.algod, 4);
+    await pay(config, appClient.appAddress, 10);
 
     await appClient.send.managerUpdatePoolContractProgram({
       args: [program.length],
@@ -122,7 +87,8 @@ describe('Factory', () => {
       });
     }
 
-    await writeGroup.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+    const result = await writeGroup.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+    console.log(`✅ Pool Program Written! => txs: ${result.txIds}`);
   });
 
   /*

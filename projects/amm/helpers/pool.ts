@@ -34,15 +34,22 @@ export async function initPool(
   weights: number[]
 ) {
   const poolClient = await getPoolClient(config, poolID);
-  await pay(config, poolClient.appAddress, 1);
+  await pay(config, factoryClient.appAddress, 10);
+  await pay(config, poolClient.appAddress, 10);
 
   const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
   const initPoolGroup = factoryClient.newGroup();
 
-  initPoolGroup.opUp({
-    ...commonAppCallTxParams(config),
-    args: [],
-  });
+  const opUpAmount = tokens.length / 2 + 1;
+
+  for (let i = 0; i < opUpAmount; i += 1) {
+    initPoolGroup.opUp({
+      ...commonAppCallTxParams(config),
+      args: [],
+      note: new Uint8Array([i]),
+    });
+  }
+
   initPoolGroup.initPool({
     ...commonAppCallTxParams(config, (500_000).microAlgo()),
     args: [poolID, tokens, weightsFixed],
@@ -53,7 +60,7 @@ export async function initPool(
     coverAppCallInnerTransactionFees: true,
   });
 
-  const lpID = resultInit.returns[1]!;
+  const lpID = resultInit.returns[resultInit.returns.length - 1]!;
 
   await optIn(config, lpID);
   return lpID;
@@ -90,7 +97,7 @@ export async function addLiquidity(
     const assetTransferTxn = await makeAssetTransferTxn(config, token, poolClient.appAddress, amount);
 
     await factoryClient.send.addLiquidity({
-      ...commonAppCallTxParams(config, (1_000_000).microAlgo()),
+      ...commonAppCallTxParams(config, (500_000).microAlgo()),
       args: [poolID, index, assetTransferTxn],
     });
   }

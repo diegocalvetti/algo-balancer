@@ -1,4 +1,5 @@
 import { Contract } from '@algorandfoundation/tealscript';
+import * as zlib from 'node:zlib';
 
 const TOTAL_LP_SUPPLY = 10 ** 16;
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
@@ -119,6 +120,14 @@ export class BalancedPoolV2 extends Contract {
     if (this.totalLP() === 0) {
       // First deployer
       amount = AMOUNT_LP_DEPLOYER;
+    } else {
+      amount = this.computeNAssetsLiquidity(sender);
+    }
+
+    /*
+    if (this.totalLP() === 0) {
+      // First deployer
+      amount = AMOUNT_LP_DEPLOYER;
     } else if (totalAssets === this.assets.value.length) {
       // All tokens provided
       amount = this.computeAllAssetsLiquidity(sender);
@@ -126,7 +135,7 @@ export class BalancedPoolV2 extends Contract {
       // Only one token provided
     } else {
       // Partial multi-token
-    }
+    } */
 
     for (let i = 0; i < this.provided(sender).value.length; i += 1) {
       this.provided(sender).value[i] = 0;
@@ -355,10 +364,11 @@ export class BalancedPoolV2 extends Contract {
     return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
   }
 
-  private computeAllAssetsLiquidity(sender: Address): uint64 {
+  private computeNAssetsLiquidity(sender: Address): uint64 {
     const totalAssets = this.assets.value.length;
-    let minRatio = 2 ** 63;
 
+    assert(totalAssets >= 1, 'Please provide at least one asset');
+    let ratio = 1;
     increaseOpcodeBudget();
 
     for (let i = 0; i < totalAssets; i += 1) {
@@ -368,17 +378,15 @@ export class BalancedPoolV2 extends Contract {
       const actualPoolBalance = poolBalance - providedAmount;
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
-      assert(providedAmount > 0, 'Missing one asset contribution');
 
-      const ratio = wideRatio([providedAmount, SCALE], [actualPoolBalance]);
-
-      if (ratio < minRatio) {
-        minRatio = ratio;
+      if (providedAmount > 0) {
+        const assetRatio = wideRatio([providedAmount, SCALE], [actualPoolBalance]);
+        ratio = ratio * assetRatio;
       }
     }
 
     const totalLP = this.totalLP();
-    return wideRatio([totalLP, minRatio], [SCALE]);
+    return wideRatio([totalLP, ratio - SCALE], [SCALE]);
   }
 
   private totalLP(): uint64 {

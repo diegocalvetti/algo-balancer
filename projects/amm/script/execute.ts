@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-case-declarations, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
+/* eslint-disable no-console, no-case-declarations, import/no-cycle, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
 import inquirer from 'inquirer';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import dotenv from 'dotenv';
@@ -57,7 +57,7 @@ async function run(command: Commands): Promise<boolean> {
         `Cabbage_${new Date().toString().substring(0, 21)}`,
       ]) {
         console.log(name);
-        const { appID, assetID } = await createToken(manager, name);
+        const { appID, assetID } = await createToken(manager, name, name.substring(0, 3).toUpperCase());
         NEW_TOKENS_APP.push(appID);
         NEW_TOKENS.push(assetID);
       }

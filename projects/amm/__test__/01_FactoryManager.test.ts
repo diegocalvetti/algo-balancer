@@ -17,6 +17,10 @@ let poolFactory: BalancedPoolV2Factory;
 let sender: string;
 let signer: TransactionSigner;
 
+/**
+ * Deploy & Set up the Factory.
+ * The factory `appID` is then stored in test.json available to use in the other tests.
+ */
 describe('FactoryManager', () => {
   beforeEach(fixture.beforeEach);
 
@@ -35,6 +39,7 @@ describe('FactoryManager', () => {
     });
   });
 
+  // Deploy the factory
   test('factory_deploy', async () => {
     const { algorand } = fixture;
 
@@ -51,6 +56,7 @@ describe('FactoryManager', () => {
     console.log(`✅ Factory Deployed => ${appClient.appId}`);
   });
 
+  // Write the pool program
   test('factory_write_pool_program', async () => {
     const balancedPoolApprovalProgram = await poolFactory.appFactory.compile();
     const program = balancedPoolApprovalProgram.compiledApproval?.compiled!;

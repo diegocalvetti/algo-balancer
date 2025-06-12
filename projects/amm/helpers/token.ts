@@ -45,7 +45,7 @@ async function deploy(config: AlgoParams, name: string): Promise<bigint> {
   return appDeployer.appId;
 }
 
-async function bootstrap(config: AlgoParams, name: string, tokenAppId: bigint): Promise<AssetInfo> {
+async function bootstrap(config: AlgoParams, name: string, unit: string, tokenAppId: bigint): Promise<AssetInfo> {
   const { algorand, sender, signer } = config;
 
   const tokenClient = algorand.client.getTypedAppClientById(TokenClient, {
@@ -65,7 +65,7 @@ async function bootstrap(config: AlgoParams, name: string, tokenAppId: bigint): 
   const encoder = new TextEncoder();
   const result = await tokenClient.send.bootstrap({
     ...commonAppCallTxParams(config),
-    args: { name: encoder.encode(name), unit: encoder.encode(name.substring(0, 2)), seed: tx.transaction },
+    args: { name: encoder.encode(name), unit: encoder.encode(unit), seed: tx.transaction },
   });
 
   return {
@@ -93,17 +93,22 @@ async function mint(config: AlgoParams, asset: AssetInfo, amount: bigint): Promi
   return asset;
 }
 
-export async function createToken(config: AlgoParams, name: string) {
+export async function createToken(config: AlgoParams, name: string, unit: string) {
   const tokenAppId = await deploy(config, name);
-  return bootstrap(config, name, tokenAppId);
+  return bootstrap(config, name, unit, tokenAppId);
 }
 
 export async function mintToken(config: AlgoParams, asset: AssetInfo, amount: bigint): Promise<AssetInfo> {
   return mint(config, asset, amount);
 }
 
-export async function createAndMintToken(config: AlgoParams, name: string, amount: bigint): Promise<AssetInfo> {
-  const token = await createToken(config, name);
+export async function createAndMintToken(
+  config: AlgoParams,
+  name: string,
+  unit: string,
+  amount: bigint,
+): Promise<AssetInfo> {
+  const token = await createToken(config, name, unit);
   const assetInfo = await mintToken(config, token, amount);
   console.log(`[${name}] created => ${token.assetID}`);
   console.log(`[${name}] minted => ${amount} to ${config.sender}`);

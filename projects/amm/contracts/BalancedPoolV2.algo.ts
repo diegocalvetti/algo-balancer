@@ -1,5 +1,4 @@
 import { Contract } from '@algorandfoundation/tealscript';
-import * as zlib from 'node:zlib';
 
 const TOTAL_LP_SUPPLY = 10 ** 16;
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;

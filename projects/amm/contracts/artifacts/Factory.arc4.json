@@ -66,16 +66,16 @@
     },
     {
       "name": "getLiquidity",
-      "desc": "Compute the liquidity for the sender and send the expected LP",
+      "desc": "Compute the liquidity for the sender and send the LPs expected",
       "args": [
         {
           "name": "poolID",
           "type": "uint64",
-          "desc": "Pool App ID"
+          "desc": "Pool App ID\n uint64 - The LPs expected"
         }
       ],
       "returns": {
-        "type": "void"
+        "type": "uint64"
       }
     },
     {

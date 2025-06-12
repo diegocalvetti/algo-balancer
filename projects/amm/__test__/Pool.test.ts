@@ -1,12 +1,20 @@
-import { describe, test, beforeAll, beforeEach } from '@jest/globals';
+/* eslint-disable no-console */
+import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { Config } from '@algorandfoundation/algokit-utils';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 
 import { TransactionSigner } from 'algosdk';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
-import { createAndMintToken, mintToken } from '../helpers/token';
-import { addLiquidity, deployAndInitPool, getLiquidity, getPool } from '../helpers/pool';
-import { AssetInfo, getPoolClient, getRandomAccount, optIn } from '../helpers/generic';
+import { createAndMintToken } from '../helpers/token';
+import {
+  swap,
+  addLiquidity,
+  createAccountAndMintTokens,
+  deployAndInitPool,
+  getLiquidity,
+  getPool,
+} from '../helpers/pool';
+import { AssetInfo, getPoolClient, getRandomAccount, pay, retrieveResult } from '../helpers/generic';
 
 const fixture = algorandFixture();
 
@@ -15,10 +23,11 @@ Config.configure({ populateAppCallResources: true });
 let sender: string;
 let signer: TransactionSigner;
 
-const FACTORY_ID = 2030;
+let FACTORY_ID: bigint;
 let factoryClient: FactoryClient;
 
-let tokens: AssetInfo[];
+let tokensInfo: AssetInfo[];
+let tokens: bigint[];
 let weights: number[];
 
 describe('Pool', () => {
@@ -28,10 +37,12 @@ describe('Pool', () => {
     await fixture.beforeEach();
     const { algorand } = fixture;
 
-    const manager = await getRandomAccount(fixture, 100_000);
+    const manager = await getRandomAccount(fixture, 100_000_000);
     signer = manager.signer;
-    sender = manager.sender;
+    sender = manager.sender.toString();
 
+    const stored = await retrieveResult<{ FACTORY_ID: bigint }>('../__test__/test');
+    FACTORY_ID = stored.FACTORY_ID;
     factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
       appId: BigInt(FACTORY_ID),
       defaultSender: sender,
@@ -42,10 +53,15 @@ describe('Pool', () => {
   test('deploy_pool_50/50', async () => {
     const { algorand } = fixture;
     const manager = { algorand, sender, signer };
+    await pay(manager, factoryClient.appAddress, 1_000_000);
 
     // Create some tokens
     const amount = BigInt(10_000_000);
-    tokens = [await createAndMintToken(manager, 'tokenA', amount), await createAndMintToken(manager, 'tokenB', amount)];
+    tokensInfo = [
+      await createAndMintToken(manager, 'tokenA', amount),
+      await createAndMintToken(manager, 'tokenB', amount),
+    ];
+    tokens = tokensInfo.map((el) => el.assetID);
     weights = [0.5, 0.5];
 
     // Create the pool
@@ -54,73 +70,82 @@ describe('Pool', () => {
 
   test('get_pool_50/50', async () => {
     const result = await factoryClient.getPool({
-      args: [tokens.map((el) => el.assetID), weights.map((el) => el * 10 ** 6)],
+      args: [tokens, weights.map((el) => el * 10 ** 6)],
     });
 
     console.log('Pool Found! ID => ', result);
+    expect(result).toBeTruthy();
   });
 
-  test('pool_50/50_get_lp_proportionally', async () => {
+  test('pool_50/50_mint_lps', async () => {
     const { algorand } = fixture;
     const manager = { algorand, sender, signer };
 
     const poolID = (await getPool(factoryClient, tokens, weights))!;
 
-    await addLiquidity(factoryClient, manager, poolID, tokens[0].assetID, 0, 100_000);
-    await addLiquidity(factoryClient, manager, poolID, tokens[1].assetID, 1, 100_000);
-    const getLiquidity1Txs = await getLiquidity(factoryClient, manager, poolID);
+    await addLiquidity(factoryClient, manager, poolID, 1, tokens);
+    const LP1 = await getLiquidity(factoryClient, manager, poolID);
 
-    const randomLP = await getRandomAccount(fixture);
-    const poolClient = await getPoolClient(randomLP, poolID);
-    const tokenLpId = await poolClient.getToken();
+    const randomLP2 = await createAccountAndMintTokens(fixture, poolID, tokensInfo);
+    await addLiquidity(factoryClient, randomLP2, poolID, 1, tokens);
+    const LP2 = await getLiquidity(factoryClient, randomLP2, poolID);
 
-    await optIn(randomLP, tokenLpId);
-    await optIn(randomLP, tokens[0].assetID);
-    await optIn(randomLP, tokens[1].assetID);
-    await mintToken(randomLP, tokens[0], BigInt(500_000));
-    await mintToken(randomLP, tokens[1], BigInt(500_000));
+    const randomLP3 = await createAccountAndMintTokens(fixture, poolID, tokensInfo);
+    await addLiquidity(factoryClient, randomLP3, poolID, 2, tokens);
+    const LP3 = await getLiquidity(factoryClient, randomLP3, poolID);
 
-    await addLiquidity(factoryClient, randomLP, poolID, tokens[0].assetID, 0, 100_000);
-    await addLiquidity(factoryClient, randomLP, poolID, tokens[1].assetID, 1, 100_000);
-    const getLiquidity2Txs = await getLiquidity(factoryClient, randomLP, poolID);
+    const randomLP4 = await createAccountAndMintTokens(fixture, poolID, tokensInfo);
+    await addLiquidity(factoryClient, randomLP4, poolID, 1 / 3, tokens);
+    const LP4 = await getLiquidity(factoryClient, randomLP4, poolID);
 
-    console.log(getLiquidity1Txs, getLiquidity2Txs);
+    expect(LP2).toEqual(LP1); // 1st & 2nd deposit the same, they should receive the exact same LP tokens amount
+    expect(LP3).toEqual(2 * LP2); // 3rd deposit is double the first; it should receive double the LP tokens.
+    expect(Math.abs(LP4 - (1 / 3) * LP1)).toBeLessThan(2); // 4th deposit a third, it should receive about one third of the first
   });
 
-  test('pool_33/33/33_get_lp_proportionally', async () => {
+  test('pool_50/50_swaps', async () => {
     const { algorand } = fixture;
     const manager = { algorand, sender, signer };
+    const poolID = (await getPool(factoryClient, tokens, weights))!;
+    const poolClient = await getPoolClient(manager, poolID);
 
+    const randomUser = await createAccountAndMintTokens(fixture, poolID, tokensInfo, 9_000_000_000);
+
+    const tokenInAmount = 0.01;
+    const received = await swap(factoryClient, randomUser, poolID, tokens, 0, 1, tokenInAmount);
+    const receivedXsSwap = await swap(factoryClient, randomUser, poolID, tokens, 0, 1, tokenInAmount / 10000);
+
+    const beforeSwapBalanceA = Number(await poolClient.getBalance({ args: [0] })) / 10 ** 6;
+    const beforeSwapBalanceB = Number(await poolClient.getBalance({ args: [1] })) / 10 ** 6;
+    const receivedXlSwap = await swap(factoryClient, randomUser, poolID, tokens, 0, 1, 100_000_000);
+    const afterSwapBalanceA = Number(await poolClient.getBalance({ args: [0] })) / 10 ** 6;
+
+    console.log(beforeSwapBalanceB, afterSwapBalanceA);
+    console.log(received, receivedXsSwap, receivedXlSwap);
+
+    expect(received).toBeGreaterThan(0); // random user swaps a 0.01 token A, should receive some tokens B
+    expect(received).toBeLessThan(tokenInAmount); // amount of token B should also be less than the provided amount of A
+    expect(receivedXsSwap).toBe(0); // if the provided amount is negligible compared to the balance, expect 0 output.
+    expect(receivedXlSwap).toBe(beforeSwapBalanceB); // a really large input should drain token B entirely.
+    expect(afterSwapBalanceA).toBe(beforeSwapBalanceA + 100_000_000); // Token A balance should equal the previous amount plus the newly added amount.
+  });
+
+  test('deploy_pool_33/33/33', async () => {
+    const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
+    await pay(manager, factoryClient.appAddress, 1_000_000);
+
+    // Create some tokens
     const amount = BigInt(10_000_000);
-    tokens = [...tokens, await createAndMintToken(manager, 'tokenC', amount)];
-    weights = [1 / 3, 1 / 3, 1 / 3];
+    tokensInfo = [
+      await createAndMintToken(manager, 'tokenC', amount),
+      await createAndMintToken(manager, 'tokenD', amount),
+      await createAndMintToken(manager, 'tokenE', amount),
+    ];
+    tokens = tokensInfo.map((el) => el.assetID);
+    weights = [1/3, 1/3, 1/3];
 
+    // Create the pool
     await deployAndInitPool(factoryClient, manager, tokens, weights);
-
-    const poolID = (await getPool(factoryClient, tokens, weights))!;
-
-    await addLiquidity(factoryClient, manager, poolID, tokens[0].assetID, 0, 100_000);
-    await addLiquidity(factoryClient, manager, poolID, tokens[1].assetID, 1, 100_000);
-    await addLiquidity(factoryClient, manager, poolID, tokens[2].assetID, 2, 100_000);
-    const getLiquidity1Txs = await getLiquidity(factoryClient, manager, poolID);
-
-    const randomLP = await getRandomAccount(fixture);
-    const poolClient = await getPoolClient(randomLP, poolID);
-    const tokenLpId = await poolClient.getToken();
-
-    await optIn(randomLP, tokenLpId);
-    await optIn(randomLP, tokens[0].assetID);
-    await optIn(randomLP, tokens[1].assetID);
-    await optIn(randomLP, tokens[2].assetID);
-    await mintToken(randomLP, tokens[0], BigInt(500_000));
-    await mintToken(randomLP, tokens[1], BigInt(500_000));
-    await mintToken(randomLP, tokens[2], BigInt(500_000));
-
-    await addLiquidity(factoryClient, randomLP, poolID, tokens[0].assetID, 0, 100_000);
-    await addLiquidity(factoryClient, randomLP, poolID, tokens[1].assetID, 1, 200_000);
-    await addLiquidity(factoryClient, randomLP, poolID, tokens[2].assetID, 2, 200_000);
-    const getLiquidity2Txs = await getLiquidity(factoryClient, randomLP, poolID);
-
-    console.log(getLiquidity1Txs, getLiquidity2Txs);
   });
 });

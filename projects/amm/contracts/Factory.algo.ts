@@ -76,11 +76,12 @@ export class Factory extends Contract {
   }
 
   /**
-   * Compute the liquidity for the sender and send the expected LP
+   * Compute the liquidity for the sender and send the LPs expected
    * @param {AppID} poolID - Pool App ID
+   * @return uint64 - The LPs expected
    */
-  getLiquidity(poolID: AppID) {
-    sendMethodCall<typeof BalancedPoolV2.prototype.getLiquidity>({
+  getLiquidity(poolID: AppID): uint64 {
+    return sendMethodCall<typeof BalancedPoolV2.prototype.getLiquidity>({
       applicationID: poolID,
       methodArgs: [this.txn.sender],
     });

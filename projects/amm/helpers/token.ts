@@ -1,6 +1,6 @@
+/* eslint-disable import/no-cycle, no-console */
 import { OnSchemaBreak, OnUpdate } from '@algorandfoundation/algokit-utils/types/app';
 import { TokenClient, TokenFactory } from '../contracts/clients/TokenClient';
-import { account } from '../utils/bootstrap';
 import { AlgoParams, AssetInfo, commonAppCallTxParams, optIn } from './generic';
 
 async function deploy(config: AlgoParams, name: string): Promise<bigint> {
@@ -33,8 +33,8 @@ async function deploy(config: AlgoParams, name: string): Promise<bigint> {
       },
       extraProgramPages: 0,
     },
-    updateParams: { sender: account.addr },
-    deleteParams: { sender: account.addr },
+    updateParams: { sender: config.sender },
+    deleteParams: { sender: config.sender },
     onSchemaBreak: OnSchemaBreak.AppendApp,
     onUpdate: OnUpdate.UpdateApp,
     populateAppCallResources: true,
@@ -65,7 +65,7 @@ async function bootstrap(config: AlgoParams, name: string, tokenAppId: bigint): 
   const encoder = new TextEncoder();
   const result = await tokenClient.send.bootstrap({
     ...commonAppCallTxParams(config),
-    args: { name: encoder.encode(name), unit: encoder.encode(name), seed: tx.transaction },
+    args: { name: encoder.encode(name), unit: encoder.encode(name.substring(0, 2)), seed: tx.transaction },
   });
 
   return {

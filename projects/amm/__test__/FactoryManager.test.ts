@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { describe, test, beforeAll, beforeEach } from '@jest/globals';
 
 import { TransactionSigner } from 'algosdk';
@@ -6,7 +7,7 @@ import { Config } from '@algorandfoundation/algokit-utils';
 
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
 import { BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
-import { pay } from '../helpers/generic';
+import { pay, storeResult } from '../helpers/generic';
 
 const fixture = algorandFixture();
 Config.configure({ populateAppCallResources: true });
@@ -23,7 +24,7 @@ describe('FactoryManager', () => {
     await fixture.beforeEach();
     const { algorand } = fixture;
 
-    fixture.context.testAccount = await fixture.context.generateAccount({ initialFunds: (100).algo() });
+    fixture.context.testAccount = await fixture.context.generateAccount({ initialFunds: (1000).algo() });
     signer = fixture.context.testAccount.signer;
     sender = fixture.context.testAccount.addr.toString();
 
@@ -46,6 +47,7 @@ describe('FactoryManager', () => {
     const createResult = await factory.send.create.createApplication();
     appClient = createResult.appClient;
 
+    await storeResult('../__test__/test', { FACTORY_ID: appClient.appId });
     console.log(`✅ Factory Deployed => ${appClient.appId}`);
   });
 
@@ -90,25 +92,4 @@ describe('FactoryManager', () => {
     const result = await writeGroup.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
     console.log(`✅ Pool Program Written! => txs: ${result.txIds}`);
   });
-
-  /*
-  test('sum', async () => {
-    const a = 13;
-    const b = 37;
-    const sum = await appClient.send.doMath({ args: { a, b, operation: 'sum' } });
-    expect(sum.return).toBe(BigInt(a + b));
-  });
-
-  test('difference', async () => {
-    const a = 13;
-    const b = 37;
-    const diff = await appClient.send.doMath({ args: { a, b, operation: 'difference' } });
-    expect(diff.return).toBe(BigInt(a >= b ? a - b : b - a));
-  });
-
-  test('hello', async () => {
-    const hello = await appClient.send.hello({ args: { name: 'world!' } });
-    expect(hello.return).toBe('Hello, world!');
-  });
-   */
 });

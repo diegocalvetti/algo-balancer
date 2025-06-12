@@ -1,9 +1,14 @@
-/* eslint-disable no-console, no-case-declarations, import/no-cycle, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
+/* eslint-disable no-console, no-case-declarations, import/no-extraneous-dependencies, no-await-in-loop, no-restricted-syntax */
 import inquirer from 'inquirer';
-import path from 'node:path';
-import fs from 'node:fs';
-import { deploy, deployToken, factorySetup, mintToken, poolSetup, tokenSetup } from '../utils/bootstrap';
-import { addLiquidity, burnLiquidity, computeLiquidity, swap } from '../utils/amm';
+import * as algokit from '@algorandfoundation/algokit-utils';
+import dotenv from 'dotenv';
+import { mintToken, createToken } from '../helpers/token';
+import { deploy, factorySetup } from '../helpers/factory';
+import { addLiquidity, burnLiquidity, getPool, getLiquidity, initPool, swap } from '../helpers/pool';
+import { getFactoryClient, storeResult, retrieveResult } from '../helpers/generic';
+import { FactoryClient } from '../contracts/clients/FactoryClient';
+
+dotenv.config();
 
 export type BootstrapResult = {
   FACTORY_ID: bigint;
@@ -24,69 +29,42 @@ const choices = [
   'Swap',
   'Quit',
 ] as const;
+type Commands = (typeof choices)[number];
 let currentChoice = 0;
 
-type Commands = (typeof choices)[number];
+const algorand = algokit.AlgorandClient.defaultLocalNet();
+const account = algorand.account.fromMnemonic(process.env.ACCOUNT_MNEMONIC!);
+const manager = { algorand, sender: account.addr, signer: account.signer };
 
 function title(text: string): void {
   console.log(`************* ${text.toUpperCase()} ************* `);
 }
 
-export async function retrieveResult<T = unknown>(filename: string): Promise<T> {
-  const filePath = path.resolve(__dirname, `./${filename}.json`);
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-
-  const parsed = JSON.parse(fileContent, (_, value) => {
-    if (typeof value === 'string' && /^\d+$/.test(value)) {
-      return BigInt(value);
-    }
-    return value;
-  });
-
-  return parsed as T;
-}
-
-async function storeResult(filename: string, data: object): Promise<void> {
-  const current = await retrieveResult<BootstrapResult>(filename);
-
-  const json = JSON.stringify(
-    { ...current, ...data },
-    (_, value) => (typeof value === 'bigint' ? value.toString() : value),
-    2
-  );
-  const filePath = path.resolve(__dirname, `./${filename}.json`);
-
-  return new Promise((resolve, reject) => {
-    fs.writeFile(filePath, json, 'utf8', (err) => {
-      if (err) {
-        console.error(`❌ Errore durante la scrittura su ${filename}:`, err);
-        reject(err);
-      } else {
-        console.log(`✅ Result of ${filename} saved: ${filePath}`);
-        resolve();
-      }
-    });
-  });
-}
-
 async function run(command: Commands): Promise<boolean> {
   title(command);
-  const { FACTORY_ID, POOL_ID, TOKENS } = await retrieveResult<BootstrapResult>('bootstrap');
+  const { FACTORY_ID, POOL_ID, TOKENS, LP_TOKEN_ID } = await retrieveResult<BootstrapResult>('../script/bootstrap');
+
+  let factoryClient: FactoryClient;
 
   switch (command) {
     case 'Create some Tokens': {
-      const pepperAppID = await deployToken(`Pepper_${new Date().toString()}`);
-      const pepperID = await tokenSetup(pepperAppID, 'Pepper', 'PPR');
+      const NEW_TOKENS_APP = [];
+      const NEW_TOKENS = [];
+      console.log('Create!!!');
 
-      const cabbageAppID = await deployToken(`Cabbage_${new Date().toString()}`);
-      const cabbageID = await tokenSetup(cabbageAppID, 'Cabbage', 'CBG');
+      for (const name of [
+        `Pepper_${new Date().toString().substring(0, 21)}`,
+        `Cabbage_${new Date().toString().substring(0, 21)}`,
+      ]) {
+        console.log(name);
+        const { appID, assetID } = await createToken(manager, name);
+        NEW_TOKENS_APP.push(appID);
+        NEW_TOKENS.push(assetID);
+      }
 
-      const fennelAppID = await deployToken(`Fennel_${new Date().toString()}`);
-      const fennelID = await tokenSetup(fennelAppID, 'Fennel', 'FNL');
-
-      await storeResult('bootstrap', {
-        TOKENS_APP: [pepperAppID, cabbageAppID, fennelAppID],
-        TOKENS: [pepperID, cabbageID, fennelID],
+      await storeResult('../script/bootstrap', {
+        TOKENS_APP: NEW_TOKENS_APP,
+        TOKENS: NEW_TOKENS,
       });
 
       break;
@@ -102,18 +80,23 @@ async function run(command: Commands): Promise<boolean> {
       ]);
       const amount = BigInt(rawAmount * 10 ** 6);
 
-      const { TOKENS_APP } = await retrieveResult<BootstrapResult>('bootstrap');
+      const { TOKENS_APP } = await retrieveResult<BootstrapResult>('../script/bootstrap');
 
-      for (const token of TOKENS_APP) {
-        await mintToken(token, amount);
+      // eslint-disable-next-line guard-for-in
+      for (const index in TOKENS_APP) {
+        const token = {
+          appID: TOKENS_APP[index],
+          assetID: TOKENS[index],
+        };
+        await mintToken(manager, token, amount);
       }
       break;
     }
     case 'Deploy & Bootstrap Factory': {
-      const appID = await deploy(`Factory_${new Date().toString()}`);
-      const { poolAppId } = await factorySetup(appID);
+      const appID = await deploy(manager, `Factory_${new Date().toString()}`);
+      const { poolAppId } = await factorySetup(manager, appID);
 
-      await storeResult('bootstrap', {
+      await storeResult('../script/bootstrap', {
         FACTORY_ID: appID,
         POOL_ID: poolAppId,
       });
@@ -121,37 +104,72 @@ async function run(command: Commands): Promise<boolean> {
       break;
     }
     case 'Write & Deploy Pool':
-      const weights = [1 / 2, 1 / 4, 1 / 4].map((n) => BigInt(n * 1e6));
+      factoryClient = await getFactoryClient(manager, FACTORY_ID);
+      const weights = [1 / 2, 1 / 2];
 
-      const LP_TOKEN_ID = await poolSetup(FACTORY_ID, POOL_ID, TOKENS, weights);
+      let existingPool = null;
+      try {
+        existingPool = await getPool(factoryClient, TOKENS, weights);
+      } catch (e) {
+        /* empty */
+      }
 
-      await storeResult('bootstrap', { LP_TOKEN_ID });
+      if (existingPool) {
+        console.log(`Pool ${existingPool} already exists! => (${TOKENS}) (${weights})`);
+        break;
+      }
+
+      const lpTokenID = await initPool(factoryClient, manager, POOL_ID, TOKENS, weights);
+      await storeResult('../script/bootstrap', { LP_TOKEN_ID: lpTokenID });
       break;
     case 'Add Liquidity':
-      const { token, amount } = await inquirer.prompt([
+      factoryClient = await getFactoryClient(manager, FACTORY_ID);
+      const { type } = await inquirer.prompt([
         {
           type: 'list',
-          name: 'token',
-          message: 'Which token?',
-          choices: TOKENS.map((v) => v.toString()),
-        },
-        {
-          type: 'number',
-          name: 'amount',
-          message: 'How much?',
-          default: 100,
+          name: 'type',
+          message: 'Which mode?',
+          choices: ['All the tokens proportional to weights', 'Single Token'],
         },
       ]);
 
-      const tokenId = BigInt(parseInt(token, 10));
-      await addLiquidity(tokenId, amount);
+      if (type === 'Single Token') {
+        const { token, amount } = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'token',
+            message: 'Which token?',
+            choices: TOKENS.map((v) => v.toString()),
+          },
+          {
+            type: 'number',
+            name: 'amount',
+            message: 'How much?',
+            default: 100,
+          },
+        ]);
 
-      console.log(`${amount} unit of token ${tokenId} provided`);
+        const tokenId = BigInt(parseInt(token, 10));
+        await addLiquidity(factoryClient, manager, POOL_ID, amount, [tokenId]);
+        console.log(`${amount} unit of token ${tokenId} provided`);
+      } else {
+        const { amount } = await inquirer.prompt([
+          {
+            type: 'number',
+            name: 'amount',
+            message: 'How much?',
+            default: 100,
+          },
+        ]);
+        const poolID = (await getPool(factoryClient, TOKENS, [1 / 2, 1 / 2]))!;
+
+        await addLiquidity(factoryClient, manager, poolID, amount, TOKENS);
+      }
       break;
     case 'Compute Liquidity':
-      await computeLiquidity();
-
-      console.log(`LP calculations done`);
+      factoryClient = await getFactoryClient(manager, FACTORY_ID);
+      const LP = await getLiquidity(factoryClient, manager, POOL_ID);
+      console.log(`LP calculations done => ${LP} LP received`);
       break;
     case 'Burn Liquidity':
       const { amountLP } = await inquirer.prompt([
@@ -162,12 +180,13 @@ async function run(command: Commands): Promise<boolean> {
           default: 100,
         },
       ]);
-
-      await burnLiquidity(amountLP);
+      factoryClient = await getFactoryClient(manager, FACTORY_ID);
+      await burnLiquidity(factoryClient, manager, POOL_ID, LP_TOKEN_ID, amountLP);
 
       console.log(`LP burned`);
       break;
     case 'Swap':
+      factoryClient = await getFactoryClient(manager, FACTORY_ID);
       const { tokenIn, amountIn, tokenOut } = await inquirer.prompt([
         {
           type: 'list',
@@ -189,11 +208,10 @@ async function run(command: Commands): Promise<boolean> {
         },
       ]);
 
-      const tokenInID = BigInt(parseInt(tokenIn, 10));
-      const tokenOutID = BigInt(parseInt(tokenOut, 10));
-      await swap(FACTORY_ID, POOL_ID, tokenInID, tokenOutID, amountIn);
+      const tokenInIndex = TOKENS.findIndex((el) => el.toString() === tokenIn);
+      const tokenOutIndex = TOKENS.findIndex((el) => el.toString() === tokenOut);
 
-      console.log('Swapped!');
+      await swap(factoryClient, manager, POOL_ID, TOKENS, tokenInIndex, tokenOutIndex, amountIn);
       break;
     case 'Quit':
       return true;
@@ -201,13 +219,13 @@ async function run(command: Commands): Promise<boolean> {
       console.log('This command does not exists');
   }
 
-  currentChoice = choices.indexOf(command);
+  currentChoice = choices.indexOf(command) + 1;
 
   return false;
 }
 
 async function main() {
-  console.log('\n🚀 BALANCER SETUP');
+  console.log('\n🚀 BALANCER SETUP V2');
 
   const { command } = await inquirer.prompt([
     {

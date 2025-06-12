@@ -187,11 +187,6 @@ export class BalancedPoolV2 extends Contract {
     const weightIn = this.weights(from).value;
     const weightOut = this.weights(to).value;
 
-    log(itob(balanceIn));
-    log(itob(balanceOut));
-    log(itob(weightIn));
-    log(itob(weightOut));
-
     const amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 
     log(itob(amountOut));
@@ -347,11 +342,15 @@ export class BalancedPoolV2 extends Contract {
 
     const power = wideRatio([weightIn, SCALE], [weightOut]);
 
-    log(itob(ratio));
-    log(itob(power));
-
     // output = balanceOut * (1 - ratio^power)
     const ratioPow = this.pow(ratio, power);
+
+    log(itob(balanceIn));
+    log(itob(amountInWithFee));
+    log(itob(ratio));
+    log(itob(power));
+    log(itob(ratioPow));
+    log(itob(wideRatio([balanceOut, SCALE - ratioPow], [SCALE])));
 
     return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
   }
@@ -393,5 +392,25 @@ export class BalancedPoolV2 extends Contract {
   @abi.readonly
   getToken(): AssetID {
     return this.token.value;
+  }
+
+  @abi.readonly
+  getBalance(index: uint64): uint64 {
+    const asset = this.assets.value[index];
+    return this.balances(asset).value;
+  }
+
+  @abi.readonly
+  estimateSwap(from: uint64, to: uint64, amount: uint64): uint64 {
+    const assetIn = this.assets.value[from];
+    const assetOut = this.assets.value[to];
+
+    const balanceIn = this.balances(assetIn).value;
+    const balanceOut = this.balances(assetOut).value;
+
+    const weightIn = this.weights(from).value;
+    const weightOut = this.weights(to).value;
+
+    return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
   }
 }

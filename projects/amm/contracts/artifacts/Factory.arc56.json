@@ -90,16 +90,16 @@
     },
     {
       "name": "getLiquidity",
-      "desc": "Compute the liquidity for the sender and send the expected LP",
+      "desc": "Compute the liquidity for the sender and send the LPs expected",
       "args": [
         {
           "name": "poolID",
           "type": "uint64",
-          "desc": "Pool App ID"
+          "desc": "Pool App ID\n uint64 - The LPs expected"
         }
       ],
       "returns": {
-        "type": "void"
+        "type": "uint64"
       },
       "actions": {
         "create": [],
@@ -1934,104 +1934,116 @@
         },
         {
           "teal": 380,
-          "source": "contracts/Factory.algo.ts:82",
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
-            408,
-            409,
-            410
+            408
           ]
         },
         {
-          "teal": 381,
-          "source": "contracts/Factory.algo.ts:82",
+          "teal": 383,
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
+            409,
+            410,
             411
           ]
         },
         {
           "teal": 384,
-          "source": "contracts/Factory.algo.ts:82",
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
-            412,
-            413,
-            414
+            412
           ]
         },
         {
-          "teal": 385,
-          "source": "contracts/Factory.algo.ts:82",
+          "teal": 387,
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
+            413,
+            414,
             415
           ]
         },
         {
-          "teal": 386,
-          "source": "contracts/Factory.algo.ts:82",
+          "teal": 388,
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
             416
           ]
         },
         {
-          "teal": 393,
-          "source": "contracts/Factory.algo.ts:82",
+          "teal": 389,
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
-            417,
-            418,
+            417
+          ]
+        },
+        {
+          "teal": 390,
+          "source": "contracts/Factory.algo.ts:83",
+          "pc": [
+            418
+          ]
+        },
+        {
+          "teal": 391,
+          "source": "contracts/Factory.algo.ts:83",
+          "pc": [
             419
           ]
         },
         {
-          "teal": 400,
+          "teal": 392,
           "source": "contracts/Factory.algo.ts:83",
           "pc": [
             420
           ]
         },
         {
-          "teal": 401,
+          "teal": 400,
           "source": "contracts/Factory.algo.ts:83",
           "pc": [
-            421
-          ]
-        },
-        {
-          "teal": 402,
-          "source": "contracts/Factory.algo.ts:83",
-          "pc": [
+            421,
             422,
             423
           ]
         },
         {
-          "teal": 403,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 407,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
-            424,
-            425,
-            426,
-            427,
-            428,
-            429
-          ]
-        },
-        {
-          "teal": 404,
-          "source": "contracts/Factory.algo.ts:83",
-          "pc": [
-            430,
-            431
+            424
           ]
         },
         {
           "teal": 408,
           "source": "contracts/Factory.algo.ts:84",
           "pc": [
+            425
+          ]
+        },
+        {
+          "teal": 409,
+          "source": "contracts/Factory.algo.ts:84",
+          "pc": [
+            426,
+            427
+          ]
+        },
+        {
+          "teal": 410,
+          "source": "contracts/Factory.algo.ts:84",
+          "pc": [
+            428,
+            429,
+            430,
+            431,
             432,
             433
           ]
         },
         {
-          "teal": 409,
+          "teal": 411,
           "source": "contracts/Factory.algo.ts:84",
           "pc": [
             434,
@@ -2039,7 +2051,7 @@
           ]
         },
         {
-          "teal": 413,
+          "teal": 415,
           "source": "contracts/Factory.algo.ts:85",
           "pc": [
             436,
@@ -2047,7 +2059,7 @@
           ]
         },
         {
-          "teal": 414,
+          "teal": 416,
           "source": "contracts/Factory.algo.ts:85",
           "pc": [
             438,
@@ -2055,159 +2067,159 @@
           ]
         },
         {
-          "teal": 417,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 420,
+          "source": "contracts/Factory.algo.ts:86",
           "pc": [
-            440
-          ]
-        },
-        {
-          "teal": 418,
-          "source": "contracts/Factory.algo.ts:83",
-          "pc": [
-            441,
-            442
+            440,
+            441
           ]
         },
         {
           "teal": 421,
-          "source": "contracts/Factory.algo.ts:83",
+          "source": "contracts/Factory.algo.ts:86",
           "pc": [
+            442,
             443
           ]
         },
         {
-          "teal": 422,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 424,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
-            444,
-            445
+            444
           ]
         },
         {
-          "teal": 423,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 425,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
+            445,
             446
           ]
         },
         {
-          "teal": 424,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 428,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
             447
           ]
         },
         {
-          "teal": 425,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 429,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
             448,
             449
           ]
         },
         {
-          "teal": 426,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 430,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
-            450,
-            451,
-            452
+            450
           ]
         },
         {
-          "teal": 427,
-          "source": "contracts/Factory.algo.ts:83",
+          "teal": 431,
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
+            451
+          ]
+        },
+        {
+          "teal": 432,
+          "source": "contracts/Factory.algo.ts:84",
+          "pc": [
+            452,
             453
           ]
         },
         {
-          "teal": 428,
-          "source": "contracts/Factory.algo.ts:82",
-          "pc": [
-            454
-          ]
-        },
-        {
           "teal": 433,
-          "source": "contracts/Factory.algo.ts:89",
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
+            454,
             455,
             456
           ]
         },
         {
           "teal": 434,
-          "source": "contracts/Factory.algo.ts:89",
+          "source": "contracts/Factory.algo.ts:84",
           "pc": [
             457
           ]
         },
         {
           "teal": 435,
-          "source": "contracts/Factory.algo.ts:89",
+          "source": "contracts/Factory.algo.ts:83",
           "pc": [
             458
           ]
         },
         {
-          "teal": 436,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 440,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            459
+            459,
+            460
           ]
         },
         {
-          "teal": 437,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 441,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            460,
             461
           ]
         },
         {
-          "teal": 438,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 442,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            462,
+            462
+          ]
+        },
+        {
+          "teal": 443,
+          "source": "contracts/Factory.algo.ts:90",
+          "pc": [
             463
           ]
         },
         {
-          "teal": 439,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 444,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            464
-          ]
-        },
-        {
-          "teal": 442,
-          "source": "contracts/Factory.algo.ts:89",
-          "errorMessage": "argument 0 (transferTxn) for burnLiquidity must be a axfer transaction",
-          "pc": [
+            464,
             465
           ]
         },
         {
           "teal": 445,
-          "source": "contracts/Factory.algo.ts:89",
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
             466,
-            467,
-            468
+            467
           ]
         },
         {
           "teal": 446,
-          "source": "contracts/Factory.algo.ts:89",
+          "source": "contracts/Factory.algo.ts:90",
+          "pc": [
+            468
+          ]
+        },
+        {
+          "teal": 449,
+          "source": "contracts/Factory.algo.ts:90",
+          "errorMessage": "argument 0 (transferTxn) for burnLiquidity must be a axfer transaction",
           "pc": [
             469
           ]
         },
         {
-          "teal": 449,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 452,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
             470,
             471,
@@ -2215,80 +2227,80 @@
           ]
         },
         {
-          "teal": 450,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 453,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
             473
           ]
         },
         {
-          "teal": 451,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 456,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            474
+            474,
+            475,
+            476
           ]
         },
         {
-          "teal": 455,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 457,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            475,
-            476,
             477
           ]
         },
         {
-          "teal": 462,
+          "teal": 458,
           "source": "contracts/Factory.algo.ts:90",
           "pc": [
             478
           ]
         },
         {
-          "teal": 463,
+          "teal": 462,
           "source": "contracts/Factory.algo.ts:90",
           "pc": [
-            479
-          ]
-        },
-        {
-          "teal": 464,
-          "source": "contracts/Factory.algo.ts:90",
-          "pc": [
+            479,
             480,
             481
           ]
         },
         {
-          "teal": 465,
-          "source": "contracts/Factory.algo.ts:90",
+          "teal": 469,
+          "source": "contracts/Factory.algo.ts:91",
           "pc": [
-            482,
-            483,
-            484,
-            485,
-            486,
-            487
-          ]
-        },
-        {
-          "teal": 466,
-          "source": "contracts/Factory.algo.ts:90",
-          "pc": [
-            488,
-            489
+            482
           ]
         },
         {
           "teal": 470,
           "source": "contracts/Factory.algo.ts:91",
           "pc": [
+            483
+          ]
+        },
+        {
+          "teal": 471,
+          "source": "contracts/Factory.algo.ts:91",
+          "pc": [
+            484,
+            485
+          ]
+        },
+        {
+          "teal": 472,
+          "source": "contracts/Factory.algo.ts:91",
+          "pc": [
+            486,
+            487,
+            488,
+            489,
             490,
             491
           ]
         },
         {
-          "teal": 471,
+          "teal": 473,
           "source": "contracts/Factory.algo.ts:91",
           "pc": [
             492,
@@ -2296,7 +2308,7 @@
           ]
         },
         {
-          "teal": 475,
+          "teal": 477,
           "source": "contracts/Factory.algo.ts:92",
           "pc": [
             494,
@@ -2304,7 +2316,7 @@
           ]
         },
         {
-          "teal": 476,
+          "teal": 478,
           "source": "contracts/Factory.algo.ts:92",
           "pc": [
             496,
@@ -2312,151 +2324,151 @@
           ]
         },
         {
-          "teal": 477,
-          "source": "contracts/Factory.algo.ts:92",
+          "teal": 482,
+          "source": "contracts/Factory.algo.ts:93",
           "pc": [
             498,
             499
           ]
         },
         {
-          "teal": 478,
-          "source": "contracts/Factory.algo.ts:92",
+          "teal": 483,
+          "source": "contracts/Factory.algo.ts:93",
           "pc": [
             500,
             501
           ]
         },
         {
-          "teal": 479,
-          "source": "contracts/Factory.algo.ts:92",
+          "teal": 484,
+          "source": "contracts/Factory.algo.ts:93",
           "pc": [
-            502
+            502,
+            503
           ]
         },
         {
-          "teal": 480,
-          "source": "contracts/Factory.algo.ts:92",
+          "teal": 485,
+          "source": "contracts/Factory.algo.ts:93",
           "pc": [
-            503,
-            504
-          ]
-        },
-        {
-          "teal": 483,
-          "source": "contracts/Factory.algo.ts:90",
-          "pc": [
+            504,
             505
           ]
         },
         {
-          "teal": 484,
-          "source": "contracts/Factory.algo.ts:90",
+          "teal": 486,
+          "source": "contracts/Factory.algo.ts:93",
           "pc": [
-            506,
-            507
+            506
           ]
         },
         {
           "teal": 487,
-          "source": "contracts/Factory.algo.ts:90",
+          "source": "contracts/Factory.algo.ts:93",
           "pc": [
+            507,
             508
           ]
         },
         {
-          "teal": 488,
-          "source": "contracts/Factory.algo.ts:89",
+          "teal": 490,
+          "source": "contracts/Factory.algo.ts:91",
           "pc": [
             509
           ]
         },
         {
-          "teal": 493,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 491,
+          "source": "contracts/Factory.algo.ts:91",
           "pc": [
-            510
+            510,
+            511
           ]
         },
         {
-          "teal": 496,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 494,
+          "source": "contracts/Factory.algo.ts:91",
           "pc": [
-            511,
             512
           ]
         },
         {
-          "teal": 497,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 495,
+          "source": "contracts/Factory.algo.ts:90",
           "pc": [
             513
           ]
         },
         {
-          "teal": 498,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 500,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             514
           ]
         },
         {
-          "teal": 499,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 503,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            515
+            515,
+            516
           ]
         },
         {
-          "teal": 500,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 504,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            516,
             517
           ]
         },
         {
-          "teal": 501,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 505,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            518,
+            518
+          ]
+        },
+        {
+          "teal": 506,
+          "source": "contracts/Factory.algo.ts:97",
+          "pc": [
             519
           ]
         },
         {
-          "teal": 502,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 507,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            520
-          ]
-        },
-        {
-          "teal": 505,
-          "source": "contracts/Factory.algo.ts:96",
-          "errorMessage": "argument 0 (transferTxn) for swap must be a axfer transaction",
-          "pc": [
+            520,
             521
           ]
         },
         {
           "teal": 508,
-          "source": "contracts/Factory.algo.ts:96",
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             522,
-            523,
-            524
+            523
           ]
         },
         {
           "teal": 509,
-          "source": "contracts/Factory.algo.ts:96",
+          "source": "contracts/Factory.algo.ts:97",
+          "pc": [
+            524
+          ]
+        },
+        {
+          "teal": 512,
+          "source": "contracts/Factory.algo.ts:97",
+          "errorMessage": "argument 0 (transferTxn) for swap must be a axfer transaction",
           "pc": [
             525
           ]
         },
         {
-          "teal": 512,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 515,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             526,
             527,
@@ -2464,15 +2476,15 @@
           ]
         },
         {
-          "teal": 513,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 516,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             529
           ]
         },
         {
-          "teal": 516,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 519,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             530,
             531,
@@ -2480,15 +2492,15 @@
           ]
         },
         {
-          "teal": 517,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 520,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             533
           ]
         },
         {
-          "teal": 520,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 523,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             534,
             535,
@@ -2496,101 +2508,101 @@
           ]
         },
         {
-          "teal": 521,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 524,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             537
           ]
         },
         {
-          "teal": 522,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 527,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            538
-          ]
-        },
-        {
-          "teal": 523,
-          "source": "contracts/Factory.algo.ts:96",
-          "pc": [
-            539
-          ]
-        },
-        {
-          "teal": 524,
-          "source": "contracts/Factory.algo.ts:96",
-          "pc": [
+            538,
+            539,
             540
           ]
         },
         {
-          "teal": 525,
-          "source": "contracts/Factory.algo.ts:96",
+          "teal": 528,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             541
           ]
         },
         {
           "teal": 529,
-          "source": "contracts/Factory.algo.ts:96",
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            542,
-            543,
+            542
+          ]
+        },
+        {
+          "teal": 530,
+          "source": "contracts/Factory.algo.ts:97",
+          "pc": [
+            543
+          ]
+        },
+        {
+          "teal": 531,
+          "source": "contracts/Factory.algo.ts:97",
+          "pc": [
             544
           ]
         },
         {
-          "teal": 536,
+          "teal": 532,
           "source": "contracts/Factory.algo.ts:97",
           "pc": [
             545
           ]
         },
         {
-          "teal": 537,
+          "teal": 536,
           "source": "contracts/Factory.algo.ts:97",
           "pc": [
-            546
-          ]
-        },
-        {
-          "teal": 538,
-          "source": "contracts/Factory.algo.ts:97",
-          "pc": [
+            546,
             547,
             548
           ]
         },
         {
-          "teal": 539,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 543,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
-            549,
-            550,
-            551,
-            552,
-            553,
-            554
-          ]
-        },
-        {
-          "teal": 540,
-          "source": "contracts/Factory.algo.ts:97",
-          "pc": [
-            555,
-            556
+            549
           ]
         },
         {
           "teal": 544,
           "source": "contracts/Factory.algo.ts:98",
           "pc": [
+            550
+          ]
+        },
+        {
+          "teal": 545,
+          "source": "contracts/Factory.algo.ts:98",
+          "pc": [
+            551,
+            552
+          ]
+        },
+        {
+          "teal": 546,
+          "source": "contracts/Factory.algo.ts:98",
+          "pc": [
+            553,
+            554,
+            555,
+            556,
             557,
             558
           ]
         },
         {
-          "teal": 545,
+          "teal": 547,
           "source": "contracts/Factory.algo.ts:98",
           "pc": [
             559,
@@ -2598,7 +2610,7 @@
           ]
         },
         {
-          "teal": 549,
+          "teal": 551,
           "source": "contracts/Factory.algo.ts:99",
           "pc": [
             561,
@@ -2606,7 +2618,7 @@
           ]
         },
         {
-          "teal": 550,
+          "teal": 552,
           "source": "contracts/Factory.algo.ts:99",
           "pc": [
             563,
@@ -2614,199 +2626,199 @@
           ]
         },
         {
-          "teal": 551,
-          "source": "contracts/Factory.algo.ts:99",
+          "teal": 556,
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
             565,
             566
           ]
         },
         {
-          "teal": 552,
-          "source": "contracts/Factory.algo.ts:99",
-          "pc": [
-            567
-          ]
-        },
-        {
-          "teal": 553,
-          "source": "contracts/Factory.algo.ts:99",
-          "pc": [
-            568,
-            569
-          ]
-        },
-        {
-          "teal": 554,
-          "source": "contracts/Factory.algo.ts:99",
-          "pc": [
-            570,
-            571
-          ]
-        },
-        {
-          "teal": 555,
-          "source": "contracts/Factory.algo.ts:99",
-          "pc": [
-            572
-          ]
-        },
-        {
-          "teal": 556,
-          "source": "contracts/Factory.algo.ts:99",
-          "pc": [
-            573,
-            574
-          ]
-        },
-        {
           "teal": 557,
-          "source": "contracts/Factory.algo.ts:99",
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
-            575,
-            576
+            567,
+            568
           ]
         },
         {
           "teal": 558,
-          "source": "contracts/Factory.algo.ts:99",
+          "source": "contracts/Factory.algo.ts:100",
+          "pc": [
+            569,
+            570
+          ]
+        },
+        {
+          "teal": 559,
+          "source": "contracts/Factory.algo.ts:100",
+          "pc": [
+            571
+          ]
+        },
+        {
+          "teal": 560,
+          "source": "contracts/Factory.algo.ts:100",
+          "pc": [
+            572,
+            573
+          ]
+        },
+        {
+          "teal": 561,
+          "source": "contracts/Factory.algo.ts:100",
+          "pc": [
+            574,
+            575
+          ]
+        },
+        {
+          "teal": 562,
+          "source": "contracts/Factory.algo.ts:100",
+          "pc": [
+            576
+          ]
+        },
+        {
+          "teal": 563,
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
             577,
             578
           ]
         },
         {
-          "teal": 559,
-          "source": "contracts/Factory.algo.ts:99",
+          "teal": 564,
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
-            579
+            579,
+            580
           ]
         },
         {
-          "teal": 560,
-          "source": "contracts/Factory.algo.ts:99",
+          "teal": 565,
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
-            580,
-            581
-          ]
-        },
-        {
-          "teal": 563,
-          "source": "contracts/Factory.algo.ts:97",
-          "pc": [
+            581,
             582
           ]
         },
         {
-          "teal": 564,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 566,
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
-            583,
-            584
+            583
           ]
         },
         {
           "teal": 567,
-          "source": "contracts/Factory.algo.ts:97",
+          "source": "contracts/Factory.algo.ts:100",
           "pc": [
+            584,
             585
           ]
         },
         {
-          "teal": 568,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 570,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
-            586,
-            587
+            586
           ]
         },
         {
-          "teal": 569,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 571,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
+            587,
             588
           ]
         },
         {
-          "teal": 570,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 574,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
             589
           ]
         },
         {
-          "teal": 571,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 575,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
             590,
             591
           ]
         },
         {
-          "teal": 572,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 576,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
-            592,
-            593,
-            594
+            592
           ]
         },
         {
-          "teal": 573,
-          "source": "contracts/Factory.algo.ts:97",
+          "teal": 577,
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
+            593
+          ]
+        },
+        {
+          "teal": 578,
+          "source": "contracts/Factory.algo.ts:98",
+          "pc": [
+            594,
             595
           ]
         },
         {
-          "teal": 574,
-          "source": "contracts/Factory.algo.ts:96",
-          "pc": [
-            596
-          ]
-        },
-        {
           "teal": 579,
-          "source": "contracts/Factory.algo.ts:103",
+          "source": "contracts/Factory.algo.ts:98",
           "pc": [
+            596,
             597,
-            598,
-            599
+            598
           ]
         },
         {
           "teal": 580,
-          "source": "contracts/Factory.algo.ts:103",
+          "source": "contracts/Factory.algo.ts:98",
+          "pc": [
+            599
+          ]
+        },
+        {
+          "teal": 581,
+          "source": "contracts/Factory.algo.ts:97",
           "pc": [
             600
           ]
         },
         {
-          "teal": 581,
-          "source": "contracts/Factory.algo.ts:103",
+          "teal": 586,
+          "source": "contracts/Factory.algo.ts:104",
           "pc": [
-            601
+            601,
+            602,
+            603
           ]
         },
         {
-          "teal": 585,
-          "source": "contracts/Factory.algo.ts:103",
+          "teal": 587,
+          "source": "contracts/Factory.algo.ts:104",
           "pc": [
-            602,
-            603,
             604
           ]
         },
         {
-          "teal": 586,
-          "source": "contracts/Factory.algo.ts:103",
+          "teal": 588,
+          "source": "contracts/Factory.algo.ts:104",
           "pc": [
             605
           ]
         },
         {
-          "teal": 591,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 592,
+          "source": "contracts/Factory.algo.ts:104",
           "pc": [
             606,
             607,
@@ -2814,15 +2826,15 @@
           ]
         },
         {
-          "teal": 592,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 593,
+          "source": "contracts/Factory.algo.ts:104",
           "pc": [
             609
           ]
         },
         {
-          "teal": 595,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 598,
+          "source": "contracts/Factory.algo.ts:110",
           "pc": [
             610,
             611,
@@ -2830,178 +2842,178 @@
           ]
         },
         {
-          "teal": 596,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 599,
+          "source": "contracts/Factory.algo.ts:110",
           "pc": [
             613
           ]
         },
         {
-          "teal": 597,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 602,
+          "source": "contracts/Factory.algo.ts:110",
           "pc": [
-            614
+            614,
+            615,
+            616
           ]
         },
         {
-          "teal": 605,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 603,
+          "source": "contracts/Factory.algo.ts:110",
           "pc": [
-            615,
-            616,
             617
           ]
         },
         {
-          "teal": 609,
+          "teal": 604,
           "source": "contracts/Factory.algo.ts:110",
           "pc": [
-            618,
-            619,
-            620
+            618
           ]
         },
         {
-          "teal": 614,
-          "source": "contracts/Factory.algo.ts:112",
+          "teal": 612,
+          "source": "contracts/Factory.algo.ts:110",
           "pc": [
+            619,
+            620,
             621
           ]
         },
         {
-          "teal": 615,
-          "source": "contracts/Factory.algo.ts:112",
-          "pc": [
-            622
-          ]
-        },
-        {
           "teal": 616,
-          "source": "contracts/Factory.algo.ts:112",
+          "source": "contracts/Factory.algo.ts:111",
           "pc": [
-            623
-          ]
-        },
-        {
-          "teal": 617,
-          "source": "contracts/Factory.algo.ts:112",
-          "pc": [
+            622,
+            623,
             624
           ]
         },
         {
-          "teal": 618,
-          "source": "contracts/Factory.algo.ts:112",
+          "teal": 621,
+          "source": "contracts/Factory.algo.ts:113",
           "pc": [
-            625,
-            626,
-            627
+            625
+          ]
+        },
+        {
+          "teal": 622,
+          "source": "contracts/Factory.algo.ts:113",
+          "pc": [
+            626
           ]
         },
         {
           "teal": 623,
           "source": "contracts/Factory.algo.ts:113",
           "pc": [
-            628
+            627
           ]
         },
         {
           "teal": 624,
           "source": "contracts/Factory.algo.ts:113",
           "pc": [
-            629,
-            630
+            628
           ]
         },
         {
           "teal": 625,
           "source": "contracts/Factory.algo.ts:113",
           "pc": [
+            629,
+            630,
             631
           ]
         },
         {
-          "teal": 626,
-          "source": "contracts/Factory.algo.ts:112",
+          "teal": 630,
+          "source": "contracts/Factory.algo.ts:114",
           "pc": [
-            632,
+            632
+          ]
+        },
+        {
+          "teal": 631,
+          "source": "contracts/Factory.algo.ts:114",
+          "pc": [
             633,
             634
           ]
         },
         {
-          "teal": 631,
-          "source": "contracts/Factory.algo.ts:115",
+          "teal": 632,
+          "source": "contracts/Factory.algo.ts:114",
           "pc": [
             635
           ]
         },
         {
-          "teal": 632,
-          "source": "contracts/Factory.algo.ts:115",
+          "teal": 633,
+          "source": "contracts/Factory.algo.ts:113",
           "pc": [
             636,
-            637
-          ]
-        },
-        {
-          "teal": 633,
-          "source": "contracts/Factory.algo.ts:115",
-          "pc": [
+            637,
             638
           ]
         },
         {
-          "teal": 634,
-          "source": "contracts/Factory.algo.ts:115",
+          "teal": 638,
+          "source": "contracts/Factory.algo.ts:116",
           "pc": [
             639
           ]
         },
         {
-          "teal": 637,
-          "source": "contracts/Factory.algo.ts:109",
+          "teal": 639,
+          "source": "contracts/Factory.algo.ts:116",
           "pc": [
-            640
+            640,
+            641
           ]
         },
         {
-          "teal": 642,
-          "source": "contracts/Factory.algo.ts:119",
+          "teal": 640,
+          "source": "contracts/Factory.algo.ts:116",
           "pc": [
-            641,
-            642,
+            642
+          ]
+        },
+        {
+          "teal": 641,
+          "source": "contracts/Factory.algo.ts:116",
+          "pc": [
             643
           ]
         },
         {
-          "teal": 643,
-          "source": "contracts/Factory.algo.ts:119",
+          "teal": 644,
+          "source": "contracts/Factory.algo.ts:110",
           "pc": [
-            644,
+            644
+          ]
+        },
+        {
+          "teal": 649,
+          "source": "contracts/Factory.algo.ts:120",
+          "pc": [
             645,
-            646
-          ]
-        },
-        {
-          "teal": 646,
-          "source": "contracts/Factory.algo.ts:119",
-          "pc": [
-            647,
-            648,
-            649
-          ]
-        },
-        {
-          "teal": 647,
-          "source": "contracts/Factory.algo.ts:119",
-          "pc": [
-            650
+            646,
+            647
           ]
         },
         {
           "teal": 650,
-          "source": "contracts/Factory.algo.ts:119",
+          "source": "contracts/Factory.algo.ts:120",
+          "pc": [
+            648,
+            649,
+            650
+          ]
+        },
+        {
+          "teal": 653,
+          "source": "contracts/Factory.algo.ts:120",
           "pc": [
             651,
             652,
@@ -3009,362 +3021,362 @@
           ]
         },
         {
-          "teal": 651,
-          "source": "contracts/Factory.algo.ts:119",
+          "teal": 654,
+          "source": "contracts/Factory.algo.ts:120",
           "pc": [
             654
           ]
         },
         {
-          "teal": 652,
-          "source": "contracts/Factory.algo.ts:119",
+          "teal": 657,
+          "source": "contracts/Factory.algo.ts:120",
           "pc": [
-            655
+            655,
+            656,
+            657
           ]
         },
         {
-          "teal": 656,
-          "source": "contracts/Factory.algo.ts:119",
+          "teal": 658,
+          "source": "contracts/Factory.algo.ts:120",
           "pc": [
-            656,
-            657,
             658
           ]
         },
         {
-          "teal": 660,
+          "teal": 659,
           "source": "contracts/Factory.algo.ts:120",
           "pc": [
-            659,
-            660,
-            661
+            659
           ]
         },
         {
-          "teal": 664,
-          "source": "contracts/Factory.algo.ts:122",
+          "teal": 663,
+          "source": "contracts/Factory.algo.ts:120",
           "pc": [
+            660,
+            661,
             662
           ]
         },
         {
-          "teal": 665,
-          "source": "contracts/Factory.algo.ts:122",
+          "teal": 667,
+          "source": "contracts/Factory.algo.ts:121",
           "pc": [
             663,
-            664
+            664,
+            665
           ]
         },
         {
-          "teal": 666,
-          "source": "contracts/Factory.algo.ts:122",
+          "teal": 671,
+          "source": "contracts/Factory.algo.ts:123",
           "pc": [
-            665,
             666
           ]
         },
         {
-          "teal": 667,
-          "source": "contracts/Factory.algo.ts:122",
+          "teal": 672,
+          "source": "contracts/Factory.algo.ts:123",
           "pc": [
-            667
-          ]
-        },
-        {
-          "teal": 668,
-          "source": "contracts/Factory.algo.ts:119",
-          "pc": [
+            667,
             668
           ]
         },
         {
-          "teal": 676,
-          "source": "contracts/Factory.algo.ts:129",
+          "teal": 673,
+          "source": "contracts/Factory.algo.ts:123",
           "pc": [
             669,
-            670,
+            670
+          ]
+        },
+        {
+          "teal": 674,
+          "source": "contracts/Factory.algo.ts:123",
+          "pc": [
             671
           ]
         },
         {
-          "teal": 680,
-          "source": "contracts/Factory.algo.ts:130",
+          "teal": 675,
+          "source": "contracts/Factory.algo.ts:120",
           "pc": [
-            672,
-            673
-          ]
-        },
-        {
-          "teal": 681,
-          "source": "contracts/Factory.algo.ts:130",
-          "pc": [
-            674,
-            675
-          ]
-        },
-        {
-          "teal": 682,
-          "source": "contracts/Factory.algo.ts:130",
-          "pc": [
-            676
+            672
           ]
         },
         {
           "teal": 683,
           "source": "contracts/Factory.algo.ts:130",
           "pc": [
-            677
-          ]
-        },
-        {
-          "teal": 686,
-          "source": "contracts/Factory.algo.ts:130",
-          "errorMessage": "only the manager can call this method",
-          "pc": [
-            678
+            673,
+            674,
+            675
           ]
         },
         {
           "teal": 687,
-          "source": "contracts/Factory.algo.ts:129",
+          "source": "contracts/Factory.algo.ts:131",
           "pc": [
+            676,
+            677
+          ]
+        },
+        {
+          "teal": 688,
+          "source": "contracts/Factory.algo.ts:131",
+          "pc": [
+            678,
             679
           ]
         },
         {
-          "teal": 691,
-          "source": "contracts/Factory.algo.ts:133",
+          "teal": 689,
+          "source": "contracts/Factory.algo.ts:131",
           "pc": [
-            680,
-            681,
+            680
+          ]
+        },
+        {
+          "teal": 690,
+          "source": "contracts/Factory.algo.ts:131",
+          "pc": [
+            681
+          ]
+        },
+        {
+          "teal": 693,
+          "source": "contracts/Factory.algo.ts:131",
+          "errorMessage": "only the manager can call this method",
+          "pc": [
             682
           ]
         },
         {
           "teal": 694,
-          "source": "contracts/Factory.algo.ts:133",
+          "source": "contracts/Factory.algo.ts:130",
           "pc": [
             683
           ]
         },
         {
-          "teal": 695,
-          "source": "contracts/Factory.algo.ts:133",
+          "teal": 698,
+          "source": "contracts/Factory.algo.ts:134",
           "pc": [
-            684
+            684,
+            685,
+            686
           ]
         },
         {
-          "teal": 699,
+          "teal": 701,
           "source": "contracts/Factory.algo.ts:134",
           "pc": [
-            685
-          ]
-        },
-        {
-          "teal": 700,
-          "source": "contracts/Factory.algo.ts:134",
-          "pc": [
-            686,
             687
           ]
         },
         {
-          "teal": 704,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 702,
+          "source": "contracts/Factory.algo.ts:134",
           "pc": [
             688
           ]
         },
         {
-          "teal": 705,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 706,
+          "source": "contracts/Factory.algo.ts:135",
           "pc": [
-            689,
-            690
+            689
           ]
         },
         {
-          "teal": 710,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 707,
+          "source": "contracts/Factory.algo.ts:135",
           "pc": [
-            691,
-            692
+            690,
+            691
           ]
         },
         {
           "teal": 711,
-          "source": "contracts/Factory.algo.ts:136",
+          "source": "contracts/Factory.algo.ts:137",
+          "pc": [
+            692
+          ]
+        },
+        {
+          "teal": 712,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
             693,
             694
           ]
         },
         {
-          "teal": 712,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 717,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            695
-          ]
-        },
-        {
-          "teal": 713,
-          "source": "contracts/Factory.algo.ts:136",
-          "pc": [
+            695,
             696
           ]
         },
         {
-          "teal": 714,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 718,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            697
-          ]
-        },
-        {
-          "teal": 715,
-          "source": "contracts/Factory.algo.ts:136",
-          "pc": [
+            697,
             698
           ]
         },
         {
-          "teal": 716,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 719,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            699,
-            700,
-            701
+            699
           ]
         },
         {
           "teal": 720,
           "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            702,
-            703
+            700
           ]
         },
         {
           "teal": 721,
           "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            704,
-            705
+            701
           ]
         },
         {
           "teal": 722,
           "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            706,
-            707
+            702
           ]
         },
         {
           "teal": 723,
           "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            708
+            703,
+            704,
+            705
           ]
         },
         {
-          "teal": 724,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 727,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
-            709,
-            710
+            706,
+            707
           ]
         },
         {
-          "teal": 725,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 728,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
+            708,
+            709
+          ]
+        },
+        {
+          "teal": 729,
+          "source": "contracts/Factory.algo.ts:138",
+          "pc": [
+            710,
             711
           ]
         },
         {
-          "teal": 726,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 730,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
             712
           ]
         },
         {
-          "teal": 727,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 731,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
-            713
+            713,
+            714
           ]
         },
         {
-          "teal": 728,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 732,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
-            714,
             715
           ]
         },
         {
-          "teal": 729,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 733,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
             716
           ]
         },
         {
-          "teal": 730,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 734,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
             717
           ]
         },
         {
-          "teal": 731,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 735,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
-            718
-          ]
-        },
-        {
-          "teal": 732,
-          "source": "contracts/Factory.algo.ts:137",
-          "pc": [
+            718,
             719
           ]
         },
         {
-          "teal": 733,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 736,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
             720
           ]
         },
         {
-          "teal": 734,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 737,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
             721
           ]
         },
         {
-          "teal": 735,
-          "source": "contracts/Factory.algo.ts:137",
+          "teal": 738,
+          "source": "contracts/Factory.algo.ts:138",
           "pc": [
-            722,
-            723
+            722
           ]
         },
         {
           "teal": 739,
           "source": "contracts/Factory.algo.ts:138",
           "pc": [
-            724,
-            725
+            723
           ]
         },
         {
           "teal": 740,
+          "source": "contracts/Factory.algo.ts:138",
+          "pc": [
+            724
+          ]
+        },
+        {
+          "teal": 741,
+          "source": "contracts/Factory.algo.ts:138",
+          "pc": [
+            725
+          ]
+        },
+        {
+          "teal": 742,
           "source": "contracts/Factory.algo.ts:138",
           "pc": [
             726,
@@ -3372,554 +3384,566 @@
           ]
         },
         {
-          "teal": 741,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 746,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
             728,
             729
           ]
         },
         {
-          "teal": 742,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 747,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            730
+            730,
+            731
           ]
         },
         {
-          "teal": 743,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 748,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            731,
-            732
-          ]
-        },
-        {
-          "teal": 744,
-          "source": "contracts/Factory.algo.ts:138",
-          "pc": [
+            732,
             733
           ]
         },
         {
-          "teal": 745,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 749,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
             734
           ]
         },
         {
-          "teal": 746,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 750,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            735
+            735,
+            736
           ]
         },
         {
-          "teal": 747,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 751,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            736,
             737
           ]
         },
         {
-          "teal": 748,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 752,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
             738
           ]
         },
         {
-          "teal": 749,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 753,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
             739
           ]
         },
         {
-          "teal": 750,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 754,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            740
-          ]
-        },
-        {
-          "teal": 751,
-          "source": "contracts/Factory.algo.ts:138",
-          "pc": [
+            740,
             741
           ]
         },
         {
-          "teal": 752,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 755,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
             742
           ]
         },
         {
-          "teal": 753,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 756,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
             743
           ]
         },
         {
-          "teal": 754,
-          "source": "contracts/Factory.algo.ts:138",
+          "teal": 757,
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            744,
+            744
+          ]
+        },
+        {
+          "teal": 758,
+          "source": "contracts/Factory.algo.ts:139",
+          "pc": [
             745
           ]
         },
         {
           "teal": 759,
-          "source": "contracts/Factory.algo.ts:136",
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            746,
-            747
+            746
           ]
         },
         {
           "teal": 760,
-          "source": "contracts/Factory.algo.ts:136",
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
-            748
+            747
           ]
         },
         {
           "teal": 761,
-          "source": "contracts/Factory.algo.ts:136",
+          "source": "contracts/Factory.algo.ts:139",
           "pc": [
+            748,
             749
           ]
         },
         {
-          "teal": 762,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 766,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
             750,
             751
           ]
         },
         {
-          "teal": 763,
-          "source": "contracts/Factory.algo.ts:136",
+          "teal": 767,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            752,
-            753,
-            754
+            752
           ]
         },
         {
           "teal": 768,
-          "source": "contracts/Factory.algo.ts:141",
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            755,
-            756
+            753
           ]
         },
         {
           "teal": 769,
-          "source": "contracts/Factory.algo.ts:141",
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            757
+            754,
+            755
           ]
         },
         {
-          "teal": 772,
-          "source": "contracts/Factory.algo.ts:133",
+          "teal": 770,
+          "source": "contracts/Factory.algo.ts:137",
           "pc": [
-            758,
-            759
+            756,
+            757,
+            758
           ]
         },
         {
           "teal": 775,
-          "source": "contracts/Factory.algo.ts:133",
+          "source": "contracts/Factory.algo.ts:142",
           "pc": [
-            760,
-            761
+            759,
+            760
           ]
         },
         {
           "teal": 776,
-          "source": "contracts/Factory.algo.ts:133",
+          "source": "contracts/Factory.algo.ts:142",
           "pc": [
-            762
+            761
           ]
         },
         {
-          "teal": 781,
-          "source": "contracts/Factory.algo.ts:144",
+          "teal": 779,
+          "source": "contracts/Factory.algo.ts:134",
           "pc": [
+            762,
             763
           ]
         },
         {
-          "teal": 784,
-          "source": "contracts/Factory.algo.ts:145",
+          "teal": 782,
+          "source": "contracts/Factory.algo.ts:134",
           "pc": [
             764,
-            765,
-            766
+            765
           ]
         },
         {
-          "teal": 785,
-          "source": "contracts/Factory.algo.ts:145",
+          "teal": 783,
+          "source": "contracts/Factory.algo.ts:134",
           "pc": [
-            767,
-            768,
-            769
+            766
           ]
         },
         {
           "teal": 788,
           "source": "contracts/Factory.algo.ts:145",
           "pc": [
-            770,
-            771,
-            772
+            767
           ]
         },
         {
-          "teal": 789,
-          "source": "contracts/Factory.algo.ts:145",
+          "teal": 791,
+          "source": "contracts/Factory.algo.ts:146",
           "pc": [
-            773,
-            774,
-            775
+            768,
+            769,
+            770
           ]
         },
         {
           "teal": 792,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:146",
           "pc": [
-            776,
-            777,
-            778
-          ]
-        },
-        {
-          "teal": 793,
-          "source": "contracts/Factory.algo.ts:144",
-          "pc": [
-            779
-          ]
-        },
-        {
-          "teal": 794,
-          "source": "contracts/Factory.algo.ts:144",
-          "pc": [
-            780
+            771,
+            772,
+            773
           ]
         },
         {
           "teal": 795,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:146",
           "pc": [
-            781
+            774,
+            775,
+            776
           ]
         },
         {
           "teal": 796,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:146",
           "pc": [
+            777,
+            778,
+            779
+          ]
+        },
+        {
+          "teal": 799,
+          "source": "contracts/Factory.algo.ts:145",
+          "pc": [
+            780,
+            781,
             782
           ]
         },
         {
           "teal": 800,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:145",
           "pc": [
-            783,
-            784,
+            783
+          ]
+        },
+        {
+          "teal": 801,
+          "source": "contracts/Factory.algo.ts:145",
+          "pc": [
+            784
+          ]
+        },
+        {
+          "teal": 802,
+          "source": "contracts/Factory.algo.ts:145",
+          "pc": [
             785
           ]
         },
         {
           "teal": 803,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:145",
           "pc": [
             786
           ]
         },
         {
           "teal": 807,
-          "source": "contracts/Factory.algo.ts:146",
+          "source": "contracts/Factory.algo.ts:145",
           "pc": [
             787,
-            788
-          ]
-        },
-        {
-          "teal": 808,
-          "source": "contracts/Factory.algo.ts:146",
-          "pc": [
-            789,
-            790
-          ]
-        },
-        {
-          "teal": 809,
-          "source": "contracts/Factory.algo.ts:146",
-          "pc": [
-            791,
-            792,
-            793
+            788,
+            789
           ]
         },
         {
           "teal": 810,
-          "source": "contracts/Factory.algo.ts:146",
+          "source": "contracts/Factory.algo.ts:145",
           "pc": [
-            794,
-            795
+            790
           ]
         },
         {
           "teal": 814,
           "source": "contracts/Factory.algo.ts:147",
           "pc": [
-            796
+            791,
+            792
           ]
         },
         {
           "teal": 815,
           "source": "contracts/Factory.algo.ts:147",
           "pc": [
-            797,
-            798
+            793,
+            794
           ]
         },
         {
           "teal": 816,
           "source": "contracts/Factory.algo.ts:147",
           "pc": [
-            799
+            795,
+            796,
+            797
           ]
         },
         {
           "teal": 817,
           "source": "contracts/Factory.algo.ts:147",
           "pc": [
+            798,
+            799
+          ]
+        },
+        {
+          "teal": 821,
+          "source": "contracts/Factory.algo.ts:148",
+          "pc": [
             800
           ]
         },
         {
-          "teal": 820,
-          "source": "contracts/Factory.algo.ts:147",
-          "errorMessage": "box value does not exist: this.pools(hash).value",
+          "teal": 822,
+          "source": "contracts/Factory.algo.ts:148",
           "pc": [
-            801
+            801,
+            802
           ]
         },
         {
           "teal": 823,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:148",
           "pc": [
-            802,
             803
           ]
         },
         {
           "teal": 824,
-          "source": "contracts/Factory.algo.ts:144",
+          "source": "contracts/Factory.algo.ts:148",
           "pc": [
             804
           ]
         },
         {
           "teal": 827,
-          "source": "contracts/Factory.algo.ts:10",
+          "source": "contracts/Factory.algo.ts:148",
+          "errorMessage": "box value does not exist: this.pools(hash).value",
           "pc": [
-            805,
-            806
-          ]
-        },
-        {
-          "teal": 828,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            807,
-            808,
-            809
-          ]
-        },
-        {
-          "teal": 829,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            810,
-            811
+            805
           ]
         },
         {
           "teal": 830,
-          "source": "contracts/Factory.algo.ts:10",
+          "source": "contracts/Factory.algo.ts:145",
           "pc": [
-            812,
-            813,
-            814
+            806,
+            807
           ]
         },
         {
           "teal": 831,
-          "source": "contracts/Factory.algo.ts:10",
+          "source": "contracts/Factory.algo.ts:145",
           "pc": [
-            815,
-            816,
-            817,
-            818
+            808
           ]
         },
         {
           "teal": 834,
           "source": "contracts/Factory.algo.ts:10",
-          "errorMessage": "this contract does not implement the given ABI method for create NoOp",
           "pc": [
-            819
+            809,
+            810
+          ]
+        },
+        {
+          "teal": 835,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            811,
+            812,
+            813
+          ]
+        },
+        {
+          "teal": 836,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            814,
+            815
           ]
         },
         {
           "teal": 837,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            820,
-            821,
-            822,
-            823,
-            824,
-            825
+            816,
+            817,
+            818
           ]
         },
         {
           "teal": 838,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            826,
-            827,
-            828,
-            829,
-            830,
-            831
-          ]
-        },
-        {
-          "teal": 839,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            832,
-            833,
-            834,
-            835,
-            836,
-            837
-          ]
-        },
-        {
-          "teal": 840,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            838,
-            839,
-            840,
-            841,
-            842,
-            843
+            819,
+            820,
+            821,
+            822
           ]
         },
         {
           "teal": 841,
           "source": "contracts/Factory.algo.ts:10",
+          "errorMessage": "this contract does not implement the given ABI method for create NoOp",
           "pc": [
-            844,
-            845,
-            846,
-            847,
-            848,
-            849
-          ]
-        },
-        {
-          "teal": 842,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            850,
-            851,
-            852,
-            853,
-            854,
-            855
-          ]
-        },
-        {
-          "teal": 843,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            856,
-            857,
-            858,
-            859,
-            860,
-            861
+            823
           ]
         },
         {
           "teal": 844,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            862,
-            863,
-            864,
-            865,
-            866,
-            867
+            824,
+            825,
+            826,
+            827,
+            828,
+            829
           ]
         },
         {
           "teal": 845,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            868,
-            869,
-            870,
-            871,
-            872,
-            873
+            830,
+            831,
+            832,
+            833,
+            834,
+            835
           ]
         },
         {
           "teal": 846,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            874,
-            875,
-            876,
-            877,
-            878,
-            879
+            836,
+            837,
+            838,
+            839,
+            840,
+            841
           ]
         },
         {
           "teal": 847,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            880,
-            881,
-            882
+            842,
+            843,
+            844,
+            845,
+            846,
+            847
           ]
         },
         {
           "teal": 848,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            883,
+            848,
+            849,
+            850,
+            851,
+            852,
+            853
+          ]
+        },
+        {
+          "teal": 849,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            854,
+            855,
+            856,
+            857,
+            858,
+            859
+          ]
+        },
+        {
+          "teal": 850,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            860,
+            861,
+            862,
+            863,
+            864,
+            865
+          ]
+        },
+        {
+          "teal": 851,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            866,
+            867,
+            868,
+            869,
+            870,
+            871
+          ]
+        },
+        {
+          "teal": 852,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            872,
+            873,
+            874,
+            875,
+            876,
+            877
+          ]
+        },
+        {
+          "teal": 853,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            878,
+            879,
+            880,
+            881,
+            882,
+            883
+          ]
+        },
+        {
+          "teal": 854,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
             884,
             885,
-            886,
+            886
+          ]
+        },
+        {
+          "teal": 855,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
             887,
             888,
             889,
@@ -3937,136 +3961,118 @@
             901,
             902,
             903,
-            904
-          ]
-        },
-        {
-          "teal": 851,
-          "source": "contracts/Factory.algo.ts:10",
-          "errorMessage": "this contract does not implement the given ABI method for call NoOp",
-          "pc": [
-            905
-          ]
-        },
-        {
-          "teal": 854,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
+            904,
+            905,
             906,
             907,
             908
           ]
         },
         {
-          "teal": 855,
+          "teal": 858,
           "source": "contracts/Factory.algo.ts:10",
+          "errorMessage": "this contract does not implement the given ABI method for call NoOp",
           "pc": [
-            909,
-            910
+            909
           ]
         },
         {
-          "teal": 856,
+          "teal": 861,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
+            910,
             911,
             912
           ]
         },
         {
-          "teal": 857,
+          "teal": 862,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            913
-          ]
-        },
-        {
-          "teal": 858,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            914,
-            915
-          ]
-        },
-        {
-          "teal": 859,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            916,
-            917
-          ]
-        },
-        {
-          "teal": 860,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            918
+            913,
+            914
           ]
         },
         {
           "teal": 863,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            919,
-            920,
-            921
+            915,
+            916
           ]
         },
         {
           "teal": 864,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            922,
-            923
+            917
           ]
         },
         {
           "teal": 865,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            924,
-            925
+            918,
+            919
           ]
         },
         {
           "teal": 866,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            926
+            920,
+            921
           ]
         },
         {
           "teal": 867,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            927,
-            928
-          ]
-        },
-        {
-          "teal": 868,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            929,
-            930
-          ]
-        },
-        {
-          "teal": 869,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            931
+            922
           ]
         },
         {
           "teal": 870,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            932
+            923,
+            924,
+            925
           ]
         },
         {
           "teal": 871,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            926,
+            927
+          ]
+        },
+        {
+          "teal": 872,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            928,
+            929
+          ]
+        },
+        {
+          "teal": 873,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            930
+          ]
+        },
+        {
+          "teal": 874,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            931,
+            932
+          ]
+        },
+        {
+          "teal": 875,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
             933,
@@ -4074,67 +4080,67 @@
           ]
         },
         {
-          "teal": 872,
+          "teal": 876,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
             935
           ]
         },
         {
-          "teal": 873,
+          "teal": 877,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
             936
           ]
         },
         {
-          "teal": 874,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            937
-          ]
-        },
-        {
-          "teal": 875,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            938,
-            939,
-            940
-          ]
-        },
-        {
-          "teal": 876,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            941,
-            942
-          ]
-        },
-        {
-          "teal": 877,
-          "source": "contracts/Factory.algo.ts:10",
-          "pc": [
-            943,
-            944
-          ]
-        },
-        {
           "teal": 878,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            945
+            937,
+            938
           ]
         },
         {
           "teal": 879,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            946
+            939
           ]
         },
         {
           "teal": 880,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            940
+          ]
+        },
+        {
+          "teal": 881,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            941
+          ]
+        },
+        {
+          "teal": 882,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            942,
+            943,
+            944
+          ]
+        },
+        {
+          "teal": 883,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            945,
+            946
+          ]
+        },
+        {
+          "teal": 884,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
             947,
@@ -4142,15 +4148,21 @@
           ]
         },
         {
-          "teal": 881,
+          "teal": 885,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            949,
+            949
+          ]
+        },
+        {
+          "teal": 886,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
             950
           ]
         },
         {
-          "teal": 882,
+          "teal": 887,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
             951,
@@ -4158,7 +4170,7 @@
           ]
         },
         {
-          "teal": 883,
+          "teal": 888,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
             953,
@@ -4166,10 +4178,26 @@
           ]
         },
         {
-          "teal": 884,
+          "teal": 889,
           "source": "contracts/Factory.algo.ts:10",
           "pc": [
-            955
+            955,
+            956
+          ]
+        },
+        {
+          "teal": 890,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            957,
+            958
+          ]
+        },
+        {
+          "teal": 891,
+          "source": "contracts/Factory.algo.ts:10",
+          "pc": [
+            959
           ]
         }
       ],
@@ -4181,11 +4209,11 @@
     }
   },
   "source": {
-    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxIDggMCA2IDIgNApieXRlY2Jsb2NrIDB4IDB4NzA2ZjZmNmM1ZjYxNzA3MDcyNmY3NjYxNmM1ZjcwNzI2ZjY3NzI2MTZkIDB4NzA2ZjZmNmM3MzVmIDB4MTUxZjdjNzUgMHg2ZDYxNmU2MTY3NjU3MiAweGI4NDQ3YjM2CgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjEwNi4yCi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9hbGdvcmFuZGZvdW5kYXRpb24vVEVBTFNjcmlwdAoKLy8gVGhpcyBjb250cmFjdCBpcyBjb21wbGlhbnQgd2l0aCBhbmQvb3IgaW1wbGVtZW50cyB0aGUgZm9sbG93aW5nIEFSQ3M6IFsgQVJDNCBdCgovLyBUaGUgZm9sbG93aW5nIHRlbiBsaW5lcyBvZiBURUFMIGhhbmRsZSBpbml0aWFsIHByb2dyYW0gZmxvdwovLyBUaGlzIHBhdHRlcm4gaXMgdXNlZCB0byBtYWtlIGl0IGVhc3kgZm9yIGFueW9uZSB0byBwYXJzZSB0aGUgc3RhcnQgb2YgdGhlIHByb2dyYW0gYW5kIGRldGVybWluZSBpZiBhIHNwZWNpZmljIGFjdGlvbiBpcyBhbGxvd2VkCi8vIEhlcmUsIGFjdGlvbiByZWZlcnMgdG8gdGhlIE9uQ29tcGxldGUgaW4gY29tYmluYXRpb24gd2l0aCB3aGV0aGVyIHRoZSBhcHAgaXMgYmVpbmcgY3JlYXRlZCBvciBjYWxsZWQKLy8gRXZlcnkgcG9zc2libGUgYWN0aW9uIGZvciB0aGlzIGNvbnRyYWN0IGlzIHJlcHJlc2VudGVkIGluIHRoZSBzd2l0Y2ggc3RhdGVtZW50Ci8vIElmIHRoZSBhY3Rpb24gaXMgbm90IGltcGxlbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIipOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnRjIDMgLy8gNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKmNyZWF0ZV9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRAoKKk5PVF9JTVBMRU1FTlRFRDoKCS8vIFRoZSByZXF1ZXN0ZWQgYWN0aW9uIGlzIG5vdCBpbXBsZW1lbnRlZCBpbiB0aGlzIGNvbnRyYWN0LiBBcmUgeW91IHVzaW5nIHRoZSBjb3JyZWN0IE9uQ29tcGxldGU/IERpZCB5b3Ugc2V0IHlvdXIgYXBwIElEPwoJZXJyCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJLy8gZXhlY3V0ZSBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oKTogdm9pZAovLwovLyBjcmVhdGVBcHBsaWNhdGlvbiBtZXRob2QgY2FsbGVkIGF0IGNyZWF0aW9uCmNyZWF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoyMgoJLy8gdGhpcy5tYW5hZ2VyLnZhbHVlID0gdGhpcy5hcHAuY3JlYXRvcgoJYnl0ZWMgNCAvLyAgIm1hbmFnZXIiCgl0eG5hIEFwcGxpY2F0aW9ucyAwCglhcHBfcGFyYW1zX2dldCBBcHBDcmVhdG9yCglwb3AKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCi8vIGNyZWF0ZVBvb2woKXZvaWQKKmFiaV9yb3V0ZV9jcmVhdGVQb29sOgoJLy8gZXhlY3V0ZSBjcmVhdGVQb29sKCl2b2lkCgljYWxsc3ViIGNyZWF0ZVBvb2wKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGNyZWF0ZVBvb2woKTogdm9pZAovLwovLyBEZXBsb3kgdGhlIHBvb2wgY29udHJhY3QsIGNvbXBpbGVkIHRlYWwgb2YgdGhlIGNvbnRyYWN0Ci8vIG11c3QgYmUgbG9hZGVkIGluIHBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbQpjcmVhdGVQb29sOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMAoJLy8gc2VuZEFwcENhbGwoewoJLy8gICAgICAgb25Db21wbGV0aW9uOiBPbkNvbXBsZXRpb24uTm9PcCwKCS8vICAgICAgIGFwcHJvdmFsUHJvZ3JhbTogdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0udmFsdWUsCgkvLyAgICAgICBjbGVhclN0YXRlUHJvZ3JhbTogQmFsYW5jZWRQb29sVjIuY2xlYXJQcm9ncmFtKCksCgkvLyAgICAgICBnbG9iYWxOdW1VaW50OiBCYWxhbmNlZFBvb2xWMi5zY2hlbWEuZ2xvYmFsLm51bVVpbnQsCgkvLyAgICAgICBnbG9iYWxOdW1CeXRlU2xpY2U6IEJhbGFuY2VkUG9vbFYyLnNjaGVtYS5nbG9iYWwubnVtQnl0ZVNsaWNlLAoJLy8gICAgICAgZXh0cmFQcm9ncmFtUGFnZXM6IDMsCgkvLyAgICAgICBhcHBsaWNhdGlvbkFyZ3M6IFttZXRob2QoJ2NyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkJyldLAoJLy8gICAgICAgZmVlOiAxMDBfMDAwLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnRjIDMgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjMxCgkvLyBvbkNvbXBsZXRpb246IE9uQ29tcGxldGlvbi5Ob09wCglpbnRjIDIgLy8gIE5vT3AKCWl0eG5fZmllbGQgT25Db21wbGV0aW9uCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMgoJLy8gYXBwcm92YWxQcm9ncmFtOiB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS52YWx1ZQoJYnl0ZWMgMSAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWJveF9nZXQKCgkvLyBib3ggdmFsdWUgZG9lcyBub3QgZXhpc3Q6IHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLnZhbHVlCglhc3NlcnQKCWl0eG5fZmllbGQgQXBwcm92YWxQcm9ncmFtCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMwoJLy8gY2xlYXJTdGF0ZVByb2dyYW06IEJhbGFuY2VkUG9vbFYyLmNsZWFyUHJvZ3JhbSgpCglwdXNoYnl0ZXMgMHgwYQoJaXR4bl9maWVsZCBDbGVhclN0YXRlUHJvZ3JhbQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzQKCS8vIGdsb2JhbE51bVVpbnQ6IEJhbGFuY2VkUG9vbFYyLnNjaGVtYS5nbG9iYWwubnVtVWludAoJaW50YyA0IC8vIDIKCWl0eG5fZmllbGQgR2xvYmFsTnVtVWludAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzUKCS8vIGdsb2JhbE51bUJ5dGVTbGljZTogQmFsYW5jZWRQb29sVjIuc2NoZW1hLmdsb2JhbC5udW1CeXRlU2xpY2UKCWludGMgNCAvLyAyCglpdHhuX2ZpZWxkIEdsb2JhbE51bUJ5dGVTbGljZQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzYKCS8vIGV4dHJhUHJvZ3JhbVBhZ2VzOiAzCglwdXNoaW50IDMKCWl0eG5fZmllbGQgRXh0cmFQcm9ncmFtUGFnZXMKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjM3CgkvLyBhcHBsaWNhdGlvbkFyZ3M6IFttZXRob2QoJ2NyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkJyldCglieXRlYyA1IC8vICBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjM4CgkvLyBmZWU6IDEwMF8wMDAKCXB1c2hpbnQgMTAwXzAwMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglyZXRzdWIKCi8vIGluaXRQb29sKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSl1aW50NjQKKmFiaV9yb3V0ZV9pbml0UG9vbDoKCS8vIFRoZSBBQkkgcmV0dXJuIHByZWZpeAoJYnl0ZWMgMyAvLyAweDE1MWY3Yzc1CgoJLy8gd2VpZ2h0czogdWludDY0W10KCXR4bmEgQXBwbGljYXRpb25BcmdzIDMKCWV4dHJhY3QgMiAwCgoJLy8gYXNzZXRJZHM6IHVpbnQ2NFtdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglleHRyYWN0IDIgMAoKCS8vIHBvb2xJRDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBpbml0UG9vbCh1aW50NjQsdWludDY0W10sdWludDY0W10pdWludDY0CgljYWxsc3ViIGluaXRQb29sCglpdG9iCgljb25jYXQKCWxvZwoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gaW5pdFBvb2wocG9vbElEOiBBcHBJRCwgYXNzZXRJZHM6IEFzc2V0SURbXSwgd2VpZ2h0czogdWludDY0W10pOiBBc3NldElECi8vCi8vIEluaXRpYWxpemUgdGhlIHBvb2wgd2l0aCB0aGUgZ2l2ZW4gYXNzZXRzICYgd2VpZ2h0cwovLyBAcGFyYW0ge0FwcElEfSBwb29sSUQgLSBQb29sIEFwcCBJRAovLyBAcGFyYW0ge0Fzc2V0SURbXX0gYXNzZXRJZHMKLy8gQHBhcmFtIHt1aW50NjRbXX0gd2VpZ2h0cwppbml0UG9vbDoKCXByb3RvIDMgMQoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlYyAwIC8vIDB4CgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo1MAoJLy8gYXNzZXJ0KGFzc2V0SWRzLmxlbmd0aCA+PSAyLCAnQXQgbGVhc3QgMiB0b2tlbnMgbmVlZGVkJykKCWZyYW1lX2RpZyAtMiAvLyBhc3NldElkczogQXNzZXRJRFtdCglsZW4KCWludGMgMSAvLyA4CgkvCglpbnRjIDQgLy8gMgoJPj0KCgkvLyBBdCBsZWFzdCAyIHRva2VucyBuZWVkZWQKCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTEKCS8vIGFzc2VydChhc3NldElkcy5sZW5ndGggPT09IHdlaWdodHMubGVuZ3RoLCAnV2VpZ2h0cyBhbmQgQXNzZXRzIGxlbmd0aCBtdXN0IGJlIHRoZSBzYW1lJykKCWZyYW1lX2RpZyAtMiAvLyBhc3NldElkczogQXNzZXRJRFtdCglsZW4KCWludGMgMSAvLyA4CgkvCglmcmFtZV9kaWcgLTMgLy8gd2VpZ2h0czogdWludDY0W10KCWxlbgoJaW50YyAxIC8vIDgKCS8KCT09CgoJLy8gV2VpZ2h0cyBhbmQgQXNzZXRzIGxlbmd0aCBtdXN0IGJlIHRoZSBzYW1lCglhc3NlcnQKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjUzCgkvLyBoYXNoID0gdGhpcy5nZXRQb29sSGFzaChhc3NldElkcywgd2VpZ2h0cykKCWZyYW1lX2RpZyAtMyAvLyB3ZWlnaHRzOiB1aW50NjRbXQoJZnJhbWVfZGlnIC0yIC8vIGFzc2V0SWRzOiBBc3NldElEW10KCWNhbGxzdWIgZ2V0UG9vbEhhc2gKCWZyYW1lX2J1cnkgMCAvLyBoYXNoOiBieXRlWzMyXQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTUKCS8vIGFzc2VydCghdGhpcy5wb29scyhoYXNoKS5leGlzdHMsICdUaGlzIHBvb2wgYWxyZWFkeSBleGlzdHMnKQoJYnl0ZWMgMiAvLyAgInBvb2xzXyIKCWZyYW1lX2RpZyAwIC8vIGhhc2g6IGJ5dGVbMzJdCgljb25jYXQKCWJveF9sZW4KCXN3YXAKCXBvcAoJIQoKCS8vIFRoaXMgcG9vbCBhbHJlYWR5IGV4aXN0cwoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo1NwoJLy8gdGhpcy5wb29scyhoYXNoKS52YWx1ZSA9IHsgaWQ6IHBvb2xJRCwgYXNzZXRzOiBhc3NldElkcywgd2VpZ2h0czogd2VpZ2h0cyB9CglieXRlYyAyIC8vICAicG9vbHNfIgoJZnJhbWVfZGlnIDAgLy8gaGFzaDogYnl0ZVszMl0KCWNvbmNhdAoJZHVwCglib3hfZGVsCglwb3AKCWJ5dGVjIDAgLy8gIGluaXRpYWwgaGVhZAoJYnl0ZWMgMCAvLyAgaW5pdGlhbCB0YWlsCglwdXNoYnl0ZXMgMHgwMDBjIC8vIGluaXRpYWwgaGVhZCBvZmZzZXQKCWZyYW1lX2RpZyAtMSAvLyBwb29sSUQ6IEFwcElECglpdG9iCgljYWxsc3ViICpwcm9jZXNzX3N0YXRpY190dXBsZV9lbGVtZW50CglmcmFtZV9kaWcgLTIgLy8gYXNzZXRJZHM6IEFzc2V0SURbXQoJZHVwCglsZW4KCWludGMgMSAvLyA4CgkvCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0CgljYWxsc3ViICpwcm9jZXNzX2R5bmFtaWNfdHVwbGVfZWxlbWVudAoJZnJhbWVfZGlnIC0zIC8vIHdlaWdodHM6IHVpbnQ2NFtdCglkdXAKCWxlbgoJaW50YyAxIC8vIDgKCS8KCWl0b2IKCWV4dHJhY3QgNiAyCglzd2FwCgljb25jYXQKCWNhbGxzdWIgKnByb2Nlc3NfZHluYW1pY190dXBsZV9lbGVtZW50Cglwb3AgLy8gcG9wIGhlYWQgb2Zmc2V0Cgljb25jYXQgLy8gY29uY2F0IGhlYWQgYW5kIHRhaWwKCWJveF9wdXQKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjU5CgkvLyByZXR1cm4gc2VuZE1ldGhvZENhbGw8dHlwZW9mIEJhbGFuY2VkUG9vbFYyLnByb3RvdHlwZS5ib290c3RyYXAsIEFzc2V0SUQ+KHsKCS8vICAgICAgIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRCwKCS8vICAgICAgIG1ldGhvZEFyZ3M6IFthc3NldElkcywgd2VpZ2h0c10sCgkvLyAgICAgfSk7CglpdHhuX2JlZ2luCglpbnRjIDMgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCXB1c2hieXRlcyAweGU2MzVmZGI1IC8vIG1ldGhvZCAiYm9vdHN0cmFwKHVpbnQ2NFtdLHVpbnQ2NFtdKXVpbnQ2NCIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo2MAoJLy8gYXBwbGljYXRpb25JRDogcG9vbElECglmcmFtZV9kaWcgLTEgLy8gcG9vbElEOiBBcHBJRAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo2MQoJLy8gbWV0aG9kQXJnczogW2Fzc2V0SWRzLCB3ZWlnaHRzXQoJZnJhbWVfZGlnIC0yIC8vIGFzc2V0SWRzOiBBc3NldElEW10KCWR1cAoJbGVuCglpbnRjIDEgLy8gOAoJLwoJaXRvYgoJZXh0cmFjdCA2IDIKCXN3YXAKCWNvbmNhdAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMyAvLyB3ZWlnaHRzOiB1aW50NjRbXQoJZHVwCglsZW4KCWludGMgMSAvLyA4CgkvCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0CglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMiAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCWl0eG4gTnVtTG9ncwoJaW50YyAwIC8vIDEKCS0KCWl0eG5hcyBMb2dzCglleHRyYWN0IDQgMAoJYnRvaQoKCS8vIHNldCB0aGUgc3Vicm91dGluZSByZXR1cm4gdmFsdWUKCWZyYW1lX2J1cnkgMAoJcmV0c3ViCgovLyBhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxheGZlcil2b2lkCiphYmlfcm91dGVfYWRkTGlxdWlkaXR5OgoJLy8gdHJhbnNmZXJUeG46IGF4ZmVyCgl0eG4gR3JvdXBJbmRleAoJaW50YyAwIC8vIDEKCS0KCWR1cAoJZ3R4bnMgVHlwZUVudW0KCWludGMgNSAvLyAgYXhmZXIKCT09CgoJLy8gYXJndW1lbnQgMCAodHJhbnNmZXJUeG4pIGZvciBhZGRMaXF1aWRpdHkgbXVzdCBiZSBhIGF4ZmVyIHRyYW5zYWN0aW9uCglhc3NlcnQKCgkvLyBpbmRleDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgoJLy8gcG9vbElEOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIGFkZExpcXVpZGl0eSh1aW50NjQsdWludDY0LGF4ZmVyKXZvaWQKCWNhbGxzdWIgYWRkTGlxdWlkaXR5CglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBhZGRMaXF1aWRpdHkocG9vbElEOiBBcHBJRCwgaW5kZXg6IHVpbnQ2NCwgdHJhbnNmZXJUeG46IEFzc2V0VHJhbnNmZXJUeG4pOiB2b2lkCi8vCi8vIEFkZCBvbmUgdG9rZW4gYXMgbGlxdWlkaXR5IHRvIHRoZSBwb29sCi8vIEBwYXJhbSB7QXBwSUR9IHBvb2xJRCAtIFBvb2wgQXBwIElECi8vIEBwYXJhbSB7dWludDY0fSBpbmRleCAtIHRoZSBpbmRleAovLyBAcGFyYW0ge0Fzc2V0VHJhbnNmZXJUeG59IHRyYW5zZmVyVHhuIC0gdHJhbnNmZXIgdHggb2YgdGhlIHRva2VuLCByZWNlaXZlciBtdXN0IGJlIHRoZSBwb29sIGFjY291bnQKYWRkTGlxdWlkaXR5OgoJcHJvdG8gMyAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo3MgoJLy8gc2VuZE1ldGhvZENhbGw8dHlwZW9mIEJhbGFuY2VkUG9vbFYyLnByb3RvdHlwZS5hZGRMaXF1aWRpdHk+KHsKCS8vICAgICAgIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRCwKCS8vICAgICAgIG1ldGhvZEFyZ3M6IFtpbmRleCwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnQsIHRyYW5zZmVyVHhuLnNlbmRlcl0sCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludGMgMyAvLyAgYXBwbAoJaXR4bl9maWVsZCBUeXBlRW51bQoJcHVzaGJ5dGVzIDB4YWJkZjdlMTUgLy8gbWV0aG9kICJhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxhZGRyZXNzKXZvaWQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NzMKCS8vIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRAoJZnJhbWVfZGlnIC0xIC8vIHBvb2xJRDogQXBwSUQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25JRAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NzQKCS8vIG1ldGhvZEFyZ3M6IFtpbmRleCwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnQsIHRyYW5zZmVyVHhuLnNlbmRlcl0KCWZyYW1lX2RpZyAtMiAvLyBpbmRleDogdWludDY0CglpdG9iCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoJZnJhbWVfZGlnIC0zIC8vIHRyYW5zZmVyVHhuOiBBc3NldFRyYW5zZmVyVHhuCglndHhucyBBc3NldEFtb3VudAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMyAvLyB0cmFuc2ZlclR4bjogQXNzZXRUcmFuc2ZlclR4bgoJZ3R4bnMgU2VuZGVyCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMiAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKLy8gZ2V0TGlxdWlkaXR5KHVpbnQ2NCl2b2lkCiphYmlfcm91dGVfZ2V0TGlxdWlkaXR5OgoJLy8gcG9vbElEOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIGdldExpcXVpZGl0eSh1aW50NjQpdm9pZAoJY2FsbHN1YiBnZXRMaXF1aWRpdHkKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGdldExpcXVpZGl0eShwb29sSUQ6IEFwcElEKTogdm9pZAovLwovLyBDb21wdXRlIHRoZSBsaXF1aWRpdHkgZm9yIHRoZSBzZW5kZXIgYW5kIHNlbmQgdGhlIGV4cGVjdGVkIExQCi8vIEBwYXJhbSB7QXBwSUR9IHBvb2xJRCAtIFBvb2wgQXBwIElECmdldExpcXVpZGl0eToKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6ODMKCS8vIHNlbmRNZXRob2RDYWxsPHR5cGVvZiBCYWxhbmNlZFBvb2xWMi5wcm90b3R5cGUuZ2V0TGlxdWlkaXR5Pih7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiBwb29sSUQsCgkvLyAgICAgICBtZXRob2RBcmdzOiBbdGhpcy50eG4uc2VuZGVyXSwKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50YyAzIC8vICBhcHBsCglpdHhuX2ZpZWxkIFR5cGVFbnVtCglwdXNoYnl0ZXMgMHgyYTc0MDA0ZiAvLyBtZXRob2QgImdldExpcXVpZGl0eShhZGRyZXNzKXVpbnQ2NCIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo4NAoJLy8gYXBwbGljYXRpb25JRDogcG9vbElECglmcmFtZV9kaWcgLTEgLy8gcG9vbElEOiBBcHBJRAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo4NQoJLy8gbWV0aG9kQXJnczogW3RoaXMudHhuLnNlbmRlcl0KCXR4biBTZW5kZXIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50YyAyIC8vIDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoJaXR4biBOdW1Mb2dzCglpbnRjIDAgLy8gMQoJLQoJaXR4bmFzIExvZ3MKCWV4dHJhY3QgNCAwCglidG9pCglyZXRzdWIKCi8vIGJ1cm5MaXF1aWRpdHkodWludDY0LGF4ZmVyKXZvaWQKKmFiaV9yb3V0ZV9idXJuTGlxdWlkaXR5OgoJLy8gdHJhbnNmZXJUeG46IGF4ZmVyCgl0eG4gR3JvdXBJbmRleAoJaW50YyAwIC8vIDEKCS0KCWR1cAoJZ3R4bnMgVHlwZUVudW0KCWludGMgNSAvLyAgYXhmZXIKCT09CgoJLy8gYXJndW1lbnQgMCAodHJhbnNmZXJUeG4pIGZvciBidXJuTGlxdWlkaXR5IG11c3QgYmUgYSBheGZlciB0cmFuc2FjdGlvbgoJYXNzZXJ0CgoJLy8gcG9vbElEOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIGJ1cm5MaXF1aWRpdHkodWludDY0LGF4ZmVyKXZvaWQKCWNhbGxzdWIgYnVybkxpcXVpZGl0eQoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gYnVybkxpcXVpZGl0eShwb29sSUQ6IEFwcElELCB0cmFuc2ZlclR4bjogQXNzZXRUcmFuc2ZlclR4bik6IHZvaWQKYnVybkxpcXVpZGl0eToKCXByb3RvIDIgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6OTAKCS8vIHNlbmRNZXRob2RDYWxsPHR5cGVvZiBCYWxhbmNlZFBvb2xWMi5wcm90b3R5cGUuYnVybkxpcXVpZGl0eT4oewoJLy8gICAgICAgYXBwbGljYXRpb25JRDogcG9vbElELAoJLy8gICAgICAgbWV0aG9kQXJnczogW3RoaXMudHhuLnNlbmRlciwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnRdLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnRjIDMgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCXB1c2hieXRlcyAweDNmYjFkMDliIC8vIG1ldGhvZCAiYnVybkxpcXVpZGl0eShhZGRyZXNzLHVpbnQ2NCl2b2lkIgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjkxCgkvLyBhcHBsaWNhdGlvbklEOiBwb29sSUQKCWZyYW1lX2RpZyAtMSAvLyBwb29sSUQ6IEFwcElECglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uSUQKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjkyCgkvLyBtZXRob2RBcmdzOiBbdGhpcy50eG4uc2VuZGVyLCB0cmFuc2ZlclR4bi5hc3NldEFtb3VudF0KCXR4biBTZW5kZXIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCglmcmFtZV9kaWcgLTIgLy8gdHJhbnNmZXJUeG46IEFzc2V0VHJhbnNmZXJUeG4KCWd0eG5zIEFzc2V0QW1vdW50CglpdG9iCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMiAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKLy8gc3dhcCh1aW50NjQsdWludDY0LHVpbnQ2NCxheGZlcil1aW50NjQKKmFiaV9yb3V0ZV9zd2FwOgoJLy8gVGhlIEFCSSByZXR1cm4gcHJlZml4CglieXRlYyAzIC8vIDB4MTUxZjdjNzUKCgkvLyB0cmFuc2ZlclR4bjogYXhmZXIKCXR4biBHcm91cEluZGV4CglpbnRjIDAgLy8gMQoJLQoJZHVwCglndHhucyBUeXBlRW51bQoJaW50YyA1IC8vICBheGZlcgoJPT0KCgkvLyBhcmd1bWVudCAwICh0cmFuc2ZlclR4bikgZm9yIHN3YXAgbXVzdCBiZSBhIGF4ZmVyIHRyYW5zYWN0aW9uCglhc3NlcnQKCgkvLyB0bzogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAzCglidG9pCgoJLy8gZnJvbTogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgoJLy8gcG9vbElEOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIHN3YXAodWludDY0LHVpbnQ2NCx1aW50NjQsYXhmZXIpdWludDY0CgljYWxsc3ViIHN3YXAKCWl0b2IKCWNvbmNhdAoJbG9nCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBzd2FwKHBvb2xJRDogQXBwSUQsIGZyb206IHVpbnQ2NCwgdG86IHVpbnQ2NCwgdHJhbnNmZXJUeG46IEFzc2V0VHJhbnNmZXJUeG4pOiB1aW50NjQKc3dhcDoKCXByb3RvIDQgMQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6OTcKCS8vIHJldHVybiBzZW5kTWV0aG9kQ2FsbDx0eXBlb2YgQmFsYW5jZWRQb29sVjIucHJvdG90eXBlLnN3YXA+KHsKCS8vICAgICAgIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRCwKCS8vICAgICAgIG1ldGhvZEFyZ3M6IFt0aGlzLnR4bi5zZW5kZXIsIGZyb20sIHRvLCB0cmFuc2ZlclR4bi5hc3NldEFtb3VudF0sCgkvLyAgICAgfSk7CglpdHhuX2JlZ2luCglpbnRjIDMgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCXB1c2hieXRlcyAweDhkMzI1ZTI5IC8vIG1ldGhvZCAic3dhcChhZGRyZXNzLHVpbnQ2NCx1aW50NjQsdWludDY0KXVpbnQ2NCIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo5OAoJLy8gYXBwbGljYXRpb25JRDogcG9vbElECglmcmFtZV9kaWcgLTEgLy8gcG9vbElEOiBBcHBJRAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo5OQoJLy8gbWV0aG9kQXJnczogW3RoaXMudHhuLnNlbmRlciwgZnJvbSwgdG8sIHRyYW5zZmVyVHhuLmFzc2V0QW1vdW50XQoJdHhuIFNlbmRlcgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMiAvLyBmcm9tOiB1aW50NjQKCWl0b2IKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCglmcmFtZV9kaWcgLTMgLy8gdG86IHVpbnQ2NAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtNCAvLyB0cmFuc2ZlclR4bjogQXNzZXRUcmFuc2ZlclR4bgoJZ3R4bnMgQXNzZXRBbW91bnQKCWl0b2IKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gRmVlIGZpZWxkIG5vdCBzZXQsIGRlZmF1bHRpbmcgdG8gMAoJaW50YyAyIC8vIDAKCWl0eG5fZmllbGQgRmVlCgoJLy8gU3VibWl0IGlubmVyIHRyYW5zYWN0aW9uCglpdHhuX3N1Ym1pdAoJaXR4biBOdW1Mb2dzCglpbnRjIDAgLy8gMQoJLQoJaXR4bmFzIExvZ3MKCWV4dHJhY3QgNCAwCglidG9pCglyZXRzdWIKCi8vIG9wVXAoKXZvaWQKKmFiaV9yb3V0ZV9vcFVwOgoJLy8gZXhlY3V0ZSBvcFVwKCl2b2lkCgljYWxsc3ViIG9wVXAKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIG9wVXAoKTogdm9pZApvcFVwOgoJcHJvdG8gMCAwCglyZXRzdWIKCi8vIE1BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQpdm9pZAoqYWJpX3JvdXRlX01BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbToKCS8vIHByb2dyYW1TaXplOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIE1BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQpdm9pZAoJY2FsbHN1YiBNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0KCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIE1BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbShwcm9ncmFtU2l6ZTogdWludDY0KTogdm9pZAovLwovLyAqKioqKioqKioqKioqKioqKioqCi8vIE1BTkFHRVIKLy8gKioqKioqKioqKioqKioqKioqKgpNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW06Cglwcm90byAxIDAKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjExMAoJLy8gdGhpcy5hc3NlcnRJc01hbmFnZXIoKQoJY2FsbHN1YiBhc3NlcnRJc01hbmFnZXIKCgkvLyAqaWYwX2NvbmRpdGlvbgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMTIKCS8vIHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLmV4aXN0cwoJYnl0ZWMgMSAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWJveF9sZW4KCXN3YXAKCXBvcAoJYnogKmlmMF9lbHNlCgoJLy8gKmlmMF9jb25zZXF1ZW50CgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjExMwoJLy8gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0ucmVzaXplKHByb2dyYW1TaXplKQoJYnl0ZWMgMSAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWZyYW1lX2RpZyAtMSAvLyBwcm9ncmFtU2l6ZTogdWludDY0Cglib3hfcmVzaXplCgliICppZjBfZW5kCgoqaWYwX2Vsc2U6CgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjExNQoJLy8gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0uY3JlYXRlKHByb2dyYW1TaXplKQoJYnl0ZWMgMSAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWZyYW1lX2RpZyAtMSAvLyBwcm9ncmFtU2l6ZTogdWludDY0Cglib3hfY3JlYXRlCglwb3AKCippZjBfZW5kOgoJcmV0c3ViCgovLyBNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQsYnl0ZVtdKXZvaWQKKmFiaV9yb3V0ZV9NQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbToKCS8vIGRhdGE6IGJ5dGVbXQoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMgoJZXh0cmFjdCAyIDAKCgkvLyBvZmZzZXQ6IHVpbnQ2NAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoKCS8vIGV4ZWN1dGUgTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0odWludDY0LGJ5dGVbXSl2b2lkCgljYWxsc3ViIE1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbShvZmZzZXQ6IHVpbnQ2NCwgZGF0YTogYnl0ZXMpOiB2b2lkCk1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtOgoJcHJvdG8gMiAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMjAKCS8vIHRoaXMuYXNzZXJ0SXNNYW5hZ2VyKCkKCWNhbGxzdWIgYXNzZXJ0SXNNYW5hZ2VyCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMjIKCS8vIHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLnJlcGxhY2Uob2Zmc2V0LCBkYXRhKQoJYnl0ZWMgMSAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWZyYW1lX2RpZyAtMSAvLyBvZmZzZXQ6IHVpbnQ2NAoJZnJhbWVfZGlnIC0yIC8vIGRhdGE6IGJ5dGVzCglib3hfcmVwbGFjZQoJcmV0c3ViCgovLyBhc3NlcnRJc01hbmFnZXIoKTogdm9pZAovLwovLyAqKioqKioqKioqKioqKioqKioqCi8vIFNVQlJPVVRJTkVTCi8vICoqKioqKioqKioqKioqKioqKioKYXNzZXJ0SXNNYW5hZ2VyOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMzAKCS8vIGFzc2VydCh0aGlzLnR4bi5zZW5kZXIgPT09IHRoaXMubWFuYWdlci52YWx1ZSwgJ29ubHkgdGhlIG1hbmFnZXIgY2FuIGNhbGwgdGhpcyBtZXRob2QnKQoJdHhuIFNlbmRlcgoJYnl0ZWMgNCAvLyAgIm1hbmFnZXIiCglhcHBfZ2xvYmFsX2dldAoJPT0KCgkvLyBvbmx5IHRoZSBtYW5hZ2VyIGNhbiBjYWxsIHRoaXMgbWV0aG9kCglhc3NlcnQKCXJldHN1YgoKLy8gZ2V0UG9vbEhhc2goYXNzZXRJZHM6IEFzc2V0SURbXSwgd2VpZ2h0czogdWludDY0W10pOiBieXRlczMyCmdldFBvb2xIYXNoOgoJcHJvdG8gMiAxCgoJLy8gUHVzaCBlbXB0eSBieXRlcyBhZnRlciB0aGUgZnJhbWUgcG9pbnRlciB0byByZXNlcnZlIHNwYWNlIGZvciBsb2NhbCB2YXJpYWJsZXMKCWJ5dGVjIDAgLy8gMHgKCWR1cAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTM0CgkvLyBwYXJ0czogYnl0ZXMgPSAnJwoJYnl0ZWMgMCAvLyAgIiIKCWZyYW1lX2J1cnkgMCAvLyBwYXJ0czogYnl0ZXMKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEzNgoJLy8gZm9yIChsZXQgaSA9IDA7IGkgPCBhc3NldElkcy5sZW5ndGg7IGkgKz0gMSkKCWludGMgMiAvLyAwCglmcmFtZV9idXJ5IDEgLy8gaTogdWludDY0CgoqZm9yXzA6CgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEzNgoJLy8gaSA8IGFzc2V0SWRzLmxlbmd0aAoJZnJhbWVfZGlnIDEgLy8gaTogdWludDY0CglmcmFtZV9kaWcgLTEgLy8gYXNzZXRJZHM6IEFzc2V0SURbXQoJbGVuCglpbnRjIDEgLy8gOAoJLwoJPAoJYnogKmZvcl8wX2VuZAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTM3CgkvLyBwYXJ0cyArPSBpdG9iKGFzc2V0SWRzW2ldKQoJZnJhbWVfZGlnIDAgLy8gcGFydHM6IGJ5dGVzCglmcmFtZV9kaWcgLTEgLy8gYXNzZXRJZHM6IEFzc2V0SURbXQoJc3RvcmUgMjU1IC8vIGZ1bGwgYXJyYXkKCWludGMgMiAvLyAgaW5pdGlhbCBvZmZzZXQKCWZyYW1lX2RpZyAxIC8vIGk6IHVpbnQ2NAoJaW50YyAxIC8vIDgKCSogLy8gYWNjICogdHlwZUxlbmd0aAoJKwoJbG9hZCAyNTUgLy8gZnVsbCBhcnJheQoJc3dhcAoJaW50YyAxIC8vIDgKCWV4dHJhY3QzCglidG9pCglpdG9iCgljb25jYXQKCWZyYW1lX2J1cnkgMCAvLyBwYXJ0czogYnl0ZXMKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEzOAoJLy8gcGFydHMgKz0gaXRvYih3ZWlnaHRzW2ldKQoJZnJhbWVfZGlnIDAgLy8gcGFydHM6IGJ5dGVzCglmcmFtZV9kaWcgLTIgLy8gd2VpZ2h0czogdWludDY0W10KCXN0b3JlIDI1NSAvLyBmdWxsIGFycmF5CglpbnRjIDIgLy8gIGluaXRpYWwgb2Zmc2V0CglmcmFtZV9kaWcgMSAvLyBpOiB1aW50NjQKCWludGMgMSAvLyA4CgkqIC8vIGFjYyAqIHR5cGVMZW5ndGgKCSsKCWxvYWQgMjU1IC8vIGZ1bGwgYXJyYXkKCXN3YXAKCWludGMgMSAvLyA4CglleHRyYWN0MwoJYnRvaQoJaXRvYgoJY29uY2F0CglmcmFtZV9idXJ5IDAgLy8gcGFydHM6IGJ5dGVzCgoqZm9yXzBfY29udGludWU6CgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEzNgoJLy8gaSArPSAxCglmcmFtZV9kaWcgMSAvLyBpOiB1aW50NjQKCWludGMgMCAvLyAxCgkrCglmcmFtZV9idXJ5IDEgLy8gaTogdWludDY0CgliICpmb3JfMAoKKmZvcl8wX2VuZDoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTQxCgkvLyByZXR1cm4gc2hhNTEyXzI1NihwYXJ0cyk7CglmcmFtZV9kaWcgMCAvLyBwYXJ0czogYnl0ZXMKCXNoYTUxMl8yNTYKCgkvLyBzZXQgdGhlIHN1YnJvdXRpbmUgcmV0dXJuIHZhbHVlCglmcmFtZV9idXJ5IDAKCgkvLyBwb3AgYWxsIGxvY2FsIHZhcmlhYmxlcyBmcm9tIHRoZSBzdGFjawoJcG9wbiAxCglyZXRzdWIKCi8vIGdldFBvb2wodWludDY0W10sdWludDY0W10pKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSkKKmFiaV9yb3V0ZV9nZXRQb29sOgoJLy8gVGhlIEFCSSByZXR1cm4gcHJlZml4CglieXRlYyAzIC8vIDB4MTUxZjdjNzUKCgkvLyB3ZWlnaHRzOiB1aW50NjRbXQoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMgoJZXh0cmFjdCAyIDAKCgkvLyBhc3NldElkczogdWludDY0W10KCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWV4dHJhY3QgMiAwCgoJLy8gZXhlY3V0ZSBnZXRQb29sKHVpbnQ2NFtdLHVpbnQ2NFtdKSh1aW50NjQsdWludDY0W10sdWludDY0W10pCgljYWxsc3ViIGdldFBvb2wKCWNvbmNhdAoJbG9nCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBnZXRQb29sKGFzc2V0SWRzOiBBc3NldElEW10sIHdlaWdodHM6IHVpbnQ2NFtdKTogUG9vbApnZXRQb29sOgoJcHJvdG8gMiAxCgoJLy8gUHVzaCBlbXB0eSBieXRlcyBhZnRlciB0aGUgZnJhbWUgcG9pbnRlciB0byByZXNlcnZlIHNwYWNlIGZvciBsb2NhbCB2YXJpYWJsZXMKCWJ5dGVjIDAgLy8gMHgKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjE0NgoJLy8gaGFzaCA9IHRoaXMuZ2V0UG9vbEhhc2goYXNzZXRJZHMsIHdlaWdodHMpCglmcmFtZV9kaWcgLTIgLy8gd2VpZ2h0czogdWludDY0W10KCWZyYW1lX2RpZyAtMSAvLyBhc3NldElkczogQXNzZXRJRFtdCgljYWxsc3ViIGdldFBvb2xIYXNoCglmcmFtZV9idXJ5IDAgLy8gaGFzaDogYnl0ZVszMl0KCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjE0NwoJLy8gcmV0dXJuIHRoaXMucG9vbHMoaGFzaCkudmFsdWU7CglieXRlYyAyIC8vICAicG9vbHNfIgoJZnJhbWVfZGlnIDAgLy8gaGFzaDogYnl0ZVszMl0KCWNvbmNhdAoJYm94X2dldAoKCS8vIGJveCB2YWx1ZSBkb2VzIG5vdCBleGlzdDogdGhpcy5wb29scyhoYXNoKS52YWx1ZQoJYXNzZXJ0CgoJLy8gc2V0IHRoZSBzdWJyb3V0aW5lIHJldHVybiB2YWx1ZQoJZnJhbWVfYnVyeSAwCglyZXRzdWIKCipjcmVhdGVfTm9PcDoKCXR4biBOdW1BcHBBcmdzCglieiAqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCglieXRlYyA1IC8vICBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMAoJbWF0Y2ggKmFiaV9yb3V0ZV9jcmVhdGVBcHBsaWNhdGlvbgoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjcmVhdGUgTm9PcAoJZXJyCgoqY2FsbF9Ob09wOgoJcHVzaGJ5dGVzIDB4NDI1ODhlMDkgLy8gbWV0aG9kICJjcmVhdGVQb29sKCl2b2lkIgoJcHVzaGJ5dGVzIDB4YTFlYjMwMjAgLy8gbWV0aG9kICJpbml0UG9vbCh1aW50NjQsdWludDY0W10sdWludDY0W10pdWludDY0IgoJcHVzaGJ5dGVzIDB4NzlhZDI5ODggLy8gbWV0aG9kICJhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxheGZlcil2b2lkIgoJcHVzaGJ5dGVzIDB4OWJjMGFjNWQgLy8gbWV0aG9kICJnZXRMaXF1aWRpdHkodWludDY0KXZvaWQiCglwdXNoYnl0ZXMgMHhmYzYwOWJhZSAvLyBtZXRob2QgImJ1cm5MaXF1aWRpdHkodWludDY0LGF4ZmVyKXZvaWQiCglwdXNoYnl0ZXMgMHg4YTM3ZDU1ZSAvLyBtZXRob2QgInN3YXAodWludDY0LHVpbnQ2NCx1aW50NjQsYXhmZXIpdWludDY0IgoJcHVzaGJ5dGVzIDB4ODU0ZGVkZTAgLy8gbWV0aG9kICJvcFVwKCl2b2lkIgoJcHVzaGJ5dGVzIDB4MDk5ZTVjZmQgLy8gbWV0aG9kICJNQU5BR0VSX3VwZGF0ZVBvb2xDb250cmFjdFByb2dyYW0odWludDY0KXZvaWQiCglwdXNoYnl0ZXMgMHhhNGI1MDNjMSAvLyBtZXRob2QgIk1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCxieXRlW10pdm9pZCIKCXB1c2hieXRlcyAweGM5OTExMzk2IC8vIG1ldGhvZCAiZ2V0UG9vbCh1aW50NjRbXSx1aW50NjRbXSkodWludDY0LHVpbnQ2NFtdLHVpbnQ2NFtdKSIKCXR4bmEgQXBwbGljYXRpb25BcmdzIDAKCW1hdGNoICphYmlfcm91dGVfY3JlYXRlUG9vbCAqYWJpX3JvdXRlX2luaXRQb29sICphYmlfcm91dGVfYWRkTGlxdWlkaXR5ICphYmlfcm91dGVfZ2V0TGlxdWlkaXR5ICphYmlfcm91dGVfYnVybkxpcXVpZGl0eSAqYWJpX3JvdXRlX3N3YXAgKmFiaV9yb3V0ZV9vcFVwICphYmlfcm91dGVfTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtICphYmlfcm91dGVfTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0gKmFiaV9yb3V0ZV9nZXRQb29sCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNhbGwgTm9PcAoJZXJyCgoqcHJvY2Vzc19zdGF0aWNfdHVwbGVfZWxlbWVudDoKCXByb3RvIDQgMwoJZnJhbWVfZGlnIC00IC8vIHR1cGxlIGhlYWQKCWZyYW1lX2RpZyAtMSAvLyBlbGVtZW50Cgljb25jYXQKCWZyYW1lX2RpZyAtMyAvLyB0dXBsZSB0YWlsCglmcmFtZV9kaWcgLTIgLy8gaGVhZCBvZmZzZXQKCXJldHN1YgoKKnByb2Nlc3NfZHluYW1pY190dXBsZV9lbGVtZW50OgoJcHJvdG8gNCAzCglmcmFtZV9kaWcgLTQgLy8gdHVwbGUgaGVhZAoJZnJhbWVfZGlnIC0yIC8vIGhlYWQgb2Zmc2V0Cgljb25jYXQKCWZyYW1lX2J1cnkgLTQgLy8gdHVwbGUgaGVhZAoJZnJhbWVfZGlnIC0xIC8vIGVsZW1lbnQKCWR1cAoJbGVuCglmcmFtZV9kaWcgLTIgLy8gaGVhZCBvZmZzZXQKCWJ0b2kKCSsKCWl0b2IKCWV4dHJhY3QgNiAyCglmcmFtZV9idXJ5IC0yIC8vIGhlYWQgb2Zmc2V0CglmcmFtZV9kaWcgLTMgLy8gdHVwbGUgdGFpbAoJc3dhcAoJY29uY2F0CglmcmFtZV9idXJ5IC0zIC8vIHR1cGxlIHRhaWwKCWZyYW1lX2RpZyAtNCAvLyB0dXBsZSBoZWFkCglmcmFtZV9kaWcgLTMgLy8gdHVwbGUgdGFpbAoJZnJhbWVfZGlnIC0yIC8vIGhlYWQgb2Zmc2V0CglyZXRzdWI=",
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDEwCmludGNibG9jayAxIDggMCA2IDIgNApieXRlY2Jsb2NrIDB4IDB4NzA2ZjZmNmM1ZjYxNzA3MDcyNmY3NjYxNmM1ZjcwNzI2ZjY3NzI2MTZkIDB4MTUxZjdjNzUgMHg3MDZmNmY2YzczNWYgMHg2ZDYxNmU2MTY3NjU3MiAweGI4NDQ3YjM2CgovLyBUaGlzIFRFQUwgd2FzIGdlbmVyYXRlZCBieSBURUFMU2NyaXB0IHYwLjEwNi4yCi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9hbGdvcmFuZGZvdW5kYXRpb24vVEVBTFNjcmlwdAoKLy8gVGhpcyBjb250cmFjdCBpcyBjb21wbGlhbnQgd2l0aCBhbmQvb3IgaW1wbGVtZW50cyB0aGUgZm9sbG93aW5nIEFSQ3M6IFsgQVJDNCBdCgovLyBUaGUgZm9sbG93aW5nIHRlbiBsaW5lcyBvZiBURUFMIGhhbmRsZSBpbml0aWFsIHByb2dyYW0gZmxvdwovLyBUaGlzIHBhdHRlcm4gaXMgdXNlZCB0byBtYWtlIGl0IGVhc3kgZm9yIGFueW9uZSB0byBwYXJzZSB0aGUgc3RhcnQgb2YgdGhlIHByb2dyYW0gYW5kIGRldGVybWluZSBpZiBhIHNwZWNpZmljIGFjdGlvbiBpcyBhbGxvd2VkCi8vIEhlcmUsIGFjdGlvbiByZWZlcnMgdG8gdGhlIE9uQ29tcGxldGUgaW4gY29tYmluYXRpb24gd2l0aCB3aGV0aGVyIHRoZSBhcHAgaXMgYmVpbmcgY3JlYXRlZCBvciBjYWxsZWQKLy8gRXZlcnkgcG9zc2libGUgYWN0aW9uIGZvciB0aGlzIGNvbnRyYWN0IGlzIHJlcHJlc2VudGVkIGluIHRoZSBzd2l0Y2ggc3RhdGVtZW50Ci8vIElmIHRoZSBhY3Rpb24gaXMgbm90IGltcGxlbWVudGVkIGluIHRoZSBjb250cmFjdCwgaXRzIHJlc3BlY3RpdmUgYnJhbmNoIHdpbGwgYmUgIipOT1RfSU1QTEVNRU5URUQiIHdoaWNoIGp1c3QgY29udGFpbnMgImVyciIKdHhuIEFwcGxpY2F0aW9uSUQKIQppbnRjIDMgLy8gNgoqCnR4biBPbkNvbXBsZXRpb24KKwpzd2l0Y2ggKmNhbGxfTm9PcCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKmNyZWF0ZV9Ob09wICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRCAqTk9UX0lNUExFTUVOVEVEICpOT1RfSU1QTEVNRU5URUQgKk5PVF9JTVBMRU1FTlRFRAoKKk5PVF9JTVBMRU1FTlRFRDoKCS8vIFRoZSByZXF1ZXN0ZWQgYWN0aW9uIGlzIG5vdCBpbXBsZW1lbnRlZCBpbiB0aGlzIGNvbnRyYWN0LiBBcmUgeW91IHVzaW5nIHRoZSBjb3JyZWN0IE9uQ29tcGxldGU/IERpZCB5b3Ugc2V0IHlvdXIgYXBwIElEPwoJZXJyCgovLyBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uOgoJLy8gZXhlY3V0ZSBjcmVhdGVBcHBsaWNhdGlvbigpdm9pZAoJY2FsbHN1YiBjcmVhdGVBcHBsaWNhdGlvbgoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gY3JlYXRlQXBwbGljYXRpb24oKTogdm9pZAovLwovLyBjcmVhdGVBcHBsaWNhdGlvbiBtZXRob2QgY2FsbGVkIGF0IGNyZWF0aW9uCmNyZWF0ZUFwcGxpY2F0aW9uOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoyMgoJLy8gdGhpcy5tYW5hZ2VyLnZhbHVlID0gdGhpcy5hcHAuY3JlYXRvcgoJYnl0ZWMgNCAvLyAgIm1hbmFnZXIiCgl0eG5hIEFwcGxpY2F0aW9ucyAwCglhcHBfcGFyYW1zX2dldCBBcHBDcmVhdG9yCglwb3AKCWFwcF9nbG9iYWxfcHV0CglyZXRzdWIKCi8vIGNyZWF0ZVBvb2woKXZvaWQKKmFiaV9yb3V0ZV9jcmVhdGVQb29sOgoJLy8gZXhlY3V0ZSBjcmVhdGVQb29sKCl2b2lkCgljYWxsc3ViIGNyZWF0ZVBvb2wKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGNyZWF0ZVBvb2woKTogdm9pZAovLwovLyBEZXBsb3kgdGhlIHBvb2wgY29udHJhY3QsIGNvbXBpbGVkIHRlYWwgb2YgdGhlIGNvbnRyYWN0Ci8vIG11c3QgYmUgbG9hZGVkIGluIHBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbQpjcmVhdGVQb29sOgoJcHJvdG8gMCAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMAoJLy8gc2VuZEFwcENhbGwoewoJLy8gICAgICAgb25Db21wbGV0aW9uOiBPbkNvbXBsZXRpb24uTm9PcCwKCS8vICAgICAgIGFwcHJvdmFsUHJvZ3JhbTogdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0udmFsdWUsCgkvLyAgICAgICBjbGVhclN0YXRlUHJvZ3JhbTogQmFsYW5jZWRQb29sVjIuY2xlYXJQcm9ncmFtKCksCgkvLyAgICAgICBnbG9iYWxOdW1VaW50OiBCYWxhbmNlZFBvb2xWMi5zY2hlbWEuZ2xvYmFsLm51bVVpbnQsCgkvLyAgICAgICBnbG9iYWxOdW1CeXRlU2xpY2U6IEJhbGFuY2VkUG9vbFYyLnNjaGVtYS5nbG9iYWwubnVtQnl0ZVNsaWNlLAoJLy8gICAgICAgZXh0cmFQcm9ncmFtUGFnZXM6IDMsCgkvLyAgICAgICBhcHBsaWNhdGlvbkFyZ3M6IFttZXRob2QoJ2NyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkJyldLAoJLy8gICAgICAgZmVlOiAxMDBfMDAwLAoJLy8gICAgIH0pCglpdHhuX2JlZ2luCglpbnRjIDMgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjMxCgkvLyBvbkNvbXBsZXRpb246IE9uQ29tcGxldGlvbi5Ob09wCglpbnRjIDIgLy8gIE5vT3AKCWl0eG5fZmllbGQgT25Db21wbGV0aW9uCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMgoJLy8gYXBwcm92YWxQcm9ncmFtOiB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS52YWx1ZQoJYnl0ZWMgMSAvLyAgInBvb2xfYXBwcm92YWxfcHJvZ3JhbSIKCWJveF9nZXQKCgkvLyBib3ggdmFsdWUgZG9lcyBub3QgZXhpc3Q6IHRoaXMucG9vbENvbnRyYWN0QXBwcm92YWxQcm9ncmFtLnZhbHVlCglhc3NlcnQKCWl0eG5fZmllbGQgQXBwcm92YWxQcm9ncmFtCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czozMwoJLy8gY2xlYXJTdGF0ZVByb2dyYW06IEJhbGFuY2VkUG9vbFYyLmNsZWFyUHJvZ3JhbSgpCglwdXNoYnl0ZXMgMHgwYQoJaXR4bl9maWVsZCBDbGVhclN0YXRlUHJvZ3JhbQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzQKCS8vIGdsb2JhbE51bVVpbnQ6IEJhbGFuY2VkUG9vbFYyLnNjaGVtYS5nbG9iYWwubnVtVWludAoJaW50YyA0IC8vIDIKCWl0eG5fZmllbGQgR2xvYmFsTnVtVWludAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzUKCS8vIGdsb2JhbE51bUJ5dGVTbGljZTogQmFsYW5jZWRQb29sVjIuc2NoZW1hLmdsb2JhbC5udW1CeXRlU2xpY2UKCWludGMgNCAvLyAyCglpdHhuX2ZpZWxkIEdsb2JhbE51bUJ5dGVTbGljZQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MzYKCS8vIGV4dHJhUHJvZ3JhbVBhZ2VzOiAzCglwdXNoaW50IDMKCWl0eG5fZmllbGQgRXh0cmFQcm9ncmFtUGFnZXMKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjM3CgkvLyBhcHBsaWNhdGlvbkFyZ3M6IFttZXRob2QoJ2NyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkJyldCglieXRlYyA1IC8vICBtZXRob2QgImNyZWF0ZUFwcGxpY2F0aW9uKCl2b2lkIgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjM4CgkvLyBmZWU6IDEwMF8wMDAKCXB1c2hpbnQgMTAwXzAwMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglyZXRzdWIKCi8vIGluaXRQb29sKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSl1aW50NjQKKmFiaV9yb3V0ZV9pbml0UG9vbDoKCS8vIFRoZSBBQkkgcmV0dXJuIHByZWZpeAoJYnl0ZWMgMiAvLyAweDE1MWY3Yzc1CgoJLy8gd2VpZ2h0czogdWludDY0W10KCXR4bmEgQXBwbGljYXRpb25BcmdzIDMKCWV4dHJhY3QgMiAwCgoJLy8gYXNzZXRJZHM6IHVpbnQ2NFtdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglleHRyYWN0IDIgMAoKCS8vIHBvb2xJRDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBpbml0UG9vbCh1aW50NjQsdWludDY0W10sdWludDY0W10pdWludDY0CgljYWxsc3ViIGluaXRQb29sCglpdG9iCgljb25jYXQKCWxvZwoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gaW5pdFBvb2wocG9vbElEOiBBcHBJRCwgYXNzZXRJZHM6IEFzc2V0SURbXSwgd2VpZ2h0czogdWludDY0W10pOiBBc3NldElECi8vCi8vIEluaXRpYWxpemUgdGhlIHBvb2wgd2l0aCB0aGUgZ2l2ZW4gYXNzZXRzICYgd2VpZ2h0cwovLyBAcGFyYW0ge0FwcElEfSBwb29sSUQgLSBQb29sIEFwcCBJRAovLyBAcGFyYW0ge0Fzc2V0SURbXX0gYXNzZXRJZHMKLy8gQHBhcmFtIHt1aW50NjRbXX0gd2VpZ2h0cwppbml0UG9vbDoKCXByb3RvIDMgMQoKCS8vIFB1c2ggZW1wdHkgYnl0ZXMgYWZ0ZXIgdGhlIGZyYW1lIHBvaW50ZXIgdG8gcmVzZXJ2ZSBzcGFjZSBmb3IgbG9jYWwgdmFyaWFibGVzCglieXRlYyAwIC8vIDB4CgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo1MAoJLy8gYXNzZXJ0KGFzc2V0SWRzLmxlbmd0aCA+PSAyLCAnQXQgbGVhc3QgMiB0b2tlbnMgbmVlZGVkJykKCWZyYW1lX2RpZyAtMiAvLyBhc3NldElkczogQXNzZXRJRFtdCglsZW4KCWludGMgMSAvLyA4CgkvCglpbnRjIDQgLy8gMgoJPj0KCgkvLyBBdCBsZWFzdCAyIHRva2VucyBuZWVkZWQKCWFzc2VydAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTEKCS8vIGFzc2VydChhc3NldElkcy5sZW5ndGggPT09IHdlaWdodHMubGVuZ3RoLCAnV2VpZ2h0cyBhbmQgQXNzZXRzIGxlbmd0aCBtdXN0IGJlIHRoZSBzYW1lJykKCWZyYW1lX2RpZyAtMiAvLyBhc3NldElkczogQXNzZXRJRFtdCglsZW4KCWludGMgMSAvLyA4CgkvCglmcmFtZV9kaWcgLTMgLy8gd2VpZ2h0czogdWludDY0W10KCWxlbgoJaW50YyAxIC8vIDgKCS8KCT09CgoJLy8gV2VpZ2h0cyBhbmQgQXNzZXRzIGxlbmd0aCBtdXN0IGJlIHRoZSBzYW1lCglhc3NlcnQKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjUzCgkvLyBoYXNoID0gdGhpcy5nZXRQb29sSGFzaChhc3NldElkcywgd2VpZ2h0cykKCWZyYW1lX2RpZyAtMyAvLyB3ZWlnaHRzOiB1aW50NjRbXQoJZnJhbWVfZGlnIC0yIC8vIGFzc2V0SWRzOiBBc3NldElEW10KCWNhbGxzdWIgZ2V0UG9vbEhhc2gKCWZyYW1lX2J1cnkgMCAvLyBoYXNoOiBieXRlWzMyXQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NTUKCS8vIGFzc2VydCghdGhpcy5wb29scyhoYXNoKS5leGlzdHMsICdUaGlzIHBvb2wgYWxyZWFkeSBleGlzdHMnKQoJYnl0ZWMgMyAvLyAgInBvb2xzXyIKCWZyYW1lX2RpZyAwIC8vIGhhc2g6IGJ5dGVbMzJdCgljb25jYXQKCWJveF9sZW4KCXN3YXAKCXBvcAoJIQoKCS8vIFRoaXMgcG9vbCBhbHJlYWR5IGV4aXN0cwoJYXNzZXJ0CgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo1NwoJLy8gdGhpcy5wb29scyhoYXNoKS52YWx1ZSA9IHsgaWQ6IHBvb2xJRCwgYXNzZXRzOiBhc3NldElkcywgd2VpZ2h0czogd2VpZ2h0cyB9CglieXRlYyAzIC8vICAicG9vbHNfIgoJZnJhbWVfZGlnIDAgLy8gaGFzaDogYnl0ZVszMl0KCWNvbmNhdAoJZHVwCglib3hfZGVsCglwb3AKCWJ5dGVjIDAgLy8gIGluaXRpYWwgaGVhZAoJYnl0ZWMgMCAvLyAgaW5pdGlhbCB0YWlsCglwdXNoYnl0ZXMgMHgwMDBjIC8vIGluaXRpYWwgaGVhZCBvZmZzZXQKCWZyYW1lX2RpZyAtMSAvLyBwb29sSUQ6IEFwcElECglpdG9iCgljYWxsc3ViICpwcm9jZXNzX3N0YXRpY190dXBsZV9lbGVtZW50CglmcmFtZV9kaWcgLTIgLy8gYXNzZXRJZHM6IEFzc2V0SURbXQoJZHVwCglsZW4KCWludGMgMSAvLyA4CgkvCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0CgljYWxsc3ViICpwcm9jZXNzX2R5bmFtaWNfdHVwbGVfZWxlbWVudAoJZnJhbWVfZGlnIC0zIC8vIHdlaWdodHM6IHVpbnQ2NFtdCglkdXAKCWxlbgoJaW50YyAxIC8vIDgKCS8KCWl0b2IKCWV4dHJhY3QgNiAyCglzd2FwCgljb25jYXQKCWNhbGxzdWIgKnByb2Nlc3NfZHluYW1pY190dXBsZV9lbGVtZW50Cglwb3AgLy8gcG9wIGhlYWQgb2Zmc2V0Cgljb25jYXQgLy8gY29uY2F0IGhlYWQgYW5kIHRhaWwKCWJveF9wdXQKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjU5CgkvLyByZXR1cm4gc2VuZE1ldGhvZENhbGw8dHlwZW9mIEJhbGFuY2VkUG9vbFYyLnByb3RvdHlwZS5ib290c3RyYXAsIEFzc2V0SUQ+KHsKCS8vICAgICAgIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRCwKCS8vICAgICAgIG1ldGhvZEFyZ3M6IFthc3NldElkcywgd2VpZ2h0c10sCgkvLyAgICAgfSk7CglpdHhuX2JlZ2luCglpbnRjIDMgLy8gIGFwcGwKCWl0eG5fZmllbGQgVHlwZUVudW0KCXB1c2hieXRlcyAweGU2MzVmZGI1IC8vIG1ldGhvZCAiYm9vdHN0cmFwKHVpbnQ2NFtdLHVpbnQ2NFtdKXVpbnQ2NCIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo2MAoJLy8gYXBwbGljYXRpb25JRDogcG9vbElECglmcmFtZV9kaWcgLTEgLy8gcG9vbElEOiBBcHBJRAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo2MQoJLy8gbWV0aG9kQXJnczogW2Fzc2V0SWRzLCB3ZWlnaHRzXQoJZnJhbWVfZGlnIC0yIC8vIGFzc2V0SWRzOiBBc3NldElEW10KCWR1cAoJbGVuCglpbnRjIDEgLy8gOAoJLwoJaXRvYgoJZXh0cmFjdCA2IDIKCXN3YXAKCWNvbmNhdAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMyAvLyB3ZWlnaHRzOiB1aW50NjRbXQoJZHVwCglsZW4KCWludGMgMSAvLyA4CgkvCglpdG9iCglleHRyYWN0IDYgMgoJc3dhcAoJY29uY2F0CglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMiAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCWl0eG4gTnVtTG9ncwoJaW50YyAwIC8vIDEKCS0KCWl0eG5hcyBMb2dzCglleHRyYWN0IDQgMAoJYnRvaQoKCS8vIHNldCB0aGUgc3Vicm91dGluZSByZXR1cm4gdmFsdWUKCWZyYW1lX2J1cnkgMAoJcmV0c3ViCgovLyBhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxheGZlcil2b2lkCiphYmlfcm91dGVfYWRkTGlxdWlkaXR5OgoJLy8gdHJhbnNmZXJUeG46IGF4ZmVyCgl0eG4gR3JvdXBJbmRleAoJaW50YyAwIC8vIDEKCS0KCWR1cAoJZ3R4bnMgVHlwZUVudW0KCWludGMgNSAvLyAgYXhmZXIKCT09CgoJLy8gYXJndW1lbnQgMCAodHJhbnNmZXJUeG4pIGZvciBhZGRMaXF1aWRpdHkgbXVzdCBiZSBhIGF4ZmVyIHRyYW5zYWN0aW9uCglhc3NlcnQKCgkvLyBpbmRleDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglidG9pCgoJLy8gcG9vbElEOiB1aW50NjQKCXR4bmEgQXBwbGljYXRpb25BcmdzIDEKCWJ0b2kKCgkvLyBleGVjdXRlIGFkZExpcXVpZGl0eSh1aW50NjQsdWludDY0LGF4ZmVyKXZvaWQKCWNhbGxzdWIgYWRkTGlxdWlkaXR5CglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBhZGRMaXF1aWRpdHkocG9vbElEOiBBcHBJRCwgaW5kZXg6IHVpbnQ2NCwgdHJhbnNmZXJUeG46IEFzc2V0VHJhbnNmZXJUeG4pOiB2b2lkCi8vCi8vIEFkZCBvbmUgdG9rZW4gYXMgbGlxdWlkaXR5IHRvIHRoZSBwb29sCi8vIEBwYXJhbSB7QXBwSUR9IHBvb2xJRCAtIFBvb2wgQXBwIElECi8vIEBwYXJhbSB7dWludDY0fSBpbmRleCAtIHRoZSBpbmRleAovLyBAcGFyYW0ge0Fzc2V0VHJhbnNmZXJUeG59IHRyYW5zZmVyVHhuIC0gdHJhbnNmZXIgdHggb2YgdGhlIHRva2VuLCByZWNlaXZlciBtdXN0IGJlIHRoZSBwb29sIGFjY291bnQKYWRkTGlxdWlkaXR5OgoJcHJvdG8gMyAwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo3MgoJLy8gc2VuZE1ldGhvZENhbGw8dHlwZW9mIEJhbGFuY2VkUG9vbFYyLnByb3RvdHlwZS5hZGRMaXF1aWRpdHk+KHsKCS8vICAgICAgIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRCwKCS8vICAgICAgIG1ldGhvZEFyZ3M6IFtpbmRleCwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnQsIHRyYW5zZmVyVHhuLnNlbmRlcl0sCgkvLyAgICAgfSkKCWl0eG5fYmVnaW4KCWludGMgMyAvLyAgYXBwbAoJaXR4bl9maWVsZCBUeXBlRW51bQoJcHVzaGJ5dGVzIDB4YWJkZjdlMTUgLy8gbWV0aG9kICJhZGRMaXF1aWRpdHkodWludDY0LHVpbnQ2NCxhZGRyZXNzKXZvaWQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NzMKCS8vIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRAoJZnJhbWVfZGlnIC0xIC8vIHBvb2xJRDogQXBwSUQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25JRAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6NzQKCS8vIG1ldGhvZEFyZ3M6IFtpbmRleCwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnQsIHRyYW5zZmVyVHhuLnNlbmRlcl0KCWZyYW1lX2RpZyAtMiAvLyBpbmRleDogdWludDY0CglpdG9iCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoJZnJhbWVfZGlnIC0zIC8vIHRyYW5zZmVyVHhuOiBBc3NldFRyYW5zZmVyVHhuCglndHhucyBBc3NldEFtb3VudAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMyAvLyB0cmFuc2ZlclR4bjogQXNzZXRUcmFuc2ZlclR4bgoJZ3R4bnMgU2VuZGVyCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMiAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCXJldHN1YgoKLy8gZ2V0TGlxdWlkaXR5KHVpbnQ2NCl1aW50NjQKKmFiaV9yb3V0ZV9nZXRMaXF1aWRpdHk6CgkvLyBUaGUgQUJJIHJldHVybiBwcmVmaXgKCWJ5dGVjIDIgLy8gMHgxNTFmN2M3NQoKCS8vIHBvb2xJRDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBnZXRMaXF1aWRpdHkodWludDY0KXVpbnQ2NAoJY2FsbHN1YiBnZXRMaXF1aWRpdHkKCWl0b2IKCWNvbmNhdAoJbG9nCglpbnRjIDAgLy8gMQoJcmV0dXJuCgovLyBnZXRMaXF1aWRpdHkocG9vbElEOiBBcHBJRCk6IHVpbnQ2NAovLwovLyBDb21wdXRlIHRoZSBsaXF1aWRpdHkgZm9yIHRoZSBzZW5kZXIgYW5kIHNlbmQgdGhlIExQcyBleHBlY3RlZAovLyBAcGFyYW0ge0FwcElEfSBwb29sSUQgLSBQb29sIEFwcCBJRAovLyBAcmV0dXJuIHVpbnQ2NCAtIFRoZSBMUHMgZXhwZWN0ZWQKZ2V0TGlxdWlkaXR5OgoJcHJvdG8gMSAxCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo4NAoJLy8gcmV0dXJuIHNlbmRNZXRob2RDYWxsPHR5cGVvZiBCYWxhbmNlZFBvb2xWMi5wcm90b3R5cGUuZ2V0TGlxdWlkaXR5Pih7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiBwb29sSUQsCgkvLyAgICAgICBtZXRob2RBcmdzOiBbdGhpcy50eG4uc2VuZGVyXSwKCS8vICAgICB9KTsKCWl0eG5fYmVnaW4KCWludGMgMyAvLyAgYXBwbAoJaXR4bl9maWVsZCBUeXBlRW51bQoJcHVzaGJ5dGVzIDB4MmE3NDAwNGYgLy8gbWV0aG9kICJnZXRMaXF1aWRpdHkoYWRkcmVzcyl1aW50NjQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6ODUKCS8vIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRAoJZnJhbWVfZGlnIC0xIC8vIHBvb2xJRDogQXBwSUQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25JRAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6ODYKCS8vIG1ldGhvZEFyZ3M6IFt0aGlzLnR4bi5zZW5kZXJdCgl0eG4gU2VuZGVyCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIEZlZSBmaWVsZCBub3Qgc2V0LCBkZWZhdWx0aW5nIHRvIDAKCWludGMgMiAvLyAwCglpdHhuX2ZpZWxkIEZlZQoKCS8vIFN1Ym1pdCBpbm5lciB0cmFuc2FjdGlvbgoJaXR4bl9zdWJtaXQKCWl0eG4gTnVtTG9ncwoJaW50YyAwIC8vIDEKCS0KCWl0eG5hcyBMb2dzCglleHRyYWN0IDQgMAoJYnRvaQoJcmV0c3ViCgovLyBidXJuTGlxdWlkaXR5KHVpbnQ2NCxheGZlcil2b2lkCiphYmlfcm91dGVfYnVybkxpcXVpZGl0eToKCS8vIHRyYW5zZmVyVHhuOiBheGZlcgoJdHhuIEdyb3VwSW5kZXgKCWludGMgMCAvLyAxCgktCglkdXAKCWd0eG5zIFR5cGVFbnVtCglpbnRjIDUgLy8gIGF4ZmVyCgk9PQoKCS8vIGFyZ3VtZW50IDAgKHRyYW5zZmVyVHhuKSBmb3IgYnVybkxpcXVpZGl0eSBtdXN0IGJlIGEgYXhmZXIgdHJhbnNhY3Rpb24KCWFzc2VydAoKCS8vIHBvb2xJRDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBidXJuTGlxdWlkaXR5KHVpbnQ2NCxheGZlcil2b2lkCgljYWxsc3ViIGJ1cm5MaXF1aWRpdHkKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGJ1cm5MaXF1aWRpdHkocG9vbElEOiBBcHBJRCwgdHJhbnNmZXJUeG46IEFzc2V0VHJhbnNmZXJUeG4pOiB2b2lkCmJ1cm5MaXF1aWRpdHk6Cglwcm90byAyIDAKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjkxCgkvLyBzZW5kTWV0aG9kQ2FsbDx0eXBlb2YgQmFsYW5jZWRQb29sVjIucHJvdG90eXBlLmJ1cm5MaXF1aWRpdHk+KHsKCS8vICAgICAgIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRCwKCS8vICAgICAgIG1ldGhvZEFyZ3M6IFt0aGlzLnR4bi5zZW5kZXIsIHRyYW5zZmVyVHhuLmFzc2V0QW1vdW50XSwKCS8vICAgICB9KQoJaXR4bl9iZWdpbgoJaW50YyAzIC8vICBhcHBsCglpdHhuX2ZpZWxkIFR5cGVFbnVtCglwdXNoYnl0ZXMgMHgzZmIxZDA5YiAvLyBtZXRob2QgImJ1cm5MaXF1aWRpdHkoYWRkcmVzcyx1aW50NjQpdm9pZCIKCWl0eG5fZmllbGQgQXBwbGljYXRpb25BcmdzCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo5MgoJLy8gYXBwbGljYXRpb25JRDogcG9vbElECglmcmFtZV9kaWcgLTEgLy8gcG9vbElEOiBBcHBJRAoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbklECgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czo5MwoJLy8gbWV0aG9kQXJnczogW3RoaXMudHhuLnNlbmRlciwgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnRdCgl0eG4gU2VuZGVyCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoJZnJhbWVfZGlnIC0yIC8vIHRyYW5zZmVyVHhuOiBBc3NldFRyYW5zZmVyVHhuCglndHhucyBBc3NldEFtb3VudAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnRjIDIgLy8gMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglyZXRzdWIKCi8vIHN3YXAodWludDY0LHVpbnQ2NCx1aW50NjQsYXhmZXIpdWludDY0CiphYmlfcm91dGVfc3dhcDoKCS8vIFRoZSBBQkkgcmV0dXJuIHByZWZpeAoJYnl0ZWMgMiAvLyAweDE1MWY3Yzc1CgoJLy8gdHJhbnNmZXJUeG46IGF4ZmVyCgl0eG4gR3JvdXBJbmRleAoJaW50YyAwIC8vIDEKCS0KCWR1cAoJZ3R4bnMgVHlwZUVudW0KCWludGMgNSAvLyAgYXhmZXIKCT09CgoJLy8gYXJndW1lbnQgMCAodHJhbnNmZXJUeG4pIGZvciBzd2FwIG11c3QgYmUgYSBheGZlciB0cmFuc2FjdGlvbgoJYXNzZXJ0CgoJLy8gdG86IHVpbnQ2NAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMwoJYnRvaQoKCS8vIGZyb206IHVpbnQ2NAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMgoJYnRvaQoKCS8vIHBvb2xJRDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBzd2FwKHVpbnQ2NCx1aW50NjQsdWludDY0LGF4ZmVyKXVpbnQ2NAoJY2FsbHN1YiBzd2FwCglpdG9iCgljb25jYXQKCWxvZwoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gc3dhcChwb29sSUQ6IEFwcElELCBmcm9tOiB1aW50NjQsIHRvOiB1aW50NjQsIHRyYW5zZmVyVHhuOiBBc3NldFRyYW5zZmVyVHhuKTogdWludDY0CnN3YXA6Cglwcm90byA0IDEKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjk4CgkvLyByZXR1cm4gc2VuZE1ldGhvZENhbGw8dHlwZW9mIEJhbGFuY2VkUG9vbFYyLnByb3RvdHlwZS5zd2FwPih7CgkvLyAgICAgICBhcHBsaWNhdGlvbklEOiBwb29sSUQsCgkvLyAgICAgICBtZXRob2RBcmdzOiBbdGhpcy50eG4uc2VuZGVyLCBmcm9tLCB0bywgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnRdLAoJLy8gICAgIH0pOwoJaXR4bl9iZWdpbgoJaW50YyAzIC8vICBhcHBsCglpdHhuX2ZpZWxkIFR5cGVFbnVtCglwdXNoYnl0ZXMgMHg4ZDMyNWUyOSAvLyBtZXRob2QgInN3YXAoYWRkcmVzcyx1aW50NjQsdWludDY0LHVpbnQ2NCl1aW50NjQiCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6OTkKCS8vIGFwcGxpY2F0aW9uSUQ6IHBvb2xJRAoJZnJhbWVfZGlnIC0xIC8vIHBvb2xJRDogQXBwSUQKCWl0eG5fZmllbGQgQXBwbGljYXRpb25JRAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTAwCgkvLyBtZXRob2RBcmdzOiBbdGhpcy50eG4uc2VuZGVyLCBmcm9tLCB0bywgdHJhbnNmZXJUeG4uYXNzZXRBbW91bnRdCgl0eG4gU2VuZGVyCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoJZnJhbWVfZGlnIC0yIC8vIGZyb206IHVpbnQ2NAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCWZyYW1lX2RpZyAtMyAvLyB0bzogdWludDY0CglpdG9iCglpdHhuX2ZpZWxkIEFwcGxpY2F0aW9uQXJncwoJZnJhbWVfZGlnIC00IC8vIHRyYW5zZmVyVHhuOiBBc3NldFRyYW5zZmVyVHhuCglndHhucyBBc3NldEFtb3VudAoJaXRvYgoJaXR4bl9maWVsZCBBcHBsaWNhdGlvbkFyZ3MKCgkvLyBGZWUgZmllbGQgbm90IHNldCwgZGVmYXVsdGluZyB0byAwCglpbnRjIDIgLy8gMAoJaXR4bl9maWVsZCBGZWUKCgkvLyBTdWJtaXQgaW5uZXIgdHJhbnNhY3Rpb24KCWl0eG5fc3VibWl0CglpdHhuIE51bUxvZ3MKCWludGMgMCAvLyAxCgktCglpdHhuYXMgTG9ncwoJZXh0cmFjdCA0IDAKCWJ0b2kKCXJldHN1YgoKLy8gb3BVcCgpdm9pZAoqYWJpX3JvdXRlX29wVXA6CgkvLyBleGVjdXRlIG9wVXAoKXZvaWQKCWNhbGxzdWIgb3BVcAoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gb3BVcCgpOiB2b2lkCm9wVXA6Cglwcm90byAwIDAKCXJldHN1YgoKLy8gTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCl2b2lkCiphYmlfcm91dGVfTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtOgoJLy8gcHJvZ3JhbVNpemU6IHVpbnQ2NAoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJYnRvaQoKCS8vIGV4ZWN1dGUgTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCl2b2lkCgljYWxsc3ViIE1BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbQoJaW50YyAwIC8vIDEKCXJldHVybgoKLy8gTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHByb2dyYW1TaXplOiB1aW50NjQpOiB2b2lkCi8vCi8vICoqKioqKioqKioqKioqKioqKioKLy8gTUFOQUdFUgovLyAqKioqKioqKioqKioqKioqKioqCk1BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbToKCXByb3RvIDEgMAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTExCgkvLyB0aGlzLmFzc2VydElzTWFuYWdlcigpCgljYWxsc3ViIGFzc2VydElzTWFuYWdlcgoKCS8vICppZjBfY29uZGl0aW9uCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjExMwoJLy8gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0uZXhpc3RzCglieXRlYyAxIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJYm94X2xlbgoJc3dhcAoJcG9wCglieiAqaWYwX2Vsc2UKCgkvLyAqaWYwX2NvbnNlcXVlbnQKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTE0CgkvLyB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS5yZXNpemUocHJvZ3JhbVNpemUpCglieXRlYyAxIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJZnJhbWVfZGlnIC0xIC8vIHByb2dyYW1TaXplOiB1aW50NjQKCWJveF9yZXNpemUKCWIgKmlmMF9lbmQKCippZjBfZWxzZToKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTE2CgkvLyB0aGlzLnBvb2xDb250cmFjdEFwcHJvdmFsUHJvZ3JhbS5jcmVhdGUocHJvZ3JhbVNpemUpCglieXRlYyAxIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJZnJhbWVfZGlnIC0xIC8vIHByb2dyYW1TaXplOiB1aW50NjQKCWJveF9jcmVhdGUKCXBvcAoKKmlmMF9lbmQ6CglyZXRzdWIKCi8vIE1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCxieXRlW10pdm9pZAoqYWJpX3JvdXRlX01BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtOgoJLy8gZGF0YTogYnl0ZVtdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglleHRyYWN0IDIgMAoKCS8vIG9mZnNldDogdWludDY0Cgl0eG5hIEFwcGxpY2F0aW9uQXJncyAxCglidG9pCgoJLy8gZXhlY3V0ZSBNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQsYnl0ZVtdKXZvaWQKCWNhbGxzdWIgTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW0KCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIE1BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtKG9mZnNldDogdWludDY0LCBkYXRhOiBieXRlcyk6IHZvaWQKTUFOQUdFUl93cml0ZVBvb2xDb250cmFjdFByb2dyYW06Cglwcm90byAyIDAKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEyMQoJLy8gdGhpcy5hc3NlcnRJc01hbmFnZXIoKQoJY2FsbHN1YiBhc3NlcnRJc01hbmFnZXIKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEyMwoJLy8gdGhpcy5wb29sQ29udHJhY3RBcHByb3ZhbFByb2dyYW0ucmVwbGFjZShvZmZzZXQsIGRhdGEpCglieXRlYyAxIC8vICAicG9vbF9hcHByb3ZhbF9wcm9ncmFtIgoJZnJhbWVfZGlnIC0xIC8vIG9mZnNldDogdWludDY0CglmcmFtZV9kaWcgLTIgLy8gZGF0YTogYnl0ZXMKCWJveF9yZXBsYWNlCglyZXRzdWIKCi8vIGFzc2VydElzTWFuYWdlcigpOiB2b2lkCi8vCi8vICoqKioqKioqKioqKioqKioqKioKLy8gU1VCUk9VVElORVMKLy8gKioqKioqKioqKioqKioqKioqKgphc3NlcnRJc01hbmFnZXI6Cglwcm90byAwIDAKCgkvLyBjb250cmFjdHMvRmFjdG9yeS5hbGdvLnRzOjEzMQoJLy8gYXNzZXJ0KHRoaXMudHhuLnNlbmRlciA9PT0gdGhpcy5tYW5hZ2VyLnZhbHVlLCAnb25seSB0aGUgbWFuYWdlciBjYW4gY2FsbCB0aGlzIG1ldGhvZCcpCgl0eG4gU2VuZGVyCglieXRlYyA0IC8vICAibWFuYWdlciIKCWFwcF9nbG9iYWxfZ2V0Cgk9PQoKCS8vIG9ubHkgdGhlIG1hbmFnZXIgY2FuIGNhbGwgdGhpcyBtZXRob2QKCWFzc2VydAoJcmV0c3ViCgovLyBnZXRQb29sSGFzaChhc3NldElkczogQXNzZXRJRFtdLCB3ZWlnaHRzOiB1aW50NjRbXSk6IGJ5dGVzMzIKZ2V0UG9vbEhhc2g6Cglwcm90byAyIDEKCgkvLyBQdXNoIGVtcHR5IGJ5dGVzIGFmdGVyIHRoZSBmcmFtZSBwb2ludGVyIHRvIHJlc2VydmUgc3BhY2UgZm9yIGxvY2FsIHZhcmlhYmxlcwoJYnl0ZWMgMCAvLyAweAoJZHVwCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMzUKCS8vIHBhcnRzOiBieXRlcyA9ICcnCglieXRlYyAwIC8vICAiIgoJZnJhbWVfYnVyeSAwIC8vIHBhcnRzOiBieXRlcwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTM3CgkvLyBmb3IgKGxldCBpID0gMDsgaSA8IGFzc2V0SWRzLmxlbmd0aDsgaSArPSAxKQoJaW50YyAyIC8vIDAKCWZyYW1lX2J1cnkgMSAvLyBpOiB1aW50NjQKCipmb3JfMDoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTM3CgkvLyBpIDwgYXNzZXRJZHMubGVuZ3RoCglmcmFtZV9kaWcgMSAvLyBpOiB1aW50NjQKCWZyYW1lX2RpZyAtMSAvLyBhc3NldElkczogQXNzZXRJRFtdCglsZW4KCWludGMgMSAvLyA4CgkvCgk8CglieiAqZm9yXzBfZW5kCgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxMzgKCS8vIHBhcnRzICs9IGl0b2IoYXNzZXRJZHNbaV0pCglmcmFtZV9kaWcgMCAvLyBwYXJ0czogYnl0ZXMKCWZyYW1lX2RpZyAtMSAvLyBhc3NldElkczogQXNzZXRJRFtdCglzdG9yZSAyNTUgLy8gZnVsbCBhcnJheQoJaW50YyAyIC8vICBpbml0aWFsIG9mZnNldAoJZnJhbWVfZGlnIDEgLy8gaTogdWludDY0CglpbnRjIDEgLy8gOAoJKiAvLyBhY2MgKiB0eXBlTGVuZ3RoCgkrCglsb2FkIDI1NSAvLyBmdWxsIGFycmF5Cglzd2FwCglpbnRjIDEgLy8gOAoJZXh0cmFjdDMKCWJ0b2kKCWl0b2IKCWNvbmNhdAoJZnJhbWVfYnVyeSAwIC8vIHBhcnRzOiBieXRlcwoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTM5CgkvLyBwYXJ0cyArPSBpdG9iKHdlaWdodHNbaV0pCglmcmFtZV9kaWcgMCAvLyBwYXJ0czogYnl0ZXMKCWZyYW1lX2RpZyAtMiAvLyB3ZWlnaHRzOiB1aW50NjRbXQoJc3RvcmUgMjU1IC8vIGZ1bGwgYXJyYXkKCWludGMgMiAvLyAgaW5pdGlhbCBvZmZzZXQKCWZyYW1lX2RpZyAxIC8vIGk6IHVpbnQ2NAoJaW50YyAxIC8vIDgKCSogLy8gYWNjICogdHlwZUxlbmd0aAoJKwoJbG9hZCAyNTUgLy8gZnVsbCBhcnJheQoJc3dhcAoJaW50YyAxIC8vIDgKCWV4dHJhY3QzCglidG9pCglpdG9iCgljb25jYXQKCWZyYW1lX2J1cnkgMCAvLyBwYXJ0czogYnl0ZXMKCipmb3JfMF9jb250aW51ZToKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTM3CgkvLyBpICs9IDEKCWZyYW1lX2RpZyAxIC8vIGk6IHVpbnQ2NAoJaW50YyAwIC8vIDEKCSsKCWZyYW1lX2J1cnkgMSAvLyBpOiB1aW50NjQKCWIgKmZvcl8wCgoqZm9yXzBfZW5kOgoJLy8gY29udHJhY3RzL0ZhY3RvcnkuYWxnby50czoxNDIKCS8vIHJldHVybiBzaGE1MTJfMjU2KHBhcnRzKTsKCWZyYW1lX2RpZyAwIC8vIHBhcnRzOiBieXRlcwoJc2hhNTEyXzI1NgoKCS8vIHNldCB0aGUgc3Vicm91dGluZSByZXR1cm4gdmFsdWUKCWZyYW1lX2J1cnkgMAoKCS8vIHBvcCBhbGwgbG9jYWwgdmFyaWFibGVzIGZyb20gdGhlIHN0YWNrCglwb3BuIDEKCXJldHN1YgoKLy8gZ2V0UG9vbCh1aW50NjRbXSx1aW50NjRbXSkodWludDY0LHVpbnQ2NFtdLHVpbnQ2NFtdKQoqYWJpX3JvdXRlX2dldFBvb2w6CgkvLyBUaGUgQUJJIHJldHVybiBwcmVmaXgKCWJ5dGVjIDIgLy8gMHgxNTFmN2M3NQoKCS8vIHdlaWdodHM6IHVpbnQ2NFtdCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAyCglleHRyYWN0IDIgMAoKCS8vIGFzc2V0SWRzOiB1aW50NjRbXQoJdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMQoJZXh0cmFjdCAyIDAKCgkvLyBleGVjdXRlIGdldFBvb2wodWludDY0W10sdWludDY0W10pKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSkKCWNhbGxzdWIgZ2V0UG9vbAoJY29uY2F0Cglsb2cKCWludGMgMCAvLyAxCglyZXR1cm4KCi8vIGdldFBvb2woYXNzZXRJZHM6IEFzc2V0SURbXSwgd2VpZ2h0czogdWludDY0W10pOiBQb29sCmdldFBvb2w6Cglwcm90byAyIDEKCgkvLyBQdXNoIGVtcHR5IGJ5dGVzIGFmdGVyIHRoZSBmcmFtZSBwb2ludGVyIHRvIHJlc2VydmUgc3BhY2UgZm9yIGxvY2FsIHZhcmlhYmxlcwoJYnl0ZWMgMCAvLyAweAoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTQ3CgkvLyBoYXNoID0gdGhpcy5nZXRQb29sSGFzaChhc3NldElkcywgd2VpZ2h0cykKCWZyYW1lX2RpZyAtMiAvLyB3ZWlnaHRzOiB1aW50NjRbXQoJZnJhbWVfZGlnIC0xIC8vIGFzc2V0SWRzOiBBc3NldElEW10KCWNhbGxzdWIgZ2V0UG9vbEhhc2gKCWZyYW1lX2J1cnkgMCAvLyBoYXNoOiBieXRlWzMyXQoKCS8vIGNvbnRyYWN0cy9GYWN0b3J5LmFsZ28udHM6MTQ4CgkvLyByZXR1cm4gdGhpcy5wb29scyhoYXNoKS52YWx1ZTsKCWJ5dGVjIDMgLy8gICJwb29sc18iCglmcmFtZV9kaWcgMCAvLyBoYXNoOiBieXRlWzMyXQoJY29uY2F0Cglib3hfZ2V0CgoJLy8gYm94IHZhbHVlIGRvZXMgbm90IGV4aXN0OiB0aGlzLnBvb2xzKGhhc2gpLnZhbHVlCglhc3NlcnQKCgkvLyBzZXQgdGhlIHN1YnJvdXRpbmUgcmV0dXJuIHZhbHVlCglmcmFtZV9idXJ5IDAKCXJldHN1YgoKKmNyZWF0ZV9Ob09wOgoJdHhuIE51bUFwcEFyZ3MKCWJ6ICphYmlfcm91dGVfY3JlYXRlQXBwbGljYXRpb24KCWJ5dGVjIDUgLy8gIG1ldGhvZCAiY3JlYXRlQXBwbGljYXRpb24oKXZvaWQiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2NyZWF0ZUFwcGxpY2F0aW9uCgoJLy8gdGhpcyBjb250cmFjdCBkb2VzIG5vdCBpbXBsZW1lbnQgdGhlIGdpdmVuIEFCSSBtZXRob2QgZm9yIGNyZWF0ZSBOb09wCgllcnIKCipjYWxsX05vT3A6CglwdXNoYnl0ZXMgMHg0MjU4OGUwOSAvLyBtZXRob2QgImNyZWF0ZVBvb2woKXZvaWQiCglwdXNoYnl0ZXMgMHhhMWViMzAyMCAvLyBtZXRob2QgImluaXRQb29sKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSl1aW50NjQiCglwdXNoYnl0ZXMgMHg3OWFkMjk4OCAvLyBtZXRob2QgImFkZExpcXVpZGl0eSh1aW50NjQsdWludDY0LGF4ZmVyKXZvaWQiCglwdXNoYnl0ZXMgMHhkMDhlN2E3NCAvLyBtZXRob2QgImdldExpcXVpZGl0eSh1aW50NjQpdWludDY0IgoJcHVzaGJ5dGVzIDB4ZmM2MDliYWUgLy8gbWV0aG9kICJidXJuTGlxdWlkaXR5KHVpbnQ2NCxheGZlcil2b2lkIgoJcHVzaGJ5dGVzIDB4OGEzN2Q1NWUgLy8gbWV0aG9kICJzd2FwKHVpbnQ2NCx1aW50NjQsdWludDY0LGF4ZmVyKXVpbnQ2NCIKCXB1c2hieXRlcyAweDg1NGRlZGUwIC8vIG1ldGhvZCAib3BVcCgpdm9pZCIKCXB1c2hieXRlcyAweDA5OWU1Y2ZkIC8vIG1ldGhvZCAiTUFOQUdFUl91cGRhdGVQb29sQ29udHJhY3RQcm9ncmFtKHVpbnQ2NCl2b2lkIgoJcHVzaGJ5dGVzIDB4YTRiNTAzYzEgLy8gbWV0aG9kICJNQU5BR0VSX3dyaXRlUG9vbENvbnRyYWN0UHJvZ3JhbSh1aW50NjQsYnl0ZVtdKXZvaWQiCglwdXNoYnl0ZXMgMHhjOTkxMTM5NiAvLyBtZXRob2QgImdldFBvb2wodWludDY0W10sdWludDY0W10pKHVpbnQ2NCx1aW50NjRbXSx1aW50NjRbXSkiCgl0eG5hIEFwcGxpY2F0aW9uQXJncyAwCgltYXRjaCAqYWJpX3JvdXRlX2NyZWF0ZVBvb2wgKmFiaV9yb3V0ZV9pbml0UG9vbCAqYWJpX3JvdXRlX2FkZExpcXVpZGl0eSAqYWJpX3JvdXRlX2dldExpcXVpZGl0eSAqYWJpX3JvdXRlX2J1cm5MaXF1aWRpdHkgKmFiaV9yb3V0ZV9zd2FwICphYmlfcm91dGVfb3BVcCAqYWJpX3JvdXRlX01BTkFHRVJfdXBkYXRlUG9vbENvbnRyYWN0UHJvZ3JhbSAqYWJpX3JvdXRlX01BTkFHRVJfd3JpdGVQb29sQ29udHJhY3RQcm9ncmFtICphYmlfcm91dGVfZ2V0UG9vbAoKCS8vIHRoaXMgY29udHJhY3QgZG9lcyBub3QgaW1wbGVtZW50IHRoZSBnaXZlbiBBQkkgbWV0aG9kIGZvciBjYWxsIE5vT3AKCWVycgoKKnByb2Nlc3Nfc3RhdGljX3R1cGxlX2VsZW1lbnQ6Cglwcm90byA0IDMKCWZyYW1lX2RpZyAtNCAvLyB0dXBsZSBoZWFkCglmcmFtZV9kaWcgLTEgLy8gZWxlbWVudAoJY29uY2F0CglmcmFtZV9kaWcgLTMgLy8gdHVwbGUgdGFpbAoJZnJhbWVfZGlnIC0yIC8vIGhlYWQgb2Zmc2V0CglyZXRzdWIKCipwcm9jZXNzX2R5bmFtaWNfdHVwbGVfZWxlbWVudDoKCXByb3RvIDQgMwoJZnJhbWVfZGlnIC00IC8vIHR1cGxlIGhlYWQKCWZyYW1lX2RpZyAtMiAvLyBoZWFkIG9mZnNldAoJY29uY2F0CglmcmFtZV9idXJ5IC00IC8vIHR1cGxlIGhlYWQKCWZyYW1lX2RpZyAtMSAvLyBlbGVtZW50CglkdXAKCWxlbgoJZnJhbWVfZGlnIC0yIC8vIGhlYWQgb2Zmc2V0CglidG9pCgkrCglpdG9iCglleHRyYWN0IDYgMgoJZnJhbWVfYnVyeSAtMiAvLyBoZWFkIG9mZnNldAoJZnJhbWVfZGlnIC0zIC8vIHR1cGxlIHRhaWwKCXN3YXAKCWNvbmNhdAoJZnJhbWVfYnVyeSAtMyAvLyB0dXBsZSB0YWlsCglmcmFtZV9kaWcgLTQgLy8gdHVwbGUgaGVhZAoJZnJhbWVfZGlnIC0zIC8vIHR1cGxlIHRhaWwKCWZyYW1lX2RpZyAtMiAvLyBoZWFkIG9mZnNldAoJcmV0c3Vi",
     "clear": "I3ByYWdtYSB2ZXJzaW9uIDEw"
   },
   "byteCode": {
-    "approval": "CiAGAQgABgIEJgYAFXBvb2xfYXBwcm92YWxfcHJvZ3JhbQZwb29sc18EFR98dQdtYW5hZ2VyBLhEezYxGBQlCzEZCI0MAtcAAAAAAAAAAAAAAsgAAAAAAAAAAAAAAIgAAiJDigAAJwQ2MgByB0hniYgAAiJDigAAsSWyECSyGSm+RLIegAEKsh8hBLI0IQSyNYEDsjgnBbIagaCNBrIBs4krNhoDVwIANhoCVwIANhoBF4gABRZQsCJDigMBKIv+FSMKIQQPRIv+FSMKi/0VIwoSRIv9i/6IAc6MACqLAFC9TEgURCqLAFBJvEgoKIACAAyL/xaIApKL/kkVIwoWVwYCTFCIApCL/UkVIwoWVwYCTFCIAoFIUL+xJbIQgATmNf21shqL/7IYi/5JFSMKFlcGAkxQshqL/UkVIwoWVwYCTFCyGiSyAbO0OyIJxTpXBAAXjACJMRYiCUk4ECEFEkQ2GgIXNhoBF4gAAiJDigMAsSWyEIAEq99+FbIai/+yGIv+FrIai/04EhayGov9OACyGiSyAbOJNhoBF4gAAiJDigEAsSWyEIAEKnQAT7Iai/+yGDEAshoksgGztDsiCcU6VwQAF4kxFiIJSTgQIQUSRDYaAReIAAIiQ4oCALElshCABD+x0JuyGov/shgxALIai/44EhayGiSyAbOJKzEWIglJOBAhBRJENhoDFzYaAhc2GgEXiAAFFlCwIkOKBAGxJbIQgASNMl4pshqL/7IYMQCyGov+FrIai/0WshqL/DgSFrIaJLIBs7Q7IgnFOlcEABeJiAACIkOKAACJNhoBF4gAAiJDigEAiAAwKb1MSEEABymL/9NCAAUpi/+5SIk2GgJXAgA2GgEXiAACIkOKAgCIAAcpi/+L/ruJigAAMQAnBGQSRImKAgEoSSiMACSMAYsBi/8VIwoMQQA1iwCL/zX/JIsBIwsINP9MI1gXFlCMAIsAi/41/ySLASMLCDT/TCNYFxZQjACLASIIjAFC/8CLAAOMAEYBiSs2GgJXAgA2GgFXAgCIAARQsCJDigIBKIv+i/+I/46MACqLAFC+RIwAiTEbQf00JwU2GgCOAf0rAIAEQliOCYAEoeswIIAEea0piIAEm8CsXYAE/GCbroAEijfVXoAEhU3t4IAECZ5c/YAEpLUDwYAEyZETljYaAI4K/Of9GP3N/g/+Pv51/sz+1f74/3IAigQDi/yL/1CL/Yv+iYoEA4v8i/5QjPyL/0kVi/4XCBZXBgKM/ov9TFCM/Yv8i/2L/ok=",
+    "approval": "CiAGAQgABgIEJgYAFXBvb2xfYXBwcm92YWxfcHJvZ3JhbQQVH3x1BnBvb2xzXwdtYW5hZ2VyBLhEezYxGBQlCzEZCI0MAtsAAAAAAAAAAAAAAswAAAAAAAAAAAAAAIgAAiJDigAAJwQ2MgByB0hniYgAAiJDigAAsSWyECSyGSm+RLIegAEKsh8hBLI0IQSyNYEDsjgnBbIagaCNBrIBs4kqNhoDVwIANhoCVwIANhoBF4gABRZQsCJDigMBKIv+FSMKIQQPRIv+FSMKi/0VIwoSRIv9i/6IAdKMACuLAFC9TEgURCuLAFBJvEgoKIACAAyL/xaIApaL/kkVIwoWVwYCTFCIApSL/UkVIwoWVwYCTFCIAoVIUL+xJbIQgATmNf21shqL/7IYi/5JFSMKFlcGAkxQshqL/UkVIwoWVwYCTFCyGiSyAbO0OyIJxTpXBAAXjACJMRYiCUk4ECEFEkQ2GgIXNhoBF4gAAiJDigMAsSWyEIAEq99+FbIai/+yGIv+FrIai/04EhayGov9OACyGiSyAbOJKjYaAReIAAUWULAiQ4oBAbElshCABCp0AE+yGov/shgxALIaJLIBs7Q7IgnFOlcEABeJMRYiCUk4ECEFEkQ2GgEXiAACIkOKAgCxJbIQgAQ/sdCbshqL/7IYMQCyGov+OBIWshoksgGziSoxFiIJSTgQIQUSRDYaAxc2GgIXNhoBF4gABRZQsCJDigQBsSWyEIAEjTJeKbIai/+yGDEAshqL/hayGov9FrIai/w4EhayGiSyAbO0OyIJxTpXBAAXiYgAAiJDigAAiTYaAReIAAIiQ4oBAIgAMCm9TEhBAAcpi//TQgAFKYv/uUiJNhoCVwIANhoBF4gAAiJDigIAiAAHKYv/i/67iYoAADEAJwRkEkSJigIBKEkojAAkjAGLAYv/FSMKDEEANYsAi/81/ySLASMLCDT/TCNYFxZQjACLAIv+Nf8kiwEjCwg0/0wjWBcWUIwAiwEiCIwBQv/AiwADjABGAYkqNhoCVwIANhoBVwIAiAAEULAiQ4oCASiL/ov/iP+OjAAriwBQvkSMAIkxG0H9MCcFNhoAjgH9JwCABEJYjgmABKHrMCCABHmtKYiABNCOenSABPxgm66ABIo31V6ABIVN7eCABAmeXP2ABKS1A8GABMmRE5Y2GgCOCvzj/RT9yf4L/j7+df7M/tX++P9yAIoEA4v8i/9Qi/2L/omKBAOL/Iv+UIz8i/9JFYv+FwgWVwYCjP6L/UxQjP2L/Iv9i/6J",
     "clear": "Cg=="
   },
   "compilerInfo": {

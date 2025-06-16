@@ -19,8 +19,6 @@ export class BalancedPoolV2 extends Contract {
 
   provided = BoxMap<Address, uint64[]>({ prefix: 'provided_', dynamicSize: true });
 
-  minRatios = BoxMap<Address, uint64>({ prefix: 'minratio_' });
-
   /**
    * createApplication method called at creation
    */
@@ -77,24 +75,6 @@ export class BalancedPoolV2 extends Contract {
     }
 
     this.provided(sender).value[index] += amount;
-
-    /*
-    const newMinRatio = this.computeLP(sender, index);
-
-    if (!this.minRatios(sender).exists) {
-      this.minRatios(sender).create(8);
-      this.minRatios(sender).value = newMinRatio;
-      // eslint-disable-next-line eqeqeq
-    } else if (this.minRatios(sender).value == 0) {
-      this.minRatios(sender).value = newMinRatio;
-    } else {
-      const currentMin = this.minRatios(sender).value;
-
-      if (newMinRatio < currentMin) {
-        this.minRatios(sender).value = newMinRatio;
-      }
-    }
-     */
   }
 
   /**
@@ -106,14 +86,6 @@ export class BalancedPoolV2 extends Contract {
     this.assertIsManager();
     this.assertIsBootstrapped();
 
-    const provided = this.provided(sender).value;
-    let totalAssets = 0;
-    for (let i = 0; i < provided.length; i += 1) {
-      if (provided[i] > 0) {
-        totalAssets += 1;
-      }
-    }
-
     let amount: uint64 = 0;
 
     if (this.totalLP() === 0) {
@@ -122,19 +94,6 @@ export class BalancedPoolV2 extends Contract {
     } else {
       amount = this.computeNAssetsLiquidity(sender);
     }
-
-    /*
-    if (this.totalLP() === 0) {
-      // First deployer
-      amount = AMOUNT_LP_DEPLOYER;
-    } else if (totalAssets === this.assets.value.length) {
-      // All tokens provided
-      amount = this.computeAllAssetsLiquidity(sender);
-    } else if (totalAssets === 1) {
-      // Only one token provided
-    } else {
-      // Partial multi-token
-    } */
 
     for (let i = 0; i < this.provided(sender).value.length; i += 1) {
       this.provided(sender).value[i] = 0;

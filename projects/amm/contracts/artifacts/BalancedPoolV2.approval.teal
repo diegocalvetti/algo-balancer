@@ -37,7 +37,7 @@ switch *call_NoOp *NOT_IMPLEMENTED *NOT_IMPLEMENTED *NOT_IMPLEMENTED *NOT_IMPLEM
 createApplication:
 	proto 0 0
 
-	// contracts/BalancedPoolV2.algo.ts:29
+	// contracts/BalancedPoolV2.algo.ts:27
 	// this.manager.value = this.app.creator
 	bytec 10 //  "manager"
 	txna Applications 0
@@ -45,7 +45,7 @@ createApplication:
 	pop
 	app_global_put
 
-	// contracts/BalancedPoolV2.algo.ts:30
+	// contracts/BalancedPoolV2.algo.ts:28
 	// this.burned.value = 0
 	bytec 7 //  "burned"
 	intc 0 // 0
@@ -86,11 +86,11 @@ bootstrap:
 	bytec 0 // 0x
 	dup
 
-	// contracts/BalancedPoolV2.algo.ts:40
+	// contracts/BalancedPoolV2.algo.ts:38
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/BalancedPoolV2.algo.ts:41
+	// contracts/BalancedPoolV2.algo.ts:39
 	// assert(assetIds.length >= 2, 'At least 2 tokens needed')
 	frame_dig -1 // assetIds: AssetID[]
 	len
@@ -102,7 +102,7 @@ bootstrap:
 	// At least 2 tokens needed
 	assert
 
-	// contracts/BalancedPoolV2.algo.ts:42
+	// contracts/BalancedPoolV2.algo.ts:40
 	// assert(assetIds.length === weights.length, 'Weights and Assets length must be the same')
 	frame_dig -1 // assetIds: AssetID[]
 	len
@@ -117,18 +117,18 @@ bootstrap:
 	// Weights and Assets length must be the same
 	assert
 
-	// contracts/BalancedPoolV2.algo.ts:43
+	// contracts/BalancedPoolV2.algo.ts:41
 	// sumOfWeights = 0
 	intc 0 // 0
 	frame_bury 0 // sumOfWeights: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:45
+	// contracts/BalancedPoolV2.algo.ts:43
 	// for (let i = 0; i < assetIds.length; i += 1)
 	intc 0 // 0
 	frame_bury 1 // i: uint64
 
 *for_0:
-	// contracts/BalancedPoolV2.algo.ts:45
+	// contracts/BalancedPoolV2.algo.ts:43
 	// i < assetIds.length
 	frame_dig 1 // i: uint64
 	frame_dig -1 // assetIds: AssetID[]
@@ -138,7 +138,7 @@ bootstrap:
 	<
 	bz *for_0_end
 
-	// contracts/BalancedPoolV2.algo.ts:46
+	// contracts/BalancedPoolV2.algo.ts:44
 	// this.optIn(assetIds[i])
 	frame_dig -1 // assetIds: AssetID[]
 	store 255 // full array
@@ -154,7 +154,7 @@ bootstrap:
 	btoi
 	callsub optIn
 
-	// contracts/BalancedPoolV2.algo.ts:47
+	// contracts/BalancedPoolV2.algo.ts:45
 	// this.addToken(i, assetIds[i], weights[i])
 	frame_dig -2 // weights: uint64[]
 	store 255 // full array
@@ -183,7 +183,7 @@ bootstrap:
 	frame_dig 1 // i: uint64
 	callsub addToken
 
-	// contracts/BalancedPoolV2.algo.ts:48
+	// contracts/BalancedPoolV2.algo.ts:46
 	// sumOfWeights += weights[i]
 	frame_dig 0 // sumOfWeights: uint64
 	frame_dig -2 // weights: uint64[]
@@ -202,7 +202,7 @@ bootstrap:
 	frame_bury 0 // sumOfWeights: uint64
 
 *for_0_continue:
-	// contracts/BalancedPoolV2.algo.ts:45
+	// contracts/BalancedPoolV2.algo.ts:43
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 3 // 1
@@ -211,7 +211,7 @@ bootstrap:
 	b *for_0
 
 *for_0_end:
-	// contracts/BalancedPoolV2.algo.ts:51
+	// contracts/BalancedPoolV2.algo.ts:49
 	// this.assets.value = assetIds
 	bytec 2 //  "assets"
 	frame_dig -1 // assetIds: AssetID[]
@@ -225,7 +225,7 @@ bootstrap:
 	concat
 	app_global_put
 
-	// contracts/BalancedPoolV2.algo.ts:53
+	// contracts/BalancedPoolV2.algo.ts:51
 	// assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1')
 	intc 2 // 1000000
 	frame_dig 0 // sumOfWeights: uint64
@@ -236,11 +236,11 @@ bootstrap:
 	// Weights must sum to 1
 	assert
 
-	// contracts/BalancedPoolV2.algo.ts:54
+	// contracts/BalancedPoolV2.algo.ts:52
 	// this.createToken()
 	callsub createToken
 
-	// contracts/BalancedPoolV2.algo.ts:56
+	// contracts/BalancedPoolV2.algo.ts:54
 	// return this.token.value;
 	bytec 4 //  "token"
 	app_global_get
@@ -289,15 +289,15 @@ addLiquidity:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/BalancedPoolV2.algo.ts:66
+	// contracts/BalancedPoolV2.algo.ts:64
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/BalancedPoolV2.algo.ts:67
+	// contracts/BalancedPoolV2.algo.ts:65
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/BalancedPoolV2.algo.ts:69
+	// contracts/BalancedPoolV2.algo.ts:67
 	// assetId = this.assets.value[index]
 	bytec 2 //  "assets"
 	app_global_get
@@ -315,7 +315,7 @@ addLiquidity:
 	btoi
 	frame_bury 0 // assetId: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:70
+	// contracts/BalancedPoolV2.algo.ts:68
 	// log('Asset ID => ' + itob(assetId))
 	pushbytes 0x4173736574204944203d3e20 // "Asset ID => "
 	frame_dig 0 // assetId: uint64
@@ -323,12 +323,12 @@ addLiquidity:
 	concat
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:72
+	// contracts/BalancedPoolV2.algo.ts:70
 	// this.optIn(assetId)
 	frame_dig 0 // assetId: uint64
 	callsub optIn
 
-	// contracts/BalancedPoolV2.algo.ts:73
+	// contracts/BalancedPoolV2.algo.ts:71
 	// this.balances(assetId).value += amount
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetId: uint64
@@ -350,7 +350,7 @@ addLiquidity:
 	box_put
 
 	// *if0_condition
-	// contracts/BalancedPoolV2.algo.ts:75
+	// contracts/BalancedPoolV2.algo.ts:73
 	// !this.provided(sender).exists
 	bytec 3 //  "provided_"
 	frame_dig -3 // sender: Address
@@ -362,17 +362,26 @@ addLiquidity:
 	bz *if0_end
 
 	// *if0_consequent
-	// contracts/BalancedPoolV2.algo.ts:76
-	// this.provided(sender).create(64)
+	// contracts/BalancedPoolV2.algo.ts:74
+	// this.provided(sender).create((this.assets.value.length + 1) * 8)
 	bytec 3 //  "provided_"
 	frame_dig -3 // sender: Address
 	concat
-	pushint 64
+	bytec 2 //  "assets"
+	app_global_get
+	extract 2 0
+	len
+	intc 1 // 8
+	/
+	intc 3 // 1
+	+
+	intc 1 // 8
+	*
 	box_create
 	pop
 
 *if0_end:
-	// contracts/BalancedPoolV2.algo.ts:79
+	// contracts/BalancedPoolV2.algo.ts:77
 	// this.provided(sender).value[index] += amount
 	bytec 3 //  "provided_"
 	frame_dig -3 // sender: Address
@@ -464,38 +473,60 @@ getLiquidity:
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
-	dupn 4
+	dup
 
-	// contracts/BalancedPoolV2.algo.ts:106
+	// contracts/BalancedPoolV2.algo.ts:86
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/BalancedPoolV2.algo.ts:107
+	// contracts/BalancedPoolV2.algo.ts:87
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/BalancedPoolV2.algo.ts:109
-	// provided = this.provided(sender).value
+	// contracts/BalancedPoolV2.algo.ts:89
+	// amount: uint64 = 0
+	intc 0 // 0
+	frame_bury 0 // amount: uint64
+
+	// *if1_condition
+	// contracts/BalancedPoolV2.algo.ts:91
+	// this.totalLP() === 0
+	callsub totalLP
+	intc 0 // 0
+	==
+	bz *if1_else
+
+	// *if1_consequent
+	// contracts/BalancedPoolV2.algo.ts:93
+	// amount = AMOUNT_LP_DEPLOYER
+	pushint 1_000_000
+	intc 4 // 10
+	intc 5 // 6
+	exp
+	*
+	frame_bury 0 // amount: uint64
+	b *if1_end
+
+*if1_else:
+	// contracts/BalancedPoolV2.algo.ts:95
+	// amount = this.computeNAssetsLiquidity(sender)
+	frame_dig -1 // sender: Address
+	callsub computeNAssetsLiquidity
+	frame_bury 0 // amount: uint64
+
+*if1_end:
+	// contracts/BalancedPoolV2.algo.ts:98
+	// for (let i = 0; i < this.provided(sender).value.length; i += 1)
+	intc 0 // 0
+	frame_bury 1 // i: uint64
+
+*for_1:
+	// contracts/BalancedPoolV2.algo.ts:98
+	// i < this.provided(sender).value.length
+	frame_dig 1 // i: uint64
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
 	concat
-	frame_bury 0 // storage key//provided
-
-	// contracts/BalancedPoolV2.algo.ts:110
-	// totalAssets = 0
-	intc 0 // 0
-	frame_bury 1 // totalAssets: uint64
-
-	// contracts/BalancedPoolV2.algo.ts:111
-	// for (let i = 0; i < provided.length; i += 1)
-	intc 0 // 0
-	frame_bury 2 // i: uint64
-
-*for_1:
-	// contracts/BalancedPoolV2.algo.ts:111
-	// i < provided.length
-	frame_dig 2 // i: uint64
-	frame_dig 0 // storage key//provided
 	box_get
 
 	// box value does not exist: this.provided(sender).value
@@ -507,106 +538,7 @@ getLiquidity:
 	<
 	bz *for_1_end
 
-	// *if1_condition
-	// contracts/BalancedPoolV2.algo.ts:112
-	// provided[i] > 0
-	frame_dig 0 // storage key//provided
-	box_get
-
-	// box value does not exist: this.provided(sender).value
-	assert
-	extract 2 0
-	store 255 // full array
-	intc 0 //  initial offset
-	frame_dig 2 // i: uint64
-	intc 1 // 8
-	* // acc * typeLength
-	+
-	load 255 // full array
-	swap
-	intc 1 // 8
-	extract3
-	btoi
-	intc 0 // 0
-	>
-	bz *if1_end
-
-	// *if1_consequent
-	// contracts/BalancedPoolV2.algo.ts:113
-	// totalAssets += 1
-	frame_dig 1 // totalAssets: uint64
-	intc 3 // 1
-	+
-	frame_bury 1 // totalAssets: uint64
-
-*if1_end:
-
-*for_1_continue:
-	// contracts/BalancedPoolV2.algo.ts:111
-	// i += 1
-	frame_dig 2 // i: uint64
-	intc 3 // 1
-	+
-	frame_bury 2 // i: uint64
-	b *for_1
-
-*for_1_end:
-	// contracts/BalancedPoolV2.algo.ts:117
-	// amount: uint64 = 0
-	intc 0 // 0
-	frame_bury 3 // amount: uint64
-
-	// *if2_condition
-	// contracts/BalancedPoolV2.algo.ts:119
-	// this.totalLP() === 0
-	callsub totalLP
-	intc 0 // 0
-	==
-	bz *if2_else
-
-	// *if2_consequent
-	// contracts/BalancedPoolV2.algo.ts:121
-	// amount = AMOUNT_LP_DEPLOYER
-	pushint 1_000_000
-	intc 4 // 10
-	intc 5 // 6
-	exp
-	*
-	frame_bury 3 // amount: uint64
-	b *if2_end
-
-*if2_else:
-	// contracts/BalancedPoolV2.algo.ts:123
-	// amount = this.computeNAssetsLiquidity(sender)
-	frame_dig -1 // sender: Address
-	callsub computeNAssetsLiquidity
-	frame_bury 3 // amount: uint64
-
-*if2_end:
-	// contracts/BalancedPoolV2.algo.ts:139
-	// for (let i = 0; i < this.provided(sender).value.length; i += 1)
-	intc 0 // 0
-	frame_bury 4 // i: uint64
-
-*for_2:
-	// contracts/BalancedPoolV2.algo.ts:139
-	// i < this.provided(sender).value.length
-	frame_dig 4 // i: uint64
-	bytec 3 //  "provided_"
-	frame_dig -1 // sender: Address
-	concat
-	box_get
-
-	// box value does not exist: this.provided(sender).value
-	assert
-	extract 2 0
-	len
-	intc 1 // 8
-	/
-	<
-	bz *for_2_end
-
-	// contracts/BalancedPoolV2.algo.ts:140
+	// contracts/BalancedPoolV2.algo.ts:99
 	// this.provided(sender).value[i] = 0
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -618,7 +550,7 @@ getLiquidity:
 	extract 2 0
 	store 255 // full array
 	intc 0 //  initial offset
-	frame_dig 4 // i: uint64
+	frame_dig 1 // i: uint64
 	intc 1 // 8
 	* // acc * typeLength
 	+
@@ -643,17 +575,17 @@ getLiquidity:
 	concat
 	box_put
 
-*for_2_continue:
-	// contracts/BalancedPoolV2.algo.ts:139
+*for_1_continue:
+	// contracts/BalancedPoolV2.algo.ts:98
 	// i += 1
-	frame_dig 4 // i: uint64
+	frame_dig 1 // i: uint64
 	intc 3 // 1
 	+
-	frame_bury 4 // i: uint64
-	b *for_2
+	frame_bury 1 // i: uint64
+	b *for_1
 
-*for_2_end:
-	// contracts/BalancedPoolV2.algo.ts:143
+*for_1_end:
+	// contracts/BalancedPoolV2.algo.ts:102
 	// sendAssetTransfer({
 	//       assetReceiver: sender,
 	//       assetAmount: amount,
@@ -663,17 +595,17 @@ getLiquidity:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/BalancedPoolV2.algo.ts:144
+	// contracts/BalancedPoolV2.algo.ts:103
 	// assetReceiver: sender
 	frame_dig -1 // sender: Address
 	itxn_field AssetReceiver
 
-	// contracts/BalancedPoolV2.algo.ts:145
+	// contracts/BalancedPoolV2.algo.ts:104
 	// assetAmount: amount
-	frame_dig 3 // amount: uint64
+	frame_dig 0 // amount: uint64
 	itxn_field AssetAmount
 
-	// contracts/BalancedPoolV2.algo.ts:146
+	// contracts/BalancedPoolV2.algo.ts:105
 	// xferAsset: this.token.value
 	bytec 4 //  "token"
 	app_global_get
@@ -686,15 +618,15 @@ getLiquidity:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/BalancedPoolV2.algo.ts:149
+	// contracts/BalancedPoolV2.algo.ts:108
 	// return amount;
-	frame_dig 3 // amount: uint64
+	frame_dig 0 // amount: uint64
 
 	// set the subroutine return value
 	frame_bury 0
 
 	// pop all local variables from the stack
-	popn 4
+	popn 1
 	retsub
 
 // burnLiquidity(address,uint64)void
@@ -726,15 +658,15 @@ burnLiquidity:
 	bytec 0 // 0x
 	dupn 5
 
-	// contracts/BalancedPoolV2.algo.ts:153
+	// contracts/BalancedPoolV2.algo.ts:112
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/BalancedPoolV2.algo.ts:154
+	// contracts/BalancedPoolV2.algo.ts:113
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/BalancedPoolV2.algo.ts:155
+	// contracts/BalancedPoolV2.algo.ts:114
 	// assert(amountLP > 0, 'Must burn positive amount')
 	frame_dig -2 // amountLP: uint64
 	intc 0 // 0
@@ -743,12 +675,12 @@ burnLiquidity:
 	// Must burn positive amount
 	assert
 
-	// contracts/BalancedPoolV2.algo.ts:157
+	// contracts/BalancedPoolV2.algo.ts:116
 	// totalLP = this.totalLP()
 	callsub totalLP
 	frame_bury 0 // totalLP: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:158
+	// contracts/BalancedPoolV2.algo.ts:117
 	// numAssets = this.assets.value.length
 	bytec 2 //  "assets"
 	app_global_get
@@ -758,20 +690,20 @@ burnLiquidity:
 	/
 	frame_bury 1 // numAssets: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:160
+	// contracts/BalancedPoolV2.algo.ts:119
 	// for (let i = 0; i < numAssets; i += 1)
 	intc 0 // 0
 	frame_bury 2 // i: uint64
 
-*for_3:
-	// contracts/BalancedPoolV2.algo.ts:160
+*for_2:
+	// contracts/BalancedPoolV2.algo.ts:119
 	// i < numAssets
 	frame_dig 2 // i: uint64
 	frame_dig 1 // numAssets: uint64
 	<
-	bz *for_3_end
+	bz *for_2_end
 
-	// contracts/BalancedPoolV2.algo.ts:161
+	// contracts/BalancedPoolV2.algo.ts:120
 	// assetId = this.assets.value[i]
 	bytec 2 //  "assets"
 	app_global_get
@@ -789,7 +721,7 @@ burnLiquidity:
 	btoi
 	frame_bury 3 // assetId: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:162
+	// contracts/BalancedPoolV2.algo.ts:121
 	// poolBalance = this.balances(assetId).value
 	bytec 1 //  "balances_"
 	frame_dig 3 // assetId: uint64
@@ -802,7 +734,7 @@ burnLiquidity:
 	btoi
 	frame_bury 4 // poolBalance: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:164
+	// contracts/BalancedPoolV2.algo.ts:123
 	// assetAmount = wideRatio([amountLP, poolBalance], [totalLP])
 	frame_dig -2 // amountLP: uint64
 	frame_dig 4 // poolBalance: uint64
@@ -819,7 +751,7 @@ burnLiquidity:
 	assert
 	frame_bury 5 // assetAmount: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:166
+	// contracts/BalancedPoolV2.algo.ts:125
 	// this.balances(assetId).value = poolBalance - assetAmount
 	bytec 1 //  "balances_"
 	frame_dig 3 // assetId: uint64
@@ -831,7 +763,7 @@ burnLiquidity:
 	itob
 	box_put
 
-	// contracts/BalancedPoolV2.algo.ts:168
+	// contracts/BalancedPoolV2.algo.ts:127
 	// sendAssetTransfer({
 	//         assetReceiver: sender,
 	//         assetAmount: assetAmount,
@@ -841,17 +773,17 @@ burnLiquidity:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/BalancedPoolV2.algo.ts:169
+	// contracts/BalancedPoolV2.algo.ts:128
 	// assetReceiver: sender
 	frame_dig -1 // sender: Address
 	itxn_field AssetReceiver
 
-	// contracts/BalancedPoolV2.algo.ts:170
+	// contracts/BalancedPoolV2.algo.ts:129
 	// assetAmount: assetAmount
 	frame_dig 5 // assetAmount: uint64
 	itxn_field AssetAmount
 
-	// contracts/BalancedPoolV2.algo.ts:171
+	// contracts/BalancedPoolV2.algo.ts:130
 	// xferAsset: assetId
 	frame_dig 3 // assetId: uint64
 	itxn_field XferAsset
@@ -863,17 +795,17 @@ burnLiquidity:
 	// Submit inner transaction
 	itxn_submit
 
-*for_3_continue:
-	// contracts/BalancedPoolV2.algo.ts:160
+*for_2_continue:
+	// contracts/BalancedPoolV2.algo.ts:119
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 3 // 1
 	+
 	frame_bury 2 // i: uint64
-	b *for_3
+	b *for_2
 
-*for_3_end:
-	// contracts/BalancedPoolV2.algo.ts:175
+*for_2_end:
+	// contracts/BalancedPoolV2.algo.ts:134
 	// this.burned.value += amountLP
 	bytec 7 //  "burned"
 	app_global_get
@@ -933,15 +865,15 @@ swap:
 	bytec 0 // 0x
 	dupn 6
 
-	// contracts/BalancedPoolV2.algo.ts:186
+	// contracts/BalancedPoolV2.algo.ts:145
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/BalancedPoolV2.algo.ts:187
+	// contracts/BalancedPoolV2.algo.ts:146
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/BalancedPoolV2.algo.ts:189
+	// contracts/BalancedPoolV2.algo.ts:148
 	// assetIn = this.assets.value[from]
 	bytec 2 //  "assets"
 	app_global_get
@@ -959,7 +891,7 @@ swap:
 	btoi
 	frame_bury 0 // assetIn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:190
+	// contracts/BalancedPoolV2.algo.ts:149
 	// assetOut = this.assets.value[to]
 	bytec 2 //  "assets"
 	app_global_get
@@ -977,7 +909,7 @@ swap:
 	btoi
 	frame_bury 1 // assetOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:192
+	// contracts/BalancedPoolV2.algo.ts:151
 	// balanceIn = this.balances(assetIn).value
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -990,7 +922,7 @@ swap:
 	btoi
 	frame_bury 2 // balanceIn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:193
+	// contracts/BalancedPoolV2.algo.ts:152
 	// balanceOut = this.balances(assetOut).value
 	bytec 1 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -1003,7 +935,7 @@ swap:
 	btoi
 	frame_bury 3 // balanceOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:195
+	// contracts/BalancedPoolV2.algo.ts:154
 	// weightIn = this.weights(from).value
 	bytec 5 //  "weights_"
 	frame_dig -2 // from: uint64
@@ -1016,7 +948,7 @@ swap:
 	btoi
 	frame_bury 4 // weightIn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:196
+	// contracts/BalancedPoolV2.algo.ts:155
 	// weightOut = this.weights(to).value
 	bytec 5 //  "weights_"
 	frame_dig -3 // to: uint64
@@ -1029,7 +961,7 @@ swap:
 	btoi
 	frame_bury 5 // weightOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:198
+	// contracts/BalancedPoolV2.algo.ts:157
 	// amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount)
 	frame_dig -4 // amount: uint64
 	frame_dig 5 // weightOut: uint64
@@ -1039,13 +971,13 @@ swap:
 	callsub calcOut
 	frame_bury 6 // amountOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:200
+	// contracts/BalancedPoolV2.algo.ts:159
 	// log(itob(amountOut))
 	frame_dig 6 // amountOut: uint64
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:202
+	// contracts/BalancedPoolV2.algo.ts:161
 	// this.balances(assetIn).value = balanceIn + amount
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -1057,7 +989,7 @@ swap:
 	itob
 	box_put
 
-	// contracts/BalancedPoolV2.algo.ts:203
+	// contracts/BalancedPoolV2.algo.ts:162
 	// this.balances(assetOut).value = balanceOut - amountOut
 	bytec 1 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -1069,7 +1001,7 @@ swap:
 	itob
 	box_put
 
-	// contracts/BalancedPoolV2.algo.ts:205
+	// contracts/BalancedPoolV2.algo.ts:164
 	// sendAssetTransfer({
 	//       assetReceiver: sender,
 	//       assetAmount: amountOut,
@@ -1079,17 +1011,17 @@ swap:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/BalancedPoolV2.algo.ts:206
+	// contracts/BalancedPoolV2.algo.ts:165
 	// assetReceiver: sender
 	frame_dig -1 // sender: Address
 	itxn_field AssetReceiver
 
-	// contracts/BalancedPoolV2.algo.ts:207
+	// contracts/BalancedPoolV2.algo.ts:166
 	// assetAmount: amountOut
 	frame_dig 6 // amountOut: uint64
 	itxn_field AssetAmount
 
-	// contracts/BalancedPoolV2.algo.ts:208
+	// contracts/BalancedPoolV2.algo.ts:167
 	// xferAsset: assetOut
 	frame_dig 1 // assetOut: uint64
 	itxn_field XferAsset
@@ -1101,7 +1033,7 @@ swap:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/BalancedPoolV2.algo.ts:211
+	// contracts/BalancedPoolV2.algo.ts:170
 	// return amountOut;
 	frame_dig 6 // amountOut: uint64
 
@@ -1116,23 +1048,23 @@ swap:
 optIn:
 	proto 1 0
 
-	// *if3_condition
-	// contracts/BalancedPoolV2.algo.ts:215
+	// *if2_condition
+	// contracts/BalancedPoolV2.algo.ts:174
 	// this.app.address.isOptedInToAsset(assetId)
 	global CurrentApplicationAddress
 	frame_dig -1 // assetId: AssetID
 	asset_holding_get AssetBalance
 	swap
 	pop
-	bz *if3_end
+	bz *if2_end
 
-	// *if3_consequent
-	// contracts/BalancedPoolV2.algo.ts:216
+	// *if2_consequent
+	// contracts/BalancedPoolV2.algo.ts:175
 	// return;
 	retsub
 
-*if3_end:
-	// contracts/BalancedPoolV2.algo.ts:219
+*if2_end:
+	// contracts/BalancedPoolV2.algo.ts:178
 	// sendAssetTransfer({
 	//       assetReceiver: this.app.address,
 	//       xferAsset: assetId,
@@ -1142,17 +1074,17 @@ optIn:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/BalancedPoolV2.algo.ts:220
+	// contracts/BalancedPoolV2.algo.ts:179
 	// assetReceiver: this.app.address
 	global CurrentApplicationAddress
 	itxn_field AssetReceiver
 
-	// contracts/BalancedPoolV2.algo.ts:221
+	// contracts/BalancedPoolV2.algo.ts:180
 	// xferAsset: assetId
 	frame_dig -1 // assetId: AssetID
 	itxn_field XferAsset
 
-	// contracts/BalancedPoolV2.algo.ts:222
+	// contracts/BalancedPoolV2.algo.ts:181
 	// assetAmount: 0
 	intc 0 // 0
 	itxn_field AssetAmount
@@ -1176,8 +1108,8 @@ optIn:
 addToken:
 	proto 3 0
 
-	// *if4_condition
-	// contracts/BalancedPoolV2.algo.ts:235
+	// *if3_condition
+	// contracts/BalancedPoolV2.algo.ts:194
 	// !this.weights(index).exists
 	bytec 5 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1187,10 +1119,10 @@ addToken:
 	swap
 	pop
 	!
-	bz *if4_end
+	bz *if3_end
 
-	// *if4_consequent
-	// contracts/BalancedPoolV2.algo.ts:236
+	// *if3_consequent
+	// contracts/BalancedPoolV2.algo.ts:195
 	// this.weights(index).create(8)
 	bytec 5 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1200,9 +1132,9 @@ addToken:
 	box_create
 	pop
 
-*if4_end:
-	// *if5_condition
-	// contracts/BalancedPoolV2.algo.ts:239
+*if3_end:
+	// *if4_condition
+	// contracts/BalancedPoolV2.algo.ts:198
 	// !this.balances(assetID).exists
 	bytec 1 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1212,10 +1144,10 @@ addToken:
 	swap
 	pop
 	!
-	bz *if5_end
+	bz *if4_end
 
-	// *if5_consequent
-	// contracts/BalancedPoolV2.algo.ts:240
+	// *if4_consequent
+	// contracts/BalancedPoolV2.algo.ts:199
 	// this.balances(assetID).create(8)
 	bytec 1 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1225,8 +1157,8 @@ addToken:
 	box_create
 	pop
 
-*if5_end:
-	// contracts/BalancedPoolV2.algo.ts:243
+*if4_end:
+	// contracts/BalancedPoolV2.algo.ts:202
 	// this.weights(index).value = weight
 	bytec 5 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1236,7 +1168,7 @@ addToken:
 	itob
 	box_put
 
-	// contracts/BalancedPoolV2.algo.ts:244
+	// contracts/BalancedPoolV2.algo.ts:203
 	// this.balances(assetID).value = 0
 	bytec 1 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1252,17 +1184,17 @@ addToken:
 createToken:
 	proto 0 0
 
-	// *if6_condition
-	// contracts/BalancedPoolV2.algo.ts:251
+	// *if5_condition
+	// contracts/BalancedPoolV2.algo.ts:210
 	// this.token.value === AssetID.zeroIndex
 	bytec 4 //  "token"
 	app_global_get
 	intc 0 // 0
 	==
-	bz *if6_end
+	bz *if5_end
 
-	// *if6_consequent
-	// contracts/BalancedPoolV2.algo.ts:252
+	// *if5_consequent
+	// contracts/BalancedPoolV2.algo.ts:211
 	// this.token.value = sendAssetCreation({
 	//         configAssetTotal: TOTAL_LP_SUPPLY,
 	//         configAssetDecimals: 6,
@@ -1279,44 +1211,44 @@ createToken:
 	pushint 3 // acfg
 	itxn_field TypeEnum
 
-	// contracts/BalancedPoolV2.algo.ts:253
+	// contracts/BalancedPoolV2.algo.ts:212
 	// configAssetTotal: TOTAL_LP_SUPPLY
 	intc 4 // 10
 	pushint 16
 	exp
 	itxn_field ConfigAssetTotal
 
-	// contracts/BalancedPoolV2.algo.ts:254
+	// contracts/BalancedPoolV2.algo.ts:213
 	// configAssetDecimals: 6
 	intc 5 // 6
 	itxn_field ConfigAssetDecimals
 
-	// contracts/BalancedPoolV2.algo.ts:255
+	// contracts/BalancedPoolV2.algo.ts:214
 	// configAssetReserve: this.app.address
 	global CurrentApplicationAddress
 	itxn_field ConfigAssetReserve
 
-	// contracts/BalancedPoolV2.algo.ts:256
+	// contracts/BalancedPoolV2.algo.ts:215
 	// configAssetManager: this.app.address
 	global CurrentApplicationAddress
 	itxn_field ConfigAssetManager
 
-	// contracts/BalancedPoolV2.algo.ts:257
+	// contracts/BalancedPoolV2.algo.ts:216
 	// configAssetClawback: globals.zeroAddress
 	global ZeroAddress
 	itxn_field ConfigAssetClawback
 
-	// contracts/BalancedPoolV2.algo.ts:258
+	// contracts/BalancedPoolV2.algo.ts:217
 	// configAssetFreeze: globals.zeroAddress
 	global ZeroAddress
 	itxn_field ConfigAssetFreeze
 
-	// contracts/BalancedPoolV2.algo.ts:259
+	// contracts/BalancedPoolV2.algo.ts:218
 	// configAssetDefaultFrozen: 0
 	intc 0 // 0
 	itxn_field ConfigAssetDefaultFrozen
 
-	// contracts/BalancedPoolV2.algo.ts:260
+	// contracts/BalancedPoolV2.algo.ts:219
 	// configAssetName: 'BalancedPool-' + this.app.id.toString()
 	pushbytes 0x42616c616e636564506f6f6c2d // "BalancedPool-"
 	txna Applications 0
@@ -1324,7 +1256,7 @@ createToken:
 	concat
 	itxn_field ConfigAssetName
 
-	// contracts/BalancedPoolV2.algo.ts:261
+	// contracts/BalancedPoolV2.algo.ts:220
 	// configAssetUnitName: 'LP'
 	pushbytes 0x4c50 // "LP"
 	itxn_field ConfigAssetUnitName
@@ -1338,7 +1270,7 @@ createToken:
 	itxn CreatedAssetID
 	app_global_put
 
-*if6_end:
+*if5_end:
 	retsub
 
 // assertIsManager(): void
@@ -1347,7 +1279,7 @@ createToken:
 assertIsManager:
 	proto 0 0
 
-	// contracts/BalancedPoolV2.algo.ts:270
+	// contracts/BalancedPoolV2.algo.ts:229
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 10 //  "manager"
@@ -1362,7 +1294,7 @@ assertIsManager:
 assertIsBootstrapped:
 	proto 0 0
 
-	// contracts/BalancedPoolV2.algo.ts:274
+	// contracts/BalancedPoolV2.algo.ts:233
 	// assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped')
 	bytec 4 //  "token"
 	app_global_get
@@ -1381,7 +1313,7 @@ lnWithSign:
 	bytec 0 // 0x
 	dupn 7
 
-	// contracts/BalancedPoolV2.algo.ts:278
+	// contracts/BalancedPoolV2.algo.ts:237
 	// assert(x > 0, 'log undefined for x ≤ 0')
 	frame_dig -1 // x: uint64
 	intc 0 // 0
@@ -1390,26 +1322,26 @@ lnWithSign:
 	// log undefined for x ≤ 0
 	assert
 
-	// contracts/BalancedPoolV2.algo.ts:280
+	// contracts/BalancedPoolV2.algo.ts:239
 	// negative: uint64 = 0
 	intc 0 // 0
 	frame_bury 0 // negative: uint64
 
-	// *if7_condition
-	// contracts/BalancedPoolV2.algo.ts:283
+	// *if6_condition
+	// contracts/BalancedPoolV2.algo.ts:242
 	// x < SCALE
 	frame_dig -1 // x: uint64
 	intc 2 // 1000000
 	<
-	bz *if7_else
+	bz *if6_else
 
-	// *if7_consequent
-	// contracts/BalancedPoolV2.algo.ts:284
+	// *if6_consequent
+	// contracts/BalancedPoolV2.algo.ts:243
 	// negative = 1
 	intc 3 // 1
 	frame_bury 0 // negative: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:285
+	// contracts/BalancedPoolV2.algo.ts:244
 	// invX = wideRatio([SCALE, SCALE], [x])
 	intc 2 // 1000000
 	dup
@@ -1426,7 +1358,7 @@ lnWithSign:
 	assert
 	frame_bury 2 // invX: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:286
+	// contracts/BalancedPoolV2.algo.ts:245
 	// z = wideRatio([invX - SCALE, SCALE], [invX])
 	frame_dig 2 // invX: uint64
 	intc 2 // 1000000
@@ -1444,10 +1376,10 @@ lnWithSign:
 	// wideRatio failed
 	assert
 	frame_bury 1 // z: uint64
-	b *if7_end
+	b *if6_end
 
-*if7_else:
-	// contracts/BalancedPoolV2.algo.ts:288
+*if6_else:
+	// contracts/BalancedPoolV2.algo.ts:247
 	// z = wideRatio([x - SCALE, SCALE], [x])
 	frame_dig -1 // x: uint64
 	intc 2 // 1000000
@@ -1466,23 +1398,23 @@ lnWithSign:
 	assert
 	frame_bury 1 // z: uint64
 
-*if7_end:
-	// contracts/BalancedPoolV2.algo.ts:291
+*if6_end:
+	// contracts/BalancedPoolV2.algo.ts:250
 	// result = z
 	frame_dig 1 // z: uint64
 	frame_bury 3 // result: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:292
+	// contracts/BalancedPoolV2.algo.ts:251
 	// term = z
 	frame_dig 1 // z: uint64
 	frame_bury 4 // term: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:293
+	// contracts/BalancedPoolV2.algo.ts:252
 	// neg = false
 	intc 0 // 0
 	frame_bury 5 // neg: bool
 
-	// contracts/BalancedPoolV2.algo.ts:295
+	// contracts/BalancedPoolV2.algo.ts:254
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 5 //  appl
@@ -1497,20 +1429,20 @@ lnWithSign:
 	itxn_field OnCompletion
 	itxn_submit
 
-	// contracts/BalancedPoolV2.algo.ts:297
+	// contracts/BalancedPoolV2.algo.ts:256
 	// for (let i = 2; i <= 10; i = i + 1)
 	intc 8 // 2
 	frame_bury 6 // i: uint64
 
-*for_4:
-	// contracts/BalancedPoolV2.algo.ts:297
+*for_3:
+	// contracts/BalancedPoolV2.algo.ts:256
 	// i <= 10
 	frame_dig 6 // i: uint64
 	intc 4 // 10
 	<=
-	bz *for_4_end
+	bz *for_3_end
 
-	// contracts/BalancedPoolV2.algo.ts:298
+	// contracts/BalancedPoolV2.algo.ts:257
 	// term = wideRatio([term, z], [SCALE])
 	frame_dig 4 // term: uint64
 	frame_dig 1 // z: uint64
@@ -1527,7 +1459,7 @@ lnWithSign:
 	assert
 	frame_bury 4 // term: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:299
+	// contracts/BalancedPoolV2.algo.ts:258
 	// delta = wideRatio([term], [i])
 	intc 0 // 0
 	frame_dig 4 // term: uint64
@@ -1543,7 +1475,7 @@ lnWithSign:
 	assert
 	frame_bury 7 // delta: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:300
+	// contracts/BalancedPoolV2.algo.ts:259
 	// result = neg ? result - delta : result + delta
 	frame_dig 5 // neg: bool
 	bz *ternary0_false
@@ -1560,23 +1492,23 @@ lnWithSign:
 *ternary0_end:
 	frame_bury 3 // result: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:301
+	// contracts/BalancedPoolV2.algo.ts:260
 	// neg = !neg
 	frame_dig 5 // neg: bool
 	!
 	frame_bury 5 // neg: bool
 
-*for_4_continue:
-	// contracts/BalancedPoolV2.algo.ts:297
+*for_3_continue:
+	// contracts/BalancedPoolV2.algo.ts:256
 	// i = i + 1
 	frame_dig 6 // i: uint64
 	intc 3 // 1
 	+
 	frame_bury 6 // i: uint64
-	b *for_4
+	b *for_3
 
-*for_4_end:
-	// contracts/BalancedPoolV2.algo.ts:304
+*for_3_end:
+	// contracts/BalancedPoolV2.algo.ts:263
 	// return [negative, result];
 	frame_dig 0 // negative: uint64
 	itob
@@ -1599,30 +1531,30 @@ exp:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/BalancedPoolV2.algo.ts:308
+	// contracts/BalancedPoolV2.algo.ts:267
 	// result = SCALE
 	intc 2 // 1000000
 	frame_bury 0 // result: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:309
+	// contracts/BalancedPoolV2.algo.ts:268
 	// term = SCALE
 	intc 2 // 1000000
 	frame_bury 1 // term: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:311
+	// contracts/BalancedPoolV2.algo.ts:270
 	// for (let i = 1; i <= 10; i = i + 1)
 	intc 3 // 1
 	frame_bury 2 // i: uint64
 
-*for_5:
-	// contracts/BalancedPoolV2.algo.ts:311
+*for_4:
+	// contracts/BalancedPoolV2.algo.ts:270
 	// i <= 10
 	frame_dig 2 // i: uint64
 	intc 4 // 10
 	<=
-	bz *for_5_end
+	bz *for_4_end
 
-	// contracts/BalancedPoolV2.algo.ts:312
+	// contracts/BalancedPoolV2.algo.ts:271
 	// term = wideRatio([term, x], [i * SCALE])
 	frame_dig 1 // term: uint64
 	frame_dig -1 // x: uint64
@@ -1641,24 +1573,24 @@ exp:
 	assert
 	frame_bury 1 // term: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:313
+	// contracts/BalancedPoolV2.algo.ts:272
 	// result += term
 	frame_dig 0 // result: uint64
 	frame_dig 1 // term: uint64
 	+
 	frame_bury 0 // result: uint64
 
-*for_5_continue:
-	// contracts/BalancedPoolV2.algo.ts:311
+*for_4_continue:
+	// contracts/BalancedPoolV2.algo.ts:270
 	// i = i + 1
 	frame_dig 2 // i: uint64
 	intc 3 // 1
 	+
 	frame_bury 2 // i: uint64
-	b *for_5
+	b *for_4
 
-*for_5_end:
-	// contracts/BalancedPoolV2.algo.ts:316
+*for_4_end:
+	// contracts/BalancedPoolV2.algo.ts:275
 	// return result;
 	frame_dig 0 // result: uint64
 
@@ -1677,28 +1609,28 @@ pow:
 	bytec 0 // 0x
 	dupn 4
 
-	// *if8_condition
-	// contracts/BalancedPoolV2.algo.ts:320
+	// *if7_condition
+	// contracts/BalancedPoolV2.algo.ts:279
 	// x === 0
 	frame_dig -1 // x: uint64
 	intc 0 // 0
 	==
-	bz *if8_end
+	bz *if7_end
 
-	// *if8_consequent
-	// contracts/BalancedPoolV2.algo.ts:320
+	// *if7_consequent
+	// contracts/BalancedPoolV2.algo.ts:279
 	// return 0;
 	intc 0 // 0
 	b *pow*return
 
-*if8_end:
-	// contracts/BalancedPoolV2.algo.ts:322
+*if7_end:
+	// contracts/BalancedPoolV2.algo.ts:281
 	// lnXResult = this.lnWithSign(x)
 	frame_dig -1 // x: uint64
 	callsub lnWithSign
 	frame_bury 0 // lnXResult: uint64[]
 
-	// contracts/BalancedPoolV2.algo.ts:323
+	// contracts/BalancedPoolV2.algo.ts:282
 	// negativeLn = lnXResult[0]
 	frame_dig 0 // lnXResult: uint64[]
 	store 255 // full array
@@ -1707,7 +1639,7 @@ pow:
 	btoi
 	frame_bury 1 // negativeLn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:324
+	// contracts/BalancedPoolV2.algo.ts:283
 	// lnX = lnXResult[1]
 	frame_dig 0 // lnXResult: uint64[]
 	store 255 // full array
@@ -1716,7 +1648,7 @@ pow:
 	btoi
 	frame_bury 2 // lnX: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:326
+	// contracts/BalancedPoolV2.algo.ts:285
 	// ylnX = wideRatio([y, lnX], [SCALE])
 	frame_dig -2 // y: uint64
 	frame_dig 2 // lnX: uint64
@@ -1733,22 +1665,22 @@ pow:
 	assert
 	frame_bury 3 // ylnX: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:328
+	// contracts/BalancedPoolV2.algo.ts:287
 	// expResult = this.exp(ylnX)
 	frame_dig 3 // ylnX: uint64
 	callsub exp
 	frame_bury 4 // expResult: uint64
 
-	// *if9_condition
-	// contracts/BalancedPoolV2.algo.ts:330
+	// *if8_condition
+	// contracts/BalancedPoolV2.algo.ts:289
 	// negativeLn === 1
 	frame_dig 1 // negativeLn: uint64
 	intc 3 // 1
 	==
-	bz *if9_end
+	bz *if8_end
 
-	// *if9_consequent
-	// contracts/BalancedPoolV2.algo.ts:331
+	// *if8_consequent
+	// contracts/BalancedPoolV2.algo.ts:290
 	// return wideRatio([SCALE, SCALE], [expResult]);
 	intc 2 // 1000000
 	dup
@@ -1765,8 +1697,8 @@ pow:
 	assert
 	b *pow*return
 
-*if9_end:
-	// contracts/BalancedPoolV2.algo.ts:334
+*if8_end:
+	// contracts/BalancedPoolV2.algo.ts:293
 	// return expResult;
 	frame_dig 4 // expResult: uint64
 
@@ -1786,7 +1718,7 @@ calcOut:
 	bytec 0 // 0x
 	dupn 3
 
-	// contracts/BalancedPoolV2.algo.ts:346
+	// contracts/BalancedPoolV2.algo.ts:305
 	// amountInWithFee = wideRatio([amountIn, SCALE - fee], [SCALE])
 	frame_dig -5 // amountIn: uint64
 	pushint 999000
@@ -1803,7 +1735,7 @@ calcOut:
 	assert
 	frame_bury 0 // amountInWithFee: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:349
+	// contracts/BalancedPoolV2.algo.ts:308
 	// ratio = wideRatio([balanceIn, SCALE], [balanceIn + amountInWithFee])
 	frame_dig -1 // balanceIn: uint64
 	intc 2 // 1000000
@@ -1822,7 +1754,7 @@ calcOut:
 	assert
 	frame_bury 1 // ratio: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:351
+	// contracts/BalancedPoolV2.algo.ts:310
 	// power = wideRatio([weightIn, SCALE], [weightOut])
 	frame_dig -2 // weightIn: uint64
 	intc 2 // 1000000
@@ -1839,44 +1771,44 @@ calcOut:
 	assert
 	frame_bury 2 // power: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:354
+	// contracts/BalancedPoolV2.algo.ts:313
 	// ratioPow = this.pow(ratio, power)
 	frame_dig 2 // power: uint64
 	frame_dig 1 // ratio: uint64
 	callsub pow
 	frame_bury 3 // ratioPow: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:356
+	// contracts/BalancedPoolV2.algo.ts:315
 	// log(itob(balanceIn))
 	frame_dig -1 // balanceIn: uint64
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:357
+	// contracts/BalancedPoolV2.algo.ts:316
 	// log(itob(amountInWithFee))
 	frame_dig 0 // amountInWithFee: uint64
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:358
+	// contracts/BalancedPoolV2.algo.ts:317
 	// log(itob(ratio))
 	frame_dig 1 // ratio: uint64
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:359
+	// contracts/BalancedPoolV2.algo.ts:318
 	// log(itob(power))
 	frame_dig 2 // power: uint64
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:360
+	// contracts/BalancedPoolV2.algo.ts:319
 	// log(itob(ratioPow))
 	frame_dig 3 // ratioPow: uint64
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:361
+	// contracts/BalancedPoolV2.algo.ts:320
 	// log(itob(wideRatio([balanceOut, SCALE - ratioPow], [SCALE])))
 	frame_dig -3 // balanceOut: uint64
 	intc 2 // 1000000
@@ -1896,7 +1828,7 @@ calcOut:
 	itob
 	log
 
-	// contracts/BalancedPoolV2.algo.ts:363
+	// contracts/BalancedPoolV2.algo.ts:322
 	// return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
 	frame_dig -3 // balanceOut: uint64
 	intc 2 // 1000000
@@ -1927,9 +1859,9 @@ computeNAssetsLiquidity:
 
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
-	dupn 8
+	dupn 10
 
-	// contracts/BalancedPoolV2.algo.ts:367
+	// contracts/BalancedPoolV2.algo.ts:326
 	// totalAssets = this.assets.value.length
 	bytec 2 //  "assets"
 	app_global_get
@@ -1939,7 +1871,7 @@ computeNAssetsLiquidity:
 	/
 	frame_bury 0 // totalAssets: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:369
+	// contracts/BalancedPoolV2.algo.ts:327
 	// assert(totalAssets >= 1, 'Please provide at least one asset')
 	frame_dig 0 // totalAssets: uint64
 	intc 3 // 1
@@ -1948,12 +1880,27 @@ computeNAssetsLiquidity:
 	// Please provide at least one asset
 	assert
 
-	// contracts/BalancedPoolV2.algo.ts:370
-	// ratio = 1
-	intc 3 // 1
+	// contracts/BalancedPoolV2.algo.ts:329
+	// ratio = SCALE
+	intc 2 // 1000000
 	frame_bury 1 // ratio: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:371
+	// contracts/BalancedPoolV2.algo.ts:331
+	// for (let i = 0; i < totalAssets - 1; i += 1)
+	intc 0 // 0
+	frame_bury 2 // i: uint64
+
+*for_5:
+	// contracts/BalancedPoolV2.algo.ts:331
+	// i < totalAssets - 1
+	frame_dig 2 // i: uint64
+	frame_dig 0 // totalAssets: uint64
+	intc 3 // 1
+	-
+	<
+	bz *for_5_end
+
+	// contracts/BalancedPoolV2.algo.ts:332
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 5 //  appl
@@ -1968,27 +1915,37 @@ computeNAssetsLiquidity:
 	itxn_field OnCompletion
 	itxn_submit
 
-	// contracts/BalancedPoolV2.algo.ts:373
+*for_5_continue:
+	// contracts/BalancedPoolV2.algo.ts:331
+	// i += 1
+	frame_dig 2 // i: uint64
+	intc 3 // 1
+	+
+	frame_bury 2 // i: uint64
+	b *for_5
+
+*for_5_end:
+	// contracts/BalancedPoolV2.algo.ts:335
 	// for (let i = 0; i < totalAssets; i += 1)
 	intc 0 // 0
-	frame_bury 2 // i: uint64
+	frame_bury 3 // i: uint64
 
 *for_6:
-	// contracts/BalancedPoolV2.algo.ts:373
+	// contracts/BalancedPoolV2.algo.ts:335
 	// i < totalAssets
-	frame_dig 2 // i: uint64
+	frame_dig 3 // i: uint64
 	frame_dig 0 // totalAssets: uint64
 	<
 	bz *for_6_end
 
-	// contracts/BalancedPoolV2.algo.ts:374
+	// contracts/BalancedPoolV2.algo.ts:336
 	// assetId = this.assets.value[i]
 	bytec 2 //  "assets"
 	app_global_get
 	extract 2 0
 	store 255 // full array
 	intc 0 //  initial offset
-	frame_dig 2 // i: uint64
+	frame_dig 3 // i: uint64
 	intc 1 // 8
 	* // acc * typeLength
 	+
@@ -1997,12 +1954,12 @@ computeNAssetsLiquidity:
 	intc 1 // 8
 	extract3
 	btoi
-	frame_bury 3 // assetId: uint64
+	frame_bury 4 // assetId: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:375
+	// contracts/BalancedPoolV2.algo.ts:337
 	// poolBalance = this.balances(assetId).value
 	bytec 1 //  "balances_"
-	frame_dig 3 // assetId: uint64
+	frame_dig 4 // assetId: uint64
 	itob
 	concat
 	box_get
@@ -2010,9 +1967,9 @@ computeNAssetsLiquidity:
 	// box value does not exist: this.balances(assetId).value
 	assert
 	btoi
-	frame_bury 4 // poolBalance: uint64
+	frame_bury 5 // poolBalance: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:376
+	// contracts/BalancedPoolV2.algo.ts:338
 	// providedAmount = this.provided(sender).value[i]
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -2024,7 +1981,7 @@ computeNAssetsLiquidity:
 	extract 2 0
 	store 255 // full array
 	intc 0 //  initial offset
-	frame_dig 2 // i: uint64
+	frame_dig 3 // i: uint64
 	intc 1 // 8
 	* // acc * typeLength
 	+
@@ -2033,40 +1990,39 @@ computeNAssetsLiquidity:
 	intc 1 // 8
 	extract3
 	btoi
-	frame_bury 5 // providedAmount: uint64
+	frame_bury 6 // providedAmount: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:377
-	// actualPoolBalance = poolBalance - providedAmount
-	frame_dig 4 // poolBalance: uint64
-	frame_dig 5 // providedAmount: uint64
-	-
-	frame_bury 6 // actualPoolBalance: uint64
+	// contracts/BalancedPoolV2.algo.ts:339
+	// weight = this.weights(i).value
+	bytec 5 //  "weights_"
+	frame_dig 3 // i: uint64
+	itob
+	concat
+	box_get
 
-	// contracts/BalancedPoolV2.algo.ts:379
+	// box value does not exist: this.weights(i).value
+	assert
+	btoi
+	frame_bury 7 // weight: uint64
+
+	// contracts/BalancedPoolV2.algo.ts:341
 	// assert(poolBalance > 0, 'Pool balance must be > 0')
-	frame_dig 4 // poolBalance: uint64
+	frame_dig 5 // poolBalance: uint64
 	intc 0 // 0
 	>
 
 	// Pool balance must be > 0
 	assert
 
-	// *if10_condition
-	// contracts/BalancedPoolV2.algo.ts:381
-	// providedAmount > 0
-	frame_dig 5 // providedAmount: uint64
-	intc 0 // 0
-	>
-	bz *if10_end
-
-	// *if10_consequent
-	// contracts/BalancedPoolV2.algo.ts:382
-	// assetRatio = wideRatio([providedAmount, SCALE], [actualPoolBalance])
-	frame_dig 5 // providedAmount: uint64
+	// contracts/BalancedPoolV2.algo.ts:343
+	// assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount])
+	frame_dig 6 // providedAmount: uint64
 	intc 2 // 1000000
 	mulw
 	intc 0 // 0
-	frame_dig 6 // actualPoolBalance: uint64
+	frame_dig 5 // poolBalance: uint64
+	frame_dig 6 // providedAmount: uint64
+	-
 	divmodw
 	pop
 	pop
@@ -2075,38 +2031,51 @@ computeNAssetsLiquidity:
 
 	// wideRatio failed
 	assert
-	frame_bury 7 // assetRatio: uint64
+	frame_bury 8 // assetRatio: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:383
-	// ratio = ratio * assetRatio
+	// contracts/BalancedPoolV2.algo.ts:344
+	// powed = this.pow(assetRatio, weight)
+	frame_dig 7 // weight: uint64
+	frame_dig 8 // assetRatio: uint64
+	callsub pow
+	frame_bury 9 // powed: uint64
+
+	// contracts/BalancedPoolV2.algo.ts:345
+	// ratio = wideRatio([ratio, powed], [SCALE])
 	frame_dig 1 // ratio: uint64
-	frame_dig 7 // assetRatio: uint64
-	*
+	frame_dig 9 // powed: uint64
+	mulw
+	intc 0 // 0
+	intc 2 // 1000000
+	divmodw
+	pop
+	pop
+	swap
+	!
+
+	// wideRatio failed
+	assert
 	frame_bury 1 // ratio: uint64
 
-*if10_end:
-
 *for_6_continue:
-	// contracts/BalancedPoolV2.algo.ts:373
+	// contracts/BalancedPoolV2.algo.ts:335
 	// i += 1
-	frame_dig 2 // i: uint64
+	frame_dig 3 // i: uint64
 	intc 3 // 1
 	+
-	frame_bury 2 // i: uint64
+	frame_bury 3 // i: uint64
 	b *for_6
 
 *for_6_end:
-	// contracts/BalancedPoolV2.algo.ts:387
+	// contracts/BalancedPoolV2.algo.ts:348
 	// totalLP = this.totalLP()
 	callsub totalLP
-	frame_bury 8 // totalLP: uint64
+	frame_bury 10 // totalLP: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:388
-	// return wideRatio([totalLP, ratio - SCALE], [SCALE]);
-	frame_dig 8 // totalLP: uint64
+	// contracts/BalancedPoolV2.algo.ts:349
+	// return wideRatio([totalLP, ratio], [SCALE]);
+	frame_dig 10 // totalLP: uint64
 	frame_dig 1 // ratio: uint64
-	intc 2 // 1000000
-	-
 	mulw
 	intc 0 // 0
 	intc 2 // 1000000
@@ -2123,14 +2092,14 @@ computeNAssetsLiquidity:
 	frame_bury 0
 
 	// pop all local variables from the stack
-	popn 8
+	popn 10
 	retsub
 
 // totalLP(): uint64
 totalLP:
 	proto 0 1
 
-	// contracts/BalancedPoolV2.algo.ts:392
+	// contracts/BalancedPoolV2.algo.ts:353
 	// return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
 	bytec 4 //  "token"
 	app_global_get
@@ -2154,7 +2123,7 @@ totalLP:
 absDiff:
 	proto 2 1
 
-	// contracts/BalancedPoolV2.algo.ts:396
+	// contracts/BalancedPoolV2.algo.ts:357
 	// return a > b ? a - b : b - a;
 	frame_dig -1 // a: uint64
 	frame_dig -2 // b: uint64
@@ -2171,6 +2140,33 @@ absDiff:
 	-
 
 *ternary1_end:
+	retsub
+
+// getTotalAssets()uint64
+*abi_route_getTotalAssets:
+	// The ABI return prefix
+	bytec 6 // 0x151f7c75
+
+	// execute getTotalAssets()uint64
+	callsub getTotalAssets
+	itob
+	concat
+	log
+	intc 3 // 1
+	return
+
+// getTotalAssets(): uint64
+getTotalAssets:
+	proto 0 1
+
+	// contracts/BalancedPoolV2.algo.ts:362
+	// return this.assets.value.length;
+	bytec 2 //  "assets"
+	app_global_get
+	extract 2 0
+	len
+	intc 1 // 8
+	/
 	retsub
 
 // getToken()uint64
@@ -2190,7 +2186,7 @@ absDiff:
 getToken:
 	proto 0 1
 
-	// contracts/BalancedPoolV2.algo.ts:401
+	// contracts/BalancedPoolV2.algo.ts:367
 	// return this.token.value;
 	bytec 4 //  "token"
 	app_global_get
@@ -2220,7 +2216,7 @@ getBalance:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/BalancedPoolV2.algo.ts:406
+	// contracts/BalancedPoolV2.algo.ts:372
 	// asset = this.assets.value[index]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2238,7 +2234,7 @@ getBalance:
 	btoi
 	frame_bury 0 // asset: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:407
+	// contracts/BalancedPoolV2.algo.ts:373
 	// return this.balances(asset).value;
 	bytec 1 //  "balances_"
 	frame_dig 0 // asset: uint64
@@ -2287,7 +2283,7 @@ estimateSwap:
 	bytec 0 // 0x
 	dupn 5
 
-	// contracts/BalancedPoolV2.algo.ts:412
+	// contracts/BalancedPoolV2.algo.ts:378
 	// assetIn = this.assets.value[from]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2305,7 +2301,7 @@ estimateSwap:
 	btoi
 	frame_bury 0 // assetIn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:413
+	// contracts/BalancedPoolV2.algo.ts:379
 	// assetOut = this.assets.value[to]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2323,7 +2319,7 @@ estimateSwap:
 	btoi
 	frame_bury 1 // assetOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:415
+	// contracts/BalancedPoolV2.algo.ts:381
 	// balanceIn = this.balances(assetIn).value
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -2336,7 +2332,7 @@ estimateSwap:
 	btoi
 	frame_bury 2 // balanceIn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:416
+	// contracts/BalancedPoolV2.algo.ts:382
 	// balanceOut = this.balances(assetOut).value
 	bytec 1 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -2349,7 +2345,7 @@ estimateSwap:
 	btoi
 	frame_bury 3 // balanceOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:418
+	// contracts/BalancedPoolV2.algo.ts:384
 	// weightIn = this.weights(from).value
 	bytec 5 //  "weights_"
 	frame_dig -1 // from: uint64
@@ -2362,7 +2358,7 @@ estimateSwap:
 	btoi
 	frame_bury 4 // weightIn: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:419
+	// contracts/BalancedPoolV2.algo.ts:385
 	// weightOut = this.weights(to).value
 	bytec 5 //  "weights_"
 	frame_dig -2 // to: uint64
@@ -2375,7 +2371,7 @@ estimateSwap:
 	btoi
 	frame_bury 5 // weightOut: uint64
 
-	// contracts/BalancedPoolV2.algo.ts:421
+	// contracts/BalancedPoolV2.algo.ts:387
 	// return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 	frame_dig -3 // amount: uint64
 	frame_dig 5 // weightOut: uint64
@@ -2407,11 +2403,12 @@ estimateSwap:
 	pushbytes 0x2a74004f // method "getLiquidity(address)uint64"
 	pushbytes 0x3fb1d09b // method "burnLiquidity(address,uint64)void"
 	pushbytes 0x8d325e29 // method "swap(address,uint64,uint64,uint64)uint64"
+	pushbytes 0x7194259e // method "getTotalAssets()uint64"
 	pushbytes 0x20eb5394 // method "getToken()uint64"
 	pushbytes 0x41310aee // method "getBalance(uint64)uint64"
 	pushbytes 0x29200583 // method "estimateSwap(uint64,uint64,uint64)uint64"
 	txna ApplicationArgs 0
-	match *abi_route_bootstrap *abi_route_addLiquidity *abi_route_getLiquidity *abi_route_burnLiquidity *abi_route_swap *abi_route_getToken *abi_route_getBalance *abi_route_estimateSwap
+	match *abi_route_bootstrap *abi_route_addLiquidity *abi_route_getLiquidity *abi_route_burnLiquidity *abi_route_swap *abi_route_getTotalAssets *abi_route_getToken *abi_route_getBalance *abi_route_estimateSwap
 
 	// this contract does not implement the given ABI method for call NoOp
 	err

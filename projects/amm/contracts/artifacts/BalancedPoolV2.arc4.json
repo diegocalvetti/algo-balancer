@@ -109,6 +109,14 @@
       }
     },
     {
+      "name": "getTotalAssets",
+      "readonly": true,
+      "args": [],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "getToken",
       "readonly": true,
       "args": [],

@@ -71,7 +71,7 @@ export class BalancedPoolV2 extends Contract {
     this.balances(assetId).value += amount;
 
     if (!this.provided(sender).exists) {
-      this.provided(sender).create(64);
+      this.provided(sender).create((this.assets.value.length + 1) * 8);
     }
 
     this.provided(sender).value[index] += amount;
@@ -324,27 +324,29 @@ export class BalancedPoolV2 extends Contract {
 
   private computeNAssetsLiquidity(sender: Address): uint64 {
     const totalAssets = this.assets.value.length;
-
     assert(totalAssets >= 1, 'Please provide at least one asset');
-    let ratio = 1;
-    increaseOpcodeBudget();
+
+    let ratio = SCALE;
+
+    for (let i = 0; i < totalAssets - 1; i += 1) {
+      increaseOpcodeBudget();
+    }
 
     for (let i = 0; i < totalAssets; i += 1) {
       const assetId = this.assets.value[i];
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
-      const actualPoolBalance = poolBalance - providedAmount;
+      const weight = this.weights(i).value;
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
-      if (providedAmount > 0) {
-        const assetRatio = wideRatio([providedAmount, SCALE], [actualPoolBalance]);
-        ratio = ratio * assetRatio;
-      }
+      const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount]);
+      const powed = this.pow(assetRatio, weight);
+      ratio = wideRatio([ratio, powed], [SCALE]);
     }
 
     const totalLP = this.totalLP();
-    return wideRatio([totalLP, ratio - SCALE], [SCALE]);
+    return wideRatio([totalLP, ratio], [SCALE]);
   }
 
   private totalLP(): uint64 {
@@ -353,6 +355,11 @@ export class BalancedPoolV2 extends Contract {
 
   private absDiff(a: uint64, b: uint64): uint64 {
     return a > b ? a - b : b - a;
+  }
+
+  @abi.readonly
+  getTotalAssets(): uint64 {
+    return this.assets.value.length;
   }
 
   @abi.readonly

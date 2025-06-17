@@ -104,12 +104,28 @@ export async function addLiquidity(
 }
 
 export async function getLiquidity(factoryClient: FactoryClient, config: AlgoParams, poolID: bigint): Promise<number> {
-  const result = await factoryClient.send.getLiquidity({
+  const group = factoryClient.newGroup();
+  const poolClient = await getPoolClient(config, poolID);
+  const totalAssets = await poolClient.getTotalAssets();
+
+  for (let i = 0; i < totalAssets; i += 1) {
+    group.opUp({
+      ...commonAppCallTxParams(config),
+      args: [],
+      note: new Uint8Array([i]),
+    });
+  }
+
+  group.getLiquidity({
     ...commonAppCallTxParams(config),
     args: [poolID],
   });
 
-  return Number(result.return!) / 10 ** 6;
+  const result = await group.send({
+    ...commonAppCallTxParams(config),
+  });
+
+  return Number(result.returns[1]!) / 10 ** 6;
 }
 
 export async function createAccountAndMintTokens(

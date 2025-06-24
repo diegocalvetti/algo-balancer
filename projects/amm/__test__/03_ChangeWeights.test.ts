@@ -6,13 +6,7 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { TransactionSigner } from 'algosdk';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { createAndMintToken } from '../helpers/token';
-import {
-  changeWeights,
-  deployAndInitPool,
-  getCurrentWeight,
-  getInterpolationTimeLeft,
-  getPool,
-} from '../helpers/pool';
+import { changeWeights, deployAndInitPool, getCurrentWeight, getInterpolationTimeLeft, getPool } from '../helpers/pool';
 import { AssetInfo, getRandomAccount, pay, retrieveResult, sleep } from '../helpers/generic';
 
 const fixture = algorandFixture();
@@ -115,7 +109,43 @@ describe('ChangeWeights', () => {
     const poolID = (await getPool(factoryClient, tokens, weights))!;
 
     await sleep(10_000);
-    console.log(`Left (+25s) => ${await getInterpolationTimeLeft(manager, poolID)}s`);
+    const interpolationTimeLeft = await getInterpolationTimeLeft(manager, poolID);
+
+    console.log(`Left => ${interpolationTimeLeft}s`);
     console.log(`Weight after change (+25s) => ${await getCurrentWeight(manager, poolID)}`);
+    expect(interpolationTimeLeft).toBe(0);
+  });
+
+  test('deploy_pool_80/20', async () => {
+    const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
+    await pay(manager, factoryClient.appAddress, 1_000_000);
+
+    // Create some tokens
+    const amount = BigInt(10_000_000);
+    tokensInfo = [
+      await createAndMintToken(manager, '03_TokenC', 'C', amount),
+      await createAndMintToken(manager, '03_TokenD', 'D', amount),
+    ];
+    tokens = tokensInfo.map((el) => el.assetID);
+    weights = [0.8, 0.2];
+
+    // Create the pool
+    await deployAndInitPool(factoryClient, manager, tokens, weights);
+  });
+
+  test('pool_80/20_instant_change_weights', async () => {
+    const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
+    const poolID = (await getPool(factoryClient, tokens, weights))!;
+
+    console.log(`Weight before change => ${await getCurrentWeight(manager, poolID)}`);
+
+    await changeWeights(factoryClient, manager, poolID, [0.5, 0.5], 0);
+    await sleep(1000);
+
+    const weightsChanged = await getCurrentWeight(manager, poolID);
+
+    console.log(`Weight after change => ${weightsChanged}`);
   });
 });

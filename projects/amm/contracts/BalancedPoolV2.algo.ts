@@ -193,8 +193,8 @@ export class BalancedPoolV2 extends Contract {
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
 
-    const weightIn = this.weights(from).value;
-    const weightOut = this.weights(to).value;
+    const weightIn = this.getCurrentWeight(from);
+    const weightOut = this.getCurrentWeight(to);
 
     const amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 
@@ -515,7 +515,7 @@ export class BalancedPoolV2 extends Contract {
       const assetId = this.assets.value[i];
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
-      const weight = this.weights(i).value;
+      const weight = this.getCurrentWeight(i);
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
@@ -589,8 +589,8 @@ export class BalancedPoolV2 extends Contract {
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
 
-    const weightIn = this.weights(from).value;
-    const weightOut = this.weights(to).value;
+    const weightIn = this.getCurrentWeight(from);
+    const weightOut = this.getCurrentWeight(to);
 
     return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
   }
@@ -600,10 +600,6 @@ export class BalancedPoolV2 extends Contract {
     const now = globals.latestTimestamp;
     const start = this.startTime.value;
     const end = this.endTime.value;
-
-    log(itob(now));
-    log(itob(start));
-    log(itob(end));
 
     if (now <= start || start === 0 || end === 0) {
       return this.weights(index).value;

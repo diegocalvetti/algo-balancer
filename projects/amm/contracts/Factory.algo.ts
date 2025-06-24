@@ -101,6 +101,15 @@ export class Factory extends Contract {
     });
   }
 
+  changeWeights(poolID: AppID, newWeights: uint64[], duration: uint64): uint64 {
+    log(itob(duration));
+
+    return sendMethodCall<typeof BalancedPoolV2.prototype.changeWeights>({
+      applicationID: poolID,
+      methodArgs: [duration, newWeights],
+    });
+  }
+
   opUp(): void {}
 
   /** ******************* */

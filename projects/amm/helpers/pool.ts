@@ -13,6 +13,7 @@ import {
 } from './generic';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { mintToken } from './token';
+import moment from "moment";
 
 export async function getPool(
   factoryClient: FactoryClient,
@@ -193,3 +194,41 @@ export const burnLiquidity = async (
     coverAppCallInnerTransactionFees: true,
   });
 };
+
+export async function changeWeights(
+  factoryClient: FactoryClient,
+  config: AlgoParams,
+  poolID: bigint,
+  weights: number[],
+  duration: number
+) {
+  const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+
+  await factoryClient.send.changeWeights({
+    ...commonAppCallTxParams(config),
+    args: [poolID, weightsFixed, duration],
+    suppressLog: true,
+  });
+}
+
+export async function getCurrentWeight(config: AlgoParams, poolID: bigint): Promise<bigint[]> {
+  const poolClient = await getPoolClient(config, poolID);
+  const tokensAmount = await poolClient.getTotalAssets({ args: [] });
+
+  const weights = [];
+  for (let i = 0; i < tokensAmount; i += 1) {
+    weights.push((await poolClient.send.getCurrentWeight({ args: [i] })).return!);
+  }
+
+  return weights;
+}
+
+export async function getInterpolationTimeLeft(config: AlgoParams, poolID: bigint): Promise<number> {
+  const poolClient = await getPoolClient(config, poolID);
+  const timesResponse = await poolClient.send.getTimes({ args: [] });
+
+  const times = timesResponse.return!;
+  const diff = moment.unix(Number(times[1])).diff(moment.unix(Number(times[2])))
+
+  return diff > 0 ? diff / 1000 : 0;
+}

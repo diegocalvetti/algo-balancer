@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop, guard-for-in, no-console, import/no-cycle */
 import { AlgorandFixture } from '@algorandfoundation/algokit-utils/types/testing';
+import moment from 'moment';
 import {
   AlgoParams,
   AssetInfo,
@@ -13,14 +14,17 @@ import {
 } from './generic';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { mintToken } from './token';
-import moment from "moment";
+
+export function fixedWeights(weights: number[]): bigint[] {
+  return weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+}
 
 export async function getPool(
   factoryClient: FactoryClient,
   tokens: bigint[],
   weights: number[]
 ): Promise<bigint | undefined> {
-  const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+  const weightsFixed = fixedWeights(weights);
   const result = await factoryClient.getPool({
     args: [tokens, weightsFixed],
   });
@@ -38,7 +42,7 @@ export async function initPool(
   await pay(config, factoryClient.appAddress, 10);
   await pay(config, poolClient.appAddress, 10);
 
-  const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+  const weightsFixed = fixedWeights(weights);
   const initPoolGroup = factoryClient.newGroup();
 
   const opUpAmount = tokens.length / 2 + 1;
@@ -73,7 +77,6 @@ export async function deployAndInitPool(
   tokens: bigint[],
   weights: number[]
 ): Promise<bigint> {
-  // Create the pool
   const result = await factoryClient.send.createPool({ args: [], populateAppCallResources: true });
 
   const tx = await getTxInfo(result.txIds[0]);
@@ -202,7 +205,7 @@ export async function changeWeights(
   weights: number[],
   duration: number
 ) {
-  const weightsFixed = weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+  const weightsFixed = fixedWeights(weights);
 
   await factoryClient.send.changeWeights({
     ...commonAppCallTxParams(config),
@@ -223,12 +226,12 @@ export async function getCurrentWeight(config: AlgoParams, poolID: bigint): Prom
   return weights;
 }
 
-export async function getInterpolationTimeLeft(config: AlgoParams, poolID: bigint): Promise<number> {
+export async function getInterpolationBlocksLeft(config: AlgoParams, poolID: bigint): Promise<number> {
   const poolClient = await getPoolClient(config, poolID);
   const timesResponse = await poolClient.send.getTimes({ args: [] });
 
   const times = timesResponse.return!;
-  const diff = moment.unix(Number(times[1])).diff(moment.unix(Number(times[2])))
+  const diff = moment.unix(Number(times[1])).diff(moment.unix(Number(times[2])));
 
   return diff > 0 ? diff / 1000 : 0;
 }

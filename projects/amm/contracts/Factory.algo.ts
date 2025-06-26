@@ -1,5 +1,5 @@
 import { Contract } from '@algorandfoundation/tealscript';
-import { BalancedPoolV2 } from './BalancedPoolV2.algo';
+import { AssetVault } from './AssetVault.algo';
 
 type Pool = {
   id: AppID;
@@ -30,9 +30,9 @@ export class Factory extends Contract {
     sendAppCall({
       onCompletion: OnCompletion.NoOp,
       approvalProgram: this.poolContractApprovalProgram.value,
-      clearStateProgram: BalancedPoolV2.clearProgram(),
-      globalNumUint: BalancedPoolV2.schema.global.numUint,
-      globalNumByteSlice: BalancedPoolV2.schema.global.numByteSlice,
+      clearStateProgram: AssetVault.clearProgram(),
+      globalNumUint: AssetVault.schema.global.numUint,
+      globalNumByteSlice: AssetVault.schema.global.numByteSlice,
       extraProgramPages: 3,
       applicationArgs: [method('createApplication()void')],
       fee: 100_000,
@@ -56,7 +56,7 @@ export class Factory extends Contract {
 
     this.pools(hash).value = { id: poolID, assets: assetIds, weights: weights };
 
-    return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
+    return sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
       applicationID: poolID,
       methodArgs: [assetIds, weights],
     });
@@ -69,7 +69,7 @@ export class Factory extends Contract {
    * @param {AssetTransferTxn} transferTxn - transfer tx of the token, receiver must be the pool account
    */
   addLiquidity(poolID: AppID, index: uint64, transferTxn: AssetTransferTxn) {
-    sendMethodCall<typeof BalancedPoolV2.prototype.addLiquidity>({
+    sendMethodCall<typeof AssetVault.prototype.addLiquidity>({
       applicationID: poolID,
       methodArgs: [index, transferTxn.assetAmount, transferTxn.sender],
     });
@@ -81,30 +81,28 @@ export class Factory extends Contract {
    * @return uint64 - The LPs expected
    */
   getLiquidity(poolID: AppID): uint64 {
-    return sendMethodCall<typeof BalancedPoolV2.prototype.getLiquidity>({
+    return sendMethodCall<typeof AssetVault.prototype.getLiquidity>({
       applicationID: poolID,
       methodArgs: [this.txn.sender],
     });
   }
 
   burnLiquidity(poolID: AppID, transferTxn: AssetTransferTxn) {
-    sendMethodCall<typeof BalancedPoolV2.prototype.burnLiquidity>({
+    sendMethodCall<typeof AssetVault.prototype.burnLiquidity>({
       applicationID: poolID,
       methodArgs: [this.txn.sender, transferTxn.assetAmount],
     });
   }
 
   swap(poolID: AppID, from: uint64, to: uint64, transferTxn: AssetTransferTxn): uint64 {
-    return sendMethodCall<typeof BalancedPoolV2.prototype.swap>({
+    return sendMethodCall<typeof AssetVault.prototype.swap>({
       applicationID: poolID,
       methodArgs: [this.txn.sender, from, to, transferTxn.assetAmount],
     });
   }
 
   changeWeights(poolID: AppID, newWeights: uint64[], duration: uint64): uint64 {
-    log(itob(duration));
-
-    return sendMethodCall<typeof BalancedPoolV2.prototype.changeWeights>({
+    return sendMethodCall<typeof AssetVault.prototype.changeWeights>({
       applicationID: poolID,
       methodArgs: [duration, newWeights],
     });

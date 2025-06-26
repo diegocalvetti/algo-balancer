@@ -1,5 +1,5 @@
 {
-  "name": "BalancedPoolV2",
+  "name": "DexPool",
   "desc": "",
   "methods": [
     {
@@ -118,25 +118,6 @@
       }
     },
     {
-      "name": "changeWeights",
-      "desc": "Updates the pool's asset weights, either immediately or with a time-based linear interpolation.\n\n\nIf  is zero, the new weights are applied immediately by overwriting the current weights.\nOtherwise, a linear transition is initiated from the current weights to  over the specified\nduration (measured in seconds or microseconds (?)).\n\n\nDuring the transition period, weights are dynamically computed based on the elapsed time\nbetween  and , and stored in . The current weights must be\nretrieved using a function like  for accurate interpolated values.",
-      "args": [
-        {
-          "name": "duration",
-          "type": "uint64",
-          "desc": "Duration of the interpolation. If 0, the weights are updated instantly."
-        },
-        {
-          "name": "newWeights",
-          "type": "uint64[]",
-          "desc": "Array of new target weights for each asset in the pool."
-        }
-      ],
-      "returns": {
-        "type": "uint64"
-      }
-    },
-    {
       "name": "getTotalAssets",
       "readonly": true,
       "args": [],
@@ -184,27 +165,6 @@
       ],
       "returns": {
         "type": "uint64"
-      }
-    },
-    {
-      "name": "getCurrentWeight",
-      "readonly": true,
-      "args": [
-        {
-          "name": "index",
-          "type": "uint64"
-        }
-      ],
-      "returns": {
-        "type": "uint64"
-      }
-    },
-    {
-      "name": "getTimes",
-      "readonly": true,
-      "args": [],
-      "returns": {
-        "type": "uint64[]"
       }
     }
   ]

@@ -4,7 +4,7 @@ const TOTAL_LP_SUPPLY = 10 ** 16;
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
 const SCALE = 1_000_000;
 
-export class BalancedPoolV2 extends Contract {
+export class DexPool extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
   token = GlobalStateKey<AssetID>({ key: 'token' });
@@ -14,12 +14,6 @@ export class BalancedPoolV2 extends Contract {
   assets = GlobalStateKey<AssetID[]>({ key: 'assets' });
 
   weights = BoxMap<uint64, uint64>({ prefix: 'weights_' });
-
-  targetWeights = BoxMap<uint64, uint64>({ prefix: 'target_weights_' });
-
-  startTime = GlobalStateKey<uint64>({ key: 'start_time' });
-
-  endTime = GlobalStateKey<uint64>({ key: 'end_time' });
 
   balances = BoxMap<AssetID, uint64>({ prefix: 'balances_' });
 
@@ -36,9 +30,6 @@ export class BalancedPoolV2 extends Contract {
   @allow.bareCreate('NoOp')
   createApplication() {
     this.manager.value = this.app.creator;
-
-    this.startTime.value = 0;
-    this.endTime.value = 0;
   }
 
   /**
@@ -193,8 +184,8 @@ export class BalancedPoolV2 extends Contract {
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
 
-    const weightIn = this.getCurrentWeight(from);
-    const weightOut = this.getCurrentWeight(to);
+    const weightIn = this.weights(from).value;
+    const weightOut = this.weights(to).value;
 
     const amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 
@@ -210,46 +201,6 @@ export class BalancedPoolV2 extends Contract {
     });
 
     return amountOut;
-  }
-
-  /**
-   * Updates the pool's asset weights, either immediately or with a time-based linear interpolation.
-   *
-   * If `duration` is zero, the new weights are applied immediately by overwriting the current weights.
-   * Otherwise, a linear transition is initiated from the current weights to `newWeights` over the specified
-   * duration (measured in seconds or microseconds (?)).
-   *
-   * During the transition period, weights are dynamically computed based on the elapsed time
-   * between `startTime` and `endTime`, and stored in `targetWeights`. The current weights must be
-   * retrieved using a function like `getCurrentWeight()` for accurate interpolated values.
-   *
-   * @param {uint64[]} newWeights - Array of new target weights for each asset in the pool.
-   * @param {uint64} duration - Duration of the interpolation. If 0, the weights are updated instantly.
-   */
-  changeWeights(duration: uint64, newWeights: uint64[]): uint64 {
-    this.assertIsManager();
-    this.assertIsBootstrapped();
-
-    const currentTime = globals.latestTimestamp;
-
-    this.startTime.value = currentTime;
-    this.endTime.value = currentTime + duration;
-
-    for (let i = 0; i < newWeights.length; i += 1) {
-      this.targetWeights(i).value = newWeights[i];
-    }
-
-    return this.endTime.value;
-  }
-
-  private finalizeWeights() {
-    if (globals.latestTimestamp >= this.endTime.value) {
-      for (let i = 0; i < this.assets.value.length; i += 1) {
-        this.weights(i).value = this.targetWeights(i).value;
-      }
-      this.startTime.value = 0;
-      this.endTime.value = 0;
-    }
   }
 
   /** ******************* */
@@ -515,7 +466,7 @@ export class BalancedPoolV2 extends Contract {
       const assetId = this.assets.value[i];
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
-      const weight = this.getCurrentWeight(i);
+      const weight = this.weights(i).value;
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
@@ -589,40 +540,9 @@ export class BalancedPoolV2 extends Contract {
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
 
-    const weightIn = this.getCurrentWeight(from);
-    const weightOut = this.getCurrentWeight(to);
+    const weightIn = this.weights(from).value;
+    const weightOut = this.weights(to).value;
 
     return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
-  }
-
-  @abi.readonly
-  getCurrentWeight(index: uint64): uint64 {
-    const now = globals.latestTimestamp;
-    const start = this.startTime.value;
-    const end = this.endTime.value;
-
-    if (now <= start || start === 0 || end === 0) {
-      return this.weights(index).value;
-    }
-
-    if (now >= end) {
-      return this.targetWeights(index).value;
-    }
-
-    const elapsed = now - start;
-    const total = end - start;
-
-    const w0 = this.weights(index).value;
-    const w1 = this.targetWeights(index).value;
-
-    const delta = w1 > w0 ? w1 - w0 : w0 - w1;
-    const offset = wideRatio([delta, elapsed], [total]);
-
-    return w1 > w0 ? w0 + offset : w0 - offset;
-  }
-
-  @abi.readonly
-  getTimes(): uint64[] {
-    return [this.startTime.value, this.endTime.value, globals.latestTimestamp];
   }
 }

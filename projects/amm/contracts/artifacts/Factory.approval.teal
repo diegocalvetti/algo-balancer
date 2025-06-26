@@ -64,9 +64,9 @@ createPool:
 	// sendAppCall({
 	//       onCompletion: OnCompletion.NoOp,
 	//       approvalProgram: this.poolContractApprovalProgram.value,
-	//       clearStateProgram: BalancedPoolV2.clearProgram(),
-	//       globalNumUint: BalancedPoolV2.schema.global.numUint,
-	//       globalNumByteSlice: BalancedPoolV2.schema.global.numByteSlice,
+	//       clearStateProgram: AssetVault.clearProgram(),
+	//       globalNumUint: AssetVault.schema.global.numUint,
+	//       globalNumByteSlice: AssetVault.schema.global.numByteSlice,
 	//       extraProgramPages: 3,
 	//       applicationArgs: [method('createApplication()void')],
 	//       fee: 100_000,
@@ -90,17 +90,17 @@ createPool:
 	itxn_field ApprovalProgram
 
 	// contracts/Factory.algo.ts:33
-	// clearStateProgram: BalancedPoolV2.clearProgram()
+	// clearStateProgram: AssetVault.clearProgram()
 	pushbytes 0x0a
 	itxn_field ClearStateProgram
 
 	// contracts/Factory.algo.ts:34
-	// globalNumUint: BalancedPoolV2.schema.global.numUint
+	// globalNumUint: AssetVault.schema.global.numUint
 	intc 4 // 4
 	itxn_field GlobalNumUint
 
 	// contracts/Factory.algo.ts:35
-	// globalNumByteSlice: BalancedPoolV2.schema.global.numByteSlice
+	// globalNumByteSlice: AssetVault.schema.global.numByteSlice
 	intc 5 // 2
 	itxn_field GlobalNumByteSlice
 
@@ -246,7 +246,7 @@ initPool:
 	box_put
 
 	// contracts/Factory.algo.ts:59
-	// return sendMethodCall<typeof BalancedPoolV2.prototype.bootstrap, AssetID>({
+	// return sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
 	//       applicationID: poolID,
 	//       methodArgs: [assetIds, weights],
 	//     });
@@ -338,7 +338,7 @@ addLiquidity:
 	proto 3 0
 
 	// contracts/Factory.algo.ts:72
-	// sendMethodCall<typeof BalancedPoolV2.prototype.addLiquidity>({
+	// sendMethodCall<typeof AssetVault.prototype.addLiquidity>({
 	//       applicationID: poolID,
 	//       methodArgs: [index, transferTxn.assetAmount, transferTxn.sender],
 	//     })
@@ -400,7 +400,7 @@ getLiquidity:
 	proto 1 1
 
 	// contracts/Factory.algo.ts:84
-	// return sendMethodCall<typeof BalancedPoolV2.prototype.getLiquidity>({
+	// return sendMethodCall<typeof AssetVault.prototype.getLiquidity>({
 	//       applicationID: poolID,
 	//       methodArgs: [this.txn.sender],
 	//     });
@@ -462,7 +462,7 @@ burnLiquidity:
 	proto 2 0
 
 	// contracts/Factory.algo.ts:91
-	// sendMethodCall<typeof BalancedPoolV2.prototype.burnLiquidity>({
+	// sendMethodCall<typeof AssetVault.prototype.burnLiquidity>({
 	//       applicationID: poolID,
 	//       methodArgs: [this.txn.sender, transferTxn.assetAmount],
 	//     })
@@ -536,7 +536,7 @@ swap:
 	proto 4 1
 
 	// contracts/Factory.algo.ts:98
-	// return sendMethodCall<typeof BalancedPoolV2.prototype.swap>({
+	// return sendMethodCall<typeof AssetVault.prototype.swap>({
 	//       applicationID: poolID,
 	//       methodArgs: [this.txn.sender, from, to, transferTxn.assetAmount],
 	//     });
@@ -610,13 +610,7 @@ changeWeights:
 	proto 3 1
 
 	// contracts/Factory.algo.ts:105
-	// log(itob(duration))
-	frame_dig -3 // duration: uint64
-	itob
-	log
-
-	// contracts/Factory.algo.ts:107
-	// return sendMethodCall<typeof BalancedPoolV2.prototype.changeWeights>({
+	// return sendMethodCall<typeof AssetVault.prototype.changeWeights>({
 	//       applicationID: poolID,
 	//       methodArgs: [duration, newWeights],
 	//     });
@@ -626,12 +620,12 @@ changeWeights:
 	pushbytes 0xf47ba5ea // method "changeWeights(uint64,uint64[])uint64"
 	itxn_field ApplicationArgs
 
-	// contracts/Factory.algo.ts:108
+	// contracts/Factory.algo.ts:106
 	// applicationID: poolID
 	frame_dig -1 // poolID: AppID
 	itxn_field ApplicationID
 
-	// contracts/Factory.algo.ts:109
+	// contracts/Factory.algo.ts:107
 	// methodArgs: [duration, newWeights]
 	frame_dig -3 // duration: uint64
 	itob
@@ -692,12 +686,12 @@ opUp:
 MANAGER_updatePoolContractProgram:
 	proto 1 0
 
-	// contracts/Factory.algo.ts:120
+	// contracts/Factory.algo.ts:118
 	// this.assertIsManager()
 	callsub assertIsManager
 
 	// *if0_condition
-	// contracts/Factory.algo.ts:122
+	// contracts/Factory.algo.ts:120
 	// this.poolContractApprovalProgram.exists
 	bytec 1 //  "pool_approval_program"
 	box_len
@@ -706,7 +700,7 @@ MANAGER_updatePoolContractProgram:
 	bz *if0_else
 
 	// *if0_consequent
-	// contracts/Factory.algo.ts:123
+	// contracts/Factory.algo.ts:121
 	// this.poolContractApprovalProgram.resize(programSize)
 	bytec 1 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
@@ -714,7 +708,7 @@ MANAGER_updatePoolContractProgram:
 	b *if0_end
 
 *if0_else:
-	// contracts/Factory.algo.ts:125
+	// contracts/Factory.algo.ts:123
 	// this.poolContractApprovalProgram.create(programSize)
 	bytec 1 //  "pool_approval_program"
 	frame_dig -1 // programSize: uint64
@@ -743,11 +737,11 @@ MANAGER_updatePoolContractProgram:
 MANAGER_writePoolContractProgram:
 	proto 2 0
 
-	// contracts/Factory.algo.ts:130
+	// contracts/Factory.algo.ts:128
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/Factory.algo.ts:132
+	// contracts/Factory.algo.ts:130
 	// this.poolContractApprovalProgram.replace(offset, data)
 	bytec 1 //  "pool_approval_program"
 	frame_dig -1 // offset: uint64
@@ -763,7 +757,7 @@ MANAGER_writePoolContractProgram:
 assertIsManager:
 	proto 0 0
 
-	// contracts/Factory.algo.ts:140
+	// contracts/Factory.algo.ts:138
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 4 //  "manager"
@@ -782,18 +776,18 @@ getPoolHash:
 	bytec 0 // 0x
 	dup
 
-	// contracts/Factory.algo.ts:144
+	// contracts/Factory.algo.ts:142
 	// parts: bytes = ''
 	bytec 0 //  ""
 	frame_bury 0 // parts: bytes
 
-	// contracts/Factory.algo.ts:146
+	// contracts/Factory.algo.ts:144
 	// for (let i = 0; i < assetIds.length; i += 1)
 	intc 2 // 0
 	frame_bury 1 // i: uint64
 
 *for_0:
-	// contracts/Factory.algo.ts:146
+	// contracts/Factory.algo.ts:144
 	// i < assetIds.length
 	frame_dig 1 // i: uint64
 	frame_dig -1 // assetIds: AssetID[]
@@ -803,7 +797,7 @@ getPoolHash:
 	<
 	bz *for_0_end
 
-	// contracts/Factory.algo.ts:147
+	// contracts/Factory.algo.ts:145
 	// parts += itob(assetIds[i])
 	frame_dig 0 // parts: bytes
 	frame_dig -1 // assetIds: AssetID[]
@@ -822,7 +816,7 @@ getPoolHash:
 	concat
 	frame_bury 0 // parts: bytes
 
-	// contracts/Factory.algo.ts:148
+	// contracts/Factory.algo.ts:146
 	// parts += itob(weights[i])
 	frame_dig 0 // parts: bytes
 	frame_dig -2 // weights: uint64[]
@@ -842,7 +836,7 @@ getPoolHash:
 	frame_bury 0 // parts: bytes
 
 *for_0_continue:
-	// contracts/Factory.algo.ts:146
+	// contracts/Factory.algo.ts:144
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 0 // 1
@@ -851,7 +845,7 @@ getPoolHash:
 	b *for_0
 
 *for_0_end:
-	// contracts/Factory.algo.ts:151
+	// contracts/Factory.algo.ts:149
 	// return sha512_256(parts);
 	frame_dig 0 // parts: bytes
 	sha512_256
@@ -890,14 +884,14 @@ getPool:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/Factory.algo.ts:156
+	// contracts/Factory.algo.ts:154
 	// hash = this.getPoolHash(assetIds, weights)
 	frame_dig -2 // weights: uint64[]
 	frame_dig -1 // assetIds: AssetID[]
 	callsub getPoolHash
 	frame_bury 0 // hash: byte[32]
 
-	// contracts/Factory.algo.ts:157
+	// contracts/Factory.algo.ts:155
 	// return this.pools(hash).value;
 	bytec 3 //  "pools_"
 	frame_dig 0 // hash: byte[32]

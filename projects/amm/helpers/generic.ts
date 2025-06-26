@@ -8,9 +8,10 @@ import LookupTransactionByID from 'algosdk/dist/types/client/v2/indexer/lookupTr
 import { TransactionResponse } from 'algosdk/dist/types/client/v2/indexer';
 import fs from 'node:fs';
 import path from 'node:path';
-import { BalancedPoolV2Client } from '../contracts/clients/BalancedPoolV2Client';
+import { AssetVaultClient } from '../contracts/clients/AssetVaultClient';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { BootstrapResult } from '../script/execute';
+import {AlgoConfig} from "@algorandfoundation/algokit-utils/types/network-client";
 
 export type AssetInfo = {
   appID: bigint;
@@ -87,10 +88,10 @@ export async function getFactoryClient(params: AlgoParams, id: number | bigint):
   });
 }
 
-export async function getPoolClient(params: AlgoParams, id: bigint): Promise<BalancedPoolV2Client> {
+export async function getPoolClient(params: AlgoParams, id: bigint): Promise<AssetVaultClient> {
   const { algorand, sender, signer } = params;
 
-  return algorand.client.getTypedAppClientById(BalancedPoolV2Client, {
+  return algorand.client.getTypedAppClientById(AssetVaultClient, {
     appId: BigInt(id),
     defaultSender: sender,
     defaultSigner: signer,

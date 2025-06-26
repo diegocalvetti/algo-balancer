@@ -5,7 +5,7 @@ import algosdk from 'algosdk';
 import { TransactionResponse } from 'algosdk/dist/types/client/v2/indexer';
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
 import { AlgoParams, getTxInfo } from './generic';
-import { BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
+import { AssetVaultFactory } from '../contracts/clients/AssetVaultClient';
 
 export async function deploy(manager: AlgoParams, name: string): Promise<bigint> {
   const { algorand } = manager;
@@ -84,12 +84,12 @@ export async function factorySetup(manager: AlgoParams, APP_ID: bigint) {
     defaultSigner: manager.signer,
   });
 
-  const balancedPoolFactory = algorand.client.getTypedAppFactory(BalancedPoolV2Factory, {
+  const assetVaultFactory = algorand.client.getTypedAppFactory(AssetVaultFactory, {
     defaultSender: manager.sender,
     defaultSigner: manager.signer,
   });
 
-  const balancedPoolApprovalProgram = await balancedPoolFactory.appFactory.compile();
+  const balancedPoolApprovalProgram = await assetVaultFactory.appFactory.compile();
 
   await algorand.send.payment({
     sender: manager.sender,

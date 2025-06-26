@@ -6,14 +6,14 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { Config } from '@algorandfoundation/algokit-utils';
 
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
-import { BalancedPoolV2Factory } from '../contracts/clients/BalancedPoolV2Client';
+import { AssetVaultFactory } from '../contracts/clients/AssetVaultClient';
 import { pay, storeResult } from '../helpers/generic';
 
 const fixture = algorandFixture();
 Config.configure({ populateAppCallResources: true });
 
 let appClient: FactoryClient;
-let poolFactory: BalancedPoolV2Factory;
+let poolFactory: AssetVaultFactory;
 let sender: string;
 let signer: TransactionSigner;
 
@@ -32,14 +32,13 @@ describe('FactoryManager', () => {
     signer = fixture.context.testAccount.signer;
     sender = fixture.context.testAccount.addr.toString();
 
-    poolFactory = new BalancedPoolV2Factory({
+    poolFactory = new AssetVaultFactory({
       algorand,
       defaultSender: sender,
       defaultSigner: signer,
     });
   });
 
-  // Deploy the factory
   test('factory_deploy', async () => {
     const { algorand } = fixture;
 
@@ -56,10 +55,9 @@ describe('FactoryManager', () => {
     console.log(`✅ Factory Deployed => ${appClient.appId}`);
   });
 
-  // Write the pool program
   test('factory_write_pool_program', async () => {
-    const balancedPoolApprovalProgram = await poolFactory.appFactory.compile();
-    const program = balancedPoolApprovalProgram.compiledApproval?.compiled!;
+    const assetVaultProgram = await poolFactory.appFactory.compile();
+    const program = assetVaultProgram.compiledApproval?.compiled!;
 
     const { algorand } = fixture;
     const config = {
@@ -79,7 +77,7 @@ describe('FactoryManager', () => {
       signer,
     });
 
-    const programBase64 = balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!;
+    const programBase64 = assetVaultProgram.compiledApproval?.compiledBase64ToBytes!;
 
     const writeGroup = appClient.newGroup();
 

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, no-await-in-loop */
 import { describe, test, beforeAll, beforeEach, expect } from '@jest/globals';
 import { Config } from '@algorandfoundation/algokit-utils';
 import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
@@ -6,8 +6,15 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import { TransactionSigner } from 'algosdk';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { createAndMintToken } from '../helpers/token';
-import { changeWeights, deployAndInitPool, getCurrentWeight, getInterpolationTimeLeft, getPool } from '../helpers/pool';
-import { AssetInfo, getRandomAccount, pay, retrieveResult, sleep } from '../helpers/generic';
+import {
+  changeWeights,
+  deployAndInitPool,
+  fixedWeights,
+  getCurrentWeight,
+  getInterpolationBlocksLeft,
+  getPool,
+} from '../helpers/pool';
+import { AssetInfo, commonAppCallTxParams, getRandomAccount, pay, retrieveResult, sleep } from '../helpers/generic';
 
 const fixture = algorandFixture();
 
@@ -68,52 +75,22 @@ describe('ChangeWeights', () => {
 
     console.log(`Weight before change => ${await getCurrentWeight(manager, poolID)}`);
 
-    const interpolationTime = 15; // seconds
+    const interpolationTime = 5; // blocks
 
     await changeWeights(factoryClient, manager, poolID, [0.5, 0.5], interpolationTime);
 
-    const interpolationTimeLeft = await getInterpolationTimeLeft(manager, poolID);
-    console.log(`Left => ${interpolationTimeLeft}s`);
+    for (let i = 1; i <= interpolationTime; i += 1) {
+      const interpolationTimeLeft = await getInterpolationBlocksLeft(manager, poolID);
+      console.log(`Left => ${interpolationTimeLeft} blocks => ${await getCurrentWeight(manager, poolID)}`);
 
-    // Weight change happened 0 or some seconds ago
-    expect(interpolationTimeLeft).toBeGreaterThan(interpolationTime - 5);
-  });
+      await factoryClient.send.opUp({ ...commonAppCallTxParams(manager), args: [], suppressLog: true });
 
-  test('pool_80/20_get_weights_5s', async () => {
-    const { algorand } = fixture;
-    const manager = { algorand, sender, signer };
-    const poolID = (await getPool(factoryClient, tokens, weights))!;
+      expect(interpolationTimeLeft).toBe(interpolationTime - i);
+    }
 
-    await sleep(5000);
-    const interpolationTimeLeft = await getInterpolationTimeLeft(manager, poolID);
+    const finalizedWeights = await getCurrentWeight(manager, poolID);
 
-    console.log(`Left => ${interpolationTimeLeft}s`);
-    console.log(`Weight after change (+5s) => ${await getCurrentWeight(manager, poolID)}`);
-
-    expect(interpolationTimeLeft).toBeGreaterThan(0);
-  });
-
-  test('pool_80/20_get_weights_+15s', async () => {
-    const { algorand } = fixture;
-    const manager = { algorand, sender, signer };
-    const poolID = (await getPool(factoryClient, tokens, weights))!;
-
-    await sleep(10_000);
-    console.log(`Left (+15s) => ${await getInterpolationTimeLeft(manager, poolID)}s`);
-    console.log(`Weight after change (+15s) => ${await getCurrentWeight(manager, poolID)}`);
-  });
-
-  test('pool_80/20_get_weights_+25s', async () => {
-    const { algorand } = fixture;
-    const manager = { algorand, sender, signer };
-    const poolID = (await getPool(factoryClient, tokens, weights))!;
-
-    await sleep(10_000);
-    const interpolationTimeLeft = await getInterpolationTimeLeft(manager, poolID);
-
-    console.log(`Left => ${interpolationTimeLeft}s`);
-    console.log(`Weight after change (+25s) => ${await getCurrentWeight(manager, poolID)}`);
-    expect(interpolationTimeLeft).toBe(0);
+    expect(finalizedWeights).toStrictEqual(fixedWeights([0.5, 0.5]))
   });
 
   test('deploy_pool_80/20', async () => {
@@ -142,10 +119,10 @@ describe('ChangeWeights', () => {
     console.log(`Weight before change => ${await getCurrentWeight(manager, poolID)}`);
 
     await changeWeights(factoryClient, manager, poolID, [0.5, 0.5], 0);
-    await sleep(1000);
 
     const weightsChanged = await getCurrentWeight(manager, poolID);
 
     console.log(`Weight after change => ${weightsChanged}`);
+    expect(weightsChanged).toStrictEqual(fixedWeights([0.5, 0.5]));
   });
 });

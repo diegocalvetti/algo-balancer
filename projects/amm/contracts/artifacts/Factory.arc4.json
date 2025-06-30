@@ -139,6 +139,26 @@
       }
     },
     {
+      "name": "addAsset",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64"
+        },
+        {
+          "name": "assetID",
+          "type": "uint64"
+        },
+        {
+          "name": "w",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "opUp",
       "args": [],
       "returns": {

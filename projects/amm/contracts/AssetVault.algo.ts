@@ -77,6 +77,7 @@ export class AssetVault extends Contract {
   addLiquidity(index: uint64, amount: uint64, sender: Address) {
     this.assertIsManager();
     this.assertIsBootstrapped();
+    this.tryFinalizeWeights();
 
     const assetId = this.assets.value[index];
     log('Asset ID => ' + itob(assetId));
@@ -106,6 +107,7 @@ export class AssetVault extends Contract {
   getLiquidity(sender: Address): uint64 {
     this.assertIsManager();
     this.assertIsBootstrapped();
+    this.tryFinalizeWeights();
 
     let amount: uint64 = 0;
 
@@ -142,6 +144,8 @@ export class AssetVault extends Contract {
   burnLiquidity(sender: Address, amountLP: uint64) {
     this.assertIsManager();
     this.assertIsBootstrapped();
+    this.tryFinalizeWeights();
+
     assert(amountLP > 0, 'Must burn positive amount');
 
     const totalLP = this.totalLP();
@@ -186,6 +190,7 @@ export class AssetVault extends Contract {
   swap(sender: Address, from: uint64, to: uint64, amount: uint64): uint64 {
     this.assertIsManager();
     this.assertIsBootstrapped();
+    this.tryFinalizeWeights();
 
     const assetIn = this.assets.value[from];
     const assetOut = this.assets.value[to];
@@ -229,6 +234,7 @@ export class AssetVault extends Contract {
   changeWeights(duration: uint64, newWeights: uint64[]): uint64 {
     this.assertIsManager();
     this.assertIsBootstrapped();
+    this.assertNoWeightTransition();
 
     if (duration === 0) {
       this.startRound.value = 0;
@@ -250,8 +256,21 @@ export class AssetVault extends Contract {
     return this.endRound.value;
   }
 
-  private finalizeWeights() {
-    if (globals.latestTimestamp >= this.endRound.value) {
+  addAsset(asset: AssetID, w: uint64): uint64 {
+    const newIndex = this.assets.value.length;
+    this.assets.value[newIndex] = asset;
+
+    for (let i = 0; i < newIndex; i += 1) {
+      this.weights(i).value = this.weights(i).value * (SCALE - w);
+    }
+
+    this.weights(newIndex).value = w;
+
+    return w;
+  }
+
+  private tryFinalizeWeights() {
+    if (globals.round >= this.endRound.value) {
       for (let i = 0; i < this.assets.value.length; i += 1) {
         this.weights(i).value = this.targetWeights(i).value;
       }
@@ -349,6 +368,10 @@ export class AssetVault extends Contract {
 
   private assertIsBootstrapped(): void {
     assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped');
+  }
+
+  private assertNoWeightTransition(): void {
+    assert(this.startRound.value === 0 && this.startRound.value === this.endRound.value);
   }
 
   /**
@@ -558,13 +581,6 @@ export class AssetVault extends Contract {
 
   /**
    * Returns the absolute difference between two unsigned integers.
-   *
-   * Equivalent to:
-   *   |a - b| = (a > b) ? a - b : b - a
-   *
-   * Useful in cases where the ordering of values is uncertain, but the magnitude
-   * of their difference is important (e.g., weight normalization tolerances).
-   *
    * @param a - First value.
    * @param b - Second value.
    * @returns The absolute difference between `a` and `b`.

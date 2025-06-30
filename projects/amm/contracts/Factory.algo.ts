@@ -108,6 +108,13 @@ export class Factory extends Contract {
     });
   }
 
+  addAsset(poolID: AppID, asset: AssetID, w: uint64): uint64 {
+    return sendMethodCall<typeof AssetVault.prototype.addAsset>({
+      applicationID: poolID,
+      methodArgs: [asset, w],
+    });
+  }
+
   opUp(): void {}
 
   /** ******************* */

@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop, guard-for-in, no-console, import/no-cycle */
 import { AlgorandFixture } from '@algorandfoundation/algokit-utils/types/testing';
-import moment from 'moment';
 import {
   AlgoParams,
   AssetInfo,
@@ -231,7 +230,20 @@ export async function getInterpolationBlocksLeft(config: AlgoParams, poolID: big
   const timesResponse = await poolClient.send.getTimes({ args: [] });
 
   const times = timesResponse.return!;
-  const diff = moment.unix(Number(times[1])).diff(moment.unix(Number(times[2])));
+  const diff = Number(times[1] - times[2]);
 
-  return diff > 0 ? diff / 1000 : 0;
+  return diff > 0 ? diff : 0;
+}
+
+export async function addAsset(
+  factoryClient: FactoryClient,
+  config: AlgoParams,
+  poolID: bigint,
+  assetID: bigint,
+  w: number
+) {
+  await factoryClient.send.addAsset({
+    ...commonAppCallTxParams(config),
+    args: [poolID, assetID, w],
+  });
 }

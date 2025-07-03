@@ -71,13 +71,14 @@ export class AssetVault extends Contract {
   /**
    * Provide one token liquidity to the pool
    * @param {uint64} index - index of the token in the pool
-   * @param {uint64} amount - amount of token sent
-   * @param {Address} sender - the sender
+   * @param txn
    */
-  addLiquidity(index: uint64, amount: uint64, sender: Address) {
-    this.assertIsManager();
+  addLiquidity(index: uint64, txn: AssetTransferTxn) {
     this.assertIsBootstrapped();
     this.tryFinalizeWeights();
+
+    const sender = txn.sender;
+    const amount = txn.assetAmount;
 
     const assetId = this.assets.value[index];
     log('Asset ID => ' + itob(assetId));
@@ -101,14 +102,13 @@ export class AssetVault extends Contract {
    *
    * After minting, the sender's "provided" state is reset.
    *
-   * @param sender - The address receiving the LP tokens
    * @returns The amount of LP tokens minted
    */
-  getLiquidity(sender: Address): uint64 {
-    this.assertIsManager();
+  getLiquidity(): uint64 {
     this.assertIsBootstrapped();
     this.tryFinalizeWeights();
 
+    const sender = this.txn.sender;
     let amount: uint64 = 0;
 
     if (this.totalLP() === 0) {
@@ -138,13 +138,14 @@ export class AssetVault extends Contract {
    * The withdrawn amount for each asset is calculated based on the
    * ratio of `amountLP` to the total LP supply.
    *
-   * @param sender - The address burning LP tokens
-   * @param amountLP - The amount of LP tokens to burn
+   * @param transferTxn
    */
-  burnLiquidity(sender: Address, amountLP: uint64) {
-    this.assertIsManager();
+  burnLiquidity(transferTxn: AssetTransferTxn) {
     this.assertIsBootstrapped();
     this.tryFinalizeWeights();
+
+    const sender = this.txn.sender;
+    const amountLP = transferTxn.assetAmount;
 
     assert(amountLP > 0, 'Must burn positive amount');
 
@@ -181,16 +182,18 @@ export class AssetVault extends Contract {
    * - Updates the pool's internal balances accordingly.
    * - Transfers the output asset to the sender.
    *
-   * @param sender - The address initiating the swap.
    * @param from - Index of the input asset in the pool.
    * @param to - Index of the output asset in the pool.
-   * @param amount - Amount of input asset to swap.
+   * @param transferTxn
    * @returns The amount of output asset received.
    */
-  swap(sender: Address, from: uint64, to: uint64, amount: uint64): uint64 {
-    this.assertIsManager();
+  swap(from: uint64, to: uint64, transferTxn: AssetTransferTxn): uint64 {
     this.assertIsBootstrapped();
     this.tryFinalizeWeights();
+    increaseOpcodeBudget();
+
+    const sender = transferTxn.sender;
+    const amount = transferTxn.assetAmount;
 
     const assetIn = this.assets.value[from];
     const assetOut = this.assets.value[to];
@@ -232,7 +235,6 @@ export class AssetVault extends Contract {
    * @param {uint64} duration - Duration of the interpolation (in blocks). If 0, the weights are updated instantly.
    */
   changeWeights(duration: uint64, newWeights: uint64[]): uint64 {
-    this.assertIsManager();
     this.assertIsBootstrapped();
     this.assertNoWeightTransition();
 
@@ -256,6 +258,7 @@ export class AssetVault extends Contract {
     return this.endRound.value;
   }
 
+  /*
   addAsset(asset: AssetID, w: uint64): uint64 {
     const newIndex = this.assets.value.length;
     this.assets.value[newIndex] = asset;
@@ -267,16 +270,17 @@ export class AssetVault extends Contract {
     this.weights(newIndex).value = w;
 
     return w;
-  }
+  } */
 
   private tryFinalizeWeights() {
+    /*
     if (globals.round >= this.endRound.value) {
       for (let i = 0; i < this.assets.value.length; i += 1) {
         this.weights(i).value = this.targetWeights(i).value;
       }
       this.startRound.value = 0;
       this.endRound.value = 0;
-    }
+    } */
   }
 
   /** ******************* */
@@ -649,4 +653,6 @@ export class AssetVault extends Contract {
   getTimes(): uint64[] {
     return [this.startRound.value, this.endRound.value, globals.round];
   }
+
+  opUp(): void {}
 }

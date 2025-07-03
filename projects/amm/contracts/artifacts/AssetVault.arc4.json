@@ -39,14 +39,8 @@
           "desc": "index of the token in the pool"
         },
         {
-          "name": "amount",
-          "type": "uint64",
-          "desc": "amount of token sent"
-        },
-        {
-          "name": "sender",
-          "type": "address",
-          "desc": "the sender"
+          "name": "txn",
+          "type": "axfer"
         }
       ],
       "returns": {
@@ -56,13 +50,7 @@
     {
       "name": "getLiquidity",
       "desc": "Mints LP tokens to the given sender based on the liquidity they provided.\n\n\nIf this is the first liquidity provision (i.e., total LP supply is 0),\na fixed initial amount is minted to the sender. Otherwise, the amount\nis calculated proportionally using .\n\n\nAfter minting, the sender's \"provided\" state is reset.",
-      "args": [
-        {
-          "name": "sender",
-          "type": "address",
-          "desc": "The address receiving the LP tokens"
-        }
-      ],
+      "args": [],
       "returns": {
         "type": "uint64",
         "desc": "The amount of LP tokens minted"
@@ -73,14 +61,8 @@
       "desc": "Burns a given amount of LP tokens from the sender and returns\ntheir proportional share of each asset in the pool.\n\n\nThe withdrawn amount for each asset is calculated based on the\nratio of  to the total LP supply.",
       "args": [
         {
-          "name": "sender",
-          "type": "address",
-          "desc": "The address burning LP tokens"
-        },
-        {
-          "name": "amountLP",
-          "type": "uint64",
-          "desc": "The amount of LP tokens to burn"
+          "name": "transferTxn",
+          "type": "axfer"
         }
       ],
       "returns": {
@@ -92,11 +74,6 @@
       "desc": "Executes a weighted swap between two tokens in the pool based on the constant mean formula.\n\n\nThe input token () is sent into the pool, and the output token () is sent back\nto the sender, following the AMM's pricing curve determined by current balances and weights.\n\n\nThis function performs the following steps:\n- Retrieves the current weights and balances for the two assets.\n- Calculates the output amount using the invariant pricing function ().\n- Updates the pool's internal balances accordingly.\n- Transfers the output asset to the sender.",
       "args": [
         {
-          "name": "sender",
-          "type": "address",
-          "desc": "The address initiating the swap."
-        },
-        {
           "name": "from",
           "type": "uint64",
           "desc": "Index of the input asset in the pool."
@@ -107,9 +84,8 @@
           "desc": "Index of the output asset in the pool."
         },
         {
-          "name": "amount",
-          "type": "uint64",
-          "desc": "Amount of input asset to swap."
+          "name": "transferTxn",
+          "type": "axfer"
         }
       ],
       "returns": {
@@ -130,22 +106,6 @@
           "name": "newWeights",
           "type": "uint64[]",
           "desc": "Array of new target weights for each asset in the pool."
-        }
-      ],
-      "returns": {
-        "type": "uint64"
-      }
-    },
-    {
-      "name": "addAsset",
-      "args": [
-        {
-          "name": "asset",
-          "type": "uint64"
-        },
-        {
-          "name": "w",
-          "type": "uint64"
         }
       ],
       "returns": {
@@ -221,6 +181,13 @@
       "args": [],
       "returns": {
         "type": "uint64[]"
+      }
+    },
+    {
+      "name": "opUp",
+      "args": [],
+      "returns": {
+        "type": "void"
       }
     }
   ]

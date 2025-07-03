@@ -62,59 +62,6 @@ export class Factory extends Contract {
     });
   }
 
-  /**
-   * Add one token as liquidity to the pool
-   * @param {AppID} poolID - Pool App ID
-   * @param {uint64} index - the index
-   * @param {AssetTransferTxn} transferTxn - transfer tx of the token, receiver must be the pool account
-   */
-  addLiquidity(poolID: AppID, index: uint64, transferTxn: AssetTransferTxn) {
-    sendMethodCall<typeof AssetVault.prototype.addLiquidity>({
-      applicationID: poolID,
-      methodArgs: [index, transferTxn.assetAmount, transferTxn.sender],
-    });
-  }
-
-  /**
-   * Compute the liquidity for the sender and send the LPs expected
-   * @param {AppID} poolID - Pool App ID
-   * @return uint64 - The LPs expected
-   */
-  getLiquidity(poolID: AppID): uint64 {
-    return sendMethodCall<typeof AssetVault.prototype.getLiquidity>({
-      applicationID: poolID,
-      methodArgs: [this.txn.sender],
-    });
-  }
-
-  burnLiquidity(poolID: AppID, transferTxn: AssetTransferTxn) {
-    sendMethodCall<typeof AssetVault.prototype.burnLiquidity>({
-      applicationID: poolID,
-      methodArgs: [this.txn.sender, transferTxn.assetAmount],
-    });
-  }
-
-  swap(poolID: AppID, from: uint64, to: uint64, transferTxn: AssetTransferTxn): uint64 {
-    return sendMethodCall<typeof AssetVault.prototype.swap>({
-      applicationID: poolID,
-      methodArgs: [this.txn.sender, from, to, transferTxn.assetAmount],
-    });
-  }
-
-  changeWeights(poolID: AppID, newWeights: uint64[], duration: uint64): uint64 {
-    return sendMethodCall<typeof AssetVault.prototype.changeWeights>({
-      applicationID: poolID,
-      methodArgs: [duration, newWeights],
-    });
-  }
-
-  addAsset(poolID: AppID, asset: AssetID, w: uint64): uint64 {
-    return sendMethodCall<typeof AssetVault.prototype.addAsset>({
-      applicationID: poolID,
-      methodArgs: [asset, w],
-    });
-  }
-
   opUp(): void {}
 
   /** ******************* */

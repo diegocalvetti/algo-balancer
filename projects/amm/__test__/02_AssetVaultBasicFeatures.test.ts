@@ -36,16 +36,16 @@ async function mintLPs() {
 
   const poolID = (await getPool(factoryClient, tokens, weights))!;
 
-  await addLiquidity(factoryClient, manager, poolID, 1, tokens);
-  const LP1 = await getLiquidity(factoryClient, manager, poolID);
+  await addLiquidity(manager, poolID, 1, tokens);
+  const LP1 = await getLiquidity(manager, poolID);
 
   const randomLP2 = await createAccountAndMintTokens(fixture, poolID, tokensInfo, 10_000_000);
-  await addLiquidity(factoryClient, randomLP2, poolID, 1, tokens);
-  const LP2 = await getLiquidity(factoryClient, randomLP2, poolID);
+  await addLiquidity(randomLP2, poolID, 1, tokens);
+  const LP2 = await getLiquidity(randomLP2, poolID);
 
   const randomLP3 = await createAccountAndMintTokens(fixture, poolID, tokensInfo);
-  await addLiquidity(factoryClient, randomLP3, poolID, 2, tokens);
-  const LP3 = await getLiquidity(factoryClient, randomLP3, poolID);
+  await addLiquidity(randomLP3, poolID, 2, tokens);
+  const LP3 = await getLiquidity(randomLP3, poolID);
 
   // const randomLP4 = await createAccountAndMintTokens(fixture, poolID, tokensInfo);
   // await addLiquidity(factoryClient, randomLP4, poolID, 1 / 3, tokens);
@@ -65,12 +65,12 @@ async function swapTest() {
   const randomUser = await createAccountAndMintTokens(fixture, poolID, tokensInfo, 9_000_000_000);
 
   const tokenInAmount = 0.01;
-  const received = await swap(factoryClient, randomUser, poolID, tokens, 0, 1, tokenInAmount);
-  const receivedXsSwap = await swap(factoryClient, randomUser, poolID, tokens, 0, 1, tokenInAmount / 10000);
+  const received = await swap(randomUser, poolID, tokens, 0, 1, tokenInAmount);
+  const receivedXsSwap = await swap(randomUser, poolID, tokens, 0, 1, tokenInAmount / 10000);
 
   const beforeSwapBalanceA = Number(await poolClient.getBalance({ args: [0] })) / 10 ** 6;
   const beforeSwapBalanceB = Number(await poolClient.getBalance({ args: [1] })) / 10 ** 6;
-  const receivedXlSwap = await swap(factoryClient, randomUser, poolID, tokens, 0, 1, 100_000_000);
+  const receivedXlSwap = await swap(randomUser, poolID, tokens, 0, 1, 100_000_000);
   const afterSwapBalanceA = Number(await poolClient.getBalance({ args: [0] })) / 10 ** 6;
 
   console.log(beforeSwapBalanceB, afterSwapBalanceA);

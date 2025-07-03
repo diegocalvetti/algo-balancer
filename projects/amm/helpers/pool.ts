@@ -84,13 +84,7 @@ export async function deployAndInitPool(
   return initPool(factoryClient, config, poolID, tokens, weights);
 }
 
-export async function addLiquidity(
-  factoryClient: FactoryClient,
-  config: AlgoParams,
-  poolID: bigint,
-  amount: number,
-  tokens: bigint[]
-) {
+export async function addLiquidity(config: AlgoParams, poolID: bigint, amount: number, tokens: bigint[]) {
   for (let index = 0; index < tokens.length; index += 1) {
     const token = tokens[index];
     await optIn(config, token);
@@ -99,16 +93,16 @@ export async function addLiquidity(
 
     const assetTransferTxn = await makeAssetTransferTxn(config, token, poolClient.appAddress, amount);
 
-    await factoryClient.send.addLiquidity({
+    await poolClient.send.addLiquidity({
       ...commonAppCallTxParams(config, (500_000).microAlgo()),
-      args: [poolID, index, assetTransferTxn],
+      args: [index, assetTransferTxn],
     });
   }
 }
 
-export async function getLiquidity(factoryClient: FactoryClient, config: AlgoParams, poolID: bigint): Promise<number> {
-  const group = factoryClient.newGroup();
+export async function getLiquidity(config: AlgoParams, poolID: bigint): Promise<number> {
   const poolClient = await getPoolClient(config, poolID);
+  const group = poolClient.newGroup();
   const totalAssets = await poolClient.getTotalAssets();
 
   for (let i = 0; i < totalAssets; i += 1) {
@@ -121,7 +115,7 @@ export async function getLiquidity(factoryClient: FactoryClient, config: AlgoPar
 
   group.getLiquidity({
     ...commonAppCallTxParams(config),
-    args: [poolID],
+    args: [],
   });
 
   const result = await group.send({
@@ -152,7 +146,6 @@ export async function createAccountAndMintTokens(
 }
 
 export async function swap(
-  factoryClient: FactoryClient,
   config: AlgoParams,
   poolID: bigint,
   tokens: bigint[],
@@ -163,31 +156,25 @@ export async function swap(
   const poolClient = await getPoolClient(config, poolID);
   const assetTransferTxn = await makeAssetTransferTxn(config, tokens[from], poolClient.appAddress, amount);
 
-  const result = await factoryClient.send.swap({
+  const result = await poolClient.send.swap({
     ...commonAppCallTxParams(config),
-    args: [poolID, from, to, assetTransferTxn],
+    args: [from, to, assetTransferTxn],
   });
 
   return Number(result.return!) / 10 ** 6;
 }
 
-export const burnLiquidity = async (
-  factoryClient: FactoryClient,
-  config: AlgoParams,
-  poolID: bigint,
-  lpID: bigint,
-  amount: number
-) => {
+export const burnLiquidity = async (config: AlgoParams, poolID: bigint, lpID: bigint, amount: number) => {
   const poolClient = await getPoolClient(config, poolID);
   const assetTransferTxn = makeAssetTransferTxn(config, lpID, poolClient.appAddress, amount);
 
-  const computeLiquidityGroup = factoryClient.newGroup();
+  const computeLiquidityGroup = poolClient.newGroup();
   computeLiquidityGroup.opUp({
     args: [],
     maxFee: (100_000).microAlgo(),
   });
   computeLiquidityGroup.burnLiquidity({
-    args: [poolID, assetTransferTxn],
+    args: [assetTransferTxn],
     maxFee: (100_000).microAlgo(),
   });
 
@@ -204,11 +191,12 @@ export async function changeWeights(
   weights: number[],
   duration: number
 ) {
+  const poolClient = await getPoolClient(config, poolID);
   const weightsFixed = fixedWeights(weights);
 
-  await factoryClient.send.changeWeights({
+  await poolClient.send.changeWeights({
     ...commonAppCallTxParams(config),
-    args: [poolID, weightsFixed, duration],
+    args: [duration, weightsFixed],
     suppressLog: true,
   });
 }
@@ -233,17 +221,4 @@ export async function getInterpolationBlocksLeft(config: AlgoParams, poolID: big
   const diff = Number(times[1] - times[2]);
 
   return diff > 0 ? diff : 0;
-}
-
-export async function addAsset(
-  factoryClient: FactoryClient,
-  config: AlgoParams,
-  poolID: bigint,
-  assetID: bigint,
-  w: number
-) {
-  await factoryClient.send.addAsset({
-    ...commonAppCallTxParams(config),
-    args: [poolID, assetID, w],
-  });
 }

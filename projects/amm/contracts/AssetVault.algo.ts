@@ -258,7 +258,6 @@ export class AssetVault extends Contract {
     return this.endRound.value;
   }
 
-  /*
   addAsset(asset: AssetID, w: uint64): uint64 {
     const newIndex = this.assets.value.length;
     this.assets.value[newIndex] = asset;
@@ -270,17 +269,16 @@ export class AssetVault extends Contract {
     this.weights(newIndex).value = w;
 
     return w;
-  } */
+  }
 
   private tryFinalizeWeights() {
-    /*
-    if (globals.round >= this.endRound.value) {
+    if (this.endRound.value !== 0 && globals.round >= this.endRound.value) {
       for (let i = 0; i < this.assets.value.length; i += 1) {
         this.weights(i).value = this.targetWeights(i).value;
       }
       this.startRound.value = 0;
       this.endRound.value = 0;
-    } */
+    }
   }
 
   /** ******************* */

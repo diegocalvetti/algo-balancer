@@ -113,6 +113,22 @@
       }
     },
     {
+      "name": "addAsset",
+      "args": [
+        {
+          "name": "asset",
+          "type": "uint64"
+        },
+        {
+          "name": "w",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
       "name": "getTotalAssets",
       "readonly": true,
       "args": [],

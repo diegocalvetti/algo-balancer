@@ -59,6 +59,7 @@ describe('FactoryManager', () => {
     const assetVaultProgram = await poolFactory.appFactory.compile();
     const program = assetVaultProgram.compiledApproval?.compiled!;
 
+    console.log(program.length);
     const { algorand } = fixture;
     const config = {
       algorand,
@@ -67,15 +68,6 @@ describe('FactoryManager', () => {
     };
 
     await pay(config, appClient.appAddress, 10);
-
-    await appClient.send.managerUpdatePoolContractProgram({
-      args: [program.length],
-      maxFee: (100_000).microAlgo(),
-      coverAppCallInnerTransactionFees: true,
-      populateAppCallResources: true,
-      sender,
-      signer,
-    });
 
     const programBase64 = assetVaultProgram.compiledApproval?.compiledBase64ToBytes!;
 

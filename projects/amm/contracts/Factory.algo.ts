@@ -10,7 +10,10 @@ type Pool = {
 export class Factory extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
-  poolContractApprovalProgram = BoxKey<bytes>({ key: 'pool_approval_program' });
+  poolContractApprovalProgram = BoxMap<uint64, bytes>({
+    prefix: 'pool_approval_program_page_',
+    dynamicSize: true,
+  });
 
   pools = BoxMap<bytes32, Pool>({ prefix: 'pools_' });
 
@@ -27,9 +30,24 @@ export class Factory extends Contract {
    * must be loaded in poolContractApprovalProgram
    */
   createPool() {
+    for (let i = 0; i < 8; i += 1) {
+      if (!this.poolContractApprovalProgram(i).exists) {
+        this.poolContractApprovalProgram(i).value = '';
+      }
+    }
+
     sendAppCall({
       onCompletion: OnCompletion.NoOp,
-      approvalProgram: this.poolContractApprovalProgram.value,
+      approvalProgram: [
+        this.poolContractApprovalProgram(0).value,
+        this.poolContractApprovalProgram(1).value,
+        this.poolContractApprovalProgram(2).value,
+        this.poolContractApprovalProgram(3).value,
+        this.poolContractApprovalProgram(4).value,
+        this.poolContractApprovalProgram(5).value,
+        this.poolContractApprovalProgram(6).value,
+        this.poolContractApprovalProgram(7).value,
+      ],
       clearStateProgram: AssetVault.clearProgram(),
       globalNumUint: AssetVault.schema.global.numUint,
       globalNumByteSlice: AssetVault.schema.global.numByteSlice,
@@ -67,21 +85,11 @@ export class Factory extends Contract {
   /** ******************* */
   /**       MANAGER       */
   /** ******************* */
-
-  MANAGER_updatePoolContractProgram(programSize: uint64): void {
-    this.assertIsManager();
-
-    if (this.poolContractApprovalProgram.exists) {
-      this.poolContractApprovalProgram.resize(programSize);
-    } else {
-      this.poolContractApprovalProgram.create(programSize);
-    }
-  }
-
   MANAGER_writePoolContractProgram(offset: uint64, data: bytes): void {
     this.assertIsManager();
 
-    this.poolContractApprovalProgram.replace(offset, data);
+    const pageIndex = (offset + 4096 - 1) / 4096;
+    this.poolContractApprovalProgram(pageIndex).value = data;
   }
 
   /** ******************* */
@@ -102,7 +110,7 @@ export class Factory extends Contract {
 
     return sha512_256(parts);
   }
-
+  
   @abi.readonly
   getPool(assetIds: AssetID[], weights: uint64[]): Pool {
     const hash = this.getPoolHash(assetIds, weights);

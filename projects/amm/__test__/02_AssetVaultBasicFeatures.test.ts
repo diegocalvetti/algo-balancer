@@ -92,7 +92,7 @@ async function getPoolTest() {
   expect(result).toBeTruthy();
 }
 
-describe('Pool', () => {
+describe('AssetVaultBasicFeatures', () => {
   beforeEach(fixture.beforeEach);
 
   beforeAll(async () => {

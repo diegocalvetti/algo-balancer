@@ -48,20 +48,8 @@
       }
     },
     {
-      "name": "MANAGER_updatePoolContractProgram",
-      "desc": "*******************",
-      "args": [
-        {
-          "name": "programSize",
-          "type": "uint64"
-        }
-      ],
-      "returns": {
-        "type": "void"
-      }
-    },
-    {
       "name": "MANAGER_writePoolContractProgram",
+      "desc": "*******************",
       "args": [
         {
           "name": "offset",

@@ -12,8 +12,25 @@
     },
     {
       "name": "createPool",
-      "desc": "Deploy the pool contract, compiled teal of the contract\nmust be loaded in poolContractApprovalProgram",
-      "args": [],
+      "desc": "Deploy the pool contract, compiled teal of the contract\nmust be loaded in dexPoolContractApprovalProgram",
+      "args": [
+        {
+          "name": "payMBR",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "createVault",
+      "args": [
+        {
+          "name": "payMBR",
+          "type": "pay"
+        }
+      ],
       "returns": {
         "type": "void"
       }
@@ -28,12 +45,20 @@
           "desc": "Pool App ID"
         },
         {
+          "name": "type",
+          "type": "uint64"
+        },
+        {
           "name": "assetIds",
           "type": "uint64[]"
         },
         {
           "name": "weights",
           "type": "uint64[]"
+        },
+        {
+          "name": "fee",
+          "type": "pay"
         }
       ],
       "returns": {
@@ -58,6 +83,10 @@
         {
           "name": "data",
           "type": "byte[]"
+        },
+        {
+          "name": "type",
+          "type": "uint64"
         }
       ],
       "returns": {
@@ -78,7 +107,7 @@
         }
       ],
       "returns": {
-        "type": "(uint64,uint64[],uint64[])"
+        "type": "(uint64,uint64,uint64[],uint64[])"
       }
     }
   ]

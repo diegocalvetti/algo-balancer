@@ -1,17 +1,34 @@
 import { Contract } from '@algorandfoundation/tealscript';
 import { AssetVault } from './AssetVault.algo';
+import { DexPool } from './DexPool.algo';
 
 type Pool = {
+  type: uint64;
   id: AppID;
   assets: AssetID[];
   weights: uint64[];
 };
 
+const DEX_POOL_TYPE = 0;
+const VAULT_POOL_TYPE = 1;
+
+const MBR_CONTRACT_PROGRAM = 100_000;
+const MBR_CREATE_POOL = 100_000;
+const MBR_CREATE_VAULT = 100_000;
+const MBR_INIT_POOL = 100_000;
+
 export class Factory extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
-  poolContractApprovalProgram = BoxMap<uint64, bytes>({
+  // @todo why not use BoxKey?
+
+  dexPoolContractApprovalProgram = BoxMap<uint64, bytes>({
     prefix: 'pool_approval_program_page_',
+    dynamicSize: true,
+  });
+
+  vaultPoolContractApprovalProgram = BoxMap<uint64, bytes>({
+    prefix: 'vault_pool_approval_program_page_',
     dynamicSize: true,
   });
 
@@ -27,33 +44,72 @@ export class Factory extends Contract {
 
   /**
    * Deploy the pool contract, compiled teal of the contract
-   * must be loaded in poolContractApprovalProgram
+   * must be loaded in dexPoolContractApprovalProgram
    */
-  createPool() {
+  createPool(payMBR: PayTxn): void {
+    // @todo check MBR cost
+    verifyPayTxn(payMBR, {
+      receiver: this.app.address,
+      amount: MBR_CREATE_POOL,
+    });
+
     for (let i = 0; i < 8; i += 1) {
-      if (!this.poolContractApprovalProgram(i).exists) {
-        this.poolContractApprovalProgram(i).value = '';
+      if (!this.dexPoolContractApprovalProgram(i).exists) {
+        this.dexPoolContractApprovalProgram(i).value = '';
       }
     }
 
     sendAppCall({
       onCompletion: OnCompletion.NoOp,
       approvalProgram: [
-        this.poolContractApprovalProgram(0).value,
-        this.poolContractApprovalProgram(1).value,
-        this.poolContractApprovalProgram(2).value,
-        this.poolContractApprovalProgram(3).value,
-        this.poolContractApprovalProgram(4).value,
-        this.poolContractApprovalProgram(5).value,
-        this.poolContractApprovalProgram(6).value,
-        this.poolContractApprovalProgram(7).value,
+        this.dexPoolContractApprovalProgram(0).value,
+        this.dexPoolContractApprovalProgram(1).value,
+        this.dexPoolContractApprovalProgram(2).value,
+        this.dexPoolContractApprovalProgram(3).value,
+        this.dexPoolContractApprovalProgram(4).value,
+        this.dexPoolContractApprovalProgram(5).value,
+        this.dexPoolContractApprovalProgram(6).value,
+        this.dexPoolContractApprovalProgram(7).value,
       ],
       clearStateProgram: AssetVault.clearProgram(),
       globalNumUint: AssetVault.schema.global.numUint,
       globalNumByteSlice: AssetVault.schema.global.numByteSlice,
       extraProgramPages: 3,
       applicationArgs: [method('createApplication()void')],
-      fee: 100_000,
+      fee: payMBR.amount,
+    });
+  }
+
+  createVault(payMBR: PayTxn): void {
+    // @todo check MBR cost
+    verifyPayTxn(payMBR, {
+      receiver: this.app.address,
+      amount: MBR_CREATE_VAULT,
+    });
+    for (let i = 0; i < 8; i += 1) {
+      if (!this.vaultPoolContractApprovalProgram(i).exists) {
+        this.vaultPoolContractApprovalProgram(i).value = '';
+      }
+    }
+
+    sendAppCall({
+      onCompletion: OnCompletion.NoOp,
+      approvalProgram: [
+        this.vaultPoolContractApprovalProgram(0).value,
+        this.vaultPoolContractApprovalProgram(1).value,
+        this.vaultPoolContractApprovalProgram(2).value,
+        this.vaultPoolContractApprovalProgram(3).value,
+        this.vaultPoolContractApprovalProgram(4).value,
+        this.vaultPoolContractApprovalProgram(5).value,
+        this.vaultPoolContractApprovalProgram(6).value,
+        this.vaultPoolContractApprovalProgram(7).value,
+      ],
+      clearStateProgram: AssetVault.clearProgram(),
+      globalNumUint: AssetVault.schema.global.numUint,
+      globalNumByteSlice: AssetVault.schema.global.numByteSlice,
+      extraProgramPages: 3,
+      applicationArgs: [method('createApplication()void')],
+      fee: payMBR.amount,
     });
   }
 
@@ -63,21 +119,37 @@ export class Factory extends Contract {
    * @param {AssetID[]} assetIds
    * @param {uint64[]} weights
    */
-  initPool(poolID: AppID, assetIds: AssetID[], weights: uint64[]): AssetID {
-    // @todo check assetIds in in-order
+  initPool(poolID: AppID, type: uint64, assetIds: AssetID[], weights: uint64[], fee: PayTxn): AssetID {
+    verifyPayTxn(fee, {
+      receiver: this.app.address,
+      amount: MBR_INIT_POOL, // @todo move to constant
+    });
     assert(assetIds.length >= 2, 'At least 2 tokens needed');
+    assert(assetIds.length <= 128, 'Maximum of 128 assets per pool');
     assert(assetIds.length === weights.length, 'Weights and Assets length must be the same');
+    this.listIsOrdered(assetIds);
 
     const hash = this.getPoolHash(assetIds, weights);
 
     assert(!this.pools(hash).exists, 'This pool already exists');
 
-    this.pools(hash).value = { id: poolID, assets: assetIds, weights: weights };
+    this.pools(hash).value = { id: poolID, type: type, assets: assetIds, weights: weights };
 
-    return sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
-      applicationID: poolID,
-      methodArgs: [assetIds, weights],
-    });
+    let LPTokenID: AssetID = AssetID.zeroIndex;
+
+    if (type === DEX_POOL_TYPE) {
+      LPTokenID = sendMethodCall<typeof DexPool.prototype.bootstrap, AssetID>({
+        applicationID: poolID,
+        methodArgs: [assetIds, weights],
+      });
+    } else if (type === VAULT_POOL_TYPE) {
+      LPTokenID = sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
+        applicationID: poolID,
+        methodArgs: [assetIds, weights],
+      });
+    }
+
+    return LPTokenID;
   }
 
   opUp(): void {}
@@ -85,11 +157,18 @@ export class Factory extends Contract {
   /** ******************* */
   /**       MANAGER       */
   /** ******************* */
-  MANAGER_writePoolContractProgram(offset: uint64, data: bytes): void {
-    this.assertIsManager();
 
+  // @todo check MBR cost of program and make an init method to cover for it
+
+  MANAGER_writePoolContractProgram(offset: uint64, data: bytes, type: uint64): void {
+    this.assertIsManager();
     const pageIndex = (offset + 4096 - 1) / 4096;
-    this.poolContractApprovalProgram(pageIndex).value = data;
+
+    if (type === DEX_POOL_TYPE) {
+      this.dexPoolContractApprovalProgram(pageIndex).value = data;
+    } else if (type === VAULT_POOL_TYPE) {
+      this.vaultPoolContractApprovalProgram(pageIndex).value = data;
+    }
   }
 
   /** ******************* */
@@ -98,6 +177,15 @@ export class Factory extends Contract {
 
   private assertIsManager(): void {
     assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
+  }
+
+  private listIsOrdered(assetIds: AssetID[]): boolean {
+    for (let i = 1; i < assetIds.length; i += 1) {
+      if (assetIds[i] < assetIds[i - 1]) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private getPoolHash(assetIds: AssetID[], weights: uint64[]): bytes32 {
@@ -110,7 +198,7 @@ export class Factory extends Contract {
 
     return sha512_256(parts);
   }
-  
+
   @abi.readonly
   getPool(assetIds: AssetID[], weights: uint64[]): Pool {
     const hash = this.getPoolHash(assetIds, weights);

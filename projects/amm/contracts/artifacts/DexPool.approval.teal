@@ -42,7 +42,7 @@ switch *call_NoOp *NOT_IMPLEMENTED *NOT_IMPLEMENTED *NOT_IMPLEMENTED *NOT_IMPLEM
 createApplication:
 	proto 0 0
 
-	// contracts/DexPool.algo.ts:32
+	// contracts\DexPool.algo.ts:32
 	// this.manager.value = this.app.creator
 	bytec 10 //  "manager"
 	txna Applications 0
@@ -85,11 +85,11 @@ bootstrap:
 	bytec 0 // 0x
 	dup
 
-	// contracts/DexPool.algo.ts:42
+	// contracts\DexPool.algo.ts:42
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/DexPool.algo.ts:43
+	// contracts\DexPool.algo.ts:43
 	// assert(assetIds.length >= 2, 'At least 2 tokens needed')
 	frame_dig -1 // assetIds: AssetID[]
 	len
@@ -101,7 +101,7 @@ bootstrap:
 	// At least 2 tokens needed
 	assert
 
-	// contracts/DexPool.algo.ts:44
+	// contracts\DexPool.algo.ts:44
 	// assert(assetIds.length === weights.length, 'Weights and Assets length must be the same')
 	frame_dig -1 // assetIds: AssetID[]
 	len
@@ -116,18 +116,18 @@ bootstrap:
 	// Weights and Assets length must be the same
 	assert
 
-	// contracts/DexPool.algo.ts:45
+	// contracts\DexPool.algo.ts:45
 	// sumOfWeights = 0
 	intc 0 // 0
 	frame_bury 0 // sumOfWeights: uint64
 
-	// contracts/DexPool.algo.ts:47
+	// contracts\DexPool.algo.ts:47
 	// for (let i = 0; i < assetIds.length; i += 1)
 	intc 0 // 0
 	frame_bury 1 // i: uint64
 
 *for_0:
-	// contracts/DexPool.algo.ts:47
+	// contracts\DexPool.algo.ts:47
 	// i < assetIds.length
 	frame_dig 1 // i: uint64
 	frame_dig -1 // assetIds: AssetID[]
@@ -137,7 +137,7 @@ bootstrap:
 	<
 	bz *for_0_end
 
-	// contracts/DexPool.algo.ts:48
+	// contracts\DexPool.algo.ts:48
 	// this.optIn(assetIds[i])
 	frame_dig -1 // assetIds: AssetID[]
 	store 255 // full array
@@ -153,7 +153,7 @@ bootstrap:
 	btoi
 	callsub optIn
 
-	// contracts/DexPool.algo.ts:49
+	// contracts\DexPool.algo.ts:49
 	// this.addToken(i, assetIds[i], weights[i])
 	frame_dig -2 // weights: uint64[]
 	store 255 // full array
@@ -182,7 +182,7 @@ bootstrap:
 	frame_dig 1 // i: uint64
 	callsub addToken
 
-	// contracts/DexPool.algo.ts:50
+	// contracts\DexPool.algo.ts:50
 	// sumOfWeights += weights[i]
 	frame_dig 0 // sumOfWeights: uint64
 	frame_dig -2 // weights: uint64[]
@@ -201,7 +201,7 @@ bootstrap:
 	frame_bury 0 // sumOfWeights: uint64
 
 *for_0_continue:
-	// contracts/DexPool.algo.ts:47
+	// contracts\DexPool.algo.ts:47
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 3 // 1
@@ -210,13 +210,13 @@ bootstrap:
 	b *for_0
 
 *for_0_end:
-	// contracts/DexPool.algo.ts:53
+	// contracts\DexPool.algo.ts:53
 	// this.burned.value = 0
 	bytec 7 //  "burned"
 	intc 0 // 0
 	app_global_put
 
-	// contracts/DexPool.algo.ts:54
+	// contracts\DexPool.algo.ts:54
 	// this.assets.value = assetIds
 	bytec 2 //  "assets"
 	frame_dig -1 // assetIds: AssetID[]
@@ -230,7 +230,7 @@ bootstrap:
 	concat
 	app_global_put
 
-	// contracts/DexPool.algo.ts:56
+	// contracts\DexPool.algo.ts:56
 	// assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1')
 	intc 2 // 1000000
 	frame_dig 0 // sumOfWeights: uint64
@@ -241,11 +241,11 @@ bootstrap:
 	// Weights must sum to 1
 	assert
 
-	// contracts/DexPool.algo.ts:57
+	// contracts\DexPool.algo.ts:57
 	// this.createToken()
 	callsub createToken
 
-	// contracts/DexPool.algo.ts:59
+	// contracts\DexPool.algo.ts:59
 	// return this.token.value;
 	bytec 4 //  "token"
 	app_global_get
@@ -294,15 +294,15 @@ addLiquidity:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/DexPool.algo.ts:69
+	// contracts\DexPool.algo.ts:69
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/DexPool.algo.ts:70
+	// contracts\DexPool.algo.ts:70
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/DexPool.algo.ts:72
+	// contracts\DexPool.algo.ts:72
 	// assetId = this.assets.value[index]
 	bytec 2 //  "assets"
 	app_global_get
@@ -320,7 +320,7 @@ addLiquidity:
 	btoi
 	frame_bury 0 // assetId: uint64
 
-	// contracts/DexPool.algo.ts:73
+	// contracts\DexPool.algo.ts:73
 	// log('Asset ID => ' + itob(assetId))
 	pushbytes 0x4173736574204944203d3e20 // "Asset ID => "
 	frame_dig 0 // assetId: uint64
@@ -328,12 +328,12 @@ addLiquidity:
 	concat
 	log
 
-	// contracts/DexPool.algo.ts:75
+	// contracts\DexPool.algo.ts:75
 	// this.optIn(assetId)
 	frame_dig 0 // assetId: uint64
 	callsub optIn
 
-	// contracts/DexPool.algo.ts:76
+	// contracts\DexPool.algo.ts:76
 	// this.balances(assetId).value += amount
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetId: uint64
@@ -355,7 +355,7 @@ addLiquidity:
 	box_put
 
 	// *if0_condition
-	// contracts/DexPool.algo.ts:78
+	// contracts\DexPool.algo.ts:78
 	// !this.provided(sender).exists
 	bytec 3 //  "provided_"
 	frame_dig -3 // sender: Address
@@ -367,7 +367,7 @@ addLiquidity:
 	bz *if0_end
 
 	// *if0_consequent
-	// contracts/DexPool.algo.ts:79
+	// contracts\DexPool.algo.ts:79
 	// this.provided(sender).create((this.assets.value.length + 1) * 8)
 	bytec 3 //  "provided_"
 	frame_dig -3 // sender: Address
@@ -386,7 +386,7 @@ addLiquidity:
 	pop
 
 *if0_end:
-	// contracts/DexPool.algo.ts:82
+	// contracts\DexPool.algo.ts:82
 	// this.provided(sender).value[index] += amount
 	bytec 3 //  "provided_"
 	frame_dig -3 // sender: Address
@@ -487,21 +487,21 @@ getLiquidity:
 	bytec 0 // 0x
 	dup
 
-	// contracts/DexPool.algo.ts:98
+	// contracts\DexPool.algo.ts:98
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/DexPool.algo.ts:99
+	// contracts\DexPool.algo.ts:99
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/DexPool.algo.ts:101
+	// contracts\DexPool.algo.ts:101
 	// amount: uint64 = 0
 	intc 0 // 0
 	frame_bury 0 // amount: uint64
 
 	// *if1_condition
-	// contracts/DexPool.algo.ts:103
+	// contracts\DexPool.algo.ts:103
 	// this.totalLP() === 0
 	callsub totalLP
 	intc 0 // 0
@@ -509,7 +509,7 @@ getLiquidity:
 	bz *if1_else
 
 	// *if1_consequent
-	// contracts/DexPool.algo.ts:105
+	// contracts\DexPool.algo.ts:105
 	// amount = AMOUNT_LP_DEPLOYER
 	pushint 1_000_000
 	intc 4 // 10
@@ -520,20 +520,20 @@ getLiquidity:
 	b *if1_end
 
 *if1_else:
-	// contracts/DexPool.algo.ts:107
+	// contracts\DexPool.algo.ts:107
 	// amount = this.computeNAssetsLiquidity(sender)
 	frame_dig -1 // sender: Address
 	callsub computeNAssetsLiquidity
 	frame_bury 0 // amount: uint64
 
 *if1_end:
-	// contracts/DexPool.algo.ts:110
+	// contracts\DexPool.algo.ts:110
 	// for (let i = 0; i < this.provided(sender).value.length; i += 1)
 	intc 0 // 0
 	frame_bury 1 // i: uint64
 
 *for_1:
-	// contracts/DexPool.algo.ts:110
+	// contracts\DexPool.algo.ts:110
 	// i < this.provided(sender).value.length
 	frame_dig 1 // i: uint64
 	bytec 3 //  "provided_"
@@ -550,7 +550,7 @@ getLiquidity:
 	<
 	bz *for_1_end
 
-	// contracts/DexPool.algo.ts:111
+	// contracts\DexPool.algo.ts:111
 	// this.provided(sender).value[i] = 0
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -588,7 +588,7 @@ getLiquidity:
 	box_put
 
 *for_1_continue:
-	// contracts/DexPool.algo.ts:110
+	// contracts\DexPool.algo.ts:110
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 3 // 1
@@ -597,7 +597,7 @@ getLiquidity:
 	b *for_1
 
 *for_1_end:
-	// contracts/DexPool.algo.ts:114
+	// contracts\DexPool.algo.ts:114
 	// sendAssetTransfer({
 	//       assetReceiver: sender,
 	//       assetAmount: amount,
@@ -607,17 +607,17 @@ getLiquidity:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/DexPool.algo.ts:115
+	// contracts\DexPool.algo.ts:115
 	// assetReceiver: sender
 	frame_dig -1 // sender: Address
 	itxn_field AssetReceiver
 
-	// contracts/DexPool.algo.ts:116
+	// contracts\DexPool.algo.ts:116
 	// assetAmount: amount
 	frame_dig 0 // amount: uint64
 	itxn_field AssetAmount
 
-	// contracts/DexPool.algo.ts:117
+	// contracts\DexPool.algo.ts:117
 	// xferAsset: this.token.value
 	bytec 4 //  "token"
 	app_global_get
@@ -630,7 +630,7 @@ getLiquidity:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/DexPool.algo.ts:120
+	// contracts\DexPool.algo.ts:120
 	// return amount;
 	frame_dig 0 // amount: uint64
 
@@ -679,15 +679,15 @@ burnLiquidity:
 	bytec 0 // 0x
 	dupn 5
 
-	// contracts/DexPool.algo.ts:134
+	// contracts\DexPool.algo.ts:134
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/DexPool.algo.ts:135
+	// contracts\DexPool.algo.ts:135
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/DexPool.algo.ts:136
+	// contracts\DexPool.algo.ts:136
 	// assert(amountLP > 0, 'Must burn positive amount')
 	frame_dig -2 // amountLP: uint64
 	intc 0 // 0
@@ -696,12 +696,12 @@ burnLiquidity:
 	// Must burn positive amount
 	assert
 
-	// contracts/DexPool.algo.ts:138
+	// contracts\DexPool.algo.ts:138
 	// totalLP = this.totalLP()
 	callsub totalLP
 	frame_bury 0 // totalLP: uint64
 
-	// contracts/DexPool.algo.ts:139
+	// contracts\DexPool.algo.ts:139
 	// numAssets = this.assets.value.length
 	bytec 2 //  "assets"
 	app_global_get
@@ -711,20 +711,20 @@ burnLiquidity:
 	/
 	frame_bury 1 // numAssets: uint64
 
-	// contracts/DexPool.algo.ts:141
+	// contracts\DexPool.algo.ts:141
 	// for (let i = 0; i < numAssets; i += 1)
 	intc 0 // 0
 	frame_bury 2 // i: uint64
 
 *for_2:
-	// contracts/DexPool.algo.ts:141
+	// contracts\DexPool.algo.ts:141
 	// i < numAssets
 	frame_dig 2 // i: uint64
 	frame_dig 1 // numAssets: uint64
 	<
 	bz *for_2_end
 
-	// contracts/DexPool.algo.ts:142
+	// contracts\DexPool.algo.ts:142
 	// assetId = this.assets.value[i]
 	bytec 2 //  "assets"
 	app_global_get
@@ -742,7 +742,7 @@ burnLiquidity:
 	btoi
 	frame_bury 3 // assetId: uint64
 
-	// contracts/DexPool.algo.ts:143
+	// contracts\DexPool.algo.ts:143
 	// poolBalance = this.balances(assetId).value
 	bytec 1 //  "balances_"
 	frame_dig 3 // assetId: uint64
@@ -755,7 +755,7 @@ burnLiquidity:
 	btoi
 	frame_bury 4 // poolBalance: uint64
 
-	// contracts/DexPool.algo.ts:145
+	// contracts\DexPool.algo.ts:145
 	// assetAmount = wideRatio([amountLP, poolBalance], [totalLP])
 	frame_dig -2 // amountLP: uint64
 	frame_dig 4 // poolBalance: uint64
@@ -772,7 +772,7 @@ burnLiquidity:
 	assert
 	frame_bury 5 // assetAmount: uint64
 
-	// contracts/DexPool.algo.ts:147
+	// contracts\DexPool.algo.ts:147
 	// this.balances(assetId).value = poolBalance - assetAmount
 	bytec 1 //  "balances_"
 	frame_dig 3 // assetId: uint64
@@ -784,7 +784,7 @@ burnLiquidity:
 	itob
 	box_put
 
-	// contracts/DexPool.algo.ts:149
+	// contracts\DexPool.algo.ts:149
 	// sendAssetTransfer({
 	//         assetReceiver: sender,
 	//         assetAmount: assetAmount,
@@ -794,17 +794,17 @@ burnLiquidity:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/DexPool.algo.ts:150
+	// contracts\DexPool.algo.ts:150
 	// assetReceiver: sender
 	frame_dig -1 // sender: Address
 	itxn_field AssetReceiver
 
-	// contracts/DexPool.algo.ts:151
+	// contracts\DexPool.algo.ts:151
 	// assetAmount: assetAmount
 	frame_dig 5 // assetAmount: uint64
 	itxn_field AssetAmount
 
-	// contracts/DexPool.algo.ts:152
+	// contracts\DexPool.algo.ts:152
 	// xferAsset: assetId
 	frame_dig 3 // assetId: uint64
 	itxn_field XferAsset
@@ -817,7 +817,7 @@ burnLiquidity:
 	itxn_submit
 
 *for_2_continue:
-	// contracts/DexPool.algo.ts:141
+	// contracts\DexPool.algo.ts:141
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 3 // 1
@@ -826,7 +826,7 @@ burnLiquidity:
 	b *for_2
 
 *for_2_end:
-	// contracts/DexPool.algo.ts:156
+	// contracts\DexPool.algo.ts:156
 	// this.burned.value += amountLP
 	bytec 7 //  "burned"
 	app_global_get
@@ -897,15 +897,15 @@ swap:
 	bytec 0 // 0x
 	dupn 6
 
-	// contracts/DexPool.algo.ts:178
+	// contracts\DexPool.algo.ts:178
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/DexPool.algo.ts:179
+	// contracts\DexPool.algo.ts:179
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/DexPool.algo.ts:181
+	// contracts\DexPool.algo.ts:181
 	// assetIn = this.assets.value[from]
 	bytec 2 //  "assets"
 	app_global_get
@@ -923,7 +923,7 @@ swap:
 	btoi
 	frame_bury 0 // assetIn: uint64
 
-	// contracts/DexPool.algo.ts:182
+	// contracts\DexPool.algo.ts:182
 	// assetOut = this.assets.value[to]
 	bytec 2 //  "assets"
 	app_global_get
@@ -941,7 +941,7 @@ swap:
 	btoi
 	frame_bury 1 // assetOut: uint64
 
-	// contracts/DexPool.algo.ts:184
+	// contracts\DexPool.algo.ts:184
 	// balanceIn = this.balances(assetIn).value
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -954,7 +954,7 @@ swap:
 	btoi
 	frame_bury 2 // balanceIn: uint64
 
-	// contracts/DexPool.algo.ts:185
+	// contracts\DexPool.algo.ts:185
 	// balanceOut = this.balances(assetOut).value
 	bytec 1 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -967,7 +967,7 @@ swap:
 	btoi
 	frame_bury 3 // balanceOut: uint64
 
-	// contracts/DexPool.algo.ts:187
+	// contracts\DexPool.algo.ts:187
 	// weightIn = this.weights(from).value
 	bytec 5 //  "weights_"
 	frame_dig -2 // from: uint64
@@ -980,7 +980,7 @@ swap:
 	btoi
 	frame_bury 4 // weightIn: uint64
 
-	// contracts/DexPool.algo.ts:188
+	// contracts\DexPool.algo.ts:188
 	// weightOut = this.weights(to).value
 	bytec 5 //  "weights_"
 	frame_dig -3 // to: uint64
@@ -993,7 +993,7 @@ swap:
 	btoi
 	frame_bury 5 // weightOut: uint64
 
-	// contracts/DexPool.algo.ts:190
+	// contracts\DexPool.algo.ts:190
 	// amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount)
 	frame_dig -4 // amount: uint64
 	frame_dig 5 // weightOut: uint64
@@ -1003,13 +1003,13 @@ swap:
 	callsub calcOut
 	frame_bury 6 // amountOut: uint64
 
-	// contracts/DexPool.algo.ts:192
+	// contracts\DexPool.algo.ts:192
 	// log(itob(amountOut))
 	frame_dig 6 // amountOut: uint64
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:194
+	// contracts\DexPool.algo.ts:194
 	// this.balances(assetIn).value = balanceIn + amount
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -1021,7 +1021,7 @@ swap:
 	itob
 	box_put
 
-	// contracts/DexPool.algo.ts:195
+	// contracts\DexPool.algo.ts:195
 	// this.balances(assetOut).value = balanceOut - amountOut
 	bytec 1 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -1033,7 +1033,7 @@ swap:
 	itob
 	box_put
 
-	// contracts/DexPool.algo.ts:197
+	// contracts\DexPool.algo.ts:197
 	// sendAssetTransfer({
 	//       assetReceiver: sender,
 	//       assetAmount: amountOut,
@@ -1043,17 +1043,17 @@ swap:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/DexPool.algo.ts:198
+	// contracts\DexPool.algo.ts:198
 	// assetReceiver: sender
 	frame_dig -1 // sender: Address
 	itxn_field AssetReceiver
 
-	// contracts/DexPool.algo.ts:199
+	// contracts\DexPool.algo.ts:199
 	// assetAmount: amountOut
 	frame_dig 6 // amountOut: uint64
 	itxn_field AssetAmount
 
-	// contracts/DexPool.algo.ts:200
+	// contracts\DexPool.algo.ts:200
 	// xferAsset: assetOut
 	frame_dig 1 // assetOut: uint64
 	itxn_field XferAsset
@@ -1065,7 +1065,7 @@ swap:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/DexPool.algo.ts:203
+	// contracts\DexPool.algo.ts:203
 	// return amountOut;
 	frame_dig 6 // amountOut: uint64
 
@@ -1089,7 +1089,7 @@ optIn:
 	proto 1 0
 
 	// *if2_condition
-	// contracts/DexPool.algo.ts:216
+	// contracts\DexPool.algo.ts:216
 	// this.app.address.isOptedInToAsset(assetId)
 	global CurrentApplicationAddress
 	frame_dig -1 // assetId: AssetID
@@ -1099,12 +1099,12 @@ optIn:
 	bz *if2_end
 
 	// *if2_consequent
-	// contracts/DexPool.algo.ts:217
+	// contracts\DexPool.algo.ts:217
 	// return;
 	retsub
 
 *if2_end:
-	// contracts/DexPool.algo.ts:220
+	// contracts\DexPool.algo.ts:220
 	// sendAssetTransfer({
 	//       assetReceiver: this.app.address,
 	//       xferAsset: assetId,
@@ -1114,17 +1114,17 @@ optIn:
 	intc 6 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/DexPool.algo.ts:221
+	// contracts\DexPool.algo.ts:221
 	// assetReceiver: this.app.address
 	global CurrentApplicationAddress
 	itxn_field AssetReceiver
 
-	// contracts/DexPool.algo.ts:222
+	// contracts\DexPool.algo.ts:222
 	// xferAsset: assetId
 	frame_dig -1 // assetId: AssetID
 	itxn_field XferAsset
 
-	// contracts/DexPool.algo.ts:223
+	// contracts\DexPool.algo.ts:223
 	// assetAmount: 0
 	intc 0 // 0
 	itxn_field AssetAmount
@@ -1154,7 +1154,7 @@ addToken:
 	proto 3 0
 
 	// *if3_condition
-	// contracts/DexPool.algo.ts:241
+	// contracts\DexPool.algo.ts:241
 	// !this.weights(index).exists
 	bytec 5 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1167,7 +1167,7 @@ addToken:
 	bz *if3_end
 
 	// *if3_consequent
-	// contracts/DexPool.algo.ts:242
+	// contracts\DexPool.algo.ts:242
 	// this.weights(index).create(8)
 	bytec 5 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1179,7 +1179,7 @@ addToken:
 
 *if3_end:
 	// *if4_condition
-	// contracts/DexPool.algo.ts:245
+	// contracts\DexPool.algo.ts:245
 	// !this.balances(assetID).exists
 	bytec 1 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1192,7 +1192,7 @@ addToken:
 	bz *if4_end
 
 	// *if4_consequent
-	// contracts/DexPool.algo.ts:246
+	// contracts\DexPool.algo.ts:246
 	// this.balances(assetID).create(8)
 	bytec 1 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1203,7 +1203,7 @@ addToken:
 	pop
 
 *if4_end:
-	// contracts/DexPool.algo.ts:249
+	// contracts\DexPool.algo.ts:249
 	// this.weights(index).value = weight
 	bytec 5 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1213,7 +1213,7 @@ addToken:
 	itob
 	box_put
 
-	// contracts/DexPool.algo.ts:250
+	// contracts\DexPool.algo.ts:250
 	// this.balances(assetID).value = 0
 	bytec 1 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1244,7 +1244,7 @@ createToken:
 	proto 0 0
 
 	// *if5_condition
-	// contracts/DexPool.algo.ts:271
+	// contracts\DexPool.algo.ts:271
 	// this.token.value === AssetID.zeroIndex
 	bytec 4 //  "token"
 	app_global_get
@@ -1253,7 +1253,7 @@ createToken:
 	bz *if5_end
 
 	// *if5_consequent
-	// contracts/DexPool.algo.ts:272
+	// contracts\DexPool.algo.ts:272
 	// this.token.value = sendAssetCreation({
 	//         configAssetTotal: TOTAL_LP_SUPPLY,
 	//         configAssetDecimals: 6,
@@ -1270,44 +1270,44 @@ createToken:
 	pushint 3 // acfg
 	itxn_field TypeEnum
 
-	// contracts/DexPool.algo.ts:273
+	// contracts\DexPool.algo.ts:273
 	// configAssetTotal: TOTAL_LP_SUPPLY
 	intc 4 // 10
 	pushint 16
 	exp
 	itxn_field ConfigAssetTotal
 
-	// contracts/DexPool.algo.ts:274
+	// contracts\DexPool.algo.ts:274
 	// configAssetDecimals: 6
 	intc 5 // 6
 	itxn_field ConfigAssetDecimals
 
-	// contracts/DexPool.algo.ts:275
+	// contracts\DexPool.algo.ts:275
 	// configAssetReserve: this.app.address
 	global CurrentApplicationAddress
 	itxn_field ConfigAssetReserve
 
-	// contracts/DexPool.algo.ts:276
+	// contracts\DexPool.algo.ts:276
 	// configAssetManager: this.app.address
 	global CurrentApplicationAddress
 	itxn_field ConfigAssetManager
 
-	// contracts/DexPool.algo.ts:277
+	// contracts\DexPool.algo.ts:277
 	// configAssetClawback: globals.zeroAddress
 	global ZeroAddress
 	itxn_field ConfigAssetClawback
 
-	// contracts/DexPool.algo.ts:278
+	// contracts\DexPool.algo.ts:278
 	// configAssetFreeze: globals.zeroAddress
 	global ZeroAddress
 	itxn_field ConfigAssetFreeze
 
-	// contracts/DexPool.algo.ts:279
+	// contracts\DexPool.algo.ts:279
 	// configAssetDefaultFrozen: 0
 	intc 0 // 0
 	itxn_field ConfigAssetDefaultFrozen
 
-	// contracts/DexPool.algo.ts:280
+	// contracts\DexPool.algo.ts:280
 	// configAssetName: 'BalancedPool-' + this.app.id.toString()
 	pushbytes 0x42616c616e636564506f6f6c2d // "BalancedPool-"
 	txna Applications 0
@@ -1315,7 +1315,7 @@ createToken:
 	concat
 	itxn_field ConfigAssetName
 
-	// contracts/DexPool.algo.ts:281
+	// contracts\DexPool.algo.ts:281
 	// configAssetUnitName: 'LP'
 	pushbytes 0x4c50 // "LP"
 	itxn_field ConfigAssetUnitName
@@ -1338,7 +1338,7 @@ createToken:
 assertIsManager:
 	proto 0 0
 
-	// contracts/DexPool.algo.ts:290
+	// contracts\DexPool.algo.ts:290
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 10 //  "manager"
@@ -1353,7 +1353,7 @@ assertIsManager:
 assertIsBootstrapped:
 	proto 0 0
 
-	// contracts/DexPool.algo.ts:294
+	// contracts\DexPool.algo.ts:294
 	// assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped')
 	bytec 4 //  "token"
 	app_global_get
@@ -1383,7 +1383,7 @@ lnWithSign:
 	bytec 0 // 0x
 	dupn 7
 
-	// contracts/DexPool.algo.ts:310
+	// contracts\DexPool.algo.ts:310
 	// assert(x > 0, 'log undefined for x ≤ 0')
 	frame_dig -1 // x: uint64
 	intc 0 // 0
@@ -1392,13 +1392,13 @@ lnWithSign:
 	// log undefined for x ≤ 0
 	assert
 
-	// contracts/DexPool.algo.ts:312
+	// contracts\DexPool.algo.ts:312
 	// negative: uint64 = 0
 	intc 0 // 0
 	frame_bury 0 // negative: uint64
 
 	// *if6_condition
-	// contracts/DexPool.algo.ts:315
+	// contracts\DexPool.algo.ts:315
 	// x < SCALE
 	frame_dig -1 // x: uint64
 	intc 2 // 1000000
@@ -1406,12 +1406,12 @@ lnWithSign:
 	bz *if6_else
 
 	// *if6_consequent
-	// contracts/DexPool.algo.ts:316
+	// contracts\DexPool.algo.ts:316
 	// negative = 1
 	intc 3 // 1
 	frame_bury 0 // negative: uint64
 
-	// contracts/DexPool.algo.ts:317
+	// contracts\DexPool.algo.ts:317
 	// invX = wideRatio([SCALE, SCALE], [x])
 	intc 2 // 1000000
 	dup
@@ -1428,7 +1428,7 @@ lnWithSign:
 	assert
 	frame_bury 2 // invX: uint64
 
-	// contracts/DexPool.algo.ts:318
+	// contracts\DexPool.algo.ts:318
 	// z = wideRatio([invX - SCALE, SCALE], [invX])
 	frame_dig 2 // invX: uint64
 	intc 2 // 1000000
@@ -1449,7 +1449,7 @@ lnWithSign:
 	b *if6_end
 
 *if6_else:
-	// contracts/DexPool.algo.ts:320
+	// contracts\DexPool.algo.ts:320
 	// z = wideRatio([x - SCALE, SCALE], [x])
 	frame_dig -1 // x: uint64
 	intc 2 // 1000000
@@ -1469,22 +1469,22 @@ lnWithSign:
 	frame_bury 1 // z: uint64
 
 *if6_end:
-	// contracts/DexPool.algo.ts:323
+	// contracts\DexPool.algo.ts:323
 	// result = z
 	frame_dig 1 // z: uint64
 	frame_bury 3 // result: uint64
 
-	// contracts/DexPool.algo.ts:324
+	// contracts\DexPool.algo.ts:324
 	// term = z
 	frame_dig 1 // z: uint64
 	frame_bury 4 // term: uint64
 
-	// contracts/DexPool.algo.ts:325
+	// contracts\DexPool.algo.ts:325
 	// neg = false
 	intc 0 // 0
 	frame_bury 5 // neg: bool
 
-	// contracts/DexPool.algo.ts:327
+	// contracts\DexPool.algo.ts:327
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 5 //  appl
@@ -1499,20 +1499,20 @@ lnWithSign:
 	itxn_field OnCompletion
 	itxn_submit
 
-	// contracts/DexPool.algo.ts:329
+	// contracts\DexPool.algo.ts:329
 	// for (let i = 2; i <= 10; i = i + 1)
 	intc 8 // 2
 	frame_bury 6 // i: uint64
 
 *for_3:
-	// contracts/DexPool.algo.ts:329
+	// contracts\DexPool.algo.ts:329
 	// i <= 10
 	frame_dig 6 // i: uint64
 	intc 4 // 10
 	<=
 	bz *for_3_end
 
-	// contracts/DexPool.algo.ts:330
+	// contracts\DexPool.algo.ts:330
 	// term = wideRatio([term, z], [SCALE])
 	frame_dig 4 // term: uint64
 	frame_dig 1 // z: uint64
@@ -1529,7 +1529,7 @@ lnWithSign:
 	assert
 	frame_bury 4 // term: uint64
 
-	// contracts/DexPool.algo.ts:331
+	// contracts\DexPool.algo.ts:331
 	// delta = wideRatio([term], [i])
 	intc 0 // 0
 	frame_dig 4 // term: uint64
@@ -1545,7 +1545,7 @@ lnWithSign:
 	assert
 	frame_bury 7 // delta: uint64
 
-	// contracts/DexPool.algo.ts:332
+	// contracts\DexPool.algo.ts:332
 	// result = neg ? result - delta : result + delta
 	frame_dig 5 // neg: bool
 	bz *ternary0_false
@@ -1562,14 +1562,14 @@ lnWithSign:
 *ternary0_end:
 	frame_bury 3 // result: uint64
 
-	// contracts/DexPool.algo.ts:333
+	// contracts\DexPool.algo.ts:333
 	// neg = !neg
 	frame_dig 5 // neg: bool
 	!
 	frame_bury 5 // neg: bool
 
 *for_3_continue:
-	// contracts/DexPool.algo.ts:329
+	// contracts\DexPool.algo.ts:329
 	// i = i + 1
 	frame_dig 6 // i: uint64
 	intc 3 // 1
@@ -1578,7 +1578,7 @@ lnWithSign:
 	b *for_3
 
 *for_3_end:
-	// contracts/DexPool.algo.ts:336
+	// contracts\DexPool.algo.ts:336
 	// return [negative, result];
 	frame_dig 0 // negative: uint64
 	itob
@@ -1609,30 +1609,30 @@ exp:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/DexPool.algo.ts:349
+	// contracts\DexPool.algo.ts:349
 	// result = SCALE
 	intc 2 // 1000000
 	frame_bury 0 // result: uint64
 
-	// contracts/DexPool.algo.ts:350
+	// contracts\DexPool.algo.ts:350
 	// term = SCALE
 	intc 2 // 1000000
 	frame_bury 1 // term: uint64
 
-	// contracts/DexPool.algo.ts:352
+	// contracts\DexPool.algo.ts:352
 	// for (let i = 1; i <= 10; i = i + 1)
 	intc 3 // 1
 	frame_bury 2 // i: uint64
 
 *for_4:
-	// contracts/DexPool.algo.ts:352
+	// contracts\DexPool.algo.ts:352
 	// i <= 10
 	frame_dig 2 // i: uint64
 	intc 4 // 10
 	<=
 	bz *for_4_end
 
-	// contracts/DexPool.algo.ts:353
+	// contracts\DexPool.algo.ts:353
 	// term = wideRatio([term, x], [i * SCALE])
 	frame_dig 1 // term: uint64
 	frame_dig -1 // x: uint64
@@ -1651,7 +1651,7 @@ exp:
 	assert
 	frame_bury 1 // term: uint64
 
-	// contracts/DexPool.algo.ts:354
+	// contracts\DexPool.algo.ts:354
 	// result += term
 	frame_dig 0 // result: uint64
 	frame_dig 1 // term: uint64
@@ -1659,7 +1659,7 @@ exp:
 	frame_bury 0 // result: uint64
 
 *for_4_continue:
-	// contracts/DexPool.algo.ts:352
+	// contracts\DexPool.algo.ts:352
 	// i = i + 1
 	frame_dig 2 // i: uint64
 	intc 3 // 1
@@ -1668,7 +1668,7 @@ exp:
 	b *for_4
 
 *for_4_end:
-	// contracts/DexPool.algo.ts:357
+	// contracts\DexPool.algo.ts:357
 	// return result;
 	frame_dig 0 // result: uint64
 
@@ -1698,7 +1698,7 @@ pow:
 	dupn 4
 
 	// *if7_condition
-	// contracts/DexPool.algo.ts:372
+	// contracts\DexPool.algo.ts:372
 	// x === 0
 	frame_dig -1 // x: uint64
 	intc 0 // 0
@@ -1706,19 +1706,19 @@ pow:
 	bz *if7_end
 
 	// *if7_consequent
-	// contracts/DexPool.algo.ts:372
+	// contracts\DexPool.algo.ts:372
 	// return 0;
 	intc 0 // 0
 	b *pow*return
 
 *if7_end:
-	// contracts/DexPool.algo.ts:374
+	// contracts\DexPool.algo.ts:374
 	// lnXResult = this.lnWithSign(x)
 	frame_dig -1 // x: uint64
 	callsub lnWithSign
 	frame_bury 0 // lnXResult: uint64[]
 
-	// contracts/DexPool.algo.ts:375
+	// contracts\DexPool.algo.ts:375
 	// negativeLn = lnXResult[0]
 	frame_dig 0 // lnXResult: uint64[]
 	store 255 // full array
@@ -1727,7 +1727,7 @@ pow:
 	btoi
 	frame_bury 1 // negativeLn: uint64
 
-	// contracts/DexPool.algo.ts:376
+	// contracts\DexPool.algo.ts:376
 	// lnX = lnXResult[1]
 	frame_dig 0 // lnXResult: uint64[]
 	store 255 // full array
@@ -1736,7 +1736,7 @@ pow:
 	btoi
 	frame_bury 2 // lnX: uint64
 
-	// contracts/DexPool.algo.ts:378
+	// contracts\DexPool.algo.ts:378
 	// ylnX = wideRatio([y, lnX], [SCALE])
 	frame_dig -2 // y: uint64
 	frame_dig 2 // lnX: uint64
@@ -1753,14 +1753,14 @@ pow:
 	assert
 	frame_bury 3 // ylnX: uint64
 
-	// contracts/DexPool.algo.ts:380
+	// contracts\DexPool.algo.ts:380
 	// expResult = this.exp(ylnX)
 	frame_dig 3 // ylnX: uint64
 	callsub exp
 	frame_bury 4 // expResult: uint64
 
 	// *if8_condition
-	// contracts/DexPool.algo.ts:382
+	// contracts\DexPool.algo.ts:382
 	// negativeLn === 1
 	frame_dig 1 // negativeLn: uint64
 	intc 3 // 1
@@ -1768,7 +1768,7 @@ pow:
 	bz *if8_end
 
 	// *if8_consequent
-	// contracts/DexPool.algo.ts:383
+	// contracts\DexPool.algo.ts:383
 	// return wideRatio([SCALE, SCALE], [expResult]);
 	intc 2 // 1000000
 	dup
@@ -1786,7 +1786,7 @@ pow:
 	b *pow*return
 
 *if8_end:
-	// contracts/DexPool.algo.ts:386
+	// contracts\DexPool.algo.ts:386
 	// return expResult;
 	frame_dig 4 // expResult: uint64
 
@@ -1823,7 +1823,7 @@ calcOut:
 	bytec 0 // 0x
 	dupn 3
 
-	// contracts/DexPool.algo.ts:416
+	// contracts\DexPool.algo.ts:416
 	// amountInWithFee = wideRatio([amountIn, SCALE - fee], [SCALE])
 	frame_dig -5 // amountIn: uint64
 	pushint 999000
@@ -1840,7 +1840,7 @@ calcOut:
 	assert
 	frame_bury 0 // amountInWithFee: uint64
 
-	// contracts/DexPool.algo.ts:419
+	// contracts\DexPool.algo.ts:419
 	// ratio = wideRatio([balanceIn, SCALE], [balanceIn + amountInWithFee])
 	frame_dig -1 // balanceIn: uint64
 	intc 2 // 1000000
@@ -1859,7 +1859,7 @@ calcOut:
 	assert
 	frame_bury 1 // ratio: uint64
 
-	// contracts/DexPool.algo.ts:421
+	// contracts\DexPool.algo.ts:421
 	// power = wideRatio([weightIn, SCALE], [weightOut])
 	frame_dig -2 // weightIn: uint64
 	intc 2 // 1000000
@@ -1876,44 +1876,44 @@ calcOut:
 	assert
 	frame_bury 2 // power: uint64
 
-	// contracts/DexPool.algo.ts:424
+	// contracts\DexPool.algo.ts:424
 	// ratioPow = this.pow(ratio, power)
 	frame_dig 2 // power: uint64
 	frame_dig 1 // ratio: uint64
 	callsub pow
 	frame_bury 3 // ratioPow: uint64
 
-	// contracts/DexPool.algo.ts:426
+	// contracts\DexPool.algo.ts:426
 	// log(itob(balanceIn))
 	frame_dig -1 // balanceIn: uint64
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:427
+	// contracts\DexPool.algo.ts:427
 	// log(itob(amountInWithFee))
 	frame_dig 0 // amountInWithFee: uint64
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:428
+	// contracts\DexPool.algo.ts:428
 	// log(itob(ratio))
 	frame_dig 1 // ratio: uint64
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:429
+	// contracts\DexPool.algo.ts:429
 	// log(itob(power))
 	frame_dig 2 // power: uint64
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:430
+	// contracts\DexPool.algo.ts:430
 	// log(itob(ratioPow))
 	frame_dig 3 // ratioPow: uint64
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:431
+	// contracts\DexPool.algo.ts:431
 	// log(itob(wideRatio([balanceOut, SCALE - ratioPow], [SCALE])))
 	frame_dig -3 // balanceOut: uint64
 	intc 2 // 1000000
@@ -1933,7 +1933,7 @@ calcOut:
 	itob
 	log
 
-	// contracts/DexPool.algo.ts:433
+	// contracts\DexPool.algo.ts:433
 	// return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
 	frame_dig -3 // balanceOut: uint64
 	intc 2 // 1000000
@@ -1984,7 +1984,7 @@ computeNAssetsLiquidity:
 	bytec 0 // 0x
 	dupn 10
 
-	// contracts/DexPool.algo.ts:456
+	// contracts\DexPool.algo.ts:456
 	// totalAssets = this.assets.value.length
 	bytec 2 //  "assets"
 	app_global_get
@@ -1994,7 +1994,7 @@ computeNAssetsLiquidity:
 	/
 	frame_bury 0 // totalAssets: uint64
 
-	// contracts/DexPool.algo.ts:457
+	// contracts\DexPool.algo.ts:457
 	// assert(totalAssets >= 1, 'Please provide at least one asset')
 	frame_dig 0 // totalAssets: uint64
 	intc 3 // 1
@@ -2003,18 +2003,18 @@ computeNAssetsLiquidity:
 	// Please provide at least one asset
 	assert
 
-	// contracts/DexPool.algo.ts:459
+	// contracts\DexPool.algo.ts:459
 	// ratio = SCALE
 	intc 2 // 1000000
 	frame_bury 1 // ratio: uint64
 
-	// contracts/DexPool.algo.ts:461
+	// contracts\DexPool.algo.ts:461
 	// for (let i = 0; i < totalAssets - 1; i += 1)
 	intc 0 // 0
 	frame_bury 2 // i: uint64
 
 *for_5:
-	// contracts/DexPool.algo.ts:461
+	// contracts\DexPool.algo.ts:461
 	// i < totalAssets - 1
 	frame_dig 2 // i: uint64
 	frame_dig 0 // totalAssets: uint64
@@ -2023,7 +2023,7 @@ computeNAssetsLiquidity:
 	<
 	bz *for_5_end
 
-	// contracts/DexPool.algo.ts:462
+	// contracts\DexPool.algo.ts:462
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 5 //  appl
@@ -2039,7 +2039,7 @@ computeNAssetsLiquidity:
 	itxn_submit
 
 *for_5_continue:
-	// contracts/DexPool.algo.ts:461
+	// contracts\DexPool.algo.ts:461
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 3 // 1
@@ -2048,20 +2048,20 @@ computeNAssetsLiquidity:
 	b *for_5
 
 *for_5_end:
-	// contracts/DexPool.algo.ts:465
+	// contracts\DexPool.algo.ts:465
 	// for (let i = 0; i < totalAssets; i += 1)
 	intc 0 // 0
 	frame_bury 3 // i: uint64
 
 *for_6:
-	// contracts/DexPool.algo.ts:465
+	// contracts\DexPool.algo.ts:465
 	// i < totalAssets
 	frame_dig 3 // i: uint64
 	frame_dig 0 // totalAssets: uint64
 	<
 	bz *for_6_end
 
-	// contracts/DexPool.algo.ts:466
+	// contracts\DexPool.algo.ts:466
 	// assetId = this.assets.value[i]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2079,7 +2079,7 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 4 // assetId: uint64
 
-	// contracts/DexPool.algo.ts:467
+	// contracts\DexPool.algo.ts:467
 	// poolBalance = this.balances(assetId).value
 	bytec 1 //  "balances_"
 	frame_dig 4 // assetId: uint64
@@ -2092,7 +2092,7 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 5 // poolBalance: uint64
 
-	// contracts/DexPool.algo.ts:468
+	// contracts\DexPool.algo.ts:468
 	// providedAmount = this.provided(sender).value[i]
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -2115,7 +2115,7 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 6 // providedAmount: uint64
 
-	// contracts/DexPool.algo.ts:469
+	// contracts\DexPool.algo.ts:469
 	// weight = this.weights(i).value
 	bytec 5 //  "weights_"
 	frame_dig 3 // i: uint64
@@ -2128,7 +2128,7 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 7 // weight: uint64
 
-	// contracts/DexPool.algo.ts:471
+	// contracts\DexPool.algo.ts:471
 	// assert(poolBalance > 0, 'Pool balance must be > 0')
 	frame_dig 5 // poolBalance: uint64
 	intc 0 // 0
@@ -2137,7 +2137,7 @@ computeNAssetsLiquidity:
 	// Pool balance must be > 0
 	assert
 
-	// contracts/DexPool.algo.ts:473
+	// contracts\DexPool.algo.ts:473
 	// assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount])
 	frame_dig 6 // providedAmount: uint64
 	intc 2 // 1000000
@@ -2156,14 +2156,14 @@ computeNAssetsLiquidity:
 	assert
 	frame_bury 8 // assetRatio: uint64
 
-	// contracts/DexPool.algo.ts:474
+	// contracts\DexPool.algo.ts:474
 	// powed = this.pow(assetRatio, weight)
 	frame_dig 7 // weight: uint64
 	frame_dig 8 // assetRatio: uint64
 	callsub pow
 	frame_bury 9 // powed: uint64
 
-	// contracts/DexPool.algo.ts:475
+	// contracts\DexPool.algo.ts:475
 	// ratio = wideRatio([ratio, powed], [SCALE])
 	frame_dig 1 // ratio: uint64
 	frame_dig 9 // powed: uint64
@@ -2180,7 +2180,7 @@ computeNAssetsLiquidity:
 	assert
 	frame_bury 1 // ratio: uint64
 
-	// contracts/DexPool.algo.ts:477
+	// contracts\DexPool.algo.ts:477
 	// this.provided(sender).value[i] = 0
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -2218,7 +2218,7 @@ computeNAssetsLiquidity:
 	box_put
 
 *for_6_continue:
-	// contracts/DexPool.algo.ts:465
+	// contracts\DexPool.algo.ts:465
 	// i += 1
 	frame_dig 3 // i: uint64
 	intc 3 // 1
@@ -2227,12 +2227,12 @@ computeNAssetsLiquidity:
 	b *for_6
 
 *for_6_end:
-	// contracts/DexPool.algo.ts:480
+	// contracts\DexPool.algo.ts:480
 	// totalLP = this.totalLP()
 	callsub totalLP
 	frame_bury 10 // totalLP: uint64
 
-	// contracts/DexPool.algo.ts:481
+	// contracts\DexPool.algo.ts:481
 	// return wideRatio([totalLP, ratio], [SCALE]);
 	frame_dig 10 // totalLP: uint64
 	frame_dig 1 // ratio: uint64
@@ -2272,7 +2272,7 @@ computeNAssetsLiquidity:
 totalLP:
 	proto 0 1
 
-	// contracts/DexPool.algo.ts:499
+	// contracts\DexPool.algo.ts:499
 	// return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
 	bytec 4 //  "token"
 	app_global_get
@@ -2308,7 +2308,7 @@ totalLP:
 absDiff:
 	proto 2 1
 
-	// contracts/DexPool.algo.ts:516
+	// contracts\DexPool.algo.ts:516
 	// return a > b ? a - b : b - a;
 	frame_dig -1 // a: uint64
 	frame_dig -2 // b: uint64
@@ -2344,7 +2344,7 @@ absDiff:
 getTotalAssets:
 	proto 0 1
 
-	// contracts/DexPool.algo.ts:521
+	// contracts\DexPool.algo.ts:521
 	// return this.assets.value.length;
 	bytec 2 //  "assets"
 	app_global_get
@@ -2371,7 +2371,7 @@ getTotalAssets:
 getToken:
 	proto 0 1
 
-	// contracts/DexPool.algo.ts:526
+	// contracts\DexPool.algo.ts:526
 	// return this.token.value;
 	bytec 4 //  "token"
 	app_global_get
@@ -2401,7 +2401,7 @@ getBalance:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/DexPool.algo.ts:531
+	// contracts\DexPool.algo.ts:531
 	// asset = this.assets.value[index]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2419,7 +2419,7 @@ getBalance:
 	btoi
 	frame_bury 0 // asset: uint64
 
-	// contracts/DexPool.algo.ts:532
+	// contracts\DexPool.algo.ts:532
 	// return this.balances(asset).value;
 	bytec 1 //  "balances_"
 	frame_dig 0 // asset: uint64
@@ -2468,7 +2468,7 @@ estimateSwap:
 	bytec 0 // 0x
 	dupn 5
 
-	// contracts/DexPool.algo.ts:537
+	// contracts\DexPool.algo.ts:537
 	// assetIn = this.assets.value[from]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2486,7 +2486,7 @@ estimateSwap:
 	btoi
 	frame_bury 0 // assetIn: uint64
 
-	// contracts/DexPool.algo.ts:538
+	// contracts\DexPool.algo.ts:538
 	// assetOut = this.assets.value[to]
 	bytec 2 //  "assets"
 	app_global_get
@@ -2504,7 +2504,7 @@ estimateSwap:
 	btoi
 	frame_bury 1 // assetOut: uint64
 
-	// contracts/DexPool.algo.ts:540
+	// contracts\DexPool.algo.ts:540
 	// balanceIn = this.balances(assetIn).value
 	bytec 1 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -2517,7 +2517,7 @@ estimateSwap:
 	btoi
 	frame_bury 2 // balanceIn: uint64
 
-	// contracts/DexPool.algo.ts:541
+	// contracts\DexPool.algo.ts:541
 	// balanceOut = this.balances(assetOut).value
 	bytec 1 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -2530,7 +2530,7 @@ estimateSwap:
 	btoi
 	frame_bury 3 // balanceOut: uint64
 
-	// contracts/DexPool.algo.ts:543
+	// contracts\DexPool.algo.ts:543
 	// weightIn = this.weights(from).value
 	bytec 5 //  "weights_"
 	frame_dig -1 // from: uint64
@@ -2543,7 +2543,7 @@ estimateSwap:
 	btoi
 	frame_bury 4 // weightIn: uint64
 
-	// contracts/DexPool.algo.ts:544
+	// contracts\DexPool.algo.ts:544
 	// weightOut = this.weights(to).value
 	bytec 5 //  "weights_"
 	frame_dig -2 // to: uint64
@@ -2556,7 +2556,7 @@ estimateSwap:
 	btoi
 	frame_bury 5 // weightOut: uint64
 
-	// contracts/DexPool.algo.ts:546
+	// contracts\DexPool.algo.ts:546
 	// return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 	frame_dig -3 // amount: uint64
 	frame_dig 5 // weightOut: uint64

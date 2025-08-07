@@ -49,8 +49,7 @@ export class AssetVault extends Contract {
    */
   bootstrap(assetIds: AssetID[], weights: uint64[]): AssetID {
     this.assertIsManager();
-    assert(assetIds.length >= 2, 'At least 2 tokens needed');
-    assert(assetIds.length === weights.length, 'Weights and Assets length must be the same');
+
     let sumOfWeights = 0;
 
     for (let i = 0; i < assetIds.length; i += 1) {

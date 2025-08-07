@@ -12,6 +12,7 @@ type Pool = {
 const DEX_POOL_TYPE = 0;
 const VAULT_POOL_TYPE = 1;
 
+// @todo move to globals
 const MBR_CONTRACT_PROGRAM = 100_000;
 const MBR_CREATE_POOL = 100_000;
 const MBR_CREATE_VAULT = 100_000;
@@ -119,21 +120,21 @@ export class Factory extends Contract {
    * @param {AssetID[]} assetIds
    * @param {uint64[]} weights
    */
-  initPool(poolID: AppID, type: uint64, assetIds: AssetID[], weights: uint64[], fee: PayTxn): AssetID {
-    verifyPayTxn(fee, {
-      receiver: this.app.address,
-      amount: MBR_INIT_POOL, // @todo move to constant
+  initPool(poolID: AppID, type: uint64, assetIds: AssetID[], weights: uint64[], coverMBR: PayTxn): AssetID {
+    verifyPayTxn(coverMBR, {
+      receiver: poolID.address,
+      amount: globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
     });
     assert(assetIds.length >= 2, 'At least 2 tokens needed');
     assert(assetIds.length <= 128, 'Maximum of 128 assets per pool');
     assert(assetIds.length === weights.length, 'Weights and Assets length must be the same');
-    this.listIsOrdered(assetIds);
+    assert(this.listIsOrdered(assetIds), 'Assets must be ordered by ID');
 
-    const hash = this.getPoolHash(assetIds, weights);
-
-    assert(!this.pools(hash).exists, 'This pool already exists');
-
-    this.pools(hash).value = { id: poolID, type: type, assets: assetIds, weights: weights };
+    if (type === DEX_POOL_TYPE) {
+      const hash = this.getPoolHash(assetIds, weights);
+      assert(!this.pools(hash).exists, 'This pool already exists');
+      this.pools(hash).value = { id: poolID, type: type, assets: assetIds, weights: weights };
+    }
 
     let LPTokenID: AssetID = AssetID.zeroIndex;
 

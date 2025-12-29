@@ -118,7 +118,6 @@ async function run(command: Commands): Promise<boolean> {
         console.log(`Pool ${existingPool} already exists! => (${TOKENS}) (${weights})`);
         break;
       }
-
       const lpTokenID = await initPool(factoryClient, manager, POOL_ID, TOKENS, weights);
       await storeResult('../script/bootstrap', { LP_TOKEN_ID: lpTokenID });
       break;
@@ -150,7 +149,7 @@ async function run(command: Commands): Promise<boolean> {
         ]);
 
         const tokenId = BigInt(parseInt(token, 10));
-        await addLiquidity(factoryClient, manager, POOL_ID, amount, [tokenId]);
+        await addLiquidity(manager, POOL_ID, amount, [tokenId]);
         console.log(`${amount} unit of token ${tokenId} provided`);
       } else {
         const { amount } = await inquirer.prompt([
@@ -163,12 +162,12 @@ async function run(command: Commands): Promise<boolean> {
         ]);
         const poolID = (await getPool(factoryClient, TOKENS, [1 / 2, 1 / 2]))!;
 
-        await addLiquidity(factoryClient, manager, poolID, amount, TOKENS);
+        await addLiquidity(manager, poolID, amount, TOKENS);
       }
       break;
     case 'Compute Liquidity':
       factoryClient = await getFactoryClient(manager, FACTORY_ID);
-      const LP = await getLiquidity(factoryClient, manager, POOL_ID);
+      const LP = await getLiquidity(manager, POOL_ID);
       console.log(`LP calculations done => ${LP} LP received`);
       break;
     case 'Burn Liquidity':
@@ -181,7 +180,7 @@ async function run(command: Commands): Promise<boolean> {
         },
       ]);
       factoryClient = await getFactoryClient(manager, FACTORY_ID);
-      await burnLiquidity(factoryClient, manager, POOL_ID, LP_TOKEN_ID, amountLP);
+      await burnLiquidity(manager, POOL_ID, LP_TOKEN_ID, amountLP);
 
       console.log(`LP burned`);
       break;
@@ -211,7 +210,7 @@ async function run(command: Commands): Promise<boolean> {
       const tokenInIndex = TOKENS.findIndex((el) => el.toString() === tokenIn);
       const tokenOutIndex = TOKENS.findIndex((el) => el.toString() === tokenOut);
 
-      await swap(factoryClient, manager, POOL_ID, TOKENS, tokenInIndex, tokenOutIndex, amountIn);
+      await swap(manager, POOL_ID, TOKENS, tokenInIndex, tokenOutIndex, amountIn);
       break;
     case 'Quit':
       return true;

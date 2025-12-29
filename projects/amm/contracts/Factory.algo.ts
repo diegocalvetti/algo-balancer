@@ -16,7 +16,7 @@ const VAULT_POOL_TYPE = 1;
 const MBR_CONTRACT_PROGRAM = 100_000;
 const MBR_CREATE_POOL = 100_000;
 const MBR_CREATE_VAULT = 100_000;
-const MBR_INIT_POOL = 100_000;
+const MBR_INIT_POOL = 1_000_000;
 
 export class Factory extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
@@ -123,7 +123,7 @@ export class Factory extends Contract {
   initPool(poolID: AppID, type: uint64, assetIds: AssetID[], weights: uint64[], coverMBR: PayTxn): AssetID {
     verifyPayTxn(coverMBR, {
       receiver: poolID.address,
-      amount: globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
+      amount: MBR_INIT_POOL, // @todo globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
     });
     assert(assetIds.length >= 2, 'At least 2 tokens needed');
     assert(assetIds.length <= 128, 'Maximum of 128 assets per pool');

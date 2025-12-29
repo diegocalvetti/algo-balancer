@@ -4,7 +4,7 @@ import algosdk from 'algosdk';
 
 import { TransactionResponse } from 'algosdk/dist/types/client/v2/indexer';
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
-import { AlgoParams, getTxInfo } from './generic';
+import { AlgoParams, getPayTx, getTxInfo } from './generic';
 import { AssetVaultFactory } from '../contracts/clients/AssetVaultClient';
 
 export async function deploy(manager: AlgoParams, name: string): Promise<bigint> {
@@ -48,6 +48,7 @@ export async function deploy(manager: AlgoParams, name: string): Promise<bigint>
   return appDeployer.appId;
 }
 
+/*
 export async function updatePoolProgram(adminFactory: FactoryClient, program: Uint8Array) {
   const resultTxn = await adminFactory.send.managerUpdatePoolContractProgram({
     args: { programSize: program.length },
@@ -57,6 +58,7 @@ export async function updatePoolProgram(adminFactory: FactoryClient, program: Ui
   console.log(`Creating the box for containing the pool program, size: ${program.length}`);
   console.log('TXs IDs: ', resultTxn.txIds);
 }
+*/
 
 export async function writePoolProgram(factoryClient: FactoryClient, program: Uint8Array) {
   const writeGroup = factoryClient.newGroup();
@@ -65,6 +67,7 @@ export async function writePoolProgram(factoryClient: FactoryClient, program: Ui
     writeGroup.managerWritePoolContractProgram({
       args: {
         offset: i,
+        type: 0,
         data: program.subarray(i, i + 2000),
       },
     });
@@ -98,17 +101,21 @@ export async function factorySetup(manager: AlgoParams, APP_ID: bigint) {
     amount: (10_000_000).microAlgo(),
   });
 
-  await updatePoolProgram(factoryClient, balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
+  // await updatePoolProgram(factoryClient, balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
   await writePoolProgram(factoryClient, balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
 
+  const payment = getPayTx(manager, factoryClient.appAddress, 0.1);
+
   const poolGroup = factoryClient.newGroup();
-  poolGroup.createPool();
+  poolGroup.createPool({
+    args: [payment],
+  });
   const result = await poolGroup.send({ populateAppCallResources: true, maxRoundsToWaitForConfirmation: 4 });
 
   console.log('Balanced Pool Created');
   console.log('TXs IDs', result.txIds);
 
-  const lookup = await getTxInfo(result.txIds[0]);
+  const lookup = await getTxInfo(result.txIds[1]);
 
   const inner = (lookup as TransactionResponse).transaction.innerTxns![0];
   const poolAppId = inner.createdApplicationIndex;

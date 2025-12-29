@@ -39,8 +39,7 @@ export async function initPool(
   weights: number[]
 ) {
   const poolClient = await getPoolClient(config, poolID);
-  const payTx = await getPayTx(config, factoryClient.appAddress, 10);
-  await pay(config, poolClient.appAddress, 10);
+  const payTx = await getPayTx(config, poolClient.appAddress, 1);
 
   const weightsFixed = fixedWeights(weights);
   const initPoolGroup = factoryClient.newGroup();

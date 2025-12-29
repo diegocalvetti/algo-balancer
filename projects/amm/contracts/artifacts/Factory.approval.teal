@@ -554,7 +554,7 @@ initPool:
 	// contracts/Factory.algo.ts:124
 	// verifyPayTxn(coverMBR, {
 	//       receiver: poolID.address,
-	//       amount: globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
+	//       amount: MBR_INIT_POOL, // @todo globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
 	//     })
 	// verify receiver
 	frame_dig -5 // coverMBR: PayTxn
@@ -570,17 +570,10 @@ initPool:
 	// verify amount
 	frame_dig -5 // coverMBR: PayTxn
 	gtxns Amount
-	global AssetOptInMinBalance
-	frame_dig -3 // assetIds: AssetID[]
-	len
-	intc 1 // 8
-	/
-	*
-	global AssetCreateMinBalance
-	+
+	pushint 1000000
 	==
 
-	// transaction verification failed: {"txn":"coverMBR","field":"amount","expected":"globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance"}
+	// transaction verification failed: {"txn":"coverMBR","field":"amount","expected":"MBR_INIT_POOL"}
 	assert
 
 	// contracts/Factory.algo.ts:128

@@ -78,6 +78,7 @@ describe('FactoryManager', () => {
         args: {
           offset: i,
           data: programBase64.subarray(i, i + 2000),
+          type: 0,
         },
         maxFee: (100_000).microAlgo(),
         sender,

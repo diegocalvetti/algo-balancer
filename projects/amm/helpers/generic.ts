@@ -60,18 +60,23 @@ export function makeAssetTransferTxn(params: AlgoParams, assetId: bigint, receiv
   });
 }
 
-export async function pay(params: AlgoParams, receiver: string | Address, amount: number) {
-  const { algorand, sender, signer } = params;
+export async function getPayTx(params: AlgoParams, receiver: string | Address, amount: number) {
+  const { algorand, sender } = params;
   const suggestedParams = await algorand.getSuggestedParams();
   suggestedParams.fee = (500_000).microAlgo().microAlgo;
   suggestedParams.flatFee = true;
 
-  const tx = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+  return algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     sender,
     receiver,
     amount: amount.algo().microAlgo,
     suggestedParams,
   });
+}
+
+export async function pay(params: AlgoParams, receiver: string | Address, amount: number) {
+  const { algorand, signer } = params;
+  const tx = await getPayTx(params, receiver, amount);
 
   const atc = new AtomicTransactionComposer();
   atc.addTransaction({ txn: tx, signer });

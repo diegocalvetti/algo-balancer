@@ -57,7 +57,7 @@
           "type": "uint64[]"
         },
         {
-          "name": "fee",
+          "name": "coverMBR",
           "type": "pay"
         }
       ],

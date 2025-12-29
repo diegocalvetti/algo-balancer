@@ -4,6 +4,7 @@ import {
   AlgoParams,
   AssetInfo,
   commonAppCallTxParams,
+  getPayTx,
   getPoolClient,
   getRandomAccount,
   getTxInfo,
@@ -38,7 +39,7 @@ export async function initPool(
   weights: number[]
 ) {
   const poolClient = await getPoolClient(config, poolID);
-  await pay(config, factoryClient.appAddress, 10);
+  const payTx = await getPayTx(config, factoryClient.appAddress, 10);
   await pay(config, poolClient.appAddress, 10);
 
   const weightsFixed = fixedWeights(weights);
@@ -56,7 +57,7 @@ export async function initPool(
 
   initPoolGroup.initPool({
     ...commonAppCallTxParams(config, (500_000).microAlgo()),
-    args: [poolID, tokens, weightsFixed],
+    args: [poolID, 0, tokens, weightsFixed, payTx],
   });
 
   const resultInit = await initPoolGroup.send({
@@ -76,7 +77,9 @@ export async function deployAndInitPool(
   tokens: bigint[],
   weights: number[]
 ): Promise<bigint> {
-  const result = await factoryClient.send.createPool({ args: [], populateAppCallResources: true });
+  const payTx = await getPayTx(config, factoryClient.appAddress, 10);
+
+  const result = await factoryClient.send.createPool({ args: [payTx], populateAppCallResources: true });
 
   const tx = await getTxInfo(result.txIds[0]);
   const poolID = tx.transaction.innerTxns![0].createdApplicationIndex!;

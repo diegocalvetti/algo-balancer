@@ -117,8 +117,10 @@ export class Factory extends Contract {
   /**
    * Initialize the pool with the given assets & weights
    * @param {AppID} poolID - Pool App ID
+   * @param type
    * @param {AssetID[]} assetIds
    * @param {uint64[]} weights
+   * @param coverMBR
    */
   initPool(poolID: AppID, type: uint64, assetIds: AssetID[], weights: uint64[], coverMBR: PayTxn): AssetID {
     verifyPayTxn(coverMBR, {

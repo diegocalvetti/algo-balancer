@@ -28,7 +28,7 @@ describe('FactoryManager', () => {
     await fixture.beforeEach();
     const { algorand } = fixture;
 
-    fixture.context.testAccount = await fixture.context.generateAccount({ initialFunds: (1000).algo() });
+    fixture.context.testAccount = await fixture.context.generateAccount({ initialFunds: (100_000).algo() });
     signer = fixture.context.testAccount.signer;
     sender = fixture.context.testAccount.addr.toString();
 

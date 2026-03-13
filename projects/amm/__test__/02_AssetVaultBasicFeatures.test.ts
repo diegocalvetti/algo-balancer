@@ -37,6 +37,7 @@ async function mintLPs() {
   const poolID = (await getPool(factoryClient, tokens, weights))!;
 
   await addLiquidity(manager, poolID, 1, tokens);
+  console.log("OKKKK");
   const LP1 = await getLiquidity(manager, poolID);
 
   const randomLP2 = await createAccountAndMintTokens(fixture, poolID, tokensInfo, 10_000_000);
@@ -99,7 +100,7 @@ describe('AssetVaultBasicFeatures', () => {
     await fixture.beforeEach();
     const { algorand } = fixture;
 
-    const manager = await getRandomAccount(fixture, 100_000_000);
+    const manager = await getRandomAccount(fixture, 1_000_000);
     signer = manager.signer;
     sender = manager.sender.toString();
 
@@ -115,7 +116,7 @@ describe('AssetVaultBasicFeatures', () => {
   test('deploy_pool_50/50', async () => {
     const { algorand } = fixture;
     const manager = { algorand, sender, signer };
-    await pay(manager, factoryClient.appAddress, 1_000_000);
+    await pay(manager, factoryClient.appAddress, 1);
 
     // Create some tokens
     const amount = BigInt(10_000_000);
@@ -184,4 +185,24 @@ describe('AssetVaultBasicFeatures', () => {
   test('pool_10_tokens_mint_lps', mintLPs);
 
   test('pool_10_tokens_swaps', swapTest);
+
+  test('deploy_pool_100_tokens', async () => {
+    const { algorand } = fixture;
+    const manager = { algorand, sender, signer };
+    await pay(manager, factoryClient.appAddress, 100_000);
+
+    const N = 100;
+    // Create some tokens
+    const amount = BigInt(10_000_000);
+    tokensInfo = await Promise.all(
+      Array.from({ length: N }, (_, i) => createAndMintToken(manager, `token${i + 1}`, `${i + 1}`, amount))
+    );
+    tokens = tokensInfo.map((el) => el.assetID);
+    weights = Array.from({ length: N }, () => 1 / N);
+
+    // Create the pool
+    await deployAndInitPool(factoryClient, manager, tokens, weights);
+  });
+
+  test('get_pool_100_tokens', getPoolTest);
 });

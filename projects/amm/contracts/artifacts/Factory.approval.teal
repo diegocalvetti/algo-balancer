@@ -542,8 +542,10 @@ createVault:
 //
 // Initialize the pool with the given assets & weights
 // @param {AppID} poolID - Pool App ID
+// @param type
 // @param {AssetID[]} assetIds
 // @param {uint64[]} weights
+// @param coverMBR
 initPool:
 	proto 5 1
 
@@ -551,7 +553,7 @@ initPool:
 	bytec 0 // 0x
 	dup
 
-	// contracts/Factory.algo.ts:124
+	// contracts/Factory.algo.ts:126
 	// verifyPayTxn(coverMBR, {
 	//       receiver: poolID.address,
 	//       amount: MBR_INIT_POOL, // @todo globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
@@ -576,7 +578,7 @@ initPool:
 	// transaction verification failed: {"txn":"coverMBR","field":"amount","expected":"MBR_INIT_POOL"}
 	assert
 
-	// contracts/Factory.algo.ts:128
+	// contracts/Factory.algo.ts:130
 	// assert(assetIds.length >= 2, 'At least 2 tokens needed')
 	frame_dig -3 // assetIds: AssetID[]
 	len
@@ -588,7 +590,7 @@ initPool:
 	// At least 2 tokens needed
 	assert
 
-	// contracts/Factory.algo.ts:129
+	// contracts/Factory.algo.ts:131
 	// assert(assetIds.length <= 128, 'Maximum of 128 assets per pool')
 	frame_dig -3 // assetIds: AssetID[]
 	len
@@ -600,7 +602,7 @@ initPool:
 	// Maximum of 128 assets per pool
 	assert
 
-	// contracts/Factory.algo.ts:130
+	// contracts/Factory.algo.ts:132
 	// assert(assetIds.length === weights.length, 'Weights and Assets length must be the same')
 	frame_dig -3 // assetIds: AssetID[]
 	len
@@ -615,7 +617,7 @@ initPool:
 	// Weights and Assets length must be the same
 	assert
 
-	// contracts/Factory.algo.ts:131
+	// contracts/Factory.algo.ts:133
 	// assert(this.listIsOrdered(assetIds), 'Assets must be ordered by ID')
 	frame_dig -3 // assetIds: AssetID[]
 	callsub listIsOrdered
@@ -624,7 +626,7 @@ initPool:
 	assert
 
 	// *if2_condition
-	// contracts/Factory.algo.ts:133
+	// contracts/Factory.algo.ts:135
 	// type === DEX_POOL_TYPE
 	frame_dig -2 // type: uint64
 	intc 2 // 0
@@ -632,14 +634,14 @@ initPool:
 	bz *if2_end
 
 	// *if2_consequent
-	// contracts/Factory.algo.ts:134
+	// contracts/Factory.algo.ts:136
 	// hash = this.getPoolHash(assetIds, weights)
 	frame_dig -4 // weights: uint64[]
 	frame_dig -3 // assetIds: AssetID[]
 	callsub getPoolHash
 	frame_bury 0 // hash: byte[32]
 
-	// contracts/Factory.algo.ts:135
+	// contracts/Factory.algo.ts:137
 	// assert(!this.pools(hash).exists, 'This pool already exists')
 	bytec 3 //  "pools_"
 	frame_dig 0 // hash: byte[32]
@@ -652,7 +654,7 @@ initPool:
 	// This pool already exists
 	assert
 
-	// contracts/Factory.algo.ts:136
+	// contracts/Factory.algo.ts:138
 	// this.pools(hash).value = { id: poolID, type: type, assets: assetIds, weights: weights }
 	bytec 3 //  "pools_"
 	frame_dig 0 // hash: byte[32]
@@ -694,13 +696,13 @@ initPool:
 	box_put
 
 *if2_end:
-	// contracts/Factory.algo.ts:139
+	// contracts/Factory.algo.ts:141
 	// LPTokenID: AssetID = AssetID.zeroIndex
 	intc 2 // 0
 	frame_bury 1 // LPTokenID: AssetID
 
 	// *if3_condition
-	// contracts/Factory.algo.ts:141
+	// contracts/Factory.algo.ts:143
 	// type === DEX_POOL_TYPE
 	frame_dig -2 // type: uint64
 	intc 2 // 0
@@ -708,7 +710,7 @@ initPool:
 	bz *if3_elseif1_condition
 
 	// *if3_consequent
-	// contracts/Factory.algo.ts:142
+	// contracts/Factory.algo.ts:144
 	// LPTokenID = sendMethodCall<typeof DexPool.prototype.bootstrap, AssetID>({
 	//         applicationID: poolID,
 	//         methodArgs: [assetIds, weights],
@@ -719,12 +721,12 @@ initPool:
 	bytec 7 //  method "bootstrap(uint64[],uint64[])uint64"
 	itxn_field ApplicationArgs
 
-	// contracts/Factory.algo.ts:143
+	// contracts/Factory.algo.ts:145
 	// applicationID: poolID
 	frame_dig -1 // poolID: AppID
 	itxn_field ApplicationID
 
-	// contracts/Factory.algo.ts:144
+	// contracts/Factory.algo.ts:146
 	// methodArgs: [assetIds, weights]
 	frame_dig -3 // assetIds: AssetID[]
 	dup
@@ -763,7 +765,7 @@ initPool:
 	b *if3_end
 
 *if3_elseif1_condition:
-	// contracts/Factory.algo.ts:146
+	// contracts/Factory.algo.ts:148
 	// type === VAULT_POOL_TYPE
 	frame_dig -2 // type: uint64
 	intc 0 // 1
@@ -771,7 +773,7 @@ initPool:
 	bz *if3_end
 
 	// *if3_elseif1_consequent
-	// contracts/Factory.algo.ts:147
+	// contracts/Factory.algo.ts:149
 	// LPTokenID = sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
 	//         applicationID: poolID,
 	//         methodArgs: [assetIds, weights],
@@ -782,12 +784,12 @@ initPool:
 	bytec 7 //  method "bootstrap(uint64[],uint64[])uint64"
 	itxn_field ApplicationArgs
 
-	// contracts/Factory.algo.ts:148
+	// contracts/Factory.algo.ts:150
 	// applicationID: poolID
 	frame_dig -1 // poolID: AppID
 	itxn_field ApplicationID
 
-	// contracts/Factory.algo.ts:149
+	// contracts/Factory.algo.ts:151
 	// methodArgs: [assetIds, weights]
 	frame_dig -3 // assetIds: AssetID[]
 	dup
@@ -825,7 +827,7 @@ initPool:
 	frame_bury 1 // LPTokenID: AssetID
 
 *if3_end:
-	// contracts/Factory.algo.ts:153
+	// contracts/Factory.algo.ts:155
 	// return LPTokenID;
 	frame_dig 1 // LPTokenID: AssetID
 
@@ -878,11 +880,11 @@ MANAGER_writePoolContractProgram:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/Factory.algo.ts:165
+	// contracts/Factory.algo.ts:167
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/Factory.algo.ts:166
+	// contracts/Factory.algo.ts:168
 	// pageIndex = (offset + 4096 - 1) / 4096
 	frame_dig -1 // offset: uint64
 	intc 6 // 4096
@@ -894,7 +896,7 @@ MANAGER_writePoolContractProgram:
 	frame_bury 0 // pageIndex: uint64
 
 	// *if4_condition
-	// contracts/Factory.algo.ts:168
+	// contracts/Factory.algo.ts:170
 	// type === DEX_POOL_TYPE
 	frame_dig -3 // type: uint64
 	intc 2 // 0
@@ -902,7 +904,7 @@ MANAGER_writePoolContractProgram:
 	bz *if4_elseif1_condition
 
 	// *if4_consequent
-	// contracts/Factory.algo.ts:169
+	// contracts/Factory.algo.ts:171
 	// this.dexPoolContractApprovalProgram(pageIndex).value = data
 	bytec 2 //  "pool_approval_program_page_"
 	frame_dig 0 // pageIndex: uint64
@@ -916,7 +918,7 @@ MANAGER_writePoolContractProgram:
 	b *if4_end
 
 *if4_elseif1_condition:
-	// contracts/Factory.algo.ts:170
+	// contracts/Factory.algo.ts:172
 	// type === VAULT_POOL_TYPE
 	frame_dig -3 // type: uint64
 	intc 0 // 1
@@ -924,7 +926,7 @@ MANAGER_writePoolContractProgram:
 	bz *if4_end
 
 	// *if4_elseif1_consequent
-	// contracts/Factory.algo.ts:171
+	// contracts/Factory.algo.ts:173
 	// this.vaultPoolContractApprovalProgram(pageIndex).value = data
 	bytec 1 //  "vault_pool_approval_program_page_"
 	frame_dig 0 // pageIndex: uint64
@@ -947,7 +949,7 @@ MANAGER_writePoolContractProgram:
 assertIsManager:
 	proto 0 0
 
-	// contracts/Factory.algo.ts:180
+	// contracts/Factory.algo.ts:182
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 5 //  "manager"
@@ -965,13 +967,13 @@ listIsOrdered:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/Factory.algo.ts:184
+	// contracts/Factory.algo.ts:186
 	// for (let i = 1; i < assetIds.length; i += 1)
 	intc 0 // 1
 	frame_bury 0 // i: uint64
 
 *for_2:
-	// contracts/Factory.algo.ts:184
+	// contracts/Factory.algo.ts:186
 	// i < assetIds.length
 	frame_dig 0 // i: uint64
 	frame_dig -1 // assetIds: AssetID[]
@@ -982,7 +984,7 @@ listIsOrdered:
 	bz *for_2_end
 
 	// *if5_condition
-	// contracts/Factory.algo.ts:185
+	// contracts/Factory.algo.ts:187
 	// assetIds[i] < assetIds[i - 1]
 	frame_dig -1 // assetIds: AssetID[]
 	store 255 // full array
@@ -1014,7 +1016,7 @@ listIsOrdered:
 	bz *if5_end
 
 	// *if5_consequent
-	// contracts/Factory.algo.ts:186
+	// contracts/Factory.algo.ts:188
 	// return false;
 	intc 2 // 0
 	b *listIsOrdered*return
@@ -1022,7 +1024,7 @@ listIsOrdered:
 *if5_end:
 
 *for_2_continue:
-	// contracts/Factory.algo.ts:184
+	// contracts/Factory.algo.ts:186
 	// i += 1
 	frame_dig 0 // i: uint64
 	intc 0 // 1
@@ -1031,7 +1033,7 @@ listIsOrdered:
 	b *for_2
 
 *for_2_end:
-	// contracts/Factory.algo.ts:189
+	// contracts/Factory.algo.ts:191
 	// return true;
 	intc 0 // 1
 
@@ -1048,18 +1050,18 @@ getPoolHash:
 	bytec 0 // 0x
 	dup
 
-	// contracts/Factory.algo.ts:193
+	// contracts/Factory.algo.ts:195
 	// parts: bytes = ''
 	bytec 0 //  ""
 	frame_bury 0 // parts: bytes
 
-	// contracts/Factory.algo.ts:195
+	// contracts/Factory.algo.ts:197
 	// for (let i = 0; i < assetIds.length; i += 1)
 	intc 2 // 0
 	frame_bury 1 // i: uint64
 
 *for_3:
-	// contracts/Factory.algo.ts:195
+	// contracts/Factory.algo.ts:197
 	// i < assetIds.length
 	frame_dig 1 // i: uint64
 	frame_dig -1 // assetIds: AssetID[]
@@ -1069,7 +1071,7 @@ getPoolHash:
 	<
 	bz *for_3_end
 
-	// contracts/Factory.algo.ts:196
+	// contracts/Factory.algo.ts:198
 	// parts += itob(assetIds[i])
 	frame_dig 0 // parts: bytes
 	frame_dig -1 // assetIds: AssetID[]
@@ -1088,7 +1090,7 @@ getPoolHash:
 	concat
 	frame_bury 0 // parts: bytes
 
-	// contracts/Factory.algo.ts:197
+	// contracts/Factory.algo.ts:199
 	// parts += itob(weights[i])
 	frame_dig 0 // parts: bytes
 	frame_dig -2 // weights: uint64[]
@@ -1108,7 +1110,7 @@ getPoolHash:
 	frame_bury 0 // parts: bytes
 
 *for_3_continue:
-	// contracts/Factory.algo.ts:195
+	// contracts/Factory.algo.ts:197
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 0 // 1
@@ -1117,7 +1119,7 @@ getPoolHash:
 	b *for_3
 
 *for_3_end:
-	// contracts/Factory.algo.ts:200
+	// contracts/Factory.algo.ts:202
 	// return sha512_256(parts);
 	frame_dig 0 // parts: bytes
 	sha512_256
@@ -1156,14 +1158,14 @@ getPool:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/Factory.algo.ts:205
+	// contracts/Factory.algo.ts:207
 	// hash = this.getPoolHash(assetIds, weights)
 	frame_dig -2 // weights: uint64[]
 	frame_dig -1 // assetIds: AssetID[]
 	callsub getPoolHash
 	frame_bury 0 // hash: byte[32]
 
-	// contracts/Factory.algo.ts:206
+	// contracts/Factory.algo.ts:208
 	// return this.pools(hash).value;
 	bytec 3 //  "pools_"
 	frame_dig 0 // hash: byte[32]

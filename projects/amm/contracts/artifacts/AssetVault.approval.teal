@@ -42,7 +42,7 @@ switch *call_NoOp *NOT_IMPLEMENTED *NOT_IMPLEMENTED *NOT_IMPLEMENTED *NOT_IMPLEM
 createApplication:
 	proto 0 0
 
-	// contracts/AssetVault.algo.ts:38
+	// contracts/AssetVault.algo.ts:39
 	// this.manager.value = this.app.creator
 	bytec 13 //  "manager"
 	txna Applications 0
@@ -50,13 +50,13 @@ createApplication:
 	pop
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:40
+	// contracts/AssetVault.algo.ts:41
 	// this.startRound.value = 0
 	bytec 8 //  "start_round"
 	intc 0 // 0
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:41
+	// contracts/AssetVault.algo.ts:42
 	// this.endRound.value = 0
 	bytec 5 //  "end_round"
 	intc 0 // 0
@@ -97,22 +97,44 @@ bootstrap:
 	bytec 0 // 0x
 	dup
 
-	// contracts/AssetVault.algo.ts:51
+	// contracts/AssetVault.algo.ts:52
 	// this.assertIsManager()
 	callsub assertIsManager
 
-	// contracts/AssetVault.algo.ts:53
+	// contracts/AssetVault.algo.ts:54
+	// assert(assetIds.length > 0)
+	frame_dig -1 // assetIds: AssetID[]
+	len
+	intc 1 // 8
+	/
+	intc 0 // 0
+	>
+	assert
+
+	// contracts/AssetVault.algo.ts:55
+	// assert(assetIds.length <= SCALE / MIN_WEIGHT, 'too many tokens')
+	frame_dig -1 // assetIds: AssetID[]
+	len
+	intc 1 // 8
+	/
+	pushint 100
+	<=
+
+	// too many tokens
+	assert
+
+	// contracts/AssetVault.algo.ts:57
 	// sumOfWeights = 0
 	intc 0 // 0
 	frame_bury 0 // sumOfWeights: uint64
 
-	// contracts/AssetVault.algo.ts:55
+	// contracts/AssetVault.algo.ts:59
 	// for (let i = 0; i < assetIds.length; i += 1)
 	intc 0 // 0
 	frame_bury 1 // i: uint64
 
 *for_0:
-	// contracts/AssetVault.algo.ts:55
+	// contracts/AssetVault.algo.ts:59
 	// i < assetIds.length
 	frame_dig 1 // i: uint64
 	frame_dig -1 // assetIds: AssetID[]
@@ -122,7 +144,27 @@ bootstrap:
 	<
 	bz *for_0_end
 
-	// contracts/AssetVault.algo.ts:56
+	// contracts/AssetVault.algo.ts:60
+	// assert(weights[i] >= MIN_WEIGHT, 'weight too small')
+	frame_dig -2 // weights: uint64[]
+	store 255 // full array
+	intc 0 //  initial offset
+	frame_dig 1 // i: uint64
+	intc 1 // 8
+	* // acc * typeLength
+	+
+	load 255 // full array
+	swap
+	intc 1 // 8
+	extract3
+	btoi
+	pushint 10000
+	>=
+
+	// weight too small
+	assert
+
+	// contracts/AssetVault.algo.ts:62
 	// this.optIn(assetIds[i])
 	frame_dig -1 // assetIds: AssetID[]
 	store 255 // full array
@@ -138,7 +180,7 @@ bootstrap:
 	btoi
 	callsub optIn
 
-	// contracts/AssetVault.algo.ts:57
+	// contracts/AssetVault.algo.ts:63
 	// this.addToken(i, assetIds[i], weights[i])
 	frame_dig -2 // weights: uint64[]
 	store 255 // full array
@@ -167,7 +209,7 @@ bootstrap:
 	frame_dig 1 // i: uint64
 	callsub addToken
 
-	// contracts/AssetVault.algo.ts:58
+	// contracts/AssetVault.algo.ts:64
 	// sumOfWeights += weights[i]
 	frame_dig 0 // sumOfWeights: uint64
 	frame_dig -2 // weights: uint64[]
@@ -186,7 +228,7 @@ bootstrap:
 	frame_bury 0 // sumOfWeights: uint64
 
 *for_0_continue:
-	// contracts/AssetVault.algo.ts:55
+	// contracts/AssetVault.algo.ts:59
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 2 // 1
@@ -195,13 +237,24 @@ bootstrap:
 	b *for_0
 
 *for_0_end:
-	// contracts/AssetVault.algo.ts:61
+	// contracts/AssetVault.algo.ts:67
+	// assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1')
+	intc 3 // 1000000
+	frame_dig 0 // sumOfWeights: uint64
+	callsub absDiff
+	intc 2 // 1
+	<=
+
+	// Weights must sum to 1
+	assert
+
+	// contracts/AssetVault.algo.ts:69
 	// this.burned.value = 0
 	bytec 11 //  "burned"
 	intc 0 // 0
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:62
+	// contracts/AssetVault.algo.ts:70
 	// this.assets.value = assetIds
 	bytec 1 //  "assets"
 	frame_dig -1 // assetIds: AssetID[]
@@ -215,22 +268,11 @@ bootstrap:
 	concat
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:64
-	// assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1')
-	intc 3 // 1000000
-	frame_dig 0 // sumOfWeights: uint64
-	callsub absDiff
-	intc 2 // 1
-	<=
-
-	// Weights must sum to 1
-	assert
-
-	// contracts/AssetVault.algo.ts:65
+	// contracts/AssetVault.algo.ts:72
 	// this.createToken()
 	callsub createToken
 
-	// contracts/AssetVault.algo.ts:67
+	// contracts/AssetVault.algo.ts:73
 	// return this.token.value;
 	bytec 7 //  "token"
 	app_global_get
@@ -277,27 +319,27 @@ addLiquidity:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/AssetVault.algo.ts:76
+	// contracts/AssetVault.algo.ts:82
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/AssetVault.algo.ts:77
+	// contracts/AssetVault.algo.ts:83
 	// this.tryFinalizeWeights()
 	callsub tryFinalizeWeights
 
-	// contracts/AssetVault.algo.ts:79
+	// contracts/AssetVault.algo.ts:85
 	// sender = txn.sender
 	frame_dig -2 // txn: AssetTransferTxn
 	gtxns Sender
 	frame_bury 0 // sender: address
 
-	// contracts/AssetVault.algo.ts:80
+	// contracts/AssetVault.algo.ts:86
 	// amount = txn.assetAmount
 	frame_dig -2 // txn: AssetTransferTxn
 	gtxns AssetAmount
 	frame_bury 1 // amount: uint64
 
-	// contracts/AssetVault.algo.ts:82
+	// contracts/AssetVault.algo.ts:88
 	// assetId = this.assets.value[index]
 	bytec 1 //  "assets"
 	app_global_get
@@ -315,7 +357,7 @@ addLiquidity:
 	btoi
 	frame_bury 2 // assetId: uint64
 
-	// contracts/AssetVault.algo.ts:83
+	// contracts/AssetVault.algo.ts:89
 	// log('Asset ID => ' + itob(assetId))
 	pushbytes 0x4173736574204944203d3e20 // "Asset ID => "
 	frame_dig 2 // assetId: uint64
@@ -323,12 +365,12 @@ addLiquidity:
 	concat
 	log
 
-	// contracts/AssetVault.algo.ts:85
+	// contracts/AssetVault.algo.ts:91
 	// this.optIn(assetId)
 	frame_dig 2 // assetId: uint64
 	callsub optIn
 
-	// contracts/AssetVault.algo.ts:86
+	// contracts/AssetVault.algo.ts:92
 	// this.balances(assetId).value += amount
 	bytec 2 //  "balances_"
 	frame_dig 2 // assetId: uint64
@@ -350,7 +392,7 @@ addLiquidity:
 	box_put
 
 	// *if0_condition
-	// contracts/AssetVault.algo.ts:88
+	// contracts/AssetVault.algo.ts:94
 	// !this.provided(sender).exists
 	bytec 3 //  "provided_"
 	frame_dig 0 // sender: address
@@ -362,7 +404,7 @@ addLiquidity:
 	bz *if0_end
 
 	// *if0_consequent
-	// contracts/AssetVault.algo.ts:89
+	// contracts/AssetVault.algo.ts:95
 	// this.provided(sender).create((this.assets.value.length + 1) * 8)
 	bytec 3 //  "provided_"
 	frame_dig 0 // sender: address
@@ -381,7 +423,7 @@ addLiquidity:
 	pop
 
 *if0_end:
-	// contracts/AssetVault.algo.ts:92
+	// contracts/AssetVault.algo.ts:98
 	// this.provided(sender).value[index] += amount
 	bytec 3 //  "provided_"
 	frame_dig 0 // sender: address
@@ -471,26 +513,26 @@ getLiquidity:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/AssetVault.algo.ts:107
+	// contracts/AssetVault.algo.ts:113
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/AssetVault.algo.ts:108
+	// contracts/AssetVault.algo.ts:114
 	// this.tryFinalizeWeights()
 	callsub tryFinalizeWeights
 
-	// contracts/AssetVault.algo.ts:110
+	// contracts/AssetVault.algo.ts:116
 	// sender = this.txn.sender
 	txn Sender
 	frame_bury 0 // sender: address
 
-	// contracts/AssetVault.algo.ts:111
+	// contracts/AssetVault.algo.ts:117
 	// amount: uint64 = 0
 	intc 0 // 0
 	frame_bury 1 // amount: uint64
 
 	// *if1_condition
-	// contracts/AssetVault.algo.ts:113
+	// contracts/AssetVault.algo.ts:119
 	// this.totalLP() === 0
 	callsub totalLP
 	intc 0 // 0
@@ -498,7 +540,7 @@ getLiquidity:
 	bz *if1_else
 
 	// *if1_consequent
-	// contracts/AssetVault.algo.ts:115
+	// contracts/AssetVault.algo.ts:121
 	// amount = AMOUNT_LP_DEPLOYER
 	pushint 1_000_000
 	intc 5 // 10
@@ -509,20 +551,20 @@ getLiquidity:
 	b *if1_end
 
 *if1_else:
-	// contracts/AssetVault.algo.ts:117
+	// contracts/AssetVault.algo.ts:123
 	// amount = this.computeNAssetsLiquidity(sender)
 	frame_dig 0 // sender: address
 	callsub computeNAssetsLiquidity
 	frame_bury 1 // amount: uint64
 
 *if1_end:
-	// contracts/AssetVault.algo.ts:120
+	// contracts/AssetVault.algo.ts:126
 	// for (let i = 0; i < this.provided(sender).value.length; i += 1)
 	intc 0 // 0
 	frame_bury 2 // i: uint64
 
 *for_1:
-	// contracts/AssetVault.algo.ts:120
+	// contracts/AssetVault.algo.ts:126
 	// i < this.provided(sender).value.length
 	frame_dig 2 // i: uint64
 	bytec 3 //  "provided_"
@@ -539,7 +581,7 @@ getLiquidity:
 	<
 	bz *for_1_end
 
-	// contracts/AssetVault.algo.ts:121
+	// contracts/AssetVault.algo.ts:127
 	// this.provided(sender).value[i] = 0
 	bytec 3 //  "provided_"
 	frame_dig 0 // sender: address
@@ -577,7 +619,7 @@ getLiquidity:
 	box_put
 
 *for_1_continue:
-	// contracts/AssetVault.algo.ts:120
+	// contracts/AssetVault.algo.ts:126
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 2 // 1
@@ -586,7 +628,7 @@ getLiquidity:
 	b *for_1
 
 *for_1_end:
-	// contracts/AssetVault.algo.ts:124
+	// contracts/AssetVault.algo.ts:130
 	// sendAssetTransfer({
 	//       assetReceiver: sender,
 	//       assetAmount: amount,
@@ -596,17 +638,17 @@ getLiquidity:
 	intc 4 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/AssetVault.algo.ts:125
+	// contracts/AssetVault.algo.ts:131
 	// assetReceiver: sender
 	frame_dig 0 // sender: address
 	itxn_field AssetReceiver
 
-	// contracts/AssetVault.algo.ts:126
+	// contracts/AssetVault.algo.ts:132
 	// assetAmount: amount
 	frame_dig 1 // amount: uint64
 	itxn_field AssetAmount
 
-	// contracts/AssetVault.algo.ts:127
+	// contracts/AssetVault.algo.ts:133
 	// xferAsset: this.token.value
 	bytec 7 //  "token"
 	app_global_get
@@ -619,7 +661,7 @@ getLiquidity:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/AssetVault.algo.ts:130
+	// contracts/AssetVault.algo.ts:136
 	// return amount;
 	frame_dig 1 // amount: uint64
 
@@ -665,26 +707,26 @@ burnLiquidity:
 	bytec 0 // 0x
 	dupn 7
 
-	// contracts/AssetVault.algo.ts:143
+	// contracts/AssetVault.algo.ts:149
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/AssetVault.algo.ts:144
+	// contracts/AssetVault.algo.ts:150
 	// this.tryFinalizeWeights()
 	callsub tryFinalizeWeights
 
-	// contracts/AssetVault.algo.ts:146
+	// contracts/AssetVault.algo.ts:152
 	// sender = this.txn.sender
 	txn Sender
 	frame_bury 0 // sender: address
 
-	// contracts/AssetVault.algo.ts:147
+	// contracts/AssetVault.algo.ts:153
 	// amountLP = transferTxn.assetAmount
 	frame_dig -1 // transferTxn: AssetTransferTxn
 	gtxns AssetAmount
 	frame_bury 1 // amountLP: uint64
 
-	// contracts/AssetVault.algo.ts:149
+	// contracts/AssetVault.algo.ts:155
 	// assert(amountLP > 0, 'Must burn positive amount')
 	frame_dig 1 // amountLP: uint64
 	intc 0 // 0
@@ -693,12 +735,12 @@ burnLiquidity:
 	// Must burn positive amount
 	assert
 
-	// contracts/AssetVault.algo.ts:151
+	// contracts/AssetVault.algo.ts:157
 	// totalLP = this.totalLP()
 	callsub totalLP
 	frame_bury 2 // totalLP: uint64
 
-	// contracts/AssetVault.algo.ts:152
+	// contracts/AssetVault.algo.ts:158
 	// numAssets = this.assets.value.length
 	bytec 1 //  "assets"
 	app_global_get
@@ -708,20 +750,20 @@ burnLiquidity:
 	/
 	frame_bury 3 // numAssets: uint64
 
-	// contracts/AssetVault.algo.ts:154
+	// contracts/AssetVault.algo.ts:160
 	// for (let i = 0; i < numAssets; i += 1)
 	intc 0 // 0
 	frame_bury 4 // i: uint64
 
 *for_2:
-	// contracts/AssetVault.algo.ts:154
+	// contracts/AssetVault.algo.ts:160
 	// i < numAssets
 	frame_dig 4 // i: uint64
 	frame_dig 3 // numAssets: uint64
 	<
 	bz *for_2_end
 
-	// contracts/AssetVault.algo.ts:155
+	// contracts/AssetVault.algo.ts:161
 	// assetId = this.assets.value[i]
 	bytec 1 //  "assets"
 	app_global_get
@@ -739,7 +781,7 @@ burnLiquidity:
 	btoi
 	frame_bury 5 // assetId: uint64
 
-	// contracts/AssetVault.algo.ts:156
+	// contracts/AssetVault.algo.ts:162
 	// poolBalance = this.balances(assetId).value
 	bytec 2 //  "balances_"
 	frame_dig 5 // assetId: uint64
@@ -752,7 +794,7 @@ burnLiquidity:
 	btoi
 	frame_bury 6 // poolBalance: uint64
 
-	// contracts/AssetVault.algo.ts:158
+	// contracts/AssetVault.algo.ts:164
 	// assetAmount = wideRatio([amountLP, poolBalance], [totalLP])
 	frame_dig 1 // amountLP: uint64
 	frame_dig 6 // poolBalance: uint64
@@ -769,7 +811,7 @@ burnLiquidity:
 	assert
 	frame_bury 7 // assetAmount: uint64
 
-	// contracts/AssetVault.algo.ts:160
+	// contracts/AssetVault.algo.ts:166
 	// this.balances(assetId).value = poolBalance - assetAmount
 	bytec 2 //  "balances_"
 	frame_dig 5 // assetId: uint64
@@ -781,7 +823,7 @@ burnLiquidity:
 	itob
 	box_put
 
-	// contracts/AssetVault.algo.ts:162
+	// contracts/AssetVault.algo.ts:168
 	// sendAssetTransfer({
 	//         assetReceiver: sender,
 	//         assetAmount: assetAmount,
@@ -791,17 +833,17 @@ burnLiquidity:
 	intc 4 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/AssetVault.algo.ts:163
+	// contracts/AssetVault.algo.ts:169
 	// assetReceiver: sender
 	frame_dig 0 // sender: address
 	itxn_field AssetReceiver
 
-	// contracts/AssetVault.algo.ts:164
+	// contracts/AssetVault.algo.ts:170
 	// assetAmount: assetAmount
 	frame_dig 7 // assetAmount: uint64
 	itxn_field AssetAmount
 
-	// contracts/AssetVault.algo.ts:165
+	// contracts/AssetVault.algo.ts:171
 	// xferAsset: assetId
 	frame_dig 5 // assetId: uint64
 	itxn_field XferAsset
@@ -814,7 +856,7 @@ burnLiquidity:
 	itxn_submit
 
 *for_2_continue:
-	// contracts/AssetVault.algo.ts:154
+	// contracts/AssetVault.algo.ts:160
 	// i += 1
 	frame_dig 4 // i: uint64
 	intc 2 // 1
@@ -823,7 +865,7 @@ burnLiquidity:
 	b *for_2
 
 *for_2_end:
-	// contracts/AssetVault.algo.ts:169
+	// contracts/AssetVault.algo.ts:175
 	// this.burned.value += amountLP
 	bytec 11 //  "burned"
 	app_global_get
@@ -891,15 +933,15 @@ swap:
 	bytec 0 // 0x
 	dupn 8
 
-	// contracts/AssetVault.algo.ts:190
+	// contracts/AssetVault.algo.ts:196
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/AssetVault.algo.ts:191
+	// contracts/AssetVault.algo.ts:197
 	// this.tryFinalizeWeights()
 	callsub tryFinalizeWeights
 
-	// contracts/AssetVault.algo.ts:192
+	// contracts/AssetVault.algo.ts:198
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 6 //  appl
@@ -914,19 +956,19 @@ swap:
 	itxn_field OnCompletion
 	itxn_submit
 
-	// contracts/AssetVault.algo.ts:194
+	// contracts/AssetVault.algo.ts:200
 	// sender = transferTxn.sender
 	frame_dig -3 // transferTxn: AssetTransferTxn
 	gtxns Sender
 	frame_bury 0 // sender: address
 
-	// contracts/AssetVault.algo.ts:195
+	// contracts/AssetVault.algo.ts:201
 	// amount = transferTxn.assetAmount
 	frame_dig -3 // transferTxn: AssetTransferTxn
 	gtxns AssetAmount
 	frame_bury 1 // amount: uint64
 
-	// contracts/AssetVault.algo.ts:197
+	// contracts/AssetVault.algo.ts:203
 	// assetIn = this.assets.value[from]
 	bytec 1 //  "assets"
 	app_global_get
@@ -944,7 +986,7 @@ swap:
 	btoi
 	frame_bury 2 // assetIn: uint64
 
-	// contracts/AssetVault.algo.ts:198
+	// contracts/AssetVault.algo.ts:204
 	// assetOut = this.assets.value[to]
 	bytec 1 //  "assets"
 	app_global_get
@@ -962,7 +1004,7 @@ swap:
 	btoi
 	frame_bury 3 // assetOut: uint64
 
-	// contracts/AssetVault.algo.ts:200
+	// contracts/AssetVault.algo.ts:206
 	// balanceIn = this.balances(assetIn).value
 	bytec 2 //  "balances_"
 	frame_dig 2 // assetIn: uint64
@@ -975,7 +1017,7 @@ swap:
 	btoi
 	frame_bury 4 // balanceIn: uint64
 
-	// contracts/AssetVault.algo.ts:201
+	// contracts/AssetVault.algo.ts:207
 	// balanceOut = this.balances(assetOut).value
 	bytec 2 //  "balances_"
 	frame_dig 3 // assetOut: uint64
@@ -988,19 +1030,19 @@ swap:
 	btoi
 	frame_bury 5 // balanceOut: uint64
 
-	// contracts/AssetVault.algo.ts:203
+	// contracts/AssetVault.algo.ts:209
 	// weightIn = this.getCurrentWeight(from)
 	frame_dig -1 // from: uint64
 	callsub getCurrentWeight
 	frame_bury 6 // weightIn: uint64
 
-	// contracts/AssetVault.algo.ts:204
+	// contracts/AssetVault.algo.ts:210
 	// weightOut = this.getCurrentWeight(to)
 	frame_dig -2 // to: uint64
 	callsub getCurrentWeight
 	frame_bury 7 // weightOut: uint64
 
-	// contracts/AssetVault.algo.ts:206
+	// contracts/AssetVault.algo.ts:212
 	// amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount)
 	frame_dig 1 // amount: uint64
 	frame_dig 7 // weightOut: uint64
@@ -1010,13 +1052,13 @@ swap:
 	callsub calcOut
 	frame_bury 8 // amountOut: uint64
 
-	// contracts/AssetVault.algo.ts:208
+	// contracts/AssetVault.algo.ts:214
 	// log(itob(amountOut))
 	frame_dig 8 // amountOut: uint64
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:210
+	// contracts/AssetVault.algo.ts:216
 	// this.balances(assetIn).value = balanceIn + amount
 	bytec 2 //  "balances_"
 	frame_dig 2 // assetIn: uint64
@@ -1028,7 +1070,7 @@ swap:
 	itob
 	box_put
 
-	// contracts/AssetVault.algo.ts:211
+	// contracts/AssetVault.algo.ts:217
 	// this.balances(assetOut).value = balanceOut - amountOut
 	bytec 2 //  "balances_"
 	frame_dig 3 // assetOut: uint64
@@ -1040,7 +1082,7 @@ swap:
 	itob
 	box_put
 
-	// contracts/AssetVault.algo.ts:213
+	// contracts/AssetVault.algo.ts:219
 	// sendAssetTransfer({
 	//       assetReceiver: sender,
 	//       assetAmount: amountOut,
@@ -1050,17 +1092,17 @@ swap:
 	intc 4 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/AssetVault.algo.ts:214
+	// contracts/AssetVault.algo.ts:220
 	// assetReceiver: sender
 	frame_dig 0 // sender: address
 	itxn_field AssetReceiver
 
-	// contracts/AssetVault.algo.ts:215
+	// contracts/AssetVault.algo.ts:221
 	// assetAmount: amountOut
 	frame_dig 8 // amountOut: uint64
 	itxn_field AssetAmount
 
-	// contracts/AssetVault.algo.ts:216
+	// contracts/AssetVault.algo.ts:222
 	// xferAsset: assetOut
 	frame_dig 3 // assetOut: uint64
 	itxn_field XferAsset
@@ -1072,7 +1114,7 @@ swap:
 	// Submit inner transaction
 	itxn_submit
 
-	// contracts/AssetVault.algo.ts:219
+	// contracts/AssetVault.algo.ts:225
 	// return amountOut;
 	frame_dig 8 // amountOut: uint64
 
@@ -1125,16 +1167,16 @@ changeWeights:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/AssetVault.algo.ts:237
+	// contracts/AssetVault.algo.ts:243
 	// this.assertIsBootstrapped()
 	callsub assertIsBootstrapped
 
-	// contracts/AssetVault.algo.ts:238
+	// contracts/AssetVault.algo.ts:244
 	// this.assertNoWeightTransition()
 	callsub assertNoWeightTransition
 
 	// *if2_condition
-	// contracts/AssetVault.algo.ts:240
+	// contracts/AssetVault.algo.ts:246
 	// duration === 0
 	frame_dig -1 // duration: uint64
 	intc 0 // 0
@@ -1142,25 +1184,25 @@ changeWeights:
 	bz *if2_else
 
 	// *if2_consequent
-	// contracts/AssetVault.algo.ts:241
+	// contracts/AssetVault.algo.ts:247
 	// this.startRound.value = 0
 	bytec 8 //  "start_round"
 	intc 0 // 0
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:242
+	// contracts/AssetVault.algo.ts:248
 	// this.endRound.value = 0
 	bytec 5 //  "end_round"
 	intc 0 // 0
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:243
+	// contracts/AssetVault.algo.ts:249
 	// for (let i = 0; i < newWeights.length; i += 1)
 	intc 0 // 0
 	frame_bury 0 // i: uint64
 
 *for_3:
-	// contracts/AssetVault.algo.ts:243
+	// contracts/AssetVault.algo.ts:249
 	// i < newWeights.length
 	frame_dig 0 // i: uint64
 	frame_dig -2 // newWeights: uint64[]
@@ -1170,7 +1212,7 @@ changeWeights:
 	<
 	bz *for_3_end
 
-	// contracts/AssetVault.algo.ts:244
+	// contracts/AssetVault.algo.ts:250
 	// this.weights(i).value = newWeights[i]
 	bytec 6 //  "weights_"
 	frame_dig 0 // i: uint64
@@ -1192,7 +1234,7 @@ changeWeights:
 	box_put
 
 *for_3_continue:
-	// contracts/AssetVault.algo.ts:243
+	// contracts/AssetVault.algo.ts:249
 	// i += 1
 	frame_dig 0 // i: uint64
 	intc 2 // 1
@@ -1204,18 +1246,18 @@ changeWeights:
 	b *if2_end
 
 *if2_else:
-	// contracts/AssetVault.algo.ts:247
+	// contracts/AssetVault.algo.ts:253
 	// currentRound = globals.round
 	global Round
 	frame_bury 1 // currentRound: uint64
 
-	// contracts/AssetVault.algo.ts:249
+	// contracts/AssetVault.algo.ts:255
 	// this.startRound.value = currentRound
 	bytec 8 //  "start_round"
 	frame_dig 1 // currentRound: uint64
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:250
+	// contracts/AssetVault.algo.ts:256
 	// this.endRound.value = currentRound + duration
 	bytec 5 //  "end_round"
 	frame_dig 1 // currentRound: uint64
@@ -1223,13 +1265,13 @@ changeWeights:
 	+
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:252
+	// contracts/AssetVault.algo.ts:258
 	// for (let i = 0; i < newWeights.length; i += 1)
 	intc 0 // 0
 	frame_bury 2 // i: uint64
 
 *for_4:
-	// contracts/AssetVault.algo.ts:252
+	// contracts/AssetVault.algo.ts:258
 	// i < newWeights.length
 	frame_dig 2 // i: uint64
 	frame_dig -2 // newWeights: uint64[]
@@ -1239,7 +1281,7 @@ changeWeights:
 	<
 	bz *for_4_end
 
-	// contracts/AssetVault.algo.ts:253
+	// contracts/AssetVault.algo.ts:259
 	// this.targetWeights(i).value = newWeights[i]
 	bytec 10 //  "target_weights_"
 	frame_dig 2 // i: uint64
@@ -1261,7 +1303,7 @@ changeWeights:
 	box_put
 
 *for_4_continue:
-	// contracts/AssetVault.algo.ts:252
+	// contracts/AssetVault.algo.ts:258
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 2 // 1
@@ -1272,7 +1314,7 @@ changeWeights:
 *for_4_end:
 
 *if2_end:
-	// contracts/AssetVault.algo.ts:257
+	// contracts/AssetVault.algo.ts:263
 	// return this.endRound.value;
 	bytec 5 //  "end_round"
 	app_global_get
@@ -1313,7 +1355,7 @@ addAsset:
 	bytec 0 // 0x
 	dup
 
-	// contracts/AssetVault.algo.ts:261
+	// contracts/AssetVault.algo.ts:267
 	// newIndex = this.assets.value.length
 	bytec 1 //  "assets"
 	app_global_get
@@ -1323,7 +1365,7 @@ addAsset:
 	/
 	frame_bury 0 // newIndex: uint64
 
-	// contracts/AssetVault.algo.ts:262
+	// contracts/AssetVault.algo.ts:268
 	// this.assets.value[newIndex] = asset
 	bytec 1 //  "assets"
 	app_global_get
@@ -1351,20 +1393,20 @@ addAsset:
 	concat
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:264
+	// contracts/AssetVault.algo.ts:270
 	// for (let i = 0; i < newIndex; i += 1)
 	intc 0 // 0
 	frame_bury 1 // i: uint64
 
 *for_5:
-	// contracts/AssetVault.algo.ts:264
+	// contracts/AssetVault.algo.ts:270
 	// i < newIndex
 	frame_dig 1 // i: uint64
 	frame_dig 0 // newIndex: uint64
 	<
 	bz *for_5_end
 
-	// contracts/AssetVault.algo.ts:265
+	// contracts/AssetVault.algo.ts:271
 	// this.weights(i).value = this.weights(i).value * (SCALE - w)
 	bytec 6 //  "weights_"
 	frame_dig 1 // i: uint64
@@ -1387,7 +1429,7 @@ addAsset:
 	box_put
 
 *for_5_continue:
-	// contracts/AssetVault.algo.ts:264
+	// contracts/AssetVault.algo.ts:270
 	// i += 1
 	frame_dig 1 // i: uint64
 	intc 2 // 1
@@ -1396,7 +1438,7 @@ addAsset:
 	b *for_5
 
 *for_5_end:
-	// contracts/AssetVault.algo.ts:268
+	// contracts/AssetVault.algo.ts:274
 	// this.weights(newIndex).value = w
 	bytec 6 //  "weights_"
 	frame_dig 0 // newIndex: uint64
@@ -1406,7 +1448,7 @@ addAsset:
 	itob
 	box_put
 
-	// contracts/AssetVault.algo.ts:270
+	// contracts/AssetVault.algo.ts:276
 	// return w;
 	frame_dig -2 // w: uint64
 
@@ -1425,7 +1467,7 @@ tryFinalizeWeights:
 	bytec 0 // 0x
 
 	// *if3_condition
-	// contracts/AssetVault.algo.ts:274
+	// contracts/AssetVault.algo.ts:280
 	// this.endRound.value !== 0 && globals.round >= this.endRound.value
 	bytec 5 //  "end_round"
 	app_global_get
@@ -1443,13 +1485,13 @@ tryFinalizeWeights:
 	bz *if3_end
 
 	// *if3_consequent
-	// contracts/AssetVault.algo.ts:275
+	// contracts/AssetVault.algo.ts:281
 	// for (let i = 0; i < this.assets.value.length; i += 1)
 	intc 0 // 0
 	frame_bury 0 // i: uint64
 
 *for_6:
-	// contracts/AssetVault.algo.ts:275
+	// contracts/AssetVault.algo.ts:281
 	// i < this.assets.value.length
 	frame_dig 0 // i: uint64
 	bytec 1 //  "assets"
@@ -1461,7 +1503,7 @@ tryFinalizeWeights:
 	<
 	bz *for_6_end
 
-	// contracts/AssetVault.algo.ts:276
+	// contracts/AssetVault.algo.ts:282
 	// this.weights(i).value = this.targetWeights(i).value
 	bytec 6 //  "weights_"
 	frame_dig 0 // i: uint64
@@ -1480,7 +1522,7 @@ tryFinalizeWeights:
 	box_put
 
 *for_6_continue:
-	// contracts/AssetVault.algo.ts:275
+	// contracts/AssetVault.algo.ts:281
 	// i += 1
 	frame_dig 0 // i: uint64
 	intc 2 // 1
@@ -1489,13 +1531,13 @@ tryFinalizeWeights:
 	b *for_6
 
 *for_6_end:
-	// contracts/AssetVault.algo.ts:278
+	// contracts/AssetVault.algo.ts:284
 	// this.startRound.value = 0
 	bytec 8 //  "start_round"
 	intc 0 // 0
 	app_global_put
 
-	// contracts/AssetVault.algo.ts:279
+	// contracts/AssetVault.algo.ts:285
 	// this.endRound.value = 0
 	bytec 5 //  "end_round"
 	intc 0 // 0
@@ -1517,7 +1559,7 @@ optIn:
 	proto 1 0
 
 	// *if4_condition
-	// contracts/AssetVault.algo.ts:293
+	// contracts/AssetVault.algo.ts:299
 	// this.app.address.isOptedInToAsset(assetId)
 	global CurrentApplicationAddress
 	frame_dig -1 // assetId: AssetID
@@ -1527,12 +1569,12 @@ optIn:
 	bz *if4_end
 
 	// *if4_consequent
-	// contracts/AssetVault.algo.ts:294
+	// contracts/AssetVault.algo.ts:300
 	// return;
 	retsub
 
 *if4_end:
-	// contracts/AssetVault.algo.ts:297
+	// contracts/AssetVault.algo.ts:303
 	// sendAssetTransfer({
 	//       assetReceiver: this.app.address,
 	//       xferAsset: assetId,
@@ -1542,17 +1584,17 @@ optIn:
 	intc 4 //  axfer
 	itxn_field TypeEnum
 
-	// contracts/AssetVault.algo.ts:298
+	// contracts/AssetVault.algo.ts:304
 	// assetReceiver: this.app.address
 	global CurrentApplicationAddress
 	itxn_field AssetReceiver
 
-	// contracts/AssetVault.algo.ts:299
+	// contracts/AssetVault.algo.ts:305
 	// xferAsset: assetId
 	frame_dig -1 // assetId: AssetID
 	itxn_field XferAsset
 
-	// contracts/AssetVault.algo.ts:300
+	// contracts/AssetVault.algo.ts:306
 	// assetAmount: 0
 	intc 0 // 0
 	itxn_field AssetAmount
@@ -1582,7 +1624,7 @@ addToken:
 	proto 3 0
 
 	// *if5_condition
-	// contracts/AssetVault.algo.ts:318
+	// contracts/AssetVault.algo.ts:324
 	// !this.weights(index).exists
 	bytec 6 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1595,7 +1637,7 @@ addToken:
 	bz *if5_end
 
 	// *if5_consequent
-	// contracts/AssetVault.algo.ts:319
+	// contracts/AssetVault.algo.ts:325
 	// this.weights(index).create(8)
 	bytec 6 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1607,7 +1649,7 @@ addToken:
 
 *if5_end:
 	// *if6_condition
-	// contracts/AssetVault.algo.ts:322
+	// contracts/AssetVault.algo.ts:328
 	// !this.balances(assetID).exists
 	bytec 2 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1620,7 +1662,7 @@ addToken:
 	bz *if6_end
 
 	// *if6_consequent
-	// contracts/AssetVault.algo.ts:323
+	// contracts/AssetVault.algo.ts:329
 	// this.balances(assetID).create(8)
 	bytec 2 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1631,7 +1673,7 @@ addToken:
 	pop
 
 *if6_end:
-	// contracts/AssetVault.algo.ts:326
+	// contracts/AssetVault.algo.ts:332
 	// this.weights(index).value = weight
 	bytec 6 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -1641,7 +1683,7 @@ addToken:
 	itob
 	box_put
 
-	// contracts/AssetVault.algo.ts:327
+	// contracts/AssetVault.algo.ts:333
 	// this.balances(assetID).value = 0
 	bytec 2 //  "balances_"
 	frame_dig -2 // assetID: AssetID
@@ -1672,7 +1714,7 @@ createToken:
 	proto 0 0
 
 	// *if7_condition
-	// contracts/AssetVault.algo.ts:348
+	// contracts/AssetVault.algo.ts:354
 	// this.token.value === AssetID.zeroIndex
 	bytec 7 //  "token"
 	app_global_get
@@ -1681,7 +1723,7 @@ createToken:
 	bz *if7_end
 
 	// *if7_consequent
-	// contracts/AssetVault.algo.ts:349
+	// contracts/AssetVault.algo.ts:355
 	// this.token.value = sendAssetCreation({
 	//         configAssetTotal: TOTAL_LP_SUPPLY,
 	//         configAssetDecimals: 6,
@@ -1698,44 +1740,44 @@ createToken:
 	pushint 3 // acfg
 	itxn_field TypeEnum
 
-	// contracts/AssetVault.algo.ts:350
+	// contracts/AssetVault.algo.ts:356
 	// configAssetTotal: TOTAL_LP_SUPPLY
 	intc 5 // 10
 	pushint 16
 	exp
 	itxn_field ConfigAssetTotal
 
-	// contracts/AssetVault.algo.ts:351
+	// contracts/AssetVault.algo.ts:357
 	// configAssetDecimals: 6
 	intc 6 // 6
 	itxn_field ConfigAssetDecimals
 
-	// contracts/AssetVault.algo.ts:352
+	// contracts/AssetVault.algo.ts:358
 	// configAssetReserve: this.app.address
 	global CurrentApplicationAddress
 	itxn_field ConfigAssetReserve
 
-	// contracts/AssetVault.algo.ts:353
+	// contracts/AssetVault.algo.ts:359
 	// configAssetManager: this.app.address
 	global CurrentApplicationAddress
 	itxn_field ConfigAssetManager
 
-	// contracts/AssetVault.algo.ts:354
+	// contracts/AssetVault.algo.ts:360
 	// configAssetClawback: globals.zeroAddress
 	global ZeroAddress
 	itxn_field ConfigAssetClawback
 
-	// contracts/AssetVault.algo.ts:355
+	// contracts/AssetVault.algo.ts:361
 	// configAssetFreeze: globals.zeroAddress
 	global ZeroAddress
 	itxn_field ConfigAssetFreeze
 
-	// contracts/AssetVault.algo.ts:356
+	// contracts/AssetVault.algo.ts:362
 	// configAssetDefaultFrozen: 0
 	intc 0 // 0
 	itxn_field ConfigAssetDefaultFrozen
 
-	// contracts/AssetVault.algo.ts:357
+	// contracts/AssetVault.algo.ts:363
 	// configAssetName: 'BalancedPool-' + this.app.id.toString()
 	pushbytes 0x42616c616e636564506f6f6c2d // "BalancedPool-"
 	txna Applications 0
@@ -1743,7 +1785,7 @@ createToken:
 	concat
 	itxn_field ConfigAssetName
 
-	// contracts/AssetVault.algo.ts:358
+	// contracts/AssetVault.algo.ts:364
 	// configAssetUnitName: 'LP'
 	pushbytes 0x4c50 // "LP"
 	itxn_field ConfigAssetUnitName
@@ -1766,7 +1808,7 @@ createToken:
 assertIsManager:
 	proto 0 0
 
-	// contracts/AssetVault.algo.ts:367
+	// contracts/AssetVault.algo.ts:373
 	// assert(this.txn.sender === this.manager.value, 'only the manager can call this method')
 	txn Sender
 	bytec 13 //  "manager"
@@ -1781,7 +1823,7 @@ assertIsManager:
 assertIsBootstrapped:
 	proto 0 0
 
-	// contracts/AssetVault.algo.ts:371
+	// contracts/AssetVault.algo.ts:377
 	// assert(this.token.value !== AssetID.zeroIndex, 'pool not bootstrapped')
 	bytec 7 //  "token"
 	app_global_get
@@ -1796,7 +1838,7 @@ assertIsBootstrapped:
 assertNoWeightTransition:
 	proto 0 0
 
-	// contracts/AssetVault.algo.ts:375
+	// contracts/AssetVault.algo.ts:381
 	// assert(this.startRound.value === 0 && this.startRound.value === this.endRound.value)
 	bytec 8 //  "start_round"
 	app_global_get
@@ -1834,7 +1876,7 @@ lnWithSign:
 	bytec 0 // 0x
 	dupn 7
 
-	// contracts/AssetVault.algo.ts:391
+	// contracts/AssetVault.algo.ts:397
 	// assert(x > 0, 'log undefined for x ≤ 0')
 	frame_dig -1 // x: uint64
 	intc 0 // 0
@@ -1843,13 +1885,13 @@ lnWithSign:
 	// log undefined for x ≤ 0
 	assert
 
-	// contracts/AssetVault.algo.ts:393
+	// contracts/AssetVault.algo.ts:399
 	// negative: uint64 = 0
 	intc 0 // 0
 	frame_bury 0 // negative: uint64
 
 	// *if8_condition
-	// contracts/AssetVault.algo.ts:396
+	// contracts/AssetVault.algo.ts:402
 	// x < SCALE
 	frame_dig -1 // x: uint64
 	intc 3 // 1000000
@@ -1857,12 +1899,12 @@ lnWithSign:
 	bz *if8_else
 
 	// *if8_consequent
-	// contracts/AssetVault.algo.ts:397
+	// contracts/AssetVault.algo.ts:403
 	// negative = 1
 	intc 2 // 1
 	frame_bury 0 // negative: uint64
 
-	// contracts/AssetVault.algo.ts:398
+	// contracts/AssetVault.algo.ts:404
 	// invX = wideRatio([SCALE, SCALE], [x])
 	intc 3 // 1000000
 	dup
@@ -1879,7 +1921,7 @@ lnWithSign:
 	assert
 	frame_bury 2 // invX: uint64
 
-	// contracts/AssetVault.algo.ts:399
+	// contracts/AssetVault.algo.ts:405
 	// z = wideRatio([invX - SCALE, SCALE], [invX])
 	frame_dig 2 // invX: uint64
 	intc 3 // 1000000
@@ -1900,7 +1942,7 @@ lnWithSign:
 	b *if8_end
 
 *if8_else:
-	// contracts/AssetVault.algo.ts:401
+	// contracts/AssetVault.algo.ts:407
 	// z = wideRatio([x - SCALE, SCALE], [x])
 	frame_dig -1 // x: uint64
 	intc 3 // 1000000
@@ -1920,22 +1962,22 @@ lnWithSign:
 	frame_bury 1 // z: uint64
 
 *if8_end:
-	// contracts/AssetVault.algo.ts:404
+	// contracts/AssetVault.algo.ts:410
 	// result = z
 	frame_dig 1 // z: uint64
 	frame_bury 3 // result: uint64
 
-	// contracts/AssetVault.algo.ts:405
+	// contracts/AssetVault.algo.ts:411
 	// term = z
 	frame_dig 1 // z: uint64
 	frame_bury 4 // term: uint64
 
-	// contracts/AssetVault.algo.ts:406
+	// contracts/AssetVault.algo.ts:412
 	// neg = false
 	intc 0 // 0
 	frame_bury 5 // neg: bool
 
-	// contracts/AssetVault.algo.ts:408
+	// contracts/AssetVault.algo.ts:414
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 6 //  appl
@@ -1950,20 +1992,20 @@ lnWithSign:
 	itxn_field OnCompletion
 	itxn_submit
 
-	// contracts/AssetVault.algo.ts:410
+	// contracts/AssetVault.algo.ts:416
 	// for (let i = 2; i <= 10; i = i + 1)
 	pushint 2
 	frame_bury 6 // i: uint64
 
 *for_7:
-	// contracts/AssetVault.algo.ts:410
+	// contracts/AssetVault.algo.ts:416
 	// i <= 10
 	frame_dig 6 // i: uint64
 	intc 5 // 10
 	<=
 	bz *for_7_end
 
-	// contracts/AssetVault.algo.ts:411
+	// contracts/AssetVault.algo.ts:417
 	// term = wideRatio([term, z], [SCALE])
 	frame_dig 4 // term: uint64
 	frame_dig 1 // z: uint64
@@ -1980,7 +2022,7 @@ lnWithSign:
 	assert
 	frame_bury 4 // term: uint64
 
-	// contracts/AssetVault.algo.ts:412
+	// contracts/AssetVault.algo.ts:418
 	// delta = wideRatio([term], [i])
 	intc 0 // 0
 	frame_dig 4 // term: uint64
@@ -1996,7 +2038,7 @@ lnWithSign:
 	assert
 	frame_bury 7 // delta: uint64
 
-	// contracts/AssetVault.algo.ts:413
+	// contracts/AssetVault.algo.ts:419
 	// result = neg ? result - delta : result + delta
 	frame_dig 5 // neg: bool
 	bz *ternary0_false
@@ -2013,14 +2055,14 @@ lnWithSign:
 *ternary0_end:
 	frame_bury 3 // result: uint64
 
-	// contracts/AssetVault.algo.ts:414
+	// contracts/AssetVault.algo.ts:420
 	// neg = !neg
 	frame_dig 5 // neg: bool
 	!
 	frame_bury 5 // neg: bool
 
 *for_7_continue:
-	// contracts/AssetVault.algo.ts:410
+	// contracts/AssetVault.algo.ts:416
 	// i = i + 1
 	frame_dig 6 // i: uint64
 	intc 2 // 1
@@ -2029,7 +2071,7 @@ lnWithSign:
 	b *for_7
 
 *for_7_end:
-	// contracts/AssetVault.algo.ts:417
+	// contracts/AssetVault.algo.ts:423
 	// return [negative, result];
 	frame_dig 0 // negative: uint64
 	itob
@@ -2060,30 +2102,30 @@ exp:
 	bytec 0 // 0x
 	dupn 2
 
-	// contracts/AssetVault.algo.ts:430
+	// contracts/AssetVault.algo.ts:436
 	// result = SCALE
 	intc 3 // 1000000
 	frame_bury 0 // result: uint64
 
-	// contracts/AssetVault.algo.ts:431
+	// contracts/AssetVault.algo.ts:437
 	// term = SCALE
 	intc 3 // 1000000
 	frame_bury 1 // term: uint64
 
-	// contracts/AssetVault.algo.ts:433
+	// contracts/AssetVault.algo.ts:439
 	// for (let i = 1; i <= 10; i = i + 1)
 	intc 2 // 1
 	frame_bury 2 // i: uint64
 
 *for_8:
-	// contracts/AssetVault.algo.ts:433
+	// contracts/AssetVault.algo.ts:439
 	// i <= 10
 	frame_dig 2 // i: uint64
 	intc 5 // 10
 	<=
 	bz *for_8_end
 
-	// contracts/AssetVault.algo.ts:434
+	// contracts/AssetVault.algo.ts:440
 	// term = wideRatio([term, x], [i * SCALE])
 	frame_dig 1 // term: uint64
 	frame_dig -1 // x: uint64
@@ -2102,7 +2144,7 @@ exp:
 	assert
 	frame_bury 1 // term: uint64
 
-	// contracts/AssetVault.algo.ts:435
+	// contracts/AssetVault.algo.ts:441
 	// result += term
 	frame_dig 0 // result: uint64
 	frame_dig 1 // term: uint64
@@ -2110,7 +2152,7 @@ exp:
 	frame_bury 0 // result: uint64
 
 *for_8_continue:
-	// contracts/AssetVault.algo.ts:433
+	// contracts/AssetVault.algo.ts:439
 	// i = i + 1
 	frame_dig 2 // i: uint64
 	intc 2 // 1
@@ -2119,7 +2161,7 @@ exp:
 	b *for_8
 
 *for_8_end:
-	// contracts/AssetVault.algo.ts:438
+	// contracts/AssetVault.algo.ts:444
 	// return result;
 	frame_dig 0 // result: uint64
 
@@ -2149,7 +2191,7 @@ pow:
 	dupn 4
 
 	// *if9_condition
-	// contracts/AssetVault.algo.ts:453
+	// contracts/AssetVault.algo.ts:459
 	// x === 0
 	frame_dig -1 // x: uint64
 	intc 0 // 0
@@ -2157,19 +2199,19 @@ pow:
 	bz *if9_end
 
 	// *if9_consequent
-	// contracts/AssetVault.algo.ts:453
+	// contracts/AssetVault.algo.ts:459
 	// return 0;
 	intc 0 // 0
 	b *pow*return
 
 *if9_end:
-	// contracts/AssetVault.algo.ts:455
+	// contracts/AssetVault.algo.ts:461
 	// lnXResult = this.lnWithSign(x)
 	frame_dig -1 // x: uint64
 	callsub lnWithSign
 	frame_bury 0 // lnXResult: uint64[]
 
-	// contracts/AssetVault.algo.ts:456
+	// contracts/AssetVault.algo.ts:462
 	// negativeLn = lnXResult[0]
 	frame_dig 0 // lnXResult: uint64[]
 	store 255 // full array
@@ -2178,7 +2220,7 @@ pow:
 	btoi
 	frame_bury 1 // negativeLn: uint64
 
-	// contracts/AssetVault.algo.ts:457
+	// contracts/AssetVault.algo.ts:463
 	// lnX = lnXResult[1]
 	frame_dig 0 // lnXResult: uint64[]
 	store 255 // full array
@@ -2187,7 +2229,7 @@ pow:
 	btoi
 	frame_bury 2 // lnX: uint64
 
-	// contracts/AssetVault.algo.ts:459
+	// contracts/AssetVault.algo.ts:465
 	// ylnX = wideRatio([y, lnX], [SCALE])
 	frame_dig -2 // y: uint64
 	frame_dig 2 // lnX: uint64
@@ -2204,14 +2246,14 @@ pow:
 	assert
 	frame_bury 3 // ylnX: uint64
 
-	// contracts/AssetVault.algo.ts:461
+	// contracts/AssetVault.algo.ts:467
 	// expResult = this.exp(ylnX)
 	frame_dig 3 // ylnX: uint64
 	callsub exp
 	frame_bury 4 // expResult: uint64
 
 	// *if10_condition
-	// contracts/AssetVault.algo.ts:463
+	// contracts/AssetVault.algo.ts:469
 	// negativeLn === 1
 	frame_dig 1 // negativeLn: uint64
 	intc 2 // 1
@@ -2219,7 +2261,7 @@ pow:
 	bz *if10_end
 
 	// *if10_consequent
-	// contracts/AssetVault.algo.ts:464
+	// contracts/AssetVault.algo.ts:470
 	// return wideRatio([SCALE, SCALE], [expResult]);
 	intc 3 // 1000000
 	dup
@@ -2237,7 +2279,7 @@ pow:
 	b *pow*return
 
 *if10_end:
-	// contracts/AssetVault.algo.ts:467
+	// contracts/AssetVault.algo.ts:473
 	// return expResult;
 	frame_dig 4 // expResult: uint64
 
@@ -2274,7 +2316,7 @@ calcOut:
 	bytec 0 // 0x
 	dupn 3
 
-	// contracts/AssetVault.algo.ts:497
+	// contracts/AssetVault.algo.ts:503
 	// amountInWithFee = wideRatio([amountIn, SCALE - fee], [SCALE])
 	frame_dig -5 // amountIn: uint64
 	pushint 999000
@@ -2291,7 +2333,7 @@ calcOut:
 	assert
 	frame_bury 0 // amountInWithFee: uint64
 
-	// contracts/AssetVault.algo.ts:500
+	// contracts/AssetVault.algo.ts:506
 	// ratio = wideRatio([balanceIn, SCALE], [balanceIn + amountInWithFee])
 	frame_dig -1 // balanceIn: uint64
 	intc 3 // 1000000
@@ -2310,7 +2352,7 @@ calcOut:
 	assert
 	frame_bury 1 // ratio: uint64
 
-	// contracts/AssetVault.algo.ts:502
+	// contracts/AssetVault.algo.ts:508
 	// power = wideRatio([weightIn, SCALE], [weightOut])
 	frame_dig -2 // weightIn: uint64
 	intc 3 // 1000000
@@ -2327,44 +2369,44 @@ calcOut:
 	assert
 	frame_bury 2 // power: uint64
 
-	// contracts/AssetVault.algo.ts:505
+	// contracts/AssetVault.algo.ts:511
 	// ratioPow = this.pow(ratio, power)
 	frame_dig 2 // power: uint64
 	frame_dig 1 // ratio: uint64
 	callsub pow
 	frame_bury 3 // ratioPow: uint64
 
-	// contracts/AssetVault.algo.ts:507
+	// contracts/AssetVault.algo.ts:513
 	// log(itob(balanceIn))
 	frame_dig -1 // balanceIn: uint64
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:508
+	// contracts/AssetVault.algo.ts:514
 	// log(itob(amountInWithFee))
 	frame_dig 0 // amountInWithFee: uint64
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:509
+	// contracts/AssetVault.algo.ts:515
 	// log(itob(ratio))
 	frame_dig 1 // ratio: uint64
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:510
+	// contracts/AssetVault.algo.ts:516
 	// log(itob(power))
 	frame_dig 2 // power: uint64
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:511
+	// contracts/AssetVault.algo.ts:517
 	// log(itob(ratioPow))
 	frame_dig 3 // ratioPow: uint64
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:512
+	// contracts/AssetVault.algo.ts:518
 	// log(itob(wideRatio([balanceOut, SCALE - ratioPow], [SCALE])))
 	frame_dig -3 // balanceOut: uint64
 	intc 3 // 1000000
@@ -2384,7 +2426,7 @@ calcOut:
 	itob
 	log
 
-	// contracts/AssetVault.algo.ts:514
+	// contracts/AssetVault.algo.ts:520
 	// return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
 	frame_dig -3 // balanceOut: uint64
 	intc 3 // 1000000
@@ -2435,7 +2477,7 @@ computeNAssetsLiquidity:
 	bytec 0 // 0x
 	dupn 10
 
-	// contracts/AssetVault.algo.ts:537
+	// contracts/AssetVault.algo.ts:543
 	// totalAssets = this.assets.value.length
 	bytec 1 //  "assets"
 	app_global_get
@@ -2445,7 +2487,7 @@ computeNAssetsLiquidity:
 	/
 	frame_bury 0 // totalAssets: uint64
 
-	// contracts/AssetVault.algo.ts:538
+	// contracts/AssetVault.algo.ts:544
 	// assert(totalAssets >= 1, 'Please provide at least one asset')
 	frame_dig 0 // totalAssets: uint64
 	intc 2 // 1
@@ -2454,18 +2496,18 @@ computeNAssetsLiquidity:
 	// Please provide at least one asset
 	assert
 
-	// contracts/AssetVault.algo.ts:540
+	// contracts/AssetVault.algo.ts:546
 	// ratio = SCALE
 	intc 3 // 1000000
 	frame_bury 1 // ratio: uint64
 
-	// contracts/AssetVault.algo.ts:542
+	// contracts/AssetVault.algo.ts:548
 	// for (let i = 0; i < totalAssets - 1; i += 1)
 	intc 0 // 0
 	frame_bury 2 // i: uint64
 
 *for_9:
-	// contracts/AssetVault.algo.ts:542
+	// contracts/AssetVault.algo.ts:548
 	// i < totalAssets - 1
 	frame_dig 2 // i: uint64
 	frame_dig 0 // totalAssets: uint64
@@ -2474,7 +2516,7 @@ computeNAssetsLiquidity:
 	<
 	bz *for_9_end
 
-	// contracts/AssetVault.algo.ts:543
+	// contracts/AssetVault.algo.ts:549
 	// increaseOpcodeBudget()
 	itxn_begin
 	intc 6 //  appl
@@ -2490,7 +2532,7 @@ computeNAssetsLiquidity:
 	itxn_submit
 
 *for_9_continue:
-	// contracts/AssetVault.algo.ts:542
+	// contracts/AssetVault.algo.ts:548
 	// i += 1
 	frame_dig 2 // i: uint64
 	intc 2 // 1
@@ -2499,20 +2541,20 @@ computeNAssetsLiquidity:
 	b *for_9
 
 *for_9_end:
-	// contracts/AssetVault.algo.ts:546
+	// contracts/AssetVault.algo.ts:552
 	// for (let i = 0; i < totalAssets; i += 1)
 	intc 0 // 0
 	frame_bury 3 // i: uint64
 
 *for_10:
-	// contracts/AssetVault.algo.ts:546
+	// contracts/AssetVault.algo.ts:552
 	// i < totalAssets
 	frame_dig 3 // i: uint64
 	frame_dig 0 // totalAssets: uint64
 	<
 	bz *for_10_end
 
-	// contracts/AssetVault.algo.ts:547
+	// contracts/AssetVault.algo.ts:553
 	// assetId = this.assets.value[i]
 	bytec 1 //  "assets"
 	app_global_get
@@ -2530,7 +2572,7 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 4 // assetId: uint64
 
-	// contracts/AssetVault.algo.ts:548
+	// contracts/AssetVault.algo.ts:554
 	// poolBalance = this.balances(assetId).value
 	bytec 2 //  "balances_"
 	frame_dig 4 // assetId: uint64
@@ -2543,7 +2585,7 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 5 // poolBalance: uint64
 
-	// contracts/AssetVault.algo.ts:549
+	// contracts/AssetVault.algo.ts:555
 	// providedAmount = this.provided(sender).value[i]
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -2566,13 +2608,13 @@ computeNAssetsLiquidity:
 	btoi
 	frame_bury 6 // providedAmount: uint64
 
-	// contracts/AssetVault.algo.ts:550
+	// contracts/AssetVault.algo.ts:556
 	// weight = this.getCurrentWeight(i)
 	frame_dig 3 // i: uint64
 	callsub getCurrentWeight
 	frame_bury 7 // weight: uint64
 
-	// contracts/AssetVault.algo.ts:552
+	// contracts/AssetVault.algo.ts:558
 	// assert(poolBalance > 0, 'Pool balance must be > 0')
 	frame_dig 5 // poolBalance: uint64
 	intc 0 // 0
@@ -2581,7 +2623,7 @@ computeNAssetsLiquidity:
 	// Pool balance must be > 0
 	assert
 
-	// contracts/AssetVault.algo.ts:554
+	// contracts/AssetVault.algo.ts:560
 	// assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount])
 	frame_dig 6 // providedAmount: uint64
 	intc 3 // 1000000
@@ -2600,14 +2642,14 @@ computeNAssetsLiquidity:
 	assert
 	frame_bury 8 // assetRatio: uint64
 
-	// contracts/AssetVault.algo.ts:555
+	// contracts/AssetVault.algo.ts:561
 	// powed = this.pow(assetRatio, weight)
 	frame_dig 7 // weight: uint64
 	frame_dig 8 // assetRatio: uint64
 	callsub pow
 	frame_bury 9 // powed: uint64
 
-	// contracts/AssetVault.algo.ts:556
+	// contracts/AssetVault.algo.ts:562
 	// ratio = wideRatio([ratio, powed], [SCALE])
 	frame_dig 1 // ratio: uint64
 	frame_dig 9 // powed: uint64
@@ -2624,7 +2666,7 @@ computeNAssetsLiquidity:
 	assert
 	frame_bury 1 // ratio: uint64
 
-	// contracts/AssetVault.algo.ts:558
+	// contracts/AssetVault.algo.ts:564
 	// this.provided(sender).value[i] = 0
 	bytec 3 //  "provided_"
 	frame_dig -1 // sender: Address
@@ -2662,7 +2704,7 @@ computeNAssetsLiquidity:
 	box_put
 
 *for_10_continue:
-	// contracts/AssetVault.algo.ts:546
+	// contracts/AssetVault.algo.ts:552
 	// i += 1
 	frame_dig 3 // i: uint64
 	intc 2 // 1
@@ -2671,12 +2713,12 @@ computeNAssetsLiquidity:
 	b *for_10
 
 *for_10_end:
-	// contracts/AssetVault.algo.ts:561
+	// contracts/AssetVault.algo.ts:567
 	// totalLP = this.totalLP()
 	callsub totalLP
 	frame_bury 10 // totalLP: uint64
 
-	// contracts/AssetVault.algo.ts:562
+	// contracts/AssetVault.algo.ts:568
 	// return wideRatio([totalLP, ratio], [SCALE]);
 	frame_dig 10 // totalLP: uint64
 	frame_dig 1 // ratio: uint64
@@ -2716,7 +2758,7 @@ computeNAssetsLiquidity:
 totalLP:
 	proto 0 1
 
-	// contracts/AssetVault.algo.ts:580
+	// contracts/AssetVault.algo.ts:586
 	// return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
 	bytec 7 //  "token"
 	app_global_get
@@ -2745,7 +2787,7 @@ totalLP:
 absDiff:
 	proto 2 1
 
-	// contracts/AssetVault.algo.ts:590
+	// contracts/AssetVault.algo.ts:596
 	// return a > b ? a - b : b - a;
 	frame_dig -1 // a: uint64
 	frame_dig -2 // b: uint64
@@ -2781,7 +2823,7 @@ absDiff:
 getTotalAssets:
 	proto 0 1
 
-	// contracts/AssetVault.algo.ts:595
+	// contracts/AssetVault.algo.ts:601
 	// return this.assets.value.length;
 	bytec 1 //  "assets"
 	app_global_get
@@ -2808,7 +2850,7 @@ getTotalAssets:
 getToken:
 	proto 0 1
 
-	// contracts/AssetVault.algo.ts:600
+	// contracts/AssetVault.algo.ts:606
 	// return this.token.value;
 	bytec 7 //  "token"
 	app_global_get
@@ -2838,7 +2880,7 @@ getBalance:
 	// Push empty bytes after the frame pointer to reserve space for local variables
 	bytec 0 // 0x
 
-	// contracts/AssetVault.algo.ts:605
+	// contracts/AssetVault.algo.ts:611
 	// asset = this.assets.value[index]
 	bytec 1 //  "assets"
 	app_global_get
@@ -2856,7 +2898,7 @@ getBalance:
 	btoi
 	frame_bury 0 // asset: uint64
 
-	// contracts/AssetVault.algo.ts:606
+	// contracts/AssetVault.algo.ts:612
 	// return this.balances(asset).value;
 	bytec 2 //  "balances_"
 	frame_dig 0 // asset: uint64
@@ -2905,7 +2947,7 @@ estimateSwap:
 	bytec 0 // 0x
 	dupn 5
 
-	// contracts/AssetVault.algo.ts:611
+	// contracts/AssetVault.algo.ts:617
 	// assetIn = this.assets.value[from]
 	bytec 1 //  "assets"
 	app_global_get
@@ -2923,7 +2965,7 @@ estimateSwap:
 	btoi
 	frame_bury 0 // assetIn: uint64
 
-	// contracts/AssetVault.algo.ts:612
+	// contracts/AssetVault.algo.ts:618
 	// assetOut = this.assets.value[to]
 	bytec 1 //  "assets"
 	app_global_get
@@ -2941,7 +2983,7 @@ estimateSwap:
 	btoi
 	frame_bury 1 // assetOut: uint64
 
-	// contracts/AssetVault.algo.ts:614
+	// contracts/AssetVault.algo.ts:620
 	// balanceIn = this.balances(assetIn).value
 	bytec 2 //  "balances_"
 	frame_dig 0 // assetIn: uint64
@@ -2954,7 +2996,7 @@ estimateSwap:
 	btoi
 	frame_bury 2 // balanceIn: uint64
 
-	// contracts/AssetVault.algo.ts:615
+	// contracts/AssetVault.algo.ts:621
 	// balanceOut = this.balances(assetOut).value
 	bytec 2 //  "balances_"
 	frame_dig 1 // assetOut: uint64
@@ -2967,19 +3009,19 @@ estimateSwap:
 	btoi
 	frame_bury 3 // balanceOut: uint64
 
-	// contracts/AssetVault.algo.ts:617
+	// contracts/AssetVault.algo.ts:623
 	// weightIn = this.getCurrentWeight(from)
 	frame_dig -1 // from: uint64
 	callsub getCurrentWeight
 	frame_bury 4 // weightIn: uint64
 
-	// contracts/AssetVault.algo.ts:618
+	// contracts/AssetVault.algo.ts:624
 	// weightOut = this.getCurrentWeight(to)
 	frame_dig -2 // to: uint64
 	callsub getCurrentWeight
 	frame_bury 5 // weightOut: uint64
 
-	// contracts/AssetVault.algo.ts:620
+	// contracts/AssetVault.algo.ts:626
 	// return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 	frame_dig -3 // amount: uint64
 	frame_dig 5 // weightOut: uint64
@@ -3020,25 +3062,25 @@ getCurrentWeight:
 	bytec 0 // 0x
 	dupn 8
 
-	// contracts/AssetVault.algo.ts:625
+	// contracts/AssetVault.algo.ts:631
 	// current = globals.round
 	global Round
 	frame_bury 0 // current: uint64
 
-	// contracts/AssetVault.algo.ts:626
+	// contracts/AssetVault.algo.ts:632
 	// start = this.startRound.value
 	bytec 8 //  "start_round"
 	app_global_get
 	frame_bury 1 // start: uint64
 
-	// contracts/AssetVault.algo.ts:627
+	// contracts/AssetVault.algo.ts:633
 	// end = this.endRound.value
 	bytec 5 //  "end_round"
 	app_global_get
 	frame_bury 2 // end: uint64
 
 	// *if11_condition
-	// contracts/AssetVault.algo.ts:629
+	// contracts/AssetVault.algo.ts:635
 	// current <= start || start === 0 || end === 0
 	frame_dig 0 // current: uint64
 	frame_dig 1 // start: uint64
@@ -3062,7 +3104,7 @@ getCurrentWeight:
 	bz *if11_end
 
 	// *if11_consequent
-	// contracts/AssetVault.algo.ts:630
+	// contracts/AssetVault.algo.ts:636
 	// return this.weights(index).value;
 	bytec 6 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -3077,7 +3119,7 @@ getCurrentWeight:
 
 *if11_end:
 	// *if12_condition
-	// contracts/AssetVault.algo.ts:633
+	// contracts/AssetVault.algo.ts:639
 	// current >= end
 	frame_dig 0 // current: uint64
 	frame_dig 2 // end: uint64
@@ -3085,7 +3127,7 @@ getCurrentWeight:
 	bz *if12_end
 
 	// *if12_consequent
-	// contracts/AssetVault.algo.ts:634
+	// contracts/AssetVault.algo.ts:640
 	// return this.targetWeights(index).value;
 	bytec 10 //  "target_weights_"
 	frame_dig -1 // index: uint64
@@ -3099,21 +3141,21 @@ getCurrentWeight:
 	b *getCurrentWeight*return
 
 *if12_end:
-	// contracts/AssetVault.algo.ts:637
+	// contracts/AssetVault.algo.ts:643
 	// elapsed = current - start
 	frame_dig 0 // current: uint64
 	frame_dig 1 // start: uint64
 	-
 	frame_bury 3 // elapsed: uint64
 
-	// contracts/AssetVault.algo.ts:638
+	// contracts/AssetVault.algo.ts:644
 	// total = end - start
 	frame_dig 2 // end: uint64
 	frame_dig 1 // start: uint64
 	-
 	frame_bury 4 // total: uint64
 
-	// contracts/AssetVault.algo.ts:640
+	// contracts/AssetVault.algo.ts:646
 	// w0 = this.weights(index).value
 	bytec 6 //  "weights_"
 	frame_dig -1 // index: uint64
@@ -3126,7 +3168,7 @@ getCurrentWeight:
 	btoi
 	frame_bury 5 // w0: uint64
 
-	// contracts/AssetVault.algo.ts:641
+	// contracts/AssetVault.algo.ts:647
 	// w1 = this.targetWeights(index).value
 	bytec 10 //  "target_weights_"
 	frame_dig -1 // index: uint64
@@ -3139,7 +3181,7 @@ getCurrentWeight:
 	btoi
 	frame_bury 6 // w1: uint64
 
-	// contracts/AssetVault.algo.ts:643
+	// contracts/AssetVault.algo.ts:649
 	// delta = w1 > w0 ? w1 - w0 : w0 - w1
 	frame_dig 6 // w1: uint64
 	frame_dig 5 // w0: uint64
@@ -3158,7 +3200,7 @@ getCurrentWeight:
 *ternary2_end:
 	frame_bury 7 // delta: uint64
 
-	// contracts/AssetVault.algo.ts:644
+	// contracts/AssetVault.algo.ts:650
 	// offset = wideRatio([delta, elapsed], [total])
 	frame_dig 7 // delta: uint64
 	frame_dig 3 // elapsed: uint64
@@ -3175,7 +3217,7 @@ getCurrentWeight:
 	assert
 	frame_bury 8 // offset: uint64
 
-	// contracts/AssetVault.algo.ts:646
+	// contracts/AssetVault.algo.ts:652
 	// return w1 > w0 ? w0 + offset : w0 - offset;
 	frame_dig 6 // w1: uint64
 	frame_dig 5 // w0: uint64
@@ -3225,7 +3267,7 @@ getCurrentWeight:
 getTimes:
 	proto 0 1
 
-	// contracts/AssetVault.algo.ts:651
+	// contracts/AssetVault.algo.ts:657
 	// return [this.startRound.value, this.endRound.value, globals.round];
 	bytec 8 //  "start_round"
 	app_global_get

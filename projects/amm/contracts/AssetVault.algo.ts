@@ -3,6 +3,7 @@ import { Contract } from '@algorandfoundation/tealscript';
 const TOTAL_LP_SUPPLY = 10 ** 16;
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
 const SCALE = 1_000_000;
+const MIN_WEIGHT = 10_000;
 
 export class AssetVault extends Contract {
   manager = GlobalStateKey<Address>({ key: 'manager' });
@@ -50,20 +51,25 @@ export class AssetVault extends Contract {
   bootstrap(assetIds: AssetID[], weights: uint64[]): AssetID {
     this.assertIsManager();
 
+    assert(assetIds.length > 0);
+    assert(assetIds.length <= SCALE / MIN_WEIGHT, 'too many tokens');
+
     let sumOfWeights = 0;
 
     for (let i = 0; i < assetIds.length; i += 1) {
+      assert(weights[i] >= MIN_WEIGHT, 'weight too small');
+
       this.optIn(assetIds[i]);
       this.addToken(i, assetIds[i], weights[i]);
       sumOfWeights += weights[i];
     }
 
+    assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1');
+
     this.burned.value = 0;
     this.assets.value = assetIds;
 
-    assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1');
     this.createToken();
-
     return this.token.value;
   }
 

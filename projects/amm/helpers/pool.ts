@@ -10,7 +10,6 @@ import {
   getTxInfo,
   makeAssetTransferTxn,
   optIn,
-  pay,
 } from './generic';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { mintToken } from './token';
@@ -76,11 +75,11 @@ export async function deployAndInitPool(
   tokens: bigint[],
   weights: number[]
 ): Promise<bigint> {
-  const payTx = await getPayTx(config, factoryClient.appAddress, 10);
+  const payTx = await getPayTx(config, factoryClient.appAddress, 0.1);
 
   const result = await factoryClient.send.createPool({ args: [payTx], populateAppCallResources: true });
 
-  const tx = await getTxInfo(result.txIds[0]);
+  const tx = await getTxInfo(result.txIds[1]);
   const poolID = tx.transaction.innerTxns![0].createdApplicationIndex!;
 
   return initPool(factoryClient, config, poolID, tokens, weights);
@@ -95,6 +94,7 @@ export async function addLiquidity(config: AlgoParams, poolID: bigint, amount: n
 
     const assetTransferTxn = await makeAssetTransferTxn(config, token, poolClient.appAddress, amount);
 
+    console.log('INDEX => ', index);
     await poolClient.send.addLiquidity({
       ...commonAppCallTxParams(config, (500_000).microAlgo()),
       args: [index, assetTransferTxn],

@@ -11,7 +11,6 @@ import path from 'node:path';
 import { AssetVaultClient } from '../contracts/clients/AssetVaultClient';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { BootstrapResult } from '../script/execute';
-import {AlgoConfig} from "@algorandfoundation/algokit-utils/types/network-client";
 
 export type AssetInfo = {
   appID: bigint;

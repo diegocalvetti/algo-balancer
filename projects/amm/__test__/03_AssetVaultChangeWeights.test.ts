@@ -14,7 +14,7 @@ import {
   getInterpolationBlocksLeft,
   getPool,
 } from '../helpers/pool';
-import { AssetInfo, commonAppCallTxParams, getRandomAccount, pay, retrieveResult, sleep } from '../helpers/generic';
+import { AssetInfo, commonAppCallTxParams, getRandomAccount, pay, retrieveResult } from '../helpers/generic';
 
 const fixture = algorandFixture();
 

@@ -189,10 +189,11 @@ export class AssetVault extends Contract {
    *
    * @param from - Index of the input asset in the pool.
    * @param to - Index of the output asset in the pool.
+   * @param minAmountOut
    * @param transferTxn
    * @returns The amount of output asset received.
    */
-  swap(from: uint64, to: uint64, transferTxn: AssetTransferTxn): uint64 {
+  swap(from: uint64, to: uint64, minAmountOut: uint64, transferTxn: AssetTransferTxn): uint64 {
     this.assertIsBootstrapped();
     this.tryFinalizeWeights();
     increaseOpcodeBudget();
@@ -211,7 +212,7 @@ export class AssetVault extends Contract {
 
     const amountOut = this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
 
-    log(itob(amountOut));
+    assert(amountOut >= minAmountOut, 'Slippage exceeded');
 
     this.balances(assetIn).value = balanceIn + amount;
     this.balances(assetOut).value = balanceOut - amountOut;

@@ -84,6 +84,10 @@
           "desc": "Index of the output asset in the pool."
         },
         {
+          "name": "minAmountOut",
+          "type": "uint64"
+        },
+        {
           "name": "transferTxn",
           "type": "axfer"
         }

@@ -158,9 +158,11 @@ export async function swap(
   const poolClient = await getPoolClient(config, poolID);
   const assetTransferTxn = await makeAssetTransferTxn(config, tokens[from], poolClient.appAddress, amount);
 
+  const minOut = 0;
+
   const result = await poolClient.send.swap({
     ...commonAppCallTxParams(config),
-    args: [from, to, assetTransferTxn],
+    args: [from, to, minOut, assetTransferTxn],
   });
 
   return Number(result.return!) / 10 ** 6;

@@ -13,6 +13,7 @@ import {
 } from './generic';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { mintToken } from './token';
+import { estimateSwapOffChain } from './estimateSwap';
 
 export function fixedWeights(weights: number[]): bigint[] {
   return weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
@@ -158,7 +159,13 @@ export async function swap(
   const poolClient = await getPoolClient(config, poolID);
   const assetTransferTxn = await makeAssetTransferTxn(config, tokens[from], poolClient.appAddress, amount);
 
-  const minOut = 0;
+  const estimate = await estimateSwapOffChain(poolClient, from, to, BigInt(amount * 10 ** 6));
+
+  const slippagePct = 0.5; // 0.5%
+  const factor = Math.floor((1 - slippagePct / 100) * 10000); // 9950
+  const minOut = (estimate * BigInt(factor)) / BigInt(10000);
+
+  console.log(`Min amount of token ${to} expected is: ${minOut}`);
 
   const result = await poolClient.send.swap({
     ...commonAppCallTxParams(config),

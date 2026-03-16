@@ -608,6 +608,11 @@ export class AssetVault extends Contract {
   }
 
   @abi.readonly
+  getWeight(index: uint64): uint64 {
+    return this.weights(index).value;
+  }
+
+  @abi.readonly
   getBalance(index: uint64): uint64 {
     const asset = this.assets.value[index];
     return this.balances(asset).value;

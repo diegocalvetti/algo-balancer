@@ -4,9 +4,20 @@ import * as algokit from '@algorandfoundation/algokit-utils';
 import dotenv from 'dotenv';
 import { createToken, mintToken } from '../helpers/token';
 import { deploy, factorySetup } from '../helpers/factory';
-import { addLiquidity, burnLiquidity, getLiquidity, getPool, initPool, PoolTypes, swap } from '../helpers/pool';
+import {
+  addLiquidity,
+  burnLiquidity,
+  getAuctionState,
+  getLiquidity,
+  getPool,
+  getPoolTypeName,
+  initPool,
+  PoolTypes,
+  swap,
+} from '../helpers/pool';
 import { getFactoryClient, retrieveResult, storeResult } from '../helpers/generic';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
+import { bid, claimRewards, settle } from '../helpers/poolAuction';
 
 dotenv.config();
 
@@ -16,6 +27,7 @@ export type BootstrapResult = {
   LP_TOKEN_ID: bigint;
   TOKENS: bigint[];
   TOKENS_APP: bigint[];
+  POOL_TYPE: PoolTypes;
 };
 
 const choices = [
@@ -27,6 +39,10 @@ const choices = [
   'Compute Liquidity',
   'Burn Liquidity',
   'Swap',
+  'Bid',
+  'Settle',
+  'Burn Liquidity (Auction)',
+  'Info',
   'Quit',
 ] as const;
 type Commands = (typeof choices)[number];
@@ -43,7 +59,8 @@ function title(text: string): void {
 
 async function run(command: Commands): Promise<boolean> {
   title(command);
-  const { FACTORY_ID, POOL_ID, TOKENS, LP_TOKEN_ID } = await retrieveResult<BootstrapResult>('../script/bootstrap');
+  const { FACTORY_ID, POOL_ID, TOKENS, LP_TOKEN_ID, POOL_TYPE } =
+    await retrieveResult<BootstrapResult>('../script/bootstrap');
 
   let factoryClient: FactoryClient;
 
@@ -111,6 +128,7 @@ async function run(command: Commands): Promise<boolean> {
       await storeResult('../script/bootstrap', {
         FACTORY_ID: appID,
         POOL_ID: poolAppId,
+        POOL_TYPE: poolType,
       });
 
       break;
@@ -173,7 +191,7 @@ async function run(command: Commands): Promise<boolean> {
             default: 100,
           },
         ]);
-        // const poolID = (await getPool(factoryClient, TOKENS, [1 / 2, 1 / 2]))!;
+
         await addLiquidity(manager, poolType, POOL_ID, amount, TOKENS);
       }
       break;
@@ -223,6 +241,72 @@ async function run(command: Commands): Promise<boolean> {
       const tokenOutIndex = TOKENS.findIndex((el) => el.toString() === tokenOut);
 
       await swap(manager, poolType, POOL_ID, TOKENS, tokenInIndex, tokenOutIndex, amountIn);
+      break;
+    case 'Bid':
+      if (POOL_TYPE !== PoolTypes.Dex) {
+        console.log(`Auction not available in ${getPoolTypeName(PoolTypes.Vault)}`);
+        break;
+      }
+
+      const { amountBid } = await inquirer.prompt([
+        {
+          type: 'number',
+          name: 'amountBid',
+          message: 'How much?',
+          default: 1,
+        },
+      ]);
+
+      const tx = await bid(manager, POOL_ID, amountBid);
+      console.log(tx.txIds);
+
+      break;
+    case 'Settle':
+      if (POOL_TYPE !== PoolTypes.Dex) {
+        console.log(`Auction not available in ${getPoolTypeName(PoolTypes.Vault)}`);
+        break;
+      }
+
+      const settleResponse = await settle(manager, POOL_ID);
+      console.log(settleResponse.txIds);
+
+      break;
+    case 'Burn Liquidity (Auction)':
+      const { amountLPAuction } = await inquirer.prompt([
+        {
+          type: 'number',
+          name: 'amountLPAuction',
+          message: 'How much?',
+          default: 100,
+        },
+      ]);
+
+      const claimResponse = await claimRewards(manager, poolType, POOL_ID, LP_TOKEN_ID, amountLPAuction);
+      console.log(claimResponse.txIds);
+
+      break;
+    case 'Info':
+      console.log({
+        FACTORY_ID,
+        POOL_ID,
+        TOKENS,
+        LP_TOKEN_ID,
+        POOL_TYPE: `${POOL_TYPE} (${getPoolTypeName(POOL_TYPE)})`,
+      });
+
+      if (POOL_TYPE === PoolTypes.Dex) {
+        const auction = await getAuctionState(manager, POOL_TYPE, POOL_ID);
+        console.log('\n\nAUCTION:');
+        console.log({
+          auctionEnd: auction[0],
+          epochEnd: auction[1],
+          highestBid: auction[2],
+          feeRate: auction[3],
+          rewardPool: auction[4],
+          globalsRound: auction[5],
+        });
+      }
+
       break;
     case 'Quit':
       return true;

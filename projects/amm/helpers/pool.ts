@@ -16,6 +16,7 @@ import { mintToken } from './token';
 import { estimateSwapOffChain } from './estimateSwap';
 import { AssetVaultClient } from '../contracts/clients/AssetVaultClient';
 import { DexPoolClient } from '../contracts/clients/DexPoolClient';
+import { DexPool } from '../contracts/DexPool.algo';
 
 export function fixedWeights(weights: number[]): bigint[] {
   return weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
@@ -144,7 +145,7 @@ export async function getLiquidity(config: AlgoParams, poolType: PoolTypes, pool
     ...commonAppCallTxParams(config),
   });
 
-  return Number(result.returns[1]!) / 10 ** 6;
+  return Number(result.returns[2]!) / 10 ** 6;
 }
 
 export async function createAccountAndMintTokens(
@@ -264,4 +265,11 @@ export async function getInterpolationBlocksLeft(
   const diff = Number(times[1] - times[2]);
 
   return diff > 0 ? diff : 0;
+}
+
+export async function getAuctionState(config: AlgoParams, poolType: PoolTypes, poolID: bigint): Promise<bigint[]> {
+  const poolClient = (await getPoolClient(config, poolType, poolID)) as DexPoolClient;
+  const auctionStateResponse = await poolClient.send.getAuctionState({ args: [] });
+
+  return auctionStateResponse.return!;
 }

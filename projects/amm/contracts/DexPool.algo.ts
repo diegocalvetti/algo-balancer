@@ -182,13 +182,15 @@ export class DexPool extends Contract {
    */
   bid(payment: PayTxn): void {
     this.assertIsBootstrapped();
-
-    assert(globals.round <= this.auctionEnd.value, 'bidding window is closed');
     assert(payment.receiver === this.app.address, 'payment must go to the pool');
     assert(payment.amount > this.highestBid.value, 'bid must exceed current highest bid');
 
-    // Refund the outbid bidder immediately — no need for them to claim later.
-    if (this.highestBid.value > 0 && this.highestBidder.value !== globals.zeroAddress) {
+    // First bid starts the countdown. Subsequent bids just replace the leader.
+    if (this.highestBid.value === 0) {
+      this.auctionEnd.value = globals.round + this.auctionDuration.value;
+    }
+
+    if (this.highestBidder.value !== globals.zeroAddress) {
       sendPayment({
         receiver: this.highestBidder.value,
         amount: this.highestBid.value,
@@ -469,7 +471,8 @@ export class DexPool extends Contract {
 
   /** Open a new bidding window from the current round. */
   private openAuction(): void {
-    this.auctionEnd.value = globals.round + this.auctionDuration.value;
+    // Reset to 0 = open indefinitely until the first bid arrives.
+    this.auctionEnd.value = 0;
   }
 
   private tryFinalizeWeights() {

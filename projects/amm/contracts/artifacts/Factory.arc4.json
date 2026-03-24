@@ -17,6 +17,10 @@
         {
           "name": "payMBR",
           "type": "pay"
+        },
+        {
+          "name": "type",
+          "type": "uint64"
         }
       ],
       "returns": {

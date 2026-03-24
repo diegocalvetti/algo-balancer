@@ -9,8 +9,8 @@ type Pool = {
   weights: uint64[];
 };
 
-const DEX_POOL_TYPE = 0;
-const VAULT_POOL_TYPE = 1;
+const VAULT_POOL_TYPE = 0;
+const DEX_POOL_TYPE = 1;
 
 // @todo move to globals
 const MBR_CONTRACT_PROGRAM = 100_000;
@@ -47,38 +47,66 @@ export class Factory extends Contract {
    * Deploy the pool contract, compiled teal of the contract
    * must be loaded in dexPoolContractApprovalProgram
    */
-  createPool(payMBR: PayTxn): void {
+  createPool(payMBR: PayTxn, type: uint64): void {
     // @todo check MBR cost
     verifyPayTxn(payMBR, {
       receiver: this.app.address,
       amount: MBR_CREATE_POOL,
     });
 
-    for (let i = 0; i < 8; i += 1) {
-      if (!this.dexPoolContractApprovalProgram(i).exists) {
-        this.dexPoolContractApprovalProgram(i).value = '';
+    if (type === DEX_POOL_TYPE) {
+      for (let i = 0; i < 8; i += 1) {
+        if (!this.dexPoolContractApprovalProgram(i).exists) {
+          this.dexPoolContractApprovalProgram(i).value = '';
+        }
       }
-    }
 
-    sendAppCall({
-      onCompletion: OnCompletion.NoOp,
-      approvalProgram: [
-        this.dexPoolContractApprovalProgram(0).value,
-        this.dexPoolContractApprovalProgram(1).value,
-        this.dexPoolContractApprovalProgram(2).value,
-        this.dexPoolContractApprovalProgram(3).value,
-        this.dexPoolContractApprovalProgram(4).value,
-        this.dexPoolContractApprovalProgram(5).value,
-        this.dexPoolContractApprovalProgram(6).value,
-        this.dexPoolContractApprovalProgram(7).value,
-      ],
-      clearStateProgram: AssetVault.clearProgram(),
-      globalNumUint: AssetVault.schema.global.numUint,
-      globalNumByteSlice: AssetVault.schema.global.numByteSlice,
-      extraProgramPages: 3,
-      applicationArgs: [method('createApplication()void')],
-      fee: payMBR.amount,
-    });
+      sendAppCall({
+        onCompletion: OnCompletion.NoOp,
+        approvalProgram: [
+          this.dexPoolContractApprovalProgram(0).value,
+          this.dexPoolContractApprovalProgram(1).value,
+          this.dexPoolContractApprovalProgram(2).value,
+          this.dexPoolContractApprovalProgram(3).value,
+          this.dexPoolContractApprovalProgram(4).value,
+          this.dexPoolContractApprovalProgram(5).value,
+          this.dexPoolContractApprovalProgram(6).value,
+          this.dexPoolContractApprovalProgram(7).value,
+        ],
+        clearStateProgram: DexPool.clearProgram(),
+        globalNumUint: DexPool.schema.global.numUint,
+        globalNumByteSlice: DexPool.schema.global.numByteSlice,
+        extraProgramPages: 3,
+        applicationArgs: [method('createApplication()void')],
+        fee: payMBR.amount,
+      });
+    } else {
+      for (let i = 0; i < 8; i += 1) {
+        if (!this.vaultPoolContractApprovalProgram(i).exists) {
+          this.vaultPoolContractApprovalProgram(i).value = '';
+        }
+      }
+
+      sendAppCall({
+        onCompletion: OnCompletion.NoOp,
+        approvalProgram: [
+          this.vaultPoolContractApprovalProgram(0).value,
+          this.vaultPoolContractApprovalProgram(1).value,
+          this.vaultPoolContractApprovalProgram(2).value,
+          this.vaultPoolContractApprovalProgram(3).value,
+          this.vaultPoolContractApprovalProgram(4).value,
+          this.vaultPoolContractApprovalProgram(5).value,
+          this.vaultPoolContractApprovalProgram(6).value,
+          this.vaultPoolContractApprovalProgram(7).value,
+        ],
+        clearStateProgram: AssetVault.clearProgram(),
+        globalNumUint: AssetVault.schema.global.numUint,
+        globalNumByteSlice: AssetVault.schema.global.numByteSlice,
+        extraProgramPages: 3,
+        applicationArgs: [method('createApplication()void')],
+        fee: payMBR.amount,
+      });
+    }
   }
 
   createVault(payMBR: PayTxn): void {
@@ -143,7 +171,7 @@ export class Factory extends Contract {
     if (type === DEX_POOL_TYPE) {
       LPTokenID = sendMethodCall<typeof DexPool.prototype.bootstrap, AssetID>({
         applicationID: poolID,
-        methodArgs: [assetIds, weights],
+        methodArgs: [assetIds, weights, 20, 5],
       });
     } else if (type === VAULT_POOL_TYPE) {
       LPTokenID = sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({

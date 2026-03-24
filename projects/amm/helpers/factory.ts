@@ -6,6 +6,8 @@ import { TransactionResponse } from 'algosdk/dist/types/client/v2/indexer';
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
 import { AlgoParams, getPayTx, getTxInfo } from './generic';
 import { AssetVaultFactory } from '../contracts/clients/AssetVaultClient';
+import { getPoolTypeName, PoolTypes } from './pool';
+import { DexPoolFactory } from '../contracts/clients/DexPoolClient';
 
 export async function deploy(manager: AlgoParams, name: string): Promise<bigint> {
   const { algorand } = manager;
@@ -60,14 +62,14 @@ export async function updatePoolProgram(adminFactory: FactoryClient, program: Ui
 }
 */
 
-export async function writePoolProgram(factoryClient: FactoryClient, program: Uint8Array) {
+export async function writePoolProgram(factoryClient: FactoryClient, type: PoolTypes, program: Uint8Array) {
   const writeGroup = factoryClient.newGroup();
 
   for (let i = 0; i < program.length; i += 2000) {
     writeGroup.managerWritePoolContractProgram({
       args: {
         offset: i,
-        type: 0,
+        type,
         data: program.subarray(i, i + 2000),
       },
     });
@@ -78,7 +80,7 @@ export async function writePoolProgram(factoryClient: FactoryClient, program: Ui
   console.log('TXs IDs: ', resultTxn.txIds);
 }
 
-export async function factorySetup(manager: AlgoParams, APP_ID: bigint) {
+export async function factorySetup(manager: AlgoParams, poolType: PoolTypes, APP_ID: bigint) {
   const { algorand } = manager;
 
   const factoryClient = algorand.client.getTypedAppClientById(FactoryClient, {
@@ -87,12 +89,21 @@ export async function factorySetup(manager: AlgoParams, APP_ID: bigint) {
     defaultSigner: manager.signer,
   });
 
-  const assetVaultFactory = algorand.client.getTypedAppFactory(AssetVaultFactory, {
-    defaultSender: manager.sender,
-    defaultSigner: manager.signer,
-  });
+  let poolFactory: DexPoolFactory | AssetVaultFactory | null;
 
-  const balancedPoolApprovalProgram = await assetVaultFactory.appFactory.compile();
+  if (poolType === PoolTypes.Vault) {
+    poolFactory = algorand.client.getTypedAppFactory(AssetVaultFactory, {
+      defaultSender: manager.sender,
+      defaultSigner: manager.signer,
+    });
+  } else {
+    poolFactory = algorand.client.getTypedAppFactory(DexPoolFactory, {
+      defaultSender: manager.sender,
+      defaultSigner: manager.signer,
+    });
+  }
+
+  const poolApprovalProgram = await poolFactory.appFactory.compile();
 
   await algorand.send.payment({
     sender: manager.sender,
@@ -102,17 +113,17 @@ export async function factorySetup(manager: AlgoParams, APP_ID: bigint) {
   });
 
   // await updatePoolProgram(factoryClient, balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
-  await writePoolProgram(factoryClient, balancedPoolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
+  await writePoolProgram(factoryClient, poolType, poolApprovalProgram.compiledApproval?.compiledBase64ToBytes!);
 
   const payment = getPayTx(manager, factoryClient.appAddress, 0.1);
 
   const poolGroup = factoryClient.newGroup();
   poolGroup.createPool({
-    args: [payment],
+    args: [payment, poolType],
   });
   const result = await poolGroup.send({ populateAppCallResources: true, maxRoundsToWaitForConfirmation: 4 });
 
-  console.log('Balanced Pool Created');
+  console.log(`${getPoolTypeName(poolType)} created!`);
   console.log('TXs IDs', result.txIds);
 
   const lookup = await getTxInfo(result.txIds[1]);

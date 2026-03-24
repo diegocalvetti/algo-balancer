@@ -14,9 +14,20 @@ import {
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { mintToken } from './token';
 import { estimateSwapOffChain } from './estimateSwap';
+import { AssetVaultClient } from '../contracts/clients/AssetVaultClient';
+import { DexPoolClient } from '../contracts/clients/DexPoolClient';
 
 export function fixedWeights(weights: number[]): bigint[] {
   return weights.map((el) => BigInt((el * 10 ** 6).toFixed(0).toString()));
+}
+
+export const enum PoolTypes {
+  Vault = 0,
+  Dex = 1,
+}
+
+export function getPoolTypeName(type: PoolTypes) {
+  return type === PoolTypes.Vault ? 'AssetVault' : 'AssetDex';
 }
 
 export async function getPool(
@@ -34,11 +45,12 @@ export async function getPool(
 export async function initPool(
   factoryClient: FactoryClient,
   config: AlgoParams,
+  poolType: PoolTypes,
   poolID: bigint,
   tokens: bigint[],
   weights: number[]
 ) {
-  const poolClient = await getPoolClient(config, poolID);
+  const poolClient: AssetVaultClient | DexPoolClient = await getPoolClient(config, poolType, poolID);
   const payTx = await getPayTx(config, poolClient.appAddress, 1);
 
   const weightsFixed = fixedWeights(weights);
@@ -56,7 +68,7 @@ export async function initPool(
 
   initPoolGroup.initPool({
     ...commonAppCallTxParams(config, (500_000).microAlgo()),
-    args: [poolID, 0, tokens, weightsFixed, payTx],
+    args: [poolID, poolType, tokens, weightsFixed, payTx],
   });
 
   const resultInit = await initPoolGroup.send({
@@ -73,25 +85,32 @@ export async function initPool(
 export async function deployAndInitPool(
   factoryClient: FactoryClient,
   config: AlgoParams,
+  poolType: PoolTypes,
   tokens: bigint[],
   weights: number[]
 ): Promise<bigint> {
   const payTx = await getPayTx(config, factoryClient.appAddress, 0.1);
 
-  const result = await factoryClient.send.createPool({ args: [payTx], populateAppCallResources: true });
+  const result = await factoryClient.send.createPool({ args: [payTx, poolType], populateAppCallResources: true });
 
   const tx = await getTxInfo(result.txIds[1]);
   const poolID = tx.transaction.innerTxns![0].createdApplicationIndex!;
 
-  return initPool(factoryClient, config, poolID, tokens, weights);
+  return initPool(factoryClient, config, poolType, poolID, tokens, weights);
 }
 
-export async function addLiquidity(config: AlgoParams, poolID: bigint, amount: number, tokens: bigint[]) {
+export async function addLiquidity(
+  config: AlgoParams,
+  poolType: PoolTypes,
+  poolID: bigint,
+  amount: number,
+  tokens: bigint[]
+) {
   for (let index = 0; index < tokens.length; index += 1) {
     const token = tokens[index];
     await optIn(config, token);
     console.log('TOKEN => ', token);
-    const poolClient = await getPoolClient(config, poolID);
+    const poolClient = await getPoolClient(config, poolType, poolID);
 
     const assetTransferTxn = await makeAssetTransferTxn(config, token, poolClient.appAddress, amount);
 
@@ -103,8 +122,8 @@ export async function addLiquidity(config: AlgoParams, poolID: bigint, amount: n
   }
 }
 
-export async function getLiquidity(config: AlgoParams, poolID: bigint): Promise<number> {
-  const poolClient = await getPoolClient(config, poolID);
+export async function getLiquidity(config: AlgoParams, poolType: PoolTypes, poolID: bigint): Promise<number> {
+  const poolClient = await getPoolClient(config, poolType, poolID);
   const group = poolClient.newGroup();
   const totalAssets = await poolClient.getTotalAssets();
 
@@ -130,12 +149,13 @@ export async function getLiquidity(config: AlgoParams, poolID: bigint): Promise<
 
 export async function createAccountAndMintTokens(
   fixture: AlgorandFixture,
+  poolType: PoolTypes,
   poolID: bigint,
   tokens: AssetInfo[],
   amount: number = 500_000
 ) {
   const randomLP = await getRandomAccount(fixture);
-  const poolClient = await getPoolClient(randomLP, poolID);
+  const poolClient = await getPoolClient(randomLP, poolType, poolID);
   const tokenLpId = await poolClient.getToken();
 
   await optIn(randomLP, tokenLpId);
@@ -150,16 +170,17 @@ export async function createAccountAndMintTokens(
 
 export async function swap(
   config: AlgoParams,
+  poolType: PoolTypes,
   poolID: bigint,
   tokens: bigint[],
   from: number,
   to: number,
   amount: number
 ): Promise<number> {
-  const poolClient = await getPoolClient(config, poolID);
+  const poolClient = await getPoolClient(config, poolType, poolID);
   const assetTransferTxn = await makeAssetTransferTxn(config, tokens[from], poolClient.appAddress, amount);
 
-  const estimate = await estimateSwapOffChain(poolClient, from, to, BigInt(amount * 10 ** 6));
+  const estimate = await estimateSwapOffChain(poolClient as AssetVaultClient, from, to, BigInt(amount * 10 ** 6));
 
   const slippagePct = 0.5; // 0.5%
   const factor = Math.floor((1 - slippagePct / 100) * 10000); // 9950
@@ -175,8 +196,14 @@ export async function swap(
   return Number(result.return!) / 10 ** 6;
 }
 
-export const burnLiquidity = async (config: AlgoParams, poolID: bigint, lpID: bigint, amount: number) => {
-  const poolClient = await getPoolClient(config, poolID);
+export const burnLiquidity = async (
+  config: AlgoParams,
+  poolType: PoolTypes,
+  poolID: bigint,
+  lpID: bigint,
+  amount: number
+) => {
+  const poolClient = await getPoolClient(config, poolType, poolID);
   const assetTransferTxn = makeAssetTransferTxn(config, lpID, poolClient.appAddress, amount);
 
   const computeLiquidityGroup = poolClient.newGroup();
@@ -198,11 +225,12 @@ export const burnLiquidity = async (config: AlgoParams, poolID: bigint, lpID: bi
 export async function changeWeights(
   factoryClient: FactoryClient,
   config: AlgoParams,
+  poolType: PoolTypes,
   poolID: bigint,
   weights: number[],
   duration: number
 ) {
-  const poolClient = await getPoolClient(config, poolID);
+  const poolClient = await getPoolClient(config, poolType, poolID);
   const weightsFixed = fixedWeights(weights);
 
   await poolClient.send.changeWeights({
@@ -212,8 +240,8 @@ export async function changeWeights(
   });
 }
 
-export async function getCurrentWeight(config: AlgoParams, poolID: bigint): Promise<bigint[]> {
-  const poolClient = await getPoolClient(config, poolID);
+export async function getCurrentWeight(config: AlgoParams, poolType: PoolTypes, poolID: bigint): Promise<bigint[]> {
+  const poolClient = await getPoolClient(config, poolType, poolID);
   const tokensAmount = await poolClient.getTotalAssets({ args: [] });
 
   const weights = [];
@@ -224,8 +252,12 @@ export async function getCurrentWeight(config: AlgoParams, poolID: bigint): Prom
   return weights;
 }
 
-export async function getInterpolationBlocksLeft(config: AlgoParams, poolID: bigint): Promise<number> {
-  const poolClient = await getPoolClient(config, poolID);
+export async function getInterpolationBlocksLeft(
+  config: AlgoParams,
+  poolType: PoolTypes,
+  poolID: bigint
+): Promise<number> {
+  const poolClient = await getPoolClient(config, poolType, poolID);
   const timesResponse = await poolClient.send.getTimes({ args: [] });
 
   const times = timesResponse.return!;

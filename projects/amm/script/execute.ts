@@ -2,10 +2,10 @@
 import inquirer from 'inquirer';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import dotenv from 'dotenv';
-import { mintToken, createToken } from '../helpers/token';
+import { createToken, mintToken } from '../helpers/token';
 import { deploy, factorySetup } from '../helpers/factory';
-import { addLiquidity, burnLiquidity, getPool, getLiquidity, initPool, swap } from '../helpers/pool';
-import { getFactoryClient, storeResult, retrieveResult } from '../helpers/generic';
+import { addLiquidity, burnLiquidity, getLiquidity, getPool, initPool, PoolTypes, swap } from '../helpers/pool';
+import { getFactoryClient, retrieveResult, storeResult } from '../helpers/generic';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 
 dotenv.config();
@@ -35,6 +35,7 @@ let currentChoice = 0;
 const algorand = algokit.AlgorandClient.defaultLocalNet();
 const account = algorand.account.fromMnemonic(process.env.ACCOUNT_MNEMONIC!);
 const manager = { algorand, sender: account.addr, signer: account.signer };
+let poolType: PoolTypes = PoolTypes.Vault;
 
 function title(text: string): void {
   console.log(`************* ${text.toUpperCase()} ************* `);
@@ -94,7 +95,18 @@ async function run(command: Commands): Promise<boolean> {
     }
     case 'Deploy & Bootstrap Factory': {
       const appID = await deploy(manager, `Factory_${new Date().toString()}`);
-      const { poolAppId } = await factorySetup(manager, appID);
+
+      const { type } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'type',
+          message: 'Which type of pool do you want?',
+          choices: ['Vault', 'WAP'],
+        },
+      ]);
+      poolType = type === 'WAP' ? PoolTypes.Dex : PoolTypes.Vault;
+
+      const { poolAppId } = await factorySetup(manager, poolType, appID);
 
       await storeResult('../script/bootstrap', {
         FACTORY_ID: appID,
@@ -118,7 +130,8 @@ async function run(command: Commands): Promise<boolean> {
         console.log(`Pool ${existingPool} already exists! => (${TOKENS}) (${weights})`);
         break;
       }
-      const lpTokenID = await initPool(factoryClient, manager, POOL_ID, TOKENS, weights);
+
+      const lpTokenID = await initPool(factoryClient, manager, poolType, POOL_ID, TOKENS, weights);
       await storeResult('../script/bootstrap', { LP_TOKEN_ID: lpTokenID });
       break;
     case 'Add Liquidity':
@@ -149,7 +162,7 @@ async function run(command: Commands): Promise<boolean> {
         ]);
 
         const tokenId = BigInt(parseInt(token, 10));
-        await addLiquidity(manager, POOL_ID, amount, [tokenId]);
+        await addLiquidity(manager, poolType, POOL_ID, amount, [tokenId]);
         console.log(`${amount} unit of token ${tokenId} provided`);
       } else {
         const { amount } = await inquirer.prompt([
@@ -162,12 +175,12 @@ async function run(command: Commands): Promise<boolean> {
         ]);
         const poolID = (await getPool(factoryClient, TOKENS, [1 / 2, 1 / 2]))!;
 
-        await addLiquidity(manager, poolID, amount, TOKENS);
+        await addLiquidity(manager, poolType, poolID, amount, TOKENS);
       }
       break;
     case 'Compute Liquidity':
       factoryClient = await getFactoryClient(manager, FACTORY_ID);
-      const LP = await getLiquidity(manager, POOL_ID);
+      const LP = await getLiquidity(manager, poolType, POOL_ID);
       console.log(`LP calculations done => ${LP} LP received`);
       break;
     case 'Burn Liquidity':
@@ -180,7 +193,7 @@ async function run(command: Commands): Promise<boolean> {
         },
       ]);
       factoryClient = await getFactoryClient(manager, FACTORY_ID);
-      await burnLiquidity(manager, POOL_ID, LP_TOKEN_ID, amountLP);
+      await burnLiquidity(manager, poolType, POOL_ID, LP_TOKEN_ID, amountLP);
 
       console.log(`LP burned`);
       break;
@@ -210,7 +223,7 @@ async function run(command: Commands): Promise<boolean> {
       const tokenInIndex = TOKENS.findIndex((el) => el.toString() === tokenIn);
       const tokenOutIndex = TOKENS.findIndex((el) => el.toString() === tokenOut);
 
-      await swap(manager, POOL_ID, TOKENS, tokenInIndex, tokenOutIndex, amountIn);
+      await swap(manager, poolType, POOL_ID, TOKENS, tokenInIndex, tokenOutIndex, amountIn);
       break;
     case 'Quit':
       return true;

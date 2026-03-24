@@ -4,7 +4,6 @@
   "methods": [
     {
       "name": "createApplication",
-      "desc": "Initializes global state variables when the application is first created.\n\n\nThis method is automatically invoked during the application's creation call ( with bare create).\nIt sets the initial manager to the app creator.\n\n\nThis function should only be called once at contract deployment.",
       "args": [],
       "returns": {
         "type": "void"
@@ -12,41 +11,94 @@
     },
     {
       "name": "bootstrap",
-      "desc": "Bootstrap the pool by assigning assets and weights, create the LP tokens.",
+      "desc": "Initialise the pool, create the LP token, and open the first bidding window.\n\n\nThe auction window opens immediately after bootstrap: arbitrageurs can start\nbidding straight away. The first epoch begins only once settleAuction() is\ncalled after the bidding window closes.",
       "args": [
         {
           "name": "assetIds",
           "type": "uint64[]",
-          "desc": "assets of the pool"
+          "desc": "Ordered list of ASA IDs to include in the pool."
         },
         {
           "name": "weights",
           "type": "uint64[]",
-          "desc": "weights of the pool\n uint64 - LP Token created ID"
+          "desc": "Normalised weights for each asset (must sum to SCALE)."
+        },
+        {
+          "name": "epochDuration",
+          "type": "uint64",
+          "desc": "Length of each arbitrageur epoch in blocks."
+        },
+        {
+          "name": "auctionDuration",
+          "type": "uint64",
+          "desc": "Length of each bidding window in blocks ( epochDuration)."
         }
       ],
       "returns": {
-        "type": "uint64"
+        "type": "uint64",
+        "desc": "The ASA ID of the newly created LP token."
+      }
+    },
+    {
+      "name": "bid",
+      "desc": "Submit a bid to become the next epoch's arbitrageur.\n\n\nThe caller attaches an ALGO payment equal to their bid. If the bid exceeds\nthe current highest, the previous highest bidder is refunded immediately\nand the new bid is escrowed in the contract. The bidding window must be open.\n\n\nRational bidders will bid up to their expected epoch profit:\n  E[profit] = E[arbitrage surplus] + E[fee revenue] - bid\nThe winning bid is therefore a market estimate of the arbitrage value that\nwould otherwise leak as uncontrolled MEV.",
+      "args": [
+        {
+          "name": "payment",
+          "type": "pay",
+          "desc": "ALGO payment carrying the bid (receiver must be app address)."
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "settleAuction",
+      "desc": "Settle the auction after the bidding window closes and start the new epoch.\n\n\nCan be called by anyone once globals.round  auctionEnd. The open-call\ndesign avoids a keeper role: any participant (including the winning bidder)\ncan trigger settlement.\n\n\nSteps:\n  1. Install the highest bidder as the active arbitrageur for the new epoch.\n  2. Add the winning bid to rewardPool, claimable by LP holders proportionally\n     via claimAuctionReward().\n  3. Start the new epoch (epochEnd) and immediately open the next bidding\n     window so arbitrageurs can start competing for the following epoch.\n\n\nIf no bid was received the pool runs without a designated arbitrageur:\nDEFAULT_FEE_RATE applies and all traders interact freely.",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "claimAuctionReward",
+      "desc": "Claim a proportional share of the accumulated ALGO reward pool.\n\n\nLP holders prove their entitlement by transferring LP tokens to the contract.\nThe tokens are returned immediately — this is a balance-proof pattern, not a\nburn. The claimable ALGO is:\n\n\n  claimable = rewardPool * (lpAmount / totalLP)\n\n\nThis is a cumulative claim: waiting several epochs before claiming collects\nthe proportional share of all accumulated rewards. Per-epoch snapshots would\nrequire storing LP balances at every epoch boundary, which is not feasible\non the AVM without external indexing, and are left as future work.",
+      "args": [
+        {
+          "name": "lpTransfer",
+          "type": "axfer",
+          "desc": "LP token transfer to the app address (balance proof)."
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "setFeeRate",
+      "desc": "Set the fee rate for ordinary trader swaps during the current epoch.\nOnly the active arbitrageur may call this, and only while their epoch is live.\nCapped at MAX_FEE_RATE to prevent the arbitrageur from eliminating organic flow.",
+      "args": [
+        {
+          "name": "rate",
+          "type": "uint64",
+          "desc": "New fee rate scaled by SCALE (e.g. 3_000 = 0.3%)."
+        }
+      ],
+      "returns": {
+        "type": "void"
       }
     },
     {
       "name": "addLiquidity",
-      "desc": "Provide one token liquidity to the pool",
       "args": [
         {
           "name": "index",
-          "type": "uint64",
-          "desc": "index of the token in the pool"
+          "type": "uint64"
         },
         {
-          "name": "amount",
-          "type": "uint64",
-          "desc": "amount of token sent"
-        },
-        {
-          "name": "sender",
-          "type": "address",
-          "desc": "the sender"
+          "name": "txn",
+          "type": "axfer"
         }
       ],
       "returns": {
@@ -55,32 +107,17 @@
     },
     {
       "name": "getLiquidity",
-      "desc": "Mints LP tokens to the given sender based on the liquidity they provided.\n\n\nIf this is the first liquidity provision (i.e., total LP supply is 0),\na fixed initial amount is minted to the sender. Otherwise, the amount\nis calculated proportionally using .\n\n\nAfter minting, the sender's \"provided\" state is reset.",
-      "args": [
-        {
-          "name": "sender",
-          "type": "address",
-          "desc": "The address receiving the LP tokens"
-        }
-      ],
+      "args": [],
       "returns": {
-        "type": "uint64",
-        "desc": "The amount of LP tokens minted"
+        "type": "uint64"
       }
     },
     {
       "name": "burnLiquidity",
-      "desc": "Burns a given amount of LP tokens from the sender and returns\ntheir proportional share of each asset in the pool.\n\n\nThe withdrawn amount for each asset is calculated based on the\nratio of  to the total LP supply.",
       "args": [
         {
-          "name": "sender",
-          "type": "address",
-          "desc": "The address burning LP tokens"
-        },
-        {
-          "name": "amountLP",
-          "type": "uint64",
-          "desc": "The amount of LP tokens to burn"
+          "name": "transferTxn",
+          "type": "axfer"
         }
       ],
       "returns": {
@@ -89,32 +126,64 @@
     },
     {
       "name": "swap",
-      "desc": "Executes a weighted swap between two tokens in the pool based on the constant mean formula.\n\n\nThe input token () is sent into the pool, and the output token () is sent back\nto the sender, following the AMM's pricing curve determined by current balances and weights.\n\n\nThis function performs the following steps:\n- Retrieves the current weights and balances for the two assets.\n- Calculates the output amount using the invariant pricing function ().\n- Updates the pool's internal balances accordingly.\n- Transfers the output asset to the sender.",
+      "desc": "Execute a token swap against the pool.\n\n\nFee logic:\n  - The active arbitrageur trades fee-free (effectiveFee = 0), allowing\n    profitable correction of price discrepancies with external markets.\n  - All other callers pay feeRate (set by the arbitrageur; DEFAULT_FEE_RATE\n    when no arbitrageur is active).\n\n\nFee revenue stays inside the pool: the full amountIn enters the balance,\ngrowing the invariant V. The arbitrageur captures this growth indirectly\nby holding LP tokens or by withdrawing via burnLiquidity at epoch end.",
       "args": [
-        {
-          "name": "sender",
-          "type": "address",
-          "desc": "The address initiating the swap."
-        },
         {
           "name": "from",
           "type": "uint64",
-          "desc": "Index of the input asset in the pool."
+          "desc": "Index of the input asset."
         },
         {
           "name": "to",
           "type": "uint64",
-          "desc": "Index of the output asset in the pool."
+          "desc": "Index of the output asset."
         },
         {
-          "name": "amount",
+          "name": "minAmountOut",
           "type": "uint64",
-          "desc": "Amount of input asset to swap."
+          "desc": "Slippage guard: reverts if computed output  this value."
+        },
+        {
+          "name": "transferTxn",
+          "type": "axfer",
+          "desc": "Asset transfer carrying the input amount."
         }
       ],
       "returns": {
         "type": "uint64",
-        "desc": "The amount of output asset received."
+        "desc": "The output amount transferred to the caller."
+      }
+    },
+    {
+      "name": "changeWeights",
+      "args": [
+        {
+          "name": "duration",
+          "type": "uint64"
+        },
+        {
+          "name": "newWeights",
+          "type": "uint64[]"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "addAsset",
+      "args": [
+        {
+          "name": "asset",
+          "type": "uint64"
+        },
+        {
+          "name": "w",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
       }
     },
     {
@@ -129,6 +198,19 @@
       "name": "getToken",
       "readonly": true,
       "args": [],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "getWeight",
+      "readonly": true,
+      "args": [
+        {
+          "name": "index",
+          "type": "uint64"
+        }
+      ],
       "returns": {
         "type": "uint64"
       }
@@ -165,6 +247,43 @@
       ],
       "returns": {
         "type": "uint64"
+      }
+    },
+    {
+      "name": "getCurrentWeight",
+      "readonly": true,
+      "args": [
+        {
+          "name": "index",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "getTimes",
+      "readonly": true,
+      "args": [],
+      "returns": {
+        "type": "uint64[]"
+      }
+    },
+    {
+      "name": "getAuctionState",
+      "desc": "Returns current auction and epoch state.\n[auctionEnd, epochEnd, highestBid, feeRate, rewardPool, currentRound]",
+      "readonly": true,
+      "args": [],
+      "returns": {
+        "type": "uint64[]"
+      }
+    },
+    {
+      "name": "opUp",
+      "args": [],
+      "returns": {
+        "type": "void"
       }
     }
   ]

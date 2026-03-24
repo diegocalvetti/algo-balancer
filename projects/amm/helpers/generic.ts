@@ -11,6 +11,8 @@ import path from 'node:path';
 import { AssetVaultClient } from '../contracts/clients/AssetVaultClient';
 import { FactoryClient } from '../contracts/clients/FactoryClient';
 import { BootstrapResult } from '../script/execute';
+import { PoolTypes } from './pool';
+import { DexPoolClient } from '../contracts/clients/DexPoolClient';
 
 export type AssetInfo = {
   appID: bigint;
@@ -92,10 +94,14 @@ export async function getFactoryClient(params: AlgoParams, id: number | bigint):
   });
 }
 
-export async function getPoolClient(params: AlgoParams, id: bigint): Promise<AssetVaultClient> {
+export async function getPoolClient(
+  params: AlgoParams,
+  poolType: PoolTypes,
+  id: bigint
+): Promise<AssetVaultClient | DexPoolClient> {
   const { algorand, sender, signer } = params;
 
-  return algorand.client.getTypedAppClientById(AssetVaultClient, {
+  return algorand.client.getTypedAppClientById(poolType === PoolTypes.Vault ? AssetVaultClient : DexPoolClient, {
     appId: BigInt(id),
     defaultSender: sender,
     defaultSigner: signer,

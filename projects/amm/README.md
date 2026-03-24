@@ -1,96 +1,97 @@
 # 🧮 Balancer-style AMM on Algorand
 
-## 🛠️ Installation
+An experimental AMM protocol built with [AlgoKit](https://github.com/algorandfoundation/algokit-cli),
+inspired by Balancer's weighted pool model and extended with a novel
+**auction-based arbitrage mechanism**. See the [Main README](./../README.md) for a
+full overview of the protocol design.
 
+---
+
+## 🛠️ Prerequisites
+
+- [Node.js 22+](https://nodejs.org/)
+- [AlgoKit CLI](https://github.com/algorandfoundation/algokit-cli) — installation [official guide](https://developer.algorand.org/docs/get-started/algokit/)
+
+---
+
+## ⚙️ Setup
 ```bash
-# Prerequisites:
-# - Node.js 22+
-# - AlgoKit CLI
-
 # Install dependencies
 npm i
-```
-## ⚙️ Compile & Setup
 
-```bash
-# Compile all the contracts
+# Compile all contracts
 npm run build
-```
 
-```bash
-# Clone the example env
+# Copy the example environment file
 cp .env.example .env
 ```
 
+---
 
-**Balancer** is a lightweight Automated Market Maker (AMM) smart contract built on Algorand, designed for local testing and experimentation.
+## 🌐 Start the local network
+
+This project runs against **Algorand LocalNet** — a local single-node Algorand network managed by AlgoKit.
+```bash
+# Start LocalNet (first time may take some minutes to pull Docker images)
+algokit localnet start
+
+# Check status
+algokit localnet status
+
+# Stop when done
+algokit localnet stop
+```
+
+> LocalNet requires Docker to be running. Make sure Docker Desktop is open before starting.
 
 ---
 
 ## 🚀 Run
 
-You can try the Balancer in two different ways:
+### 1. Interactive shell (manual exploration)
 
----
+Ideal for exploring and interacting with the contracts manually.
 
-### 1. Manual mode with a LocalNet account
-
-> Ideal to explore and interact with the contract manually.
-
-#### 🔧 Requirements
-- Algorand LocalNet running
-- A funded account on LocalNet
-- A `.env` file containing your private key:
-
+Add your LocalNet account mnemonic to `.env`:
 ```env
-# .env
-SECRET_KEY="your_mnemonic_or_private_key"
+SECRET_KEY="word1 word2 word3 ..."
 ```
 
-#### 🧑‍💻 Launch interactive shell
-
+Then launch the interactive shell:
 ```bash
 npm run execute
 ```
 
-This opens a custom interactive shell where you can call contract functions and observe the AMM logic in action.
+This opens a custom CLI where you can deploy pools, provide liquidity, execute swaps, and observe the AMM logic in action step by step.
 
 ---
 
-### 🧪 2. Automated test execution with Jest
+### 2. Automated tests with Jest
 
-> Ideal to verify that everything works with minimal setup.
+> ⚠️ The automated test suite is currently broken while the auction mechanism (AWP) is being finalised. It will be restored in a future release.
 
-#### ▶️ Run the tests
-
+Ideal to verify that everything works with minimal setup — no `.env` or manual configuration required.
 ```bash
 npm run test
 ```
 
 During test execution:
+- Test accounts are automatically created and funded
+- The Factory contract is deployed on LocalNet
+- All core pool logic is verified through real on-chain transactions
 
-- Test accounts are automatically created
-- The contract is deployed on LocalNet
-- Core logic is verified without requiring a `.env` file or manual setup
+> **Important:** tests must run in order. The first test deploys the Factory contract, which all subsequent tests depend on. Skipping or isolating individual tests without a deployed Factory will cause failures.
 
+The test suite should be considered **feature tests**, not unit tests:
+- ✅ Real smart contracts deployed on LocalNet, real transactions, real state changes
+- ❌ No mocks or stubs — behavior reflects actual AVM execution
 
-> **Important:** The tests must be executed in the defined order.
-
-- The **first test** is responsible for **deploying the Factory contract**, which is then used by the **following tests** to deploy and interact with various AMM pools.
-- Skipping or isolating tests without the Factory deployment will result in failures or undefined behavior.
-If you're running individual tests, make sure the factory has already been deployed — or run the full suite in sequence.
 ---
-The test suite included in this project should be considered **feature tests**, not unit tests.
-
-- ✅ They **deploy real smart contracts** on a running LocalNet instance, they perform **real transactions** and **state changes**.
-- ❌ They do **not use mocks or stubs** — the behavior tested reflects actual contract execution on Algorand's local environment.
 
 ## 📁 Project Structure
-
-```bash
-/contracts       → Smart contract code (TEALScript)
-/scripts         → Runnable scripts
-/helpers         → Helpers method to interact with the chain
-/__test__        → Jest test suite
 ```
-
+/contracts     → Smart contract source code (TEALScript)
+/helpers       → Chain interaction helpers
+/scripts       → Runnable utility scripts
+/__test__      → Jest feature test suite
+```

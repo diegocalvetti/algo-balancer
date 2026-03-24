@@ -173,9 +173,8 @@ async function run(command: Commands): Promise<boolean> {
             default: 100,
           },
         ]);
-        const poolID = (await getPool(factoryClient, TOKENS, [1 / 2, 1 / 2]))!;
-
-        await addLiquidity(manager, poolType, poolID, amount, TOKENS);
+        // const poolID = (await getPool(factoryClient, TOKENS, [1 / 2, 1 / 2]))!;
+        await addLiquidity(manager, poolType, POOL_ID, amount, TOKENS);
       }
       break;
     case 'Compute Liquidity':

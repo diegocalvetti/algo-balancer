@@ -6,6 +6,14 @@ import { createVaultPool, deployVaultFactory, VaultHarness } from './support/vau
 
 const fixture = algorandFixture();
 
+/**
+ * Pool creation & bootstrap.
+ *
+ * A vault pool is deployed through the Factory, which seeds its assets and
+ * weights and mints the pool's LP token. These tests assert the initial
+ * on-chain state right after bootstrap: the LP token exists, every asset is
+ * registered with its weight, and all balances start at zero (no liquidity yet).
+ */
 describe('AssetVault · bootstrap', () => {
   let harness: VaultHarness;
 
@@ -38,5 +46,10 @@ describe('AssetVault · bootstrap', () => {
 
     expect(await poolClient.getWeight({ args: [0] })).toBe(fixedWeights([0.8])[0]);
     expect(await poolClient.getWeight({ args: [1] })).toBe(fixedWeights([0.2])[0]);
+  });
+
+  test('a weight below MIN_WEIGHT is rejected', async () => {
+    // 0.005 → 5_000 micro, under the 10_000 floor.
+    await expect(createVaultPool(harness, [0.995, 0.005])).rejects.toThrow();
   });
 });

@@ -17,6 +17,16 @@ const SEED_MICRO = BigInt(SEED * 10 ** 6);
 
 const fixture = algorandFixture();
 
+/**
+ * Weighted swaps.
+ *
+ * Output follows the Balancer constant-mean formula
+ *   amountOut = balanceOut · (1 − (balanceIn / (balanceIn + amountIn))^(wIn/wOut))
+ * with a 0.1% fee that stays inside the pool. These tests cover normal pricing
+ * (output positive but below input), rounding of negligible amounts, exact
+ * balance accounting, the conservative behaviour on huge trades (the fixed-point
+ * pow under-delivers rather than ever over-paying), and the minOut slippage guard.
+ */
 describe('AssetVault · swap', () => {
   let harness: VaultHarness;
 

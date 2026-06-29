@@ -18,6 +18,16 @@ const AMOUNT_LP_DEPLOYER = BigInt(1_000_000 * 10 ** 6);
 
 const fixture = algorandFixture();
 
+/**
+ * Liquidity provision & redemption.
+ *
+ * Providers deposit assets in proportion to the pool's current balances (an
+ * invariant-preserving join) and receive LP tokens via the weighted
+ * geometric-mean formula; burning LP redeems the underlying assets pro-rata.
+ * These tests cover proportional minting across providers, rejection of
+ * unbalanced/single-sided deposits, the rule that the first deposit must seed
+ * every asset, and burn draining the pool.
+ */
 describe('AssetVault · liquidity', () => {
   let harness: VaultHarness;
 

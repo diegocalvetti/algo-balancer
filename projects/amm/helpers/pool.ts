@@ -57,7 +57,11 @@ export async function initPool(
   const weightsFixed = fixedWeights(weights);
   const initPoolGroup = factoryClient.newGroup();
 
-  const opUpAmount = tokens.length / 2 + 1;
+  // Cap the opUps so the whole group stays within Algorand's 16-transaction
+  // atomic group limit (14 opUps + the initPool call = 15). 14 opUps give plenty
+  // of top-level opcode budget and enough foreign-resource slots (14 * 8) to
+  // populate even a 100-asset pool; the inner bootstrap tops up its own budget.
+  const opUpAmount = Math.min(Math.floor(tokens.length / 2) + 1, 14);
 
   for (let i = 0; i < opUpAmount; i += 1) {
     initPoolGroup.opUp({

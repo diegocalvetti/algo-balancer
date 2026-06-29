@@ -11,6 +11,7 @@ import {
   getRandomAccount,
   makeAssetTransferTxn,
   optIn,
+  pay,
 } from '../../helpers/generic';
 import { deploy, writePoolProgram } from '../../helpers/factory';
 import { fixedWeights, initPool, PoolTypes } from '../../helpers/pool';
@@ -124,6 +125,61 @@ export async function createVaultPool(
     defaultSigner: manager.signer,
   });
 
+  await optIn(manager, lpId);
+
+  return { poolID, poolClient, tokensInfo, assetIds, weights, lpId };
+}
+
+/**
+ * Stress variant of {@link createVaultPool} for large, equal-weighted pools.
+ *
+ * Mints `n` tokens and bootstraps an n-asset pool with weight 1/n each. Unlike
+ * the normal helper, it funds the pool app directly before bootstrap, because
+ * the Factory's fixed MBR_INIT_POOL (1 ALGO) is nowhere near enough for ~n asset
+ * opt-ins plus ~2n boxes. Slow (n token deploys) — for the stress suite only.
+ *
+ * @param n        - Number of assets (max 100: SCALE / MIN_WEIGHT).
+ * @param fundAlgo - ALGO to fund the pool with for MBR (default scales with n).
+ */
+export async function createLargeVaultPool(
+  harness: VaultHarness,
+  n: number,
+  fundAlgo: number = Math.ceil(n * 0.15) + 2
+): Promise<VaultPool> {
+  const { manager, factoryClient } = harness;
+
+  // Equal weights that sum to exactly SCALE: give the rounding remainder to the
+  // first asset so the contract's `sum ≈ SCALE` check passes for any n.
+  const base = Math.floor(10 ** 6 / n);
+  const remainder = 10 ** 6 - base * n;
+  const weights = Array.from({ length: n }, (_, i) => (i === 0 ? base + remainder : base) / 10 ** 6);
+
+  const tag = `s${Date.now() % 100000}`;
+
+  const minted: AssetInfo[] = [];
+  for (let i = 0; i < n; i += 1) {
+    minted.push(await createAndMintToken(manager, `${tag}_${i}`, `${tag}${i}`, BigInt(10_000_000)));
+  }
+  const tokensInfo = [...minted].sort((a, b) => (a.assetID < b.assetID ? -1 : 1));
+  const assetIds = tokensInfo.map((t) => t.assetID);
+
+  const payTx = await getPayTx(manager, factoryClient.appAddress, 0.1);
+  const createResult = await factoryClient.send.createPool({
+    args: [payTx, PoolTypes.Vault],
+    populateAppCallResources: true,
+  });
+  const poolID = BigInt(createResult.confirmation!.innerTxns![0].applicationIndex!);
+
+  const poolClient = harness.fixture.algorand.client.getTypedAppClientById(AssetVaultClient, {
+    appId: poolID,
+    defaultSender: manager.sender,
+    defaultSigner: manager.signer,
+  });
+
+  // Cover the many-asset MBR up front (Factory's fixed MBR is too small).
+  await pay(manager, poolClient.appAddress, fundAlgo);
+
+  const lpId = await initPool(factoryClient, manager, PoolTypes.Vault, poolID, assetIds, weights);
   await optIn(manager, lpId);
 
   return { poolID, poolClient, tokensInfo, assetIds, weights, lpId };

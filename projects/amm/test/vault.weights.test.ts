@@ -33,6 +33,16 @@ function expectedWeight(w0: bigint, w1: bigint, start: bigint, end: bigint, curr
 
 const fixture = algorandFixture();
 
+/**
+ * Dynamic weights.
+ *
+ * The manager can re-weight the pool either instantly or via a linear
+ * interpolation over a block window (startRound → endRound): getCurrentWeight
+ * reports the live interpolated value, while the stored weights only finalize on
+ * the next state-changing call. These tests cover the instant change, the linear
+ * interpolation (checked against an off-chain mirror), finalization past the end,
+ * the no-concurrent-transition rule, and manager-only access control.
+ */
 describe('AssetVault · weights', () => {
   let harness: VaultHarness;
 

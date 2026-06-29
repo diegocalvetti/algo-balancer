@@ -61,6 +61,13 @@ export class AssetVault extends Contract {
     assert(assetIds.length > 0);
     assert(assetIds.length <= SCALE / MIN_WEIGHT, 'too many tokens');
 
+    // Large pools (up to 100 assets) far exceed the default ~700 opcode budget of
+    // this inner call: each asset costs an opt-in + box writes. Top up the budget
+    // proportionally so bootstrapping a max-size pool stays within budget.
+    for (let b = 0; b < assetIds.length / 4 + 1; b += 1) {
+      increaseOpcodeBudget();
+    }
+
     let sumOfWeights = 0;
 
     for (let i = 0; i < assetIds.length; i += 1) {

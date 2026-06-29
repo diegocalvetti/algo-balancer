@@ -156,7 +156,9 @@ export class Factory extends Contract {
       amount: MBR_INIT_POOL, // @todo globals.assetOptInMinBalance * assetIds.length + globals.assetCreateMinBalance,
     });
     assert(assetIds.length >= 2, 'At least 2 tokens needed');
-    assert(assetIds.length <= 128, 'Maximum of 128 assets per pool');
+    // Hard cap is SCALE / MIN_WEIGHT = 100: every weight must be >= MIN_WEIGHT and
+    // the weights must sum to SCALE, so no more than 100 assets can ever fit.
+    assert(assetIds.length <= 100, 'Maximum of 100 assets per pool');
     assert(assetIds.length === weights.length, 'Weights and Assets length must be the same');
     assert(this.listIsOrdered(assetIds), 'Assets must be ordered by ID');
 

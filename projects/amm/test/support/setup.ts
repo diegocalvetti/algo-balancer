@@ -9,6 +9,14 @@ import { Config } from '@algorandfoundation/algokit-utils';
  */
 const noop = () => undefined;
 
+// Let BigInt survive Jest's worker IPC (which serializes via JSON). Without this,
+// a failing expectation on bigint values crashes the reporter with
+// "Do not know how to serialize a BigInt" instead of showing the diff.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, func-names
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
+
 Config.configure({
   populateAppCallResources: true,
   logger: {

@@ -905,12 +905,12 @@ initPool:
 	// contracts/Factory.algo.ts:172
 	// LPTokenID = sendMethodCall<typeof DexPool.prototype.bootstrap, AssetID>({
 	//         applicationID: poolID,
-	//         methodArgs: [assetIds, weights, 20, 5],
+	//         methodArgs: [assetIds, weights, 20, 5, this.txn.sender],
 	//       })
 	itxn_begin
 	intc 3 //  appl
 	itxn_field TypeEnum
-	pushbytes 0x5be37d20 // method "bootstrap(uint64[],uint64[],uint64,uint64)uint64"
+	pushbytes 0x9fc85964 // method "bootstrap(uint64[],uint64[],uint64,uint64,address)uint64"
 	itxn_field ApplicationArgs
 
 	// contracts/Factory.algo.ts:173
@@ -919,7 +919,7 @@ initPool:
 	itxn_field ApplicationID
 
 	// contracts/Factory.algo.ts:174
-	// methodArgs: [assetIds, weights, 20, 5]
+	// methodArgs: [assetIds, weights, 20, 5, this.txn.sender]
 	frame_dig -3 // assetIds: AssetID[]
 	dup
 	len
@@ -943,6 +943,8 @@ initPool:
 	pushbytes 0x0000000000000014
 	itxn_field ApplicationArgs
 	pushbytes 0x0000000000000005
+	itxn_field ApplicationArgs
+	txn Sender
 	itxn_field ApplicationArgs
 
 	// Fee field not set, defaulting to 0
@@ -972,12 +974,12 @@ initPool:
 	// contracts/Factory.algo.ts:177
 	// LPTokenID = sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
 	//         applicationID: poolID,
-	//         methodArgs: [assetIds, weights],
+	//         methodArgs: [assetIds, weights, this.txn.sender],
 	//       })
 	itxn_begin
 	intc 3 //  appl
 	itxn_field TypeEnum
-	pushbytes 0xe635fdb5 // method "bootstrap(uint64[],uint64[])uint64"
+	pushbytes 0x3ba86fd1 // method "bootstrap(uint64[],uint64[],address)uint64"
 	itxn_field ApplicationArgs
 
 	// contracts/Factory.algo.ts:178
@@ -986,7 +988,7 @@ initPool:
 	itxn_field ApplicationID
 
 	// contracts/Factory.algo.ts:179
-	// methodArgs: [assetIds, weights]
+	// methodArgs: [assetIds, weights, this.txn.sender]
 	frame_dig -3 // assetIds: AssetID[]
 	dup
 	len
@@ -1006,6 +1008,8 @@ initPool:
 	extract 6 2
 	swap
 	concat
+	itxn_field ApplicationArgs
+	txn Sender
 	itxn_field ApplicationArgs
 
 	// Fee field not set, defaulting to 0

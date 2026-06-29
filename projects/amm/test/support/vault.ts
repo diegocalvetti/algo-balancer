@@ -13,7 +13,7 @@ import {
   optIn,
 } from '../../helpers/generic';
 import { deploy, writePoolProgram } from '../../helpers/factory';
-import { initPool, PoolTypes } from '../../helpers/pool';
+import { fixedWeights, initPool, PoolTypes } from '../../helpers/pool';
 import { createAndMintToken, mintToken } from '../../helpers/token';
 
 /**
@@ -243,4 +243,63 @@ export async function burn(account: AlgoParams, pool: VaultPool, lpMicro: bigint
   group.burnLiquidity({ ...commonAppCallTxParams(account, (500_000).microAlgo()), args: [xfer] });
 
   await group.send(commonAppCallTxParams(account));
+}
+
+// ─── Weight helpers ─────────────────────────────────────────────────────────
+
+/**
+ * Schedule a weight change. `duration === 0` applies it instantly; otherwise the
+ * weights interpolate linearly over `duration` blocks.
+ */
+export async function changeWeights(
+  account: AlgoParams,
+  pool: VaultPool,
+  newWeights: number[],
+  duration: number
+): Promise<void> {
+  const client = vaultClientFor(account, pool);
+  await client.send.changeWeights({
+    ...commonAppCallTxParams(account),
+    args: [duration, fixedWeights(newWeights)],
+    suppressLog: true,
+  });
+}
+
+/** Interpolated (live) weights as reported by getCurrentWeight, in pool order. */
+export async function currentWeights(pool: VaultPool): Promise<bigint[]> {
+  const numAssets = Number(await pool.poolClient.getTotalAssets());
+  const out: bigint[] = [];
+  for (let i = 0; i < numAssets; i += 1) {
+    out.push(await pool.poolClient.getCurrentWeight({ args: [i] }));
+  }
+  return out;
+}
+
+/** Stored (committed) weights as reported by getWeight, in pool order. */
+export async function storedWeights(pool: VaultPool): Promise<bigint[]> {
+  const numAssets = Number(await pool.poolClient.getTotalAssets());
+  const out: bigint[] = [];
+  for (let i = 0; i < numAssets; i += 1) {
+    out.push(await pool.poolClient.getWeight({ args: [i] }));
+  }
+  return out;
+}
+
+/** Current weight-transition window: [startRound, endRound, currentRound]. */
+export async function poolTimes(pool: VaultPool): Promise<{ start: bigint; end: bigint; current: bigint }> {
+  const t = await pool.poolClient.getTimes();
+  return { start: t[0], end: t[1], current: t[2] };
+}
+
+/** Advance the chain by `n` rounds (one no-op transaction per round on LocalNet). */
+export async function advanceRounds(account: AlgoParams, pool: VaultPool, n: number): Promise<void> {
+  const client = vaultClientFor(account, pool);
+  for (let i = 0; i < n; i += 1) {
+    await client.send.opUp({
+      ...commonAppCallTxParams(account),
+      args: [],
+      note: new Uint8Array([i]),
+      suppressLog: true,
+    });
+  }
 }

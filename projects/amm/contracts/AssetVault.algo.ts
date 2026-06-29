@@ -44,11 +44,18 @@ export class AssetVault extends Contract {
 
   /**
    * Bootstrap the pool by assigning assets and weights, create the LP tokens.
+   *
+   * Called by the Factory as an inner transaction, so at entry the manager is
+   * still the Factory (the app creator). The `admin` — the human who requested
+   * the pool via the Factory — is handed over control here, becoming the pool
+   * manager that can later call manager-only methods such as changeWeights.
+   *
    * @param {AssetID[]} assetIds - assets of the pool
    * @param {uint64[]} weights - weights of the pool
+   * @param {Address} admin - account that becomes the pool manager
    * @return uint64 - LP Token created ID
    */
-  bootstrap(assetIds: AssetID[], weights: uint64[]): AssetID {
+  bootstrap(assetIds: AssetID[], weights: uint64[], admin: Address): AssetID {
     this.assertIsManager();
 
     assert(assetIds.length > 0);
@@ -70,6 +77,10 @@ export class AssetVault extends Contract {
     this.assets.value = assetIds;
 
     this.createToken();
+
+    // Hand control from the Factory to the human admin.
+    this.manager.value = admin;
+
     return this.token.value;
   }
 
@@ -248,8 +259,18 @@ export class AssetVault extends Contract {
    * @param {uint64} duration - Duration of the interpolation (in blocks). If 0, the weights are updated instantly.
    */
   changeWeights(duration: uint64, newWeights: uint64[]): uint64 {
+    this.assertIsManager();
     this.assertIsBootstrapped();
     this.assertNoWeightTransition();
+
+    assert(newWeights.length === this.assets.value.length, 'weights length must match assets');
+
+    let sumOfWeights: uint64 = 0;
+    for (let i = 0; i < newWeights.length; i += 1) {
+      assert(newWeights[i] >= MIN_WEIGHT, 'weight too small');
+      sumOfWeights += newWeights[i];
+    }
+    assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'weights must sum to 1');
 
     if (duration === 0) {
       this.startRound.value = 0;

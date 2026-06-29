@@ -12,7 +12,7 @@
     },
     {
       "name": "bootstrap",
-      "desc": "Bootstrap the pool by assigning assets and weights, create the LP tokens.",
+      "desc": "Bootstrap the pool by assigning assets and weights, create the LP tokens.\n\n\nCalled by the Factory as an inner transaction, so at entry the manager is\nstill the Factory (the app creator). The  — the human who requested\nthe pool via the Factory — is handed over control here, becoming the pool\nmanager that can later call manager-only methods such as changeWeights.",
       "args": [
         {
           "name": "assetIds",
@@ -22,7 +22,12 @@
         {
           "name": "weights",
           "type": "uint64[]",
-          "desc": "weights of the pool\n uint64 - LP Token created ID"
+          "desc": "weights of the pool"
+        },
+        {
+          "name": "admin",
+          "type": "address",
+          "desc": "account that becomes the pool manager\n uint64 - LP Token created ID"
         }
       ],
       "returns": {

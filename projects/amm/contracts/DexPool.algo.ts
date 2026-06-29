@@ -127,13 +127,25 @@ export class DexPool extends Contract {
    * bidding straight away. The first epoch begins only once settleAuction() is
    * called after the bidding window closes.
    *
+   * Called by the Factory as an inner transaction, so at entry the manager is
+   * still the Factory (the app creator). The `admin` — the human who requested
+   * the pool via the Factory — is handed control here, becoming the pool manager
+   * that can later call manager-only methods such as changeWeights.
+   *
    * @param assetIds        - Ordered list of ASA IDs to include in the pool.
    * @param weights         - Normalised weights for each asset (must sum to SCALE).
    * @param epochDuration   - Length of each arbitrageur epoch in blocks.
    * @param auctionDuration - Length of each bidding window in blocks (< epochDuration).
+   * @param admin           - Account that becomes the pool manager.
    * @returns The ASA ID of the newly created LP token.
    */
-  bootstrap(assetIds: AssetID[], weights: uint64[], epochDuration: uint64, auctionDuration: uint64): AssetID {
+  bootstrap(
+    assetIds: AssetID[],
+    weights: uint64[],
+    epochDuration: uint64,
+    auctionDuration: uint64,
+    admin: Address
+  ): AssetID {
     this.assertIsManager();
 
     assert(assetIds.length > 0, 'pool must have at least one asset');
@@ -160,6 +172,9 @@ export class DexPool extends Contract {
 
     this.createToken();
     this.openAuction();
+
+    // Hand control from the Factory to the human admin.
+    this.manager.value = admin;
 
     return this.token.value;
   }
@@ -443,8 +458,18 @@ export class DexPool extends Contract {
   }
 
   changeWeights(duration: uint64, newWeights: uint64[]): uint64 {
+    this.assertIsManager();
     this.assertIsBootstrapped();
     this.assertNoWeightTransition();
+
+    assert(newWeights.length === this.assets.value.length, 'weights length must match assets');
+
+    let sumOfWeights: uint64 = 0;
+    for (let i = 0; i < newWeights.length; i += 1) {
+      assert(newWeights[i] >= MIN_WEIGHT, 'weight too small');
+      sumOfWeights += newWeights[i];
+    }
+    assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'weights must sum to 1');
 
     if (duration === 0) {
       this.startRound.value = 0;

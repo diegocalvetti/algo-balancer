@@ -171,12 +171,12 @@ export class Factory extends Contract {
     if (type === DEX_POOL_TYPE) {
       LPTokenID = sendMethodCall<typeof DexPool.prototype.bootstrap, AssetID>({
         applicationID: poolID,
-        methodArgs: [assetIds, weights, 20, 5],
+        methodArgs: [assetIds, weights, 20, 5, this.txn.sender],
       });
     } else if (type === VAULT_POOL_TYPE) {
       LPTokenID = sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
         applicationID: poolID,
-        methodArgs: [assetIds, weights],
+        methodArgs: [assetIds, weights, this.txn.sender],
       });
     }
 

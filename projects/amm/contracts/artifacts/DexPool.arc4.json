@@ -11,7 +11,7 @@
     },
     {
       "name": "bootstrap",
-      "desc": "Initialise the pool, create the LP token, and open the first bidding window.\n\n\nThe auction window opens immediately after bootstrap: arbitrageurs can start\nbidding straight away. The first epoch begins only once settleAuction() is\ncalled after the bidding window closes.",
+      "desc": "Initialise the pool, create the LP token, and open the first bidding window.\n\n\nThe auction window opens immediately after bootstrap: arbitrageurs can start\nbidding straight away. The first epoch begins only once settleAuction() is\ncalled after the bidding window closes.\n\n\nCalled by the Factory as an inner transaction, so at entry the manager is\nstill the Factory (the app creator). The  — the human who requested\nthe pool via the Factory — is handed control here, becoming the pool manager\nthat can later call manager-only methods such as changeWeights.",
       "args": [
         {
           "name": "assetIds",
@@ -32,6 +32,11 @@
           "name": "auctionDuration",
           "type": "uint64",
           "desc": "Length of each bidding window in blocks ( epochDuration)."
+        },
+        {
+          "name": "admin",
+          "type": "address",
+          "desc": "Account that becomes the pool manager."
         }
       ],
       "returns": {

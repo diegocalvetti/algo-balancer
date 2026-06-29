@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "kappa": {
+      "type": "http",
+      "url": "https://algorand-docs.mcp.kapa.ai/"
+    },
+    "vibekit-mcp": {
+      "command": "/Users/diegocalvetti/.local/bin/vibekit",
+      "args": [
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}

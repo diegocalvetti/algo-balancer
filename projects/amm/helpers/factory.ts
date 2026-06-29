@@ -1,12 +1,11 @@
 /* eslint-disable import/no-unresolved, no-console, import/no-cycle */
 import { OnSchemaBreak, OnUpdate } from '@algorandfoundation/algokit-utils/types/app';
-import algosdk from 'algosdk';
 
 import { TransactionResponse } from 'algosdk/dist/types/client/v2/indexer';
 import { FactoryClient, FactoryFactory } from '../contracts/clients/FactoryClient';
 import { AlgoParams, getPayTx, getTxInfo } from './generic';
 import { AssetVaultFactory } from '../contracts/clients/AssetVaultClient';
-import { getPoolTypeName, PoolTypes } from './pool';
+import { PoolTypes } from './pool';
 import { DexPoolFactory } from '../contracts/clients/DexPoolClient';
 
 export async function deploy(manager: AlgoParams, name: string): Promise<bigint> {
@@ -44,9 +43,6 @@ export async function deploy(manager: AlgoParams, name: string): Promise<bigint>
     populateAppCallResources: true,
   });
 
-  console.log('\n\n✅ Factory APP_ID IS: ', appDeployer.appId);
-  console.log('✅ Factory APP_ADDRESS IS: ', algosdk.encodeAddress(appDeployer.appAddress.publicKey));
-
   return appDeployer.appId;
 }
 
@@ -75,9 +71,7 @@ export async function writePoolProgram(factoryClient: FactoryClient, type: PoolT
     });
   }
 
-  const resultTxn = await writeGroup.send({ populateAppCallResources: true });
-  console.log(`Pool program written, size: ${program.length}`);
-  console.log('TXs IDs: ', resultTxn.txIds);
+  await writeGroup.send({ populateAppCallResources: true });
 }
 
 export async function factorySetup(manager: AlgoParams, poolType: PoolTypes, APP_ID: bigint) {
@@ -122,9 +116,6 @@ export async function factorySetup(manager: AlgoParams, poolType: PoolTypes, APP
     args: [payment, poolType],
   });
   const result = await poolGroup.send({ populateAppCallResources: true, maxRoundsToWaitForConfirmation: 4 });
-
-  console.log(`${getPoolTypeName(poolType)} created!`);
-  console.log('TXs IDs', result.txIds);
 
   const lookup = await getTxInfo(result.txIds[1]);
 

@@ -110,12 +110,10 @@ export async function addLiquidity(
   for (let index = 0; index < tokens.length; index += 1) {
     const token = tokens[index];
     await optIn(config, token);
-    console.log('TOKEN => ', token);
     const poolClient = await getPoolClient(config, poolType, poolID);
 
     const assetTransferTxn = await makeAssetTransferTxn(config, token, poolClient.appAddress, amount);
 
-    console.log('INDEX => ', index);
     await poolClient.send.addLiquidity({
       ...commonAppCallTxParams(config, (500_000).microAlgo()),
       args: [index, assetTransferTxn],
@@ -186,8 +184,6 @@ export async function swap(
   const slippagePct = 0.5; // 0.5%
   const factor = Math.floor((1 - slippagePct / 100) * 10000); // 9950
   const minOut = (estimate * BigInt(factor)) / BigInt(10000);
-
-  console.log(`Min amount of token ${to} expected is: ${minOut}`);
 
   const result = await poolClient.send.swap({
     ...commonAppCallTxParams(config),

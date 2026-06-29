@@ -86,7 +86,6 @@ export class AssetVault extends Contract {
     const amount = txn.assetAmount;
 
     const assetId = this.assets.value[index];
-    log('Asset ID => ' + itob(assetId));
 
     this.optIn(assetId);
     this.balances(assetId).value += amount;
@@ -117,7 +116,12 @@ export class AssetVault extends Contract {
     let amount: uint64 = 0;
 
     if (this.totalLP() === 0) {
-      // First deployer
+      // First deposit defines the initial pool. Require every asset to be seeded
+      // with a positive balance, otherwise the pool would start with a zero
+      // balance — bricking swaps and blocking all future proportional joins.
+      for (let i = 0; i < this.assets.value.length; i += 1) {
+        assert(this.balances(this.assets.value[i]).value > 0, 'first deposit must seed every asset');
+      }
       amount = AMOUNT_LP_DEPLOYER;
     } else {
       amount = this.computeNAssetsLiquidity(sender);
@@ -154,7 +158,12 @@ export class AssetVault extends Contract {
 
     assert(amountLP > 0, 'Must burn positive amount');
 
-    const totalLP = this.totalLP();
+    // Circulating supply BEFORE this burn. The LP being burned has already been
+    // transferred into the app — which is the token reserve — by the grouped
+    // asset transfer, so totalLP() already excludes it. Add it back to recover
+    // the correct redemption denominator (otherwise full burns divide by zero
+    // and partial burns over-redeem).
+    const totalLP = this.totalLP() + amountLP;
     const numAssets = this.assets.value.length;
 
     for (let i = 0; i < numAssets; i += 1) {
@@ -171,8 +180,6 @@ export class AssetVault extends Contract {
         xferAsset: assetId,
       });
     }
-
-    this.burned.value += amountLP;
   }
 
   /**
@@ -511,13 +518,6 @@ export class AssetVault extends Contract {
     // output = balanceOut * (1 - ratio^power)
     const ratioPow = this.pow(ratio, power);
 
-    log(itob(balanceIn));
-    log(itob(amountInWithFee));
-    log(itob(ratio));
-    log(itob(power));
-    log(itob(ratioPow));
-    log(itob(wideRatio([balanceOut, SCALE - ratioPow], [SCALE])));
-
     return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
   }
 
@@ -545,6 +545,7 @@ export class AssetVault extends Contract {
     assert(totalAssets >= 1, 'Please provide at least one asset');
 
     let ratio = SCALE;
+    let referenceRatio: uint64 = 0;
 
     for (let i = 0; i < totalAssets - 1; i += 1) {
       increaseOpcodeBudget();
@@ -558,7 +559,23 @@ export class AssetVault extends Contract {
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
+      // provided_i / balance_before_i — the fraction by which this asset's
+      // balance is growing.
       const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount]);
+
+      // Every asset must grow by the same fraction (invariant-preserving join).
+      // Otherwise the geometric-mean LP formula is not valid and the deposit
+      // would be mispriced — reject instead of silently minting wrong/zero LP.
+      // This also rules out single-sided deposits. Tolerance: 0.5% for rounding.
+      if (i === 0) {
+        referenceRatio = assetRatio;
+      } else {
+        assert(
+          this.absDiff(assetRatio, referenceRatio) <= referenceRatio / 200,
+          'deposit must be proportional to pool balances'
+        );
+      }
+
       const powed = this.pow(assetRatio, weight);
       ratio = wideRatio([ratio, powed], [SCALE]);
 

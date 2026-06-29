@@ -40,8 +40,6 @@ async function deploy(config: AlgoParams, name: string): Promise<bigint> {
     populateAppCallResources: true,
   });
 
-  console.log('\n\n✅ Token APP_ID IS: ', appDeployer.appId);
-
   return appDeployer.appId;
 }
 
@@ -110,8 +108,6 @@ export async function createAndMintToken(
 ): Promise<AssetInfo> {
   const token = await createToken(config, name, unit);
   const assetInfo = await mintToken(config, token, amount);
-  console.log(`[${name}] created => ${token.assetID}`);
-  console.log(`[${name}] minted => ${amount} to ${config.sender}`);
 
   return assetInfo;
 }

@@ -14,7 +14,7 @@ import {
   pay,
 } from '../../helpers/generic';
 import { deploy, writePoolProgram } from '../../helpers/factory';
-import { fixedWeights, initPool, PoolTypes } from '../../helpers/pool';
+import { fixedWeights, PoolTypes } from '../../helpers/pool';
 import { createAndMintToken, mintToken } from '../../helpers/token';
 
 /**
@@ -78,6 +78,55 @@ export async function deployVaultFactory(fixture: AlgorandFixture): Promise<Vaul
 }
 
 /**
+ * Bootstrap a vault pool in batches:
+ *   1. preparePool — Factory hands the pool over to the manager (admin).
+ *   2. addAssets — assets are added in groups small enough to fit a 16-transaction
+ *      group's resource references (each asset needs an opt-in + 3 boxes).
+ *   3. finalizeBootstrap — validates the weight sum and mints the LP token.
+ *
+ * This is how a pool scales past the ~20 assets a single bootstrap call can
+ * reference. Returns the LP token id.
+ */
+async function bootstrapVaultAssets(
+  harness: VaultHarness,
+  poolID: bigint,
+  poolClient: AssetVaultClient,
+  assetIds: bigint[],
+  weights: number[],
+  fundAlgo: number = Math.ceil(assetIds.length * 0.2) + 1
+): Promise<bigint> {
+  const { manager, factoryClient } = harness;
+  const weightsFixed = fixedWeights(weights);
+
+  // Fund the pool for asset opt-ins + boxes (the Factory's fixed MBR is tiny).
+  await pay(manager, poolClient.appAddress, fundAlgo);
+
+  // Hand the pool over to the manager so it can add assets directly.
+  const prepPay = await getPayTx(manager, poolClient.appAddress, 1);
+  await factoryClient.send.preparePool({ args: [poolID, prepPay], populateAppCallResources: true });
+
+  // Add assets in resource-sized batches (one opUp per asset gives ample slots).
+  const BATCH = 10;
+  for (let start = 0; start < assetIds.length; start += BATCH) {
+    const aBatch = assetIds.slice(start, start + BATCH);
+    const wBatch = weightsFixed.slice(start, start + BATCH);
+
+    const group = poolClient.newGroup();
+    for (let k = 0; k < aBatch.length; k += 1) {
+      group.opUp({ ...commonAppCallTxParams(manager), args: [], note: new Uint8Array([k]) });
+    }
+    group.addAssets({ ...commonAppCallTxParams(manager, (500_000).microAlgo()), args: [aBatch, wBatch] });
+    await group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true });
+  }
+
+  const res = await poolClient.send.finalizeBootstrap({
+    ...commonAppCallTxParams(manager, (500_000).microAlgo()),
+    args: [],
+  });
+  return res.return as bigint;
+}
+
+/**
  * Create and bootstrap a fresh AssetVault pool with newly minted tokens.
  *
  * Unlike DEX pools, vault pools are not registered in the Factory's pool map,
@@ -116,14 +165,14 @@ export async function createVaultPool(
   });
   const poolID = BigInt(createResult.confirmation!.innerTxns![0].applicationIndex!);
 
-  // Bootstrap: assign assets/weights and create the LP token.
-  const lpId = await initPool(factoryClient, manager, PoolTypes.Vault, poolID, assetIds, weights);
-
   const poolClient = harness.fixture.algorand.client.getTypedAppClientById(AssetVaultClient, {
     appId: poolID,
     defaultSender: manager.sender,
     defaultSigner: manager.signer,
   });
+
+  // Bootstrap in batches: prepare (handover) → addAssets → finalize.
+  const lpId = await bootstrapVaultAssets(harness, poolID, poolClient, assetIds, weights);
 
   await optIn(manager, lpId);
 
@@ -176,10 +225,8 @@ export async function createLargeVaultPool(
     defaultSigner: manager.signer,
   });
 
-  // Cover the many-asset MBR up front (Factory's fixed MBR is too small).
-  await pay(manager, poolClient.appAddress, fundAlgo);
-
-  const lpId = await initPool(factoryClient, manager, PoolTypes.Vault, poolID, assetIds, weights);
+  // Bootstrap in batches, funding the pool for the many-asset MBR up front.
+  const lpId = await bootstrapVaultAssets(harness, poolID, poolClient, assetIds, weights, fundAlgo);
   await optIn(manager, lpId);
 
   return { poolID, poolClient, tokensInfo, assetIds, weights, lpId };
@@ -278,12 +325,18 @@ export async function swap(
   const client = vaultClientFor(account, pool);
   const xfer = await makeAssetTransferTxn(account, pool.assetIds[from], pool.poolClient.appAddress, amount);
 
-  const result = await client.send.swap({
+  // A swap now touches several boxes (assetAt, balances, weights for both sides);
+  // pair it with an opUp so the group has enough foreign-reference slots.
+  const group = client.newGroup();
+  group.opUp({ ...commonAppCallTxParams(account), args: [], note: new Uint8Array([0]) });
+  group.swap({
     ...commonAppCallTxParams(account, (500_000).microAlgo()),
     args: [from, to, BigInt(minOut), xfer],
   });
 
-  return result.return as bigint;
+  const result = await group.send(commonAppCallTxParams(account));
+  const returns = result.returns!;
+  return returns[returns.length - 1] as bigint;
 }
 
 /** Burn `lpMicro` micro-LP held by `account`, redeeming the underlying assets. */

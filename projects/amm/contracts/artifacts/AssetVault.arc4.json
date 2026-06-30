@@ -4,48 +4,67 @@
   "methods": [
     {
       "name": "createApplication",
-      "desc": "Initializes global state variables when the application is first created.\n\n\nThis method is automatically invoked during the application's creation call ( with bare create).\nIt sets the initial manager to the app creator.\n\n\nThis function should only be called once at contract deployment.",
+      "desc": "Sets the manager to the creator. Bare create, called once at deployment.",
       "args": [],
       "returns": {
         "type": "void"
       }
     },
     {
-      "name": "bootstrap",
-      "desc": "Bootstrap the pool by assigning assets and weights, create the LP tokens.\n\n\nCalled by the Factory as an inner transaction, so at entry the manager is\nstill the Factory (the app creator). The  — the human who requested\nthe pool via the Factory — is handed over control here, becoming the pool\nmanager that can later call manager-only methods such as changeWeights.",
+      "name": "prepare",
+      "desc": "Begin bootstrapping: hand the pool over to  and reset asset state.\n\n\nCalled by the Factory (still the manager at this point). The admin then fills\nthe pool with one or more  batches and closes it with\n. Batching keeps each transaction's resource\nreferences within the per-group limit, so the pool can hold many assets.",
       "args": [
         {
-          "name": "assetIds",
+          "name": "admin",
+          "type": "address",
+          "desc": "account that becomes the pool manager."
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "addAssets",
+      "desc": "Append a batch of assets and weights during bootstrap. Manager-only, and only\nbefore . May be called repeatedly; AssetIDs must be\nstrictly increasing across all batches. Weights accumulate and are validated\nat finalize.",
+      "args": [
+        {
+          "name": "assets",
           "type": "uint64[]",
-          "desc": "assets of the pool"
+          "desc": "ASA IDs for this batch (strictly increasing)."
         },
         {
           "name": "weights",
           "type": "uint64[]",
-          "desc": "weights of the pool"
-        },
-        {
-          "name": "admin",
-          "type": "address",
-          "desc": "account that becomes the pool manager\n uint64 - LP Token created ID"
+          "desc": "Weight per asset, each = MIN_WEIGHT."
         }
       ],
       "returns": {
-        "type": "uint64"
+        "type": "void"
+      }
+    },
+    {
+      "name": "finalizeBootstrap",
+      "desc": "Close bootstrapping: require the weights to sum to SCALE and mint the LP token.\nThe pool is live (accepts liquidity) afterwards. Manager-only.",
+      "args": [],
+      "returns": {
+        "type": "uint64",
+        "desc": "the LP token AssetID."
       }
     },
     {
       "name": "addLiquidity",
-      "desc": "Provide one token liquidity to the pool",
+      "desc": "Deposit one asset toward a liquidity position. The amount is held in \nuntil  converts the full position into LP tokens.",
       "args": [
         {
           "name": "index",
           "type": "uint64",
-          "desc": "index of the token in the pool"
+          "desc": "index of the deposited asset in the pool."
         },
         {
           "name": "txn",
-          "type": "axfer"
+          "type": "axfer",
+          "desc": "asset transfer carrying the deposit."
         }
       ],
       "returns": {
@@ -54,20 +73,21 @@
     },
     {
       "name": "getLiquidity",
-      "desc": "Mints LP tokens to the given sender based on the liquidity they provided.\n\n\nIf this is the first liquidity provision (i.e., total LP supply is 0),\na fixed initial amount is minted to the sender. Otherwise, the amount\nis calculated proportionally using .\n\n\nAfter minting, the sender's \"provided\" state is reset.",
+      "desc": "Mint LP tokens for the sender's pending deposits, then clear them.\n\n\nThe first provider receives a fixed amount (AMOUNT_LP_DEPLOYER) and must seed\nevery asset. Subsequent providers receive an amount proportional to the value\nthey add, via .",
       "args": [],
       "returns": {
         "type": "uint64",
-        "desc": "The amount of LP tokens minted"
+        "desc": "the amount of LP tokens minted."
       }
     },
     {
       "name": "burnLiquidity",
-      "desc": "Burns a given amount of LP tokens from the sender and returns\ntheir proportional share of each asset in the pool.\n\n\nThe withdrawn amount for each asset is calculated based on the\nratio of  to the total LP supply.",
+      "desc": "Burn LP tokens and return the holder's proportional share of every asset.",
       "args": [
         {
           "name": "transferTxn",
-          "type": "axfer"
+          "type": "axfer",
+          "desc": "LP transfer into the pool; its amount is the LP burned."
         }
       ],
       "returns": {
@@ -76,49 +96,52 @@
     },
     {
       "name": "swap",
-      "desc": "Executes a weighted swap between two tokens in the pool based on the constant mean formula.\n\n\nThe input token () is sent into the pool, and the output token () is sent back\nto the sender, following the AMM's pricing curve determined by current balances and weights.\n\n\nThis function performs the following steps:\n- Retrieves the current weights and balances for the two assets.\n- Calculates the output amount using the invariant pricing function ().\n- Updates the pool's internal balances accordingly.\n- Transfers the output asset to the sender.",
+      "desc": "Swap  for  along the weighted constant-mean curve.\n\n\nThe input asset is sent into the pool, the output asset back to the sender.\nReverts if the computed output is below  (slippage guard).",
       "args": [
         {
           "name": "from",
           "type": "uint64",
-          "desc": "Index of the input asset in the pool."
+          "desc": "index of the input asset."
         },
         {
           "name": "to",
           "type": "uint64",
-          "desc": "Index of the output asset in the pool."
+          "desc": "index of the output asset."
         },
         {
           "name": "minAmountOut",
-          "type": "uint64"
+          "type": "uint64",
+          "desc": "minimum acceptable output."
         },
         {
           "name": "transferTxn",
-          "type": "axfer"
+          "type": "axfer",
+          "desc": "asset transfer carrying the input amount."
         }
       ],
       "returns": {
         "type": "uint64",
-        "desc": "The amount of output asset received."
+        "desc": "the output amount sent to the sender."
       }
     },
     {
       "name": "changeWeights",
-      "desc": "Updates the pool's asset weights, either immediately or with a time-based linear interpolation.\n\n\nIf  is zero, the new weights are applied immediately by overwriting the current weights.\nOtherwise, a linear transition is initiated from the current weights to  over the specified\nduration (measured in seconds or microseconds (?)).\n\n\nDuring the transition period, weights are dynamically computed based on the elapsed time\nbetween  and , and stored in . The current weights must be\nretrieved using a function like  for accurate interpolated values.",
+      "desc": "Change the pool's weights. Manager-only; rejected while a transition is active.\n\n\nWith  the new weights apply immediately. Otherwise they\ninterpolate linearly from the current weights to  over \nblocks; during the transition  returns the live value.",
       "args": [
         {
           "name": "duration",
           "type": "uint64",
-          "desc": "Duration of the interpolation (in blocks). If 0, the weights are updated instantly."
+          "desc": "interpolation length in blocks (0 = instant)."
         },
         {
           "name": "newWeights",
           "type": "uint64[]",
-          "desc": "Array of new target weights for each asset in the pool."
+          "desc": "target weight per asset (each = MIN_WEIGHT, summing to SCALE)."
         }
       ],
       "returns": {
-        "type": "uint64"
+        "type": "uint64",
+        "desc": "the round at which the transition ends (0 if instant)."
       }
     },
     {
@@ -202,6 +225,7 @@
     },
     {
       "name": "getCurrentWeight",
+      "desc": "Current weight of an asset, interpolated if a weight transition is active.",
       "readonly": true,
       "args": [
         {

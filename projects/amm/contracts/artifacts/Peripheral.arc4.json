@@ -1,0 +1,37 @@
+{
+  "name": "Peripheral",
+  "desc": "",
+  "methods": [
+    {
+      "name": "execute",
+      "args": [
+        {
+          "name": "pool",
+          "type": "uint64"
+        },
+        {
+          "name": "values",
+          "type": "uint64[]"
+        },
+        {
+          "name": "assets",
+          "type": "uint64[]"
+        },
+        {
+          "name": "rekey",
+          "type": "pay"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "createApplication",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    }
+  ]
+}

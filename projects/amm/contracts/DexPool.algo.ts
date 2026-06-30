@@ -127,10 +127,8 @@ export class DexPool extends Contract {
    * bidding straight away. The first epoch begins only once settleAuction() is
    * called after the bidding window closes.
    *
-   * Called by the Factory as an inner transaction, so at entry the manager is
-   * still the Factory (the app creator). The `admin` — the human who requested
-   * the pool via the Factory — is handed control here, becoming the pool manager
-   * that can later call manager-only methods such as changeWeights.
+   * Called by the Factory (the manager at entry); control is handed to `admin`,
+   * who becomes the pool manager.
    *
    * @param assetIds        - Ordered list of ASA IDs to include in the pool.
    * @param weights         - Normalised weights for each asset (must sum to SCALE).
@@ -346,9 +344,8 @@ export class DexPool extends Contract {
     let amount: uint64 = 0;
 
     if (this.totalLP() === 0) {
-      // First deposit defines the initial pool. Require every asset to be seeded
-      // with a positive balance, otherwise the pool would start with a zero
-      // balance — bricking swaps and blocking all future proportional joins.
+      // First deposit sets the initial pool; every asset must be seeded so the
+      // pool never starts with a zero balance (which would break swaps and joins).
       for (let i = 0; i < this.assets.value.length; i += 1) {
         assert(this.balances(this.assets.value[i]).value > 0, 'first deposit must seed every asset');
       }
@@ -379,11 +376,8 @@ export class DexPool extends Contract {
 
     assert(amountLP > 0, 'must burn positive amount');
 
-    // Circulating supply BEFORE this burn. The LP being burned has already been
-    // transferred into the app — which is the token reserve — by the grouped
-    // asset transfer, so totalLP() already excludes it. Add it back to recover
-    // the correct redemption denominator (otherwise full burns divide by zero
-    // and partial burns over-redeem).
+    // Redeem against the supply circulating before this burn. The incoming LP is
+    // already in the reserve (so totalLP() excludes it); add it back as the denominator.
     const totalLP = this.totalLP() + amountLP;
     const numAssets = this.assets.value.length;
 
@@ -672,14 +666,12 @@ export class DexPool extends Contract {
 
       assert(poolBalance > 0, 'pool balance must be > 0');
 
-      // provided_i / balance_before_i — the fraction by which this asset's
-      // balance is growing.
+      // Fraction by which this asset's balance grows.
       const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount]);
 
-      // Every asset must grow by the same fraction (invariant-preserving join).
-      // Otherwise the geometric-mean LP formula is not valid and the deposit
-      // would be mispriced — reject instead of silently minting wrong/zero LP.
-      // This also rules out single-sided deposits. Tolerance: 0.5% for rounding.
+      // All assets must grow by the same fraction (0.5% tolerance for rounding),
+      // otherwise the deposit is not invariant-preserving and is rejected — which
+      // also blocks single-sided deposits.
       if (i === 0) {
         referenceRatio = assetRatio;
       } else {

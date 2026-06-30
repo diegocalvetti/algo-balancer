@@ -70,6 +70,25 @@
       }
     },
     {
+      "name": "preparePool",
+      "desc": "Hand a freshly created vault pool over to its admin (the caller) so it can be\nbootstrapped in batches via the pool's own addAssets / finalizeBootstrap.",
+      "args": [
+        {
+          "name": "poolID",
+          "type": "uint64",
+          "desc": "the vault pool app to hand over."
+        },
+        {
+          "name": "coverMBR",
+          "type": "pay",
+          "desc": "payment covering the pool's base minimum balance."
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "opUp",
       "args": [],
       "returns": {

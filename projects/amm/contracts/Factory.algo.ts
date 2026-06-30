@@ -175,14 +175,28 @@ export class Factory extends Contract {
         applicationID: poolID,
         methodArgs: [assetIds, weights, 20, 5, this.txn.sender],
       });
-    } else if (type === VAULT_POOL_TYPE) {
-      LPTokenID = sendMethodCall<typeof AssetVault.prototype.bootstrap, AssetID>({
-        applicationID: poolID,
-        methodArgs: [assetIds, weights, this.txn.sender],
-      });
     }
 
     return LPTokenID;
+  }
+
+  /**
+   * Hand a freshly created vault pool over to its admin (the caller) so it can be
+   * bootstrapped in batches via the pool's own addAssets / finalizeBootstrap.
+   *
+   * @param poolID   - the vault pool app to hand over.
+   * @param coverMBR - payment covering the pool's base minimum balance.
+   */
+  preparePool(poolID: AppID, coverMBR: PayTxn): void {
+    verifyPayTxn(coverMBR, {
+      receiver: poolID.address,
+      amount: MBR_INIT_POOL,
+    });
+
+    sendMethodCall<typeof AssetVault.prototype.prepare>({
+      applicationID: poolID,
+      methodArgs: [this.txn.sender],
+    });
   }
 
   opUp(): void {}

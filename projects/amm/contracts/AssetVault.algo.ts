@@ -1,39 +1,61 @@
 import { Contract } from '@algorandfoundation/tealscript';
 
+/** Total LP supply minted at token creation; circulating supply is tracked separately. */
 const TOTAL_LP_SUPPLY = 10 ** 16;
+/** LP minted to the very first liquidity provider, which sets the initial supply. */
 const AMOUNT_LP_DEPLOYER = 1_000_000 * 10 ** 6;
+/** Fixed-point scale: weights and ratios are expressed as integers out of SCALE (1.0). */
 const SCALE = 1_000_000;
+/** Minimum weight per asset (1% of SCALE). Caps the pool at SCALE / MIN_WEIGHT = 100 assets. */
 const MIN_WEIGHT = 10_000;
 
+/**
+ * Weighted constant-mean AMM pool (Balancer-style) holding up to 100 assets.
+ *
+ * Pricing follows the weighted invariant V = Π balance_i^weight_i. Weights can be
+ * changed instantly or interpolated linearly over a block window. The pool is
+ * bootstrapped in batches (prepare → addAssets → finalizeBootstrap) so it can
+ * scale to many assets, then accepts proportional liquidity and weighted swaps.
+ */
 export class AssetVault extends Contract {
+  /** Account allowed to call admin methods (e.g. changeWeights). */
   manager = GlobalStateKey<Address>({ key: 'manager' });
 
+  /** LP token ASA. Zero until finalizeBootstrap; non-zero means the pool is live. */
   token = GlobalStateKey<AssetID>({ key: 'token' });
 
   burned = GlobalStateKey<uint64>({ key: 'burned' });
 
-  assets = GlobalStateKey<AssetID[]>({ key: 'assets' });
+  /** Asset list as one box per index. (A global array would cap the pool at ~15 assets.) */
+  assetAt = BoxMap<uint64, AssetID>({ prefix: 'asset_' });
 
+  /** Number of assets currently registered. */
+  numAssets = GlobalStateKey<uint64>({ key: 'num_assets' });
+
+  /** Current weight per asset index (scaled by SCALE). */
   weights = BoxMap<uint64, uint64>({ prefix: 'weights_' });
 
+  /** Destination weights during an interpolated weight change. */
   targetWeights = BoxMap<uint64, uint64>({ prefix: 'target_weights_' });
 
+  /** First/last round of the active weight interpolation; both 0 when none is running. */
   startRound = GlobalStateKey<uint64>({ key: 'start_round' });
 
   endRound = GlobalStateKey<uint64>({ key: 'end_round' });
 
+  /** Pool balance per asset, tracked internally rather than read from holdings. */
   balances = BoxMap<AssetID, uint64>({ prefix: 'balances_' });
 
+  /** Per-provider amounts deposited but not yet converted to LP (one slot per asset). */
   provided = BoxMap<Address, uint64[]>({ prefix: 'provided_', dynamicSize: true });
 
-  /**
-   * Initializes global state variables when the application is first created.
-   *
-   * This method is automatically invoked during the application's creation call (`NoOp` with bare create).
-   * It sets the initial manager to the app creator.
-   *
-   * This function should only be called once at contract deployment.
-   */
+  /** Running weight total accumulated during bootstrap, checked against SCALE at finalize. */
+  weightSumAccum = GlobalStateKey<uint64>({ key: 'weight_sum' });
+
+  /** Highest AssetID added so far; enforces strictly-increasing order across batches. */
+  lastAsset = GlobalStateKey<AssetID>({ key: 'last_asset' });
+
+  /** Sets the manager to the creator. Bare create, called once at deployment. */
   @allow.bareCreate('NoOp')
   createApplication() {
     this.manager.value = this.app.creator;
@@ -43,58 +65,83 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Bootstrap the pool by assigning assets and weights, create the LP tokens.
+   * Begin bootstrapping: hand the pool over to `admin` and reset asset state.
    *
-   * Called by the Factory as an inner transaction, so at entry the manager is
-   * still the Factory (the app creator). The `admin` — the human who requested
-   * the pool via the Factory — is handed over control here, becoming the pool
-   * manager that can later call manager-only methods such as changeWeights.
+   * Called by the Factory (still the manager at this point). The admin then fills
+   * the pool with one or more {@link addAssets} batches and closes it with
+   * {@link finalizeBootstrap}. Batching keeps each transaction's resource
+   * references within the per-group limit, so the pool can hold many assets.
    *
-   * @param {AssetID[]} assetIds - assets of the pool
-   * @param {uint64[]} weights - weights of the pool
-   * @param {Address} admin - account that becomes the pool manager
-   * @return uint64 - LP Token created ID
+   * @param admin - account that becomes the pool manager.
    */
-  bootstrap(assetIds: AssetID[], weights: uint64[], admin: Address): AssetID {
+  prepare(admin: Address): void {
     this.assertIsManager();
 
-    assert(assetIds.length > 0);
-    assert(assetIds.length <= SCALE / MIN_WEIGHT, 'too many tokens');
+    this.manager.value = admin;
+    this.numAssets.value = 0;
+    this.weightSumAccum.value = 0;
+    this.lastAsset.value = AssetID.zeroIndex;
+    this.burned.value = 0;
+  }
 
-    // Large pools (up to 100 assets) far exceed the default ~700 opcode budget of
-    // this inner call: each asset costs an opt-in + box writes. Top up the budget
-    // proportionally so bootstrapping a max-size pool stays within budget.
-    for (let b = 0; b < assetIds.length / 4 + 1; b += 1) {
+  /**
+   * Append a batch of assets and weights during bootstrap. Manager-only, and only
+   * before {@link finalizeBootstrap}. May be called repeatedly; AssetIDs must be
+   * strictly increasing across all batches. Weights accumulate and are validated
+   * at finalize.
+   *
+   * @param assets  - ASA IDs for this batch (strictly increasing).
+   * @param weights - Weight per asset, each >= MIN_WEIGHT.
+   */
+  addAssets(assets: AssetID[], weights: uint64[]): void {
+    this.assertIsManager();
+    assert(this.token.value === AssetID.zeroIndex, 'pool already bootstrapped');
+    assert(assets.length === weights.length, 'assets and weights length mismatch');
+
+    // Each asset costs an opt-in plus box writes; raise the opcode budget to match.
+    for (let b = 0; b < assets.length / 4 + 1; b += 1) {
       increaseOpcodeBudget();
     }
 
-    let sumOfWeights = 0;
-
-    for (let i = 0; i < assetIds.length; i += 1) {
+    for (let i = 0; i < assets.length; i += 1) {
       assert(weights[i] >= MIN_WEIGHT, 'weight too small');
+      assert(assets[i] > this.lastAsset.value, 'assets must be strictly increasing');
 
-      this.optIn(assetIds[i]);
-      this.addToken(i, assetIds[i], weights[i]);
-      sumOfWeights += weights[i];
+      const index = this.numAssets.value;
+      this.optIn(assets[i]);
+      this.addToken(index, assets[i], weights[i]);
+
+      this.weightSumAccum.value = this.weightSumAccum.value + weights[i];
+      this.lastAsset.value = assets[i];
+      this.numAssets.value = index + 1;
     }
 
-    assert(this.absDiff(sumOfWeights, SCALE) <= 1, 'Weights must sum to 1');
+    assert(this.numAssets.value <= SCALE / MIN_WEIGHT, 'too many tokens');
+  }
 
-    this.burned.value = 0;
-    this.assets.value = assetIds;
+  /**
+   * Close bootstrapping: require the weights to sum to SCALE and mint the LP token.
+   * The pool is live (accepts liquidity) afterwards. Manager-only.
+   *
+   * @returns the LP token AssetID.
+   */
+  finalizeBootstrap(): AssetID {
+    this.assertIsManager();
+    assert(this.token.value === AssetID.zeroIndex, 'pool already bootstrapped');
+    assert(this.numAssets.value >= 1, 'no assets added');
+    assert(this.absDiff(this.weightSumAccum.value, SCALE) <= 1, 'weights must sum to 1');
 
     this.createToken();
-
-    // Hand control from the Factory to the human admin.
-    this.manager.value = admin;
 
     return this.token.value;
   }
 
   /**
-   * Provide one token liquidity to the pool
-   * @param {uint64} index - index of the token in the pool
-   * @param txn
+   * Deposit one asset toward a liquidity position. The amount is held in `provided`
+   * until {@link getLiquidity} converts the full position into LP tokens.
+   *
+   * @param index - index of the deposited asset in the pool.
+   * @param txn   - asset transfer carrying the deposit.
    */
   addLiquidity(index: uint64, txn: AssetTransferTxn) {
     this.assertIsBootstrapped();
@@ -103,28 +150,26 @@ export class AssetVault extends Contract {
     const sender = txn.sender;
     const amount = txn.assetAmount;
 
-    const assetId = this.assets.value[index];
+    const assetId = this.assetAt(index).value;
 
     this.optIn(assetId);
     this.balances(assetId).value += amount;
 
     if (!this.provided(sender).exists) {
-      this.provided(sender).create((this.assets.value.length + 1) * 8);
+      this.provided(sender).create((this.numAssets.value + 1) * 8);
     }
 
     this.provided(sender).value[index] += amount;
   }
 
   /**
-   * Mints LP tokens to the given sender based on the liquidity they provided.
+   * Mint LP tokens for the sender's pending deposits, then clear them.
    *
-   * If this is the first liquidity provision (i.e., total LP supply is 0),
-   * a fixed initial amount is minted to the sender. Otherwise, the amount
-   * is calculated proportionally using `computeNAssetsLiquidity()`.
+   * The first provider receives a fixed amount (AMOUNT_LP_DEPLOYER) and must seed
+   * every asset. Subsequent providers receive an amount proportional to the value
+   * they add, via {@link computeNAssetsLiquidity}.
    *
-   * After minting, the sender's "provided" state is reset.
-   *
-   * @returns The amount of LP tokens minted
+   * @returns the amount of LP tokens minted.
    */
   getLiquidity(): uint64 {
     this.assertIsBootstrapped();
@@ -134,11 +179,10 @@ export class AssetVault extends Contract {
     let amount: uint64 = 0;
 
     if (this.totalLP() === 0) {
-      // First deposit defines the initial pool. Require every asset to be seeded
-      // with a positive balance, otherwise the pool would start with a zero
-      // balance — bricking swaps and blocking all future proportional joins.
-      for (let i = 0; i < this.assets.value.length; i += 1) {
-        assert(this.balances(this.assets.value[i]).value > 0, 'first deposit must seed every asset');
+      // First deposit sets the initial pool; every asset must be seeded so the
+      // pool never starts with a zero balance (which would break swaps and joins).
+      for (let i = 0; i < this.numAssets.value; i += 1) {
+        assert(this.balances(this.assetAt(i).value).value > 0, 'first deposit must seed every asset');
       }
       amount = AMOUNT_LP_DEPLOYER;
     } else {
@@ -159,13 +203,9 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Burns a given amount of LP tokens from the sender and returns
-   * their proportional share of each asset in the pool.
+   * Burn LP tokens and return the holder's proportional share of every asset.
    *
-   * The withdrawn amount for each asset is calculated based on the
-   * ratio of `amountLP` to the total LP supply.
-   *
-   * @param transferTxn
+   * @param transferTxn - LP transfer into the pool; its amount is the LP burned.
    */
   burnLiquidity(transferTxn: AssetTransferTxn) {
     this.assertIsBootstrapped();
@@ -176,16 +216,13 @@ export class AssetVault extends Contract {
 
     assert(amountLP > 0, 'Must burn positive amount');
 
-    // Circulating supply BEFORE this burn. The LP being burned has already been
-    // transferred into the app — which is the token reserve — by the grouped
-    // asset transfer, so totalLP() already excludes it. Add it back to recover
-    // the correct redemption denominator (otherwise full burns divide by zero
-    // and partial burns over-redeem).
+    // Redeem against the supply circulating before this burn. The incoming LP is
+    // already in the reserve (so totalLP() excludes it); add it back as the denominator.
     const totalLP = this.totalLP() + amountLP;
-    const numAssets = this.assets.value.length;
+    const numAssets = this.numAssets.value;
 
     for (let i = 0; i < numAssets; i += 1) {
-      const assetId = this.assets.value[i];
+      const assetId = this.assetAt(i).value;
       const poolBalance = this.balances(assetId).value;
 
       const assetAmount = wideRatio([amountLP, poolBalance], [totalLP]);
@@ -201,22 +238,16 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Executes a weighted swap between two tokens in the pool based on the constant mean formula.
+   * Swap `from` for `to` along the weighted constant-mean curve.
    *
-   * The input token (`from`) is sent into the pool, and the output token (`to`) is sent back
-   * to the sender, following the AMM's pricing curve determined by current balances and weights.
+   * The input asset is sent into the pool, the output asset back to the sender.
+   * Reverts if the computed output is below `minAmountOut` (slippage guard).
    *
-   * This function performs the following steps:
-   * - Retrieves the current weights and balances for the two assets.
-   * - Calculates the output amount using the invariant pricing function (`calcOut`).
-   * - Updates the pool's internal balances accordingly.
-   * - Transfers the output asset to the sender.
-   *
-   * @param from - Index of the input asset in the pool.
-   * @param to - Index of the output asset in the pool.
-   * @param minAmountOut
-   * @param transferTxn
-   * @returns The amount of output asset received.
+   * @param from         - index of the input asset.
+   * @param to           - index of the output asset.
+   * @param minAmountOut - minimum acceptable output.
+   * @param transferTxn  - asset transfer carrying the input amount.
+   * @returns the output amount sent to the sender.
    */
   swap(from: uint64, to: uint64, minAmountOut: uint64, transferTxn: AssetTransferTxn): uint64 {
     this.assertIsBootstrapped();
@@ -226,8 +257,8 @@ export class AssetVault extends Contract {
     const sender = transferTxn.sender;
     const amount = transferTxn.assetAmount;
 
-    const assetIn = this.assets.value[from];
-    const assetOut = this.assets.value[to];
+    const assetIn = this.assetAt(from).value;
+    const assetOut = this.assetAt(to).value;
 
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
@@ -252,25 +283,22 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Updates the pool's asset weights, either immediately or with a time-based linear interpolation.
+   * Change the pool's weights. Manager-only; rejected while a transition is active.
    *
-   * If `duration` is zero, the new weights are applied immediately by overwriting the current weights.
-   * Otherwise, a linear transition is initiated from the current weights to `newWeights` over the specified
-   * duration (measured in seconds or microseconds (?)).
+   * With `duration === 0` the new weights apply immediately. Otherwise they
+   * interpolate linearly from the current weights to `newWeights` over `duration`
+   * blocks; during the transition {@link getCurrentWeight} returns the live value.
    *
-   * During the transition period, weights are dynamically computed based on the elapsed time
-   * between `startRound` and `endRound`, and stored in `targetWeights`. The current weights must be
-   * retrieved using a function like `getCurrentWeight()` for accurate interpolated values.
-   *
-   * @param {uint64[]} newWeights - Array of new target weights for each asset in the pool.
-   * @param {uint64} duration - Duration of the interpolation (in blocks). If 0, the weights are updated instantly.
+   * @param duration   - interpolation length in blocks (0 = instant).
+   * @param newWeights - target weight per asset (each >= MIN_WEIGHT, summing to SCALE).
+   * @returns the round at which the transition ends (0 if instant).
    */
   changeWeights(duration: uint64, newWeights: uint64[]): uint64 {
     this.assertIsManager();
     this.assertIsBootstrapped();
     this.assertNoWeightTransition();
 
-    assert(newWeights.length === this.assets.value.length, 'weights length must match assets');
+    assert(newWeights.length === this.numAssets.value, 'weights length must match assets');
 
     let sumOfWeights: uint64 = 0;
     for (let i = 0; i < newWeights.length; i += 1) {
@@ -300,21 +328,31 @@ export class AssetVault extends Contract {
   }
 
   addAsset(asset: AssetID, w: uint64): uint64 {
-    const newIndex = this.assets.value.length;
-    this.assets.value[newIndex] = asset;
+    const newIndex = this.numAssets.value;
+
+    if (!this.assetAt(newIndex).exists) {
+      this.assetAt(newIndex).create(8);
+    }
+    this.assetAt(newIndex).value = asset;
 
     for (let i = 0; i < newIndex; i += 1) {
       this.weights(i).value = this.weights(i).value * (SCALE - w);
     }
 
+    if (!this.weights(newIndex).exists) {
+      this.weights(newIndex).create(8);
+    }
     this.weights(newIndex).value = w;
+
+    this.numAssets.value = newIndex + 1;
 
     return w;
   }
 
+  /** Commit a finished weight interpolation into the stored weights. */
   private tryFinalizeWeights() {
     if (this.endRound.value !== 0 && globals.round >= this.endRound.value) {
-      for (let i = 0; i < this.assets.value.length; i += 1) {
+      for (let i = 0; i < this.numAssets.value; i += 1) {
         this.weights(i).value = this.targetWeights(i).value;
       }
       this.startRound.value = 0;
@@ -326,11 +364,7 @@ export class AssetVault extends Contract {
   /**     SUBROUTINES     */
   /** ******************* */
 
-  /**
-   * Opts the application into a given ASA if not already opted-in.
-   *
-   * @param assetId - The ID of the asset to opt into.
-   */
+  /** Opt the app into an ASA if it is not already opted in. */
   private optIn(assetId: AssetID): void {
     if (this.app.address.isOptedInToAsset(assetId)) {
       return;
@@ -343,20 +377,12 @@ export class AssetVault extends Contract {
     });
   }
 
-  /**
-   * Registers a new token in the pool by initializing its balance and weight.
-   *
-   * This function creates and sets:
-   * - A balance box for the token, initialized to 0.
-   * - A weight box for the token's index, used in weighted operations like swaps.
-   *
-   * It assumes the caller has already validated inputs and manages order/indexing externally.
-   *
-   * @param index - Index of the token within the pool.
-   * @param assetID - The ASA ID of the token to add.
-   * @param weight - The normalized weight assigned to the token (e.g., scaled by 1e6).
-   */
+  /** Create the asset/weight/balance boxes for one token at `index`. */
   private addToken(index: uint64, assetID: AssetID, weight: uint64): void {
+    if (!this.assetAt(index).exists) {
+      this.assetAt(index).create(8);
+    }
+
     if (!this.weights(index).exists) {
       this.weights(index).create(8);
     }
@@ -365,26 +391,15 @@ export class AssetVault extends Contract {
       this.balances(assetID).create(8);
     }
 
+    this.assetAt(index).value = assetID;
     this.weights(index).value = weight;
     this.balances(assetID).value = 0;
   }
 
   /**
-   * Creates the LP (liquidity provider) token for the pool if it does not already exist.
-   *
-   * The LP token is an Algorand Standard Asset (ASA) that represents a user's proportional
-   * share of the pool.
-   * This function ensures only one token is created, and sets the contract
-   * as its manager and reserve.
-   *
-   * The token is configured with:
-   * - Total supply: `TOTAL_LP_SUPPLY`
-   * - Decimals: 6
-   * - Reserve: this contract's address
-   * - No clawback/freeze addresses
-   * - Default frozen: false
-   *
-   * The Token name is dynamically derived from the application ID.
+   * Create the pool's LP token (once). It is an ASA with this contract as manager
+   * and reserve, 6 decimals, and no clawback/freeze. Held in reserve and released
+   * as liquidity is minted.
    */
   private createToken(): void {
     if (this.token.value === AssetID.zeroIndex) {
@@ -402,9 +417,6 @@ export class AssetVault extends Contract {
     }
   }
 
-  /**
-   * Assert the tx sender is the manager
-   */
   private assertIsManager(): void {
     assert(this.txn.sender === this.manager.value, 'only the manager can call this method');
   }
@@ -418,16 +430,11 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Approximates the natural logarithm of a fixed-point value `x` with sign support.
+   * Fixed-point ln(x) via the Mercator series around 1, with a sign flag.
+   * For x < 1 it computes ln(1/x) and flags the result negative, keeping precision.
    *
-   * Uses a rational approximation of ln(x) via the Mercator series, centered around 1.
-   * If `x < SCALE`, the logarithm of the inverse is computed and a `negative` flag is returned.
-   * This is used to handle values less than 1 while keeping precision stable.
-   *
-   * @param x - Input value in fixed-point representation (scaled by SCALE).
-   * @returns A tuple [negative: uint64, result: uint64] where:
-   *          - negative = 1 if log(x) is negative
-   *          - result = absolute value of log(x) scaled by SCALE
+   * @param x - value scaled by SCALE (must be > 0).
+   * @returns [negative, |ln(x)| scaled by SCALE], negative = 1 when ln(x) < 0.
    */
   private lnWithSign(x: uint64): uint64[] {
     assert(x > 0, 'log undefined for x ≤ 0');
@@ -460,13 +467,10 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Approximates the exponential function e^x for a fixed-point input.
+   * Fixed-point e^x via a 10-term Taylor series.
    *
-   * Uses a truncated Taylor series expansion of e^x:
-   *     e^x ≈ 1 + x + x^2/2! + x^3/3! + ... + x^n/n!
-   *
-   * @param x - Exponent in fixed-point representation (scaled by SCALE).
-   * @returns Approximated e^x value in fixed-point representation.
+   * @param x - exponent scaled by SCALE.
+   * @returns e^x scaled by SCALE.
    */
   private exp(x: uint64): uint64 {
     let result = SCALE;
@@ -481,15 +485,12 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Approximates x rise to the power of y (i.e., x^y) in fixed-point arithmetic.
+   * Fixed-point x^y, computed as exp(y * ln(x)) with sign-aware ln for x < 1.
+   * Accuracy degrades for ratios far from 1 (series truncation).
    *
-   * Internally implemented using:
-   *   x^y = exp(y * ln(x))
-   * Handles x < 1 via sign-aware logarithm and inversion logic.
-   *
-   * @param x - Base value in fixed-point representation.
-   * @param y - Exponent in fixed-point representation.
-   * @returns Approximated result of x^y in fixed-point.
+   * @param x - base scaled by SCALE.
+   * @param y - exponent scaled by SCALE.
+   * @returns x^y scaled by SCALE.
    */
   private pow(x: uint64, y: uint64): uint64 {
     if (x === 0) return 0;
@@ -510,22 +511,16 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * Calculates the output amount of a token swap using the constant mean formula
-   * with weight-based pricing and an optional fee.
+   * Weighted constant-mean swap output, with a swap fee on the input:
    *
-   * The formula used is derived from the Balancer-style AMM:
+   *   amountOut = balanceOut * (1 - (balanceIn / (balanceIn + amountInWithFee)) ^ (weightIn / weightOut))
    *
-   *   amountOut = balanceOut * (1 - (balanceIn / (balanceIn + amountInWithFee))^(weightIn / weightOut))
-   *
-   * This ensures price sensitivity based on both token weights and pool balances.
-   * A swap fee is applied by reducing the effective input amount.
-   *
-   * @param balanceIn - Current balance of the input asset in the pool.
-   * @param weightIn - Weight of the input asset, scaled by SCALE.
-   * @param balanceOut - Current balance of the output asset in the pool.
-   * @param weightOut - Weight of the output asset, scaled by SCALE.
-   * @param amountIn - Amount of input asset sent by the user.
-   * @returns The amount of output asset the user will receive.
+   * @param balanceIn  - input asset balance.
+   * @param weightIn   - input asset weight (scaled by SCALE).
+   * @param balanceOut - output asset balance.
+   * @param weightOut  - output asset weight (scaled by SCALE).
+   * @param amountIn   - input amount sent by the user.
+   * @returns the output amount.
    */
   private calcOut(
     balanceIn: uint64,
@@ -538,38 +533,29 @@ export class AssetVault extends Contract {
 
     const amountInWithFee = wideRatio([amountIn, SCALE - fee], [SCALE]);
 
-    // x / (x + Dx - f)
     const ratio = wideRatio([balanceIn, SCALE], [balanceIn + amountInWithFee]);
 
     const power = wideRatio([weightIn, SCALE], [weightOut]);
 
-    // output = balanceOut * (1 - ratio^power)
     const ratioPow = this.pow(ratio, power);
 
     return wideRatio([balanceOut, SCALE - ratioPow], [SCALE]);
   }
 
   /**
-   * Computes the amount of LP tokens to mint for a user based on the assets they provided,
-   * using the constant mean formula with weight sensitivity.
+   * LP to mint for a proportional, invariant-preserving deposit:
    *
-   * This method calculates the geometric mean of each provided asset relative to the pool's balance,
-   * adjusted by its weight. The formula is:
+   *   liquidity = totalLP * Π_i (provided_i / balance_before_i) ^ weight_i
    *
-   * liquidity = totalLP * Π_i (provided_i / (balance_i - provided_i)) ^ weight_i
+   * Every asset must grow by the same fraction of its balance (within 0.5%),
+   * otherwise the deposit is not invariant-preserving and is rejected — this also
+   * blocks single-sided deposits. Clears the sender's `provided` slots as it reads them.
    *
-   * It ensures proportional liquidity provisioning across all assets, weighted appropriately.
-   * The liquidity amount is scaled by the product of powered ratios and the total LP supply.
-   *
-   * During execution, this function also resets the sender's `provided` vector to zero,
-   * consuming the state used to compute the liquidity. This ensures the same input
-   * cannot be reused in future calculations.
-   *
-   * @param sender - The user address for which liquidity is being computed.
-   * @returns The amount of LP tokens to mint for the sender.
+   * @param sender - the provider whose deposit is being priced.
+   * @returns the LP amount to mint.
    */
   private computeNAssetsLiquidity(sender: Address): uint64 {
-    const totalAssets = this.assets.value.length;
+    const totalAssets = this.numAssets.value;
     assert(totalAssets >= 1, 'Please provide at least one asset');
 
     let ratio = SCALE;
@@ -580,21 +566,17 @@ export class AssetVault extends Contract {
     }
 
     for (let i = 0; i < totalAssets; i += 1) {
-      const assetId = this.assets.value[i];
+      const assetId = this.assetAt(i).value;
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
       const weight = this.getCurrentWeight(i);
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
-      // provided_i / balance_before_i — the fraction by which this asset's
-      // balance is growing.
+      // Fraction by which this asset's balance grows.
       const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount]);
 
-      // Every asset must grow by the same fraction (invariant-preserving join).
-      // Otherwise the geometric-mean LP formula is not valid and the deposit
-      // would be mispriced — reject instead of silently minting wrong/zero LP.
-      // This also rules out single-sided deposits. Tolerance: 0.5% for rounding.
+      // All assets must grow by the same fraction (0.5% tolerance for rounding).
       if (i === 0) {
         referenceRatio = assetRatio;
       } else {
@@ -614,37 +596,19 @@ export class AssetVault extends Contract {
     return wideRatio([totalLP, ratio], [SCALE]);
   }
 
-  /**
-   * Returns the total circulating supply of LP tokens in the pool.
-   *
-   * Circulating LP supply is calculated as:
-   *   totalIssued - reserveBalance - burned
-   *
-   * - `totalIssued`: the total supply originally created by the pool.
-   * - `reserveBalance`: LP tokens still held in the reserve (i.e., the pool itself).
-   * - `burned`: total LP tokens permanently removed via `burnLiquidity()`.
-   *
-   * This value is used in proportional calculations such as minting or burning LP tokens.
-   *
-   * @returns The current total circulating LP token supply.
-   */
+  /** Circulating LP supply: total issued, minus the reserve, minus burned. */
   private totalLP(): uint64 {
     return this.token.value.total - this.token.value.reserve.assetBalance(this.token.value) - this.burned.value;
   }
 
-  /**
-   * Returns the absolute difference between two unsigned integers.
-   * @param a - First value.
-   * @param b - Second value.
-   * @returns The absolute difference between `a` and `b`.
-   */
+  /** |a - b| for unsigned integers. */
   private absDiff(a: uint64, b: uint64): uint64 {
     return a > b ? a - b : b - a;
   }
 
   @abi.readonly
   getTotalAssets(): uint64 {
-    return this.assets.value.length;
+    return this.numAssets.value;
   }
 
   @abi.readonly
@@ -659,14 +623,14 @@ export class AssetVault extends Contract {
 
   @abi.readonly
   getBalance(index: uint64): uint64 {
-    const asset = this.assets.value[index];
+    const asset = this.assetAt(index).value;
     return this.balances(asset).value;
   }
 
   @abi.readonly
   estimateSwap(from: uint64, to: uint64, amount: uint64): uint64 {
-    const assetIn = this.assets.value[from];
-    const assetOut = this.assets.value[to];
+    const assetIn = this.assetAt(from).value;
+    const assetOut = this.assetAt(to).value;
 
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
@@ -677,6 +641,7 @@ export class AssetVault extends Contract {
     return this.calcOut(balanceIn, weightIn, balanceOut, weightOut, amount);
   }
 
+  /** Current weight of an asset, interpolated if a weight transition is active. */
   @abi.readonly
   getCurrentWeight(index: uint64): uint64 {
     const current = globals.round;

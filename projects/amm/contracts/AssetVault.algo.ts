@@ -152,6 +152,9 @@ export class AssetVault extends Contract {
 
     const assetId = this.assetAt(index).value;
 
+    assert(txn.xferAsset === assetId, 'wrong asset for this index');
+    assert(txn.assetReceiver === this.app.address, 'deposit must be sent to the pool');
+
     this.optIn(assetId);
     this.balances(assetId).value += amount;
 
@@ -215,6 +218,8 @@ export class AssetVault extends Contract {
     const amountLP = transferTxn.assetAmount;
 
     assert(amountLP > 0, 'Must burn positive amount');
+    assert(transferTxn.xferAsset === this.token.value, 'must transfer the LP token');
+    assert(transferTxn.assetReceiver === this.app.address, 'LP must be sent to the pool');
 
     // Redeem against the supply circulating before this burn. The incoming LP is
     // already in the reserve (so totalLP() excludes it); add it back as the denominator.
@@ -259,6 +264,9 @@ export class AssetVault extends Contract {
 
     const assetIn = this.assetAt(from).value;
     const assetOut = this.assetAt(to).value;
+
+    assert(transferTxn.xferAsset === assetIn, 'wrong input asset');
+    assert(transferTxn.assetReceiver === this.app.address, 'input must be sent to the pool');
 
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
@@ -325,28 +333,6 @@ export class AssetVault extends Contract {
     }
 
     return this.endRound.value;
-  }
-
-  addAsset(asset: AssetID, w: uint64): uint64 {
-    const newIndex = this.numAssets.value;
-
-    if (!this.assetAt(newIndex).exists) {
-      this.assetAt(newIndex).create(8);
-    }
-    this.assetAt(newIndex).value = asset;
-
-    for (let i = 0; i < newIndex; i += 1) {
-      this.weights(i).value = this.weights(i).value * (SCALE - w);
-    }
-
-    if (!this.weights(newIndex).exists) {
-      this.weights(newIndex).create(8);
-    }
-    this.weights(newIndex).value = w;
-
-    this.numAssets.value = newIndex + 1;
-
-    return w;
   }
 
   /** Commit a finished weight interpolation into the stored weights. */

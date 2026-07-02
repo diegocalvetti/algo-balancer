@@ -27,7 +27,7 @@ const fixture = algorandFixture();
  *
  * 100 is the hard ceiling: every weight must be >= MIN_WEIGHT (10_000) and the
  * weights must sum to SCALE (1_000_000), so 100 weights of exactly 10_000 is the
- * densest possible. (128 — the old Factory cap — is mathematically impossible.)
+ * densest possible. (128 — the old Factory cap — is mathematically impossible right now.)
  */
 describe('AssetVault · stress (slow)', () => {
   let harness: VaultHarness;

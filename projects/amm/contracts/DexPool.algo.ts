@@ -326,6 +326,9 @@ export class DexPool extends Contract {
     const amount = txn.assetAmount;
     const assetId = this.assets.value[index];
 
+    assert(txn.xferAsset === assetId, 'wrong asset for this index');
+    assert(txn.assetReceiver === this.app.address, 'deposit must be sent to the pool');
+
     this.optIn(assetId);
     this.balances(assetId).value += amount;
 
@@ -375,6 +378,8 @@ export class DexPool extends Contract {
     const amountLP = transferTxn.assetAmount;
 
     assert(amountLP > 0, 'must burn positive amount');
+    assert(transferTxn.xferAsset === this.token.value, 'must transfer the LP token');
+    assert(transferTxn.assetReceiver === this.app.address, 'LP must be sent to the pool');
 
     // Redeem against the supply circulating before this burn. The incoming LP is
     // already in the reserve (so totalLP() excludes it); add it back as the denominator.
@@ -425,6 +430,9 @@ export class DexPool extends Contract {
 
     const assetIn = this.assets.value[from];
     const assetOut = this.assets.value[to];
+
+    assert(transferTxn.xferAsset === assetIn, 'wrong input asset');
+    assert(transferTxn.assetReceiver === this.app.address, 'input must be sent to the pool');
 
     const balanceIn = this.balances(assetIn).value;
     const balanceOut = this.balances(assetOut).value;
@@ -481,18 +489,6 @@ export class DexPool extends Contract {
     }
 
     return this.endRound.value;
-  }
-
-  addAsset(asset: AssetID, w: uint64): uint64 {
-    const newIndex = this.assets.value.length;
-    this.assets.value[newIndex] = asset;
-
-    for (let i = 0; i < newIndex; i += 1) {
-      this.weights(i).value = wideRatio([this.weights(i).value, SCALE - w], [SCALE]);
-    }
-
-    this.weights(newIndex).value = w;
-    return w;
   }
 
   // ─── Private helpers ──────────────────────────────────────────────────────

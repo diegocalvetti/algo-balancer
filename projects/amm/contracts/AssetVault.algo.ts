@@ -450,17 +450,15 @@ export class AssetVault extends Contract {
       z = wideRatio([x - SCALE, SCALE], [x]);
     }
 
+    // ln(x) = z + z^2/2 + z^3/3 + ... for z = (x-1)/x (all terms positive).
     let result = z;
     let term = z;
-    let neg = false;
 
     increaseOpcodeBudget();
 
     for (let i = 2; i <= 10; i = i + 1) {
       term = wideRatio([term, z], [SCALE]);
-      const delta = wideRatio([term], [i]);
-      result = neg ? result - delta : result + delta;
-      neg = !neg;
+      result = result + wideRatio([term], [i]);
     }
 
     return [negative, result];
@@ -543,13 +541,17 @@ export class AssetVault extends Contract {
   }
 
   /**
-   * LP to mint for a proportional, invariant-preserving deposit:
+   * LP to mint for a proportional deposit.
    *
-   *   liquidity = totalLP * Π_i (provided_i / balance_before_i) ^ weight_i
-   *
-   * Every asset must grow by the same fraction of its balance (within 0.5%),
+   * Every asset must grow by the same fraction k of its balance (within 0.5%),
    * otherwise the deposit is not invariant-preserving and is rejected — this also
-   * blocks single-sided deposits. Clears the sender's `provided` slots as it reads them.
+   * blocks single-sided deposits. Because the deposit grows the invariant by
+   * (1 + k) and Σ weights = 1, the LP supply must grow by exactly k:
+   *
+   *   minted = totalLP * k
+   *
+   * This is linear and exact — no per-asset pow is needed once proportionality is
+   * enforced. Clears the sender's `provided` slots as it reads them.
    *
    * @param sender - the provider whose deposit is being priced.
    * @returns the LP amount to mint.
@@ -558,18 +560,12 @@ export class AssetVault extends Contract {
     const totalAssets = this.numAssets.value;
     assert(totalAssets >= 1, 'Please provide at least one asset');
 
-    let ratio = SCALE;
     let referenceRatio: uint64 = 0;
-
-    for (let i = 0; i < totalAssets - 1; i += 1) {
-      increaseOpcodeBudget();
-    }
 
     for (let i = 0; i < totalAssets; i += 1) {
       const assetId = this.assetAt(i).value;
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
-      const weight = this.getCurrentWeight(i);
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
@@ -586,14 +582,10 @@ export class AssetVault extends Contract {
         );
       }
 
-      const powed = this.pow(assetRatio, weight);
-      ratio = wideRatio([ratio, powed], [SCALE]);
-
       this.provided(sender).value[i] = 0;
     }
 
-    const totalLP = this.totalLP();
-    return wideRatio([totalLP, ratio], [SCALE]);
+    return wideRatio([this.totalLP(), referenceRatio], [SCALE]);
   }
 
   /** Circulating LP supply: total issued, minus the reserve, minus burned. */

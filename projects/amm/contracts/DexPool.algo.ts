@@ -577,17 +577,15 @@ export class DexPool extends Contract {
       z = wideRatio([x - SCALE, SCALE], [x]);
     }
 
+    // ln(x) = z + z^2/2 + z^3/3 + ... for z = (x-1)/x (all terms positive).
     let result = z;
     let term = z;
-    let neg = false;
 
     increaseOpcodeBudget();
 
     for (let i = 2; i <= 10; i = i + 1) {
       term = wideRatio([term, z], [SCALE]);
-      const delta = wideRatio([term], [i]);
-      result = neg ? result - delta : result + delta;
-      neg = !neg;
+      result = result + wideRatio([term], [i]);
     }
 
     return [negative, result];
@@ -651,18 +649,12 @@ export class DexPool extends Contract {
     const totalAssets = this.assets.value.length;
     assert(totalAssets >= 1, 'provide at least one asset');
 
-    let ratio = SCALE;
     let referenceRatio: uint64 = 0;
-
-    for (let i = 0; i < totalAssets - 1; i += 1) {
-      increaseOpcodeBudget();
-    }
 
     for (let i = 0; i < totalAssets; i += 1) {
       const assetId = this.assets.value[i];
       const poolBalance = this.balances(assetId).value;
       const providedAmount = this.provided(sender).value[i];
-      const weight = this.getCurrentWeight(i);
 
       assert(poolBalance > 0, 'pool balance must be > 0');
 
@@ -681,13 +673,12 @@ export class DexPool extends Contract {
         );
       }
 
-      const powed = this.pow(assetRatio, weight);
-      ratio = wideRatio([ratio, powed], [SCALE]);
-
       this.provided(sender).value[i] = 0;
     }
 
-    return wideRatio([this.totalLP(), ratio], [SCALE]);
+    // Proportional deposit grows every balance by k = referenceRatio, so LP grows
+    // by exactly k (linear and exact; no per-asset pow needed since Σ weights = 1).
+    return wideRatio([this.totalLP(), referenceRatio], [SCALE]);
   }
 
   private totalLP(): uint64 {

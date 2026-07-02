@@ -412,3 +412,39 @@ export async function advanceRounds(account: AlgoParams, pool: VaultPool, n: num
     });
   }
 }
+
+// ─── Economic / accounting helpers ──────────────────────────────────────────
+
+/** An account's holding of a given ASA, in micro units. */
+export async function assetBalance(account: AlgoParams, assetId: bigint): Promise<bigint> {
+  const info = await account.algorand.asset.getAccountInformation(account.sender, assetId);
+  return info.balance;
+}
+
+/** The pool's internal balance for every asset, in pool order (micro units). */
+export async function poolBalances(pool: VaultPool): Promise<bigint[]> {
+  const numAssets = Number(await pool.poolClient.getTotalAssets());
+  const out: bigint[] = [];
+  for (let i = 0; i < numAssets; i += 1) {
+    out.push(await pool.poolClient.getBalance({ args: [i] }));
+  }
+  return out;
+}
+
+/**
+ * The pool's weighted-mean invariant V = Π (balance_i)^(weight_i), computed
+ * off-chain in floating point. Used to check value conservation (V must grow
+ * with fees and never shrink), not for exact on-chain accounting.
+ */
+export async function poolInvariant(pool: VaultPool): Promise<number> {
+  const balances = await poolBalances(pool);
+  const weights = await currentWeights(pool);
+
+  let v = 1;
+  for (let i = 0; i < balances.length; i += 1) {
+    const balance = Number(balances[i]) / 10 ** 6;
+    const weight = Number(weights[i]) / 10 ** 6;
+    v *= balance ** weight;
+  }
+  return v;
+}

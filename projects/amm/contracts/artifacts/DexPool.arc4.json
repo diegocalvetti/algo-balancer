@@ -118,6 +118,14 @@
       }
     },
     {
+      "name": "cancelDeposit",
+      "desc": "Refund an escrowed deposit that was never converted to LP. Returns each\npending asset amount to the sender and clears their record. Escrowed deposits\nare not part of the pool balance, so this cannot touch other LPs' funds.",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "burnLiquidity",
       "args": [
         {

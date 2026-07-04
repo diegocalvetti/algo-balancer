@@ -81,6 +81,14 @@
       }
     },
     {
+      "name": "cancelDeposit",
+      "desc": "Refund an escrowed deposit that was never converted to LP. Returns each\npending asset amount to the sender and clears their record. Escrowed deposits\nare not part of the pool balance, so this cannot touch other LPs' funds.",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
       "name": "burnLiquidity",
       "desc": "Burn LP tokens and return the holder's proportional share of every asset.",
       "args": [
@@ -88,6 +96,61 @@
           "name": "transferTxn",
           "type": "axfer",
           "desc": "LP transfer into the pool; its amount is the LP burned."
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "startMint",
+      "desc": "Begin a batched mint. Prices the LP for the sender's escrowed proportional\ndeposit — read from asset 0, since every asset grows the pool by the same\nfraction — and records it. Fold the deposit in with commitDeposit() batches,\nthen release the LP with finishMint().",
+      "args": [],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "commitDeposit",
+      "desc": "Fold the next  escrowed assets of an in-progress mint into the pool,\nchecking each grows the pool by the same fraction as asset 0 (or, on the first\ndeposit, is simply non-zero). Call until every asset is committed.",
+      "args": [
+        {
+          "name": "count",
+          "type": "uint64"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "finishMint",
+      "desc": "Finish an in-progress mint: require every asset committed, then send the LP.",
+      "args": [],
+      "returns": {
+        "type": "uint64"
+      }
+    },
+    {
+      "name": "startBurn",
+      "desc": "Begin a batched burn: lock the LP and snapshot the redemption denominator\n(circulating supply before the burn). Withdraw the assets with claimBurn()\nbatches. Balances are read live per batch, so run the claims promptly.",
+      "args": [
+        {
+          "name": "transferTxn",
+          "type": "axfer"
+        }
+      ],
+      "returns": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "claimBurn",
+      "desc": "Pay out the next  assets of an in-progress burn, each at the fixed\nfraction (amountLP / denominator) of its live balance. Call until every asset\nis claimed, at which point the pending record is cleared.",
+      "args": [
+        {
+          "name": "count",
+          "type": "uint64"
         }
       ],
       "returns": {

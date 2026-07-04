@@ -55,6 +55,22 @@ export class AssetVault extends Contract {
   /** Highest AssetID added so far; enforces strictly-increasing order across batches. */
   lastAsset = GlobalStateKey<AssetID>({ key: 'last_asset' });
 
+  // Per-account in-progress batched mint (for pools too large to mint in one
+  // getLiquidity call). Existence of pendingMintLp marks an active mint.
+  pendingMintLp = BoxMap<Address, uint64>({ prefix: 'pm_lp_' });
+
+  pendingMintRatio = BoxMap<Address, uint64>({ prefix: 'pm_ratio_' });
+
+  pendingMintCursor = BoxMap<Address, uint64>({ prefix: 'pm_cursor_' });
+
+  // Per-account in-progress batched burn (for pools too large to redeem in one
+  // burnLiquidity call). Existence of pendingBurnLp marks an active burn.
+  pendingBurnLp = BoxMap<Address, uint64>({ prefix: 'pb_lp_' });
+
+  pendingBurnDenom = BoxMap<Address, uint64>({ prefix: 'pb_denom_' });
+
+  pendingBurnCursor = BoxMap<Address, uint64>({ prefix: 'pb_cursor_' });
+
   /** Sets the manager to the creator. Bare create, called once at deployment. */
   @allow.bareCreate('NoOp')
   createApplication() {
@@ -156,8 +172,11 @@ export class AssetVault extends Contract {
     assert(txn.assetReceiver === this.app.address, 'deposit must be sent to the pool');
 
     this.optIn(assetId);
-    this.balances(assetId).value += amount;
 
+    // Escrow the deposit in `provided` only. It is folded into the pool balance
+    // (and thus becomes part of what LPs can withdraw) only when getLiquidity
+    // mints the corresponding LP. This keeps a pending deposit out of the shared
+    // pool, so it can't be siphoned by another LP's burn or move the price.
     if (!this.provided(sender).exists) {
       this.provided(sender).create((this.numAssets.value + 1) * 8);
     }
@@ -185,14 +204,18 @@ export class AssetVault extends Contract {
       // First deposit sets the initial pool; every asset must be seeded so the
       // pool never starts with a zero balance (which would break swaps and joins).
       for (let i = 0; i < this.numAssets.value; i += 1) {
-        assert(this.balances(this.assetAt(i).value).value > 0, 'first deposit must seed every asset');
+        assert(this.provided(sender).value[i] > 0, 'first deposit must seed every asset');
       }
       amount = AMOUNT_LP_DEPLOYER;
     } else {
       amount = this.computeNAssetsLiquidity(sender);
     }
 
-    for (let i = 0; i < this.provided(sender).value.length; i += 1) {
+    // Fold the escrowed deposit into the pool now that LP is being minted, then
+    // clear the pending record.
+    for (let i = 0; i < this.numAssets.value; i += 1) {
+      const assetId = this.assetAt(i).value;
+      this.balances(assetId).value += this.provided(sender).value[i];
       this.provided(sender).value[i] = 0;
     }
 
@@ -203,6 +226,34 @@ export class AssetVault extends Contract {
     });
 
     return amount;
+  }
+
+  /**
+   * Refund an escrowed deposit that was never converted to LP. Returns each
+   * pending asset amount to the sender and clears their record. Escrowed deposits
+   * are not part of the pool balance, so this cannot touch other LPs' funds.
+   */
+  cancelDeposit(): void {
+    this.assertIsBootstrapped();
+
+    const sender = this.txn.sender;
+    assert(this.provided(sender).exists, 'no pending deposit');
+
+    for (let b = 0; b < this.numAssets.value / 4 + 1; b += 1) {
+      increaseOpcodeBudget();
+    }
+
+    for (let i = 0; i < this.numAssets.value; i += 1) {
+      const amount = this.provided(sender).value[i];
+      if (amount > 0) {
+        sendAssetTransfer({
+          assetReceiver: sender,
+          assetAmount: amount,
+          xferAsset: this.assetAt(i).value,
+        });
+      }
+      this.provided(sender).value[i] = 0;
+    }
   }
 
   /**
@@ -239,6 +290,178 @@ export class AssetVault extends Contract {
         assetAmount: assetAmount,
         xferAsset: assetId,
       });
+    }
+  }
+
+  // ─── Batched liquidity ──────────────────────────────────────────────────────
+  // For pools with too many assets to mint or burn in a single call: the O(n)
+  // work (folding deposits, paying out assets) is split across several calls, each
+  // staying within one transaction group's resource-reference limit.
+
+  /**
+   * Begin a batched mint. Prices the LP for the sender's escrowed proportional
+   * deposit — read from asset 0, since every asset grows the pool by the same
+   * fraction — and records it. Fold the deposit in with commitDeposit() batches,
+   * then release the LP with finishMint().
+   */
+  startMint(): void {
+    this.assertIsBootstrapped();
+    this.tryFinalizeWeights();
+
+    const sender = this.txn.sender;
+    assert(!this.pendingMintLp(sender).exists, 'finish the pending mint first');
+    assert(this.provided(sender).exists, 'nothing provided');
+
+    let lpAmount: uint64 = 0;
+    let referenceRatio: uint64 = 0;
+
+    if (this.totalLP() === 0) {
+      // First deposit: fixed LP; proportionality becomes "every asset seeded".
+      lpAmount = AMOUNT_LP_DEPLOYER;
+    } else {
+      const balance0 = this.balances(this.assetAt(0).value).value;
+      const provided0 = this.provided(sender).value[0];
+      assert(provided0 > 0 && balance0 > 0, 'must provide asset 0');
+      referenceRatio = wideRatio([provided0, SCALE], [balance0]);
+      lpAmount = wideRatio([this.totalLP(), referenceRatio], [SCALE]);
+    }
+
+    this.pendingMintLp(sender).create(8);
+    this.pendingMintLp(sender).value = lpAmount;
+    this.pendingMintRatio(sender).create(8);
+    this.pendingMintRatio(sender).value = referenceRatio;
+    this.pendingMintCursor(sender).create(8);
+    this.pendingMintCursor(sender).value = 0;
+  }
+
+  /**
+   * Fold the next `count` escrowed assets of an in-progress mint into the pool,
+   * checking each grows the pool by the same fraction as asset 0 (or, on the first
+   * deposit, is simply non-zero). Call until every asset is committed.
+   */
+  commitDeposit(count: uint64): void {
+    const sender = this.txn.sender;
+    assert(this.pendingMintLp(sender).exists, 'no pending mint');
+
+    for (let b = 0; b < count / 4 + 1; b += 1) {
+      increaseOpcodeBudget();
+    }
+
+    const referenceRatio = this.pendingMintRatio(sender).value;
+    const cursor = this.pendingMintCursor(sender).value;
+    const remaining = this.numAssets.value - cursor;
+    const batch = count < remaining ? count : remaining;
+
+    for (let j = 0; j < batch; j += 1) {
+      const index = cursor + j;
+      const assetId = this.assetAt(index).value;
+      const providedAmount = this.provided(sender).value[index];
+
+      if (referenceRatio === 0) {
+        assert(providedAmount > 0, 'first deposit must seed every asset');
+      } else {
+        const poolBalance = this.balances(assetId).value;
+        assert(poolBalance > 0, 'pool balance must be > 0');
+        const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance]);
+        assert(
+          this.absDiff(assetRatio, referenceRatio) <= referenceRatio / 200,
+          'deposit must be proportional to pool balances'
+        );
+      }
+
+      this.balances(assetId).value += providedAmount;
+      this.provided(sender).value[index] = 0;
+    }
+
+    this.pendingMintCursor(sender).value = cursor + batch;
+  }
+
+  /** Finish an in-progress mint: require every asset committed, then send the LP. */
+  finishMint(): uint64 {
+    const sender = this.txn.sender;
+    assert(this.pendingMintLp(sender).exists, 'no pending mint');
+
+    assert(this.pendingMintCursor(sender).value === this.numAssets.value, 'commit every asset first');
+
+    const lpAmount = this.pendingMintLp(sender).value;
+    this.pendingMintLp(sender).delete();
+    this.pendingMintRatio(sender).delete();
+    this.pendingMintCursor(sender).delete();
+
+    sendAssetTransfer({
+      assetReceiver: sender,
+      assetAmount: lpAmount,
+      xferAsset: this.token.value,
+    });
+
+    return lpAmount;
+  }
+
+  /**
+   * Begin a batched burn: lock the LP and snapshot the redemption denominator
+   * (circulating supply before the burn). Withdraw the assets with claimBurn()
+   * batches. Balances are read live per batch, so run the claims promptly.
+   */
+  startBurn(transferTxn: AssetTransferTxn): void {
+    this.assertIsBootstrapped();
+    this.tryFinalizeWeights();
+
+    const sender = this.txn.sender;
+    const amountLP = transferTxn.assetAmount;
+
+    assert(amountLP > 0, 'must burn positive amount');
+    assert(transferTxn.xferAsset === this.token.value, 'must transfer the LP token');
+    assert(transferTxn.assetReceiver === this.app.address, 'LP must be sent to the pool');
+    assert(!this.pendingBurnLp(sender).exists, 'finish the pending burn first');
+
+    this.pendingBurnLp(sender).create(8);
+    this.pendingBurnLp(sender).value = amountLP;
+    this.pendingBurnDenom(sender).create(8);
+    this.pendingBurnDenom(sender).value = this.totalLP() + amountLP;
+    this.pendingBurnCursor(sender).create(8);
+    this.pendingBurnCursor(sender).value = 0;
+  }
+
+  /**
+   * Pay out the next `count` assets of an in-progress burn, each at the fixed
+   * fraction (amountLP / denominator) of its live balance. Call until every asset
+   * is claimed, at which point the pending record is cleared.
+   */
+  claimBurn(count: uint64): void {
+    const sender = this.txn.sender;
+    assert(this.pendingBurnLp(sender).exists, 'no pending burn');
+
+    for (let b = 0; b < count / 4 + 1; b += 1) {
+      increaseOpcodeBudget();
+    }
+
+    const amountLP = this.pendingBurnLp(sender).value;
+    const denominator = this.pendingBurnDenom(sender).value;
+    const cursor = this.pendingBurnCursor(sender).value;
+    const remaining = this.numAssets.value - cursor;
+    const batch = count < remaining ? count : remaining;
+
+    for (let j = 0; j < batch; j += 1) {
+      const index = cursor + j;
+      const assetId = this.assetAt(index).value;
+      const poolBalance = this.balances(assetId).value;
+      const assetAmount = wideRatio([amountLP, poolBalance], [denominator]);
+
+      this.balances(assetId).value = poolBalance - assetAmount;
+
+      sendAssetTransfer({
+        assetReceiver: sender,
+        assetAmount: assetAmount,
+        xferAsset: assetId,
+      });
+    }
+
+    if (cursor + batch === this.numAssets.value) {
+      this.pendingBurnLp(sender).delete();
+      this.pendingBurnDenom(sender).delete();
+      this.pendingBurnCursor(sender).delete();
+    } else {
+      this.pendingBurnCursor(sender).value = cursor + batch;
     }
   }
 
@@ -537,7 +760,8 @@ export class AssetVault extends Contract {
    *   minted = totalLP * k
    *
    * This is linear and exact — no per-asset pow is needed once proportionality is
-   * enforced. Clears the sender's `provided` slots as it reads them.
+   * enforced. Reads the sender's escrowed `provided` amounts; getLiquidity folds
+   * and clears them after minting.
    *
    * @param sender - the provider whose deposit is being priced.
    * @returns the LP amount to mint.
@@ -555,8 +779,9 @@ export class AssetVault extends Contract {
 
       assert(poolBalance > 0, 'Pool balance must be > 0');
 
-      // Fraction by which this asset's balance grows.
-      const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount]);
+      // Fraction by which this asset's balance will grow. The deposit is still
+      // escrowed (not yet in poolBalance), so poolBalance is the pre-deposit base.
+      const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance]);
 
       // All assets must grow by the same fraction (0.5% tolerance for rounding).
       if (i === 0) {
@@ -567,8 +792,6 @@ export class AssetVault extends Contract {
           'deposit must be proportional to pool balances'
         );
       }
-
-      this.provided(sender).value[i] = 0;
     }
 
     return wideRatio([this.totalLP(), referenceRatio], [SCALE]);

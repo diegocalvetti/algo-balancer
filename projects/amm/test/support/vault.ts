@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { AlgorandFixture } from '@algorandfoundation/algokit-utils/types/testing';
+import algosdk from 'algosdk';
 
 import { FactoryClient } from '../../contracts/clients/FactoryClient';
 import { AssetVaultClient, AssetVaultFactory } from '../../contracts/clients/AssetVaultClient';
@@ -291,8 +292,11 @@ export async function mintLp(account: AlgoParams, pool: VaultPool): Promise<bigi
   const client = vaultClientFor(account, pool);
   const group = client.newGroup();
 
+  // Cap opUps so the group stays within the 16-transaction limit (15 opUps +
+  // getLiquidity). This maximises the foreign-reference slots available.
   const numAssets = Number(await pool.poolClient.getTotalAssets());
-  for (let i = 0; i < numAssets; i += 1) {
+  const opUps = Math.min(numAssets, 15);
+  for (let i = 0; i < opUps; i += 1) {
     group.opUp({ ...commonAppCallTxParams(account), args: [], note: new Uint8Array([i]) });
   }
   group.getLiquidity({ ...commonAppCallTxParams(account), args: [] });
@@ -345,13 +349,180 @@ export async function burn(account: AlgoParams, pool: VaultPool, lpMicro: bigint
   const xfer = await makeAssetTransferTxn(account, pool.lpId, pool.poolClient.appAddress, Number(lpMicro) / 10 ** 6);
 
   const group = client.newGroup();
+  // 14 opUps + the LP transfer + burnLiquidity = 16 (the group limit).
   const numAssets = Number(await pool.poolClient.getTotalAssets());
-  for (let i = 0; i < numAssets; i += 1) {
+  const opUps = Math.min(numAssets, 14);
+  for (let i = 0; i < opUps; i += 1) {
     group.opUp({ ...commonAppCallTxParams(account), args: [], note: new Uint8Array([i]) });
   }
   group.burnLiquidity({ ...commonAppCallTxParams(account, (500_000).microAlgo()), args: [xfer] });
 
   await group.send(commonAppCallTxParams(account));
+}
+
+/** Refund `account`'s escrowed (not-yet-minted) deposit. */
+export async function cancelDeposit(account: AlgoParams, pool: VaultPool): Promise<void> {
+  const client = vaultClientFor(account, pool);
+  const group = client.newGroup();
+
+  const numAssets = Number(await pool.poolClient.getTotalAssets());
+  const opUps = Math.min(numAssets, 15);
+  for (let i = 0; i < opUps; i += 1) {
+    group.opUp({ ...commonAppCallTxParams(account), args: [], note: new Uint8Array([i]) });
+  }
+  group.cancelDeposit({ ...commonAppCallTxParams(account, (500_000).microAlgo()), args: [] });
+
+  await group.send(commonAppCallTxParams(account));
+}
+
+const SEND_OPTS = { populateAppCallResources: true, coverAppCallInnerTransactionFees: true };
+
+/** 8-byte big-endian encoding of a uint64 (matches TEALScript's itob box keys). */
+function u64be(n: bigint | number): Uint8Array {
+  const b = new Uint8Array(8);
+  new DataView(b.buffer).setBigUint64(0, BigInt(n));
+  return b;
+}
+
+function boxName(prefix: string, suffix: Uint8Array): Uint8Array {
+  return new Uint8Array([...new TextEncoder().encode(prefix), ...suffix]);
+}
+
+/**
+ * All box references a batched commitDeposit / claimBurn call touches for the
+ * asset range [cursor, cursor+count). These boxes are read via box_get, which
+ * returns "empty" instead of faulting when unreferenced, so resource population
+ * cannot auto-discover them at a runtime-derived index — they must be named.
+ */
+function batchBoxes(account: AlgoParams, pool: VaultPool, prefixes: string[], cursor: number, count: number) {
+  const pub = algosdk.decodeAddress(account.sender.toString()).publicKey;
+  const boxes = prefixes.map((p) => ({ appId: pool.poolID, name: boxName(p, pub) }));
+  boxes.push({ appId: pool.poolID, name: boxName('provided_', pub) });
+  for (let i = cursor; i < cursor + count; i += 1) {
+    boxes.push({ appId: pool.poolID, name: boxName('asset_', u64be(i)) });
+    boxes.push({ appId: pool.poolID, name: boxName('balances_', u64be(pool.assetIds[i])) });
+  }
+  return boxes;
+}
+
+function pendingBoxes(account: AlgoParams, pool: VaultPool, prefixes: string[]) {
+  const pub = algosdk.decodeAddress(account.sender.toString()).publicKey;
+  return prefixes.map((prefix) => ({ appId: pool.poolID, name: boxName(prefix, pub) }));
+}
+
+const MINT_BOXES = ['pm_lp_', 'pm_ratio_', 'pm_cursor_'];
+const BURN_BOXES = ['pb_lp_', 'pb_denom_', 'pb_cursor_'];
+
+/**
+ * Batched mint for large pools: startMint → commitDeposit (in batches) → finishMint.
+ * The escrowed deposit must already be in place (via {@link provide}). Returns the
+ * LP minted (micro).
+ */
+type BoxRef = { appId: bigint; name: Uint8Array };
+
+/**
+ * Run one batched-liquidity call in its own group, spreading `boxes` across the
+ * opUp transactions (max 8 box refs per transaction; a resource referenced by any
+ * transaction is available to the whole group). Returns the send result.
+ */
+type BatchRefs = { boxReferences: BoxRef[]; assetReferences: bigint[] };
+
+/**
+ * Run one batched-liquidity call. Boxes are NOT shared across a group (unlike
+ * assets), so the ≤8 box references the call needs go on the method transaction
+ * itself; a couple of plain opUps supply extra opcode budget. Population is off,
+ * because it would strip explicit box refs (box_get access doesn't fault when
+ * unreferenced, so population can't detect it).
+ */
+async function sendBatchGroup(
+  client: ReturnType<typeof vaultClientFor>,
+  account: AlgoParams,
+  refs: BatchRefs,
+  addCall: (group: ReturnType<ReturnType<typeof vaultClientFor>['newGroup']>, refs: BatchRefs) => void
+) {
+  const group = client.newGroup();
+  group.opUp({ ...commonAppCallTxParams(account), args: [], note: new Uint8Array([0]) });
+  group.opUp({ ...commonAppCallTxParams(account), args: [], note: new Uint8Array([1]) });
+  addCall(group, refs);
+  return group.send({ populateAppCallResources: false, coverAppCallInnerTransactionFees: true });
+}
+
+// Box refs live on the accessing transaction (max 8), so each batch is small:
+// mint touches 3 pending + 1 provided + 2 per asset, leaving room for 2 assets.
+export async function mintLpBatched(account: AlgoParams, pool: VaultPool, batchSize = 2): Promise<bigint> {
+  const client = vaultClientFor(account, pool);
+  const numAssets = Number(await pool.poolClient.getTotalAssets());
+  const params = commonAppCallTxParams(account, (500_000).microAlgo());
+
+  await sendBatchGroup(
+    client,
+    account,
+    { boxReferences: batchBoxes(account, pool, MINT_BOXES, 0, 1), assetReferences: [pool.lpId] },
+    (g, r) => g.startMint({ ...params, args: [], ...r })
+  );
+
+  for (let done = 0; done < numAssets; done += batchSize) {
+    const count = Math.min(batchSize, numAssets - done);
+    await sendBatchGroup(
+      client,
+      account,
+      { boxReferences: batchBoxes(account, pool, MINT_BOXES, done, count), assetReferences: [] },
+      (g, r) => g.commitDeposit({ ...params, args: [count], ...r })
+    );
+  }
+
+  const result = await sendBatchGroup(
+    client,
+    account,
+    { boxReferences: pendingBoxes(account, pool, MINT_BOXES), assetReferences: [pool.lpId] },
+    (g, r) => g.finishMint({ ...params, args: [], ...r })
+  );
+
+  return result.returns![result.returns!.length - 1] as bigint;
+}
+
+/**
+ * Batched burn for large pools: startBurn → claimBurn (in batches until every asset
+ * is paid out).
+ */
+// Burn touches one extra reference per asset (the asset itself, for the transfer),
+// and the per-transaction reference budget is 8 total, so it claims one asset at a time.
+export async function burnBatched(account: AlgoParams, pool: VaultPool, lpMicro: bigint, batchSize = 1): Promise<void> {
+  const client = vaultClientFor(account, pool);
+  const numAssets = Number(await pool.poolClient.getTotalAssets());
+  const params = commonAppCallTxParams(account, (500_000).microAlgo());
+
+  const xfer = await makeAssetTransferTxn(account, pool.lpId, pool.poolClient.appAddress, Number(lpMicro) / 10 ** 6);
+  await sendBatchGroup(
+    client,
+    account,
+    { boxReferences: pendingBoxes(account, pool, BURN_BOXES), assetReferences: [pool.lpId] },
+    (g, r) => g.startBurn({ ...params, args: [xfer], ...r })
+  );
+
+  for (let done = 0; done < numAssets; done += batchSize) {
+    const count = Math.min(batchSize, numAssets - done);
+    await sendBatchGroup(
+      client,
+      account,
+      {
+        boxReferences: batchBoxes(account, pool, BURN_BOXES, done, count),
+        assetReferences: pool.assetIds.slice(done, done + count),
+      },
+      (g, r) => g.claimBurn({ ...params, args: [count], ...r })
+    );
+  }
+}
+
+/** Read a pool balance via the readonly getBalance, naming the boxes it touches. */
+export async function getBalanceAt(pool: VaultPool, index: number): Promise<bigint> {
+  return pool.poolClient.getBalance({
+    args: [index],
+    boxReferences: [
+      { appId: pool.poolID, name: boxName('asset_', u64be(index)) },
+      { appId: pool.poolID, name: boxName('balances_', u64be(pool.assetIds[index])) },
+    ],
+  });
 }
 
 // ─── Weight helpers ─────────────────────────────────────────────────────────

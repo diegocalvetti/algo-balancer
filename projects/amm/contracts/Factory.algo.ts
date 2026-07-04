@@ -209,7 +209,10 @@ export class Factory extends Contract {
 
   MANAGER_writePoolContractProgram(offset: uint64, data: bytes, type: uint64): void {
     this.assertIsManager();
-    const pageIndex = (offset + 4096 - 1) / 4096;
+    // The program is written in 2000-byte chunks, one per box; createPool reads the
+    // boxes in order and concatenates them. Index by chunk, not by 4096-byte page —
+    // otherwise chunks past 4096 bytes collide and overwrite earlier ones.
+    const pageIndex = offset / 2000;
 
     if (type === DEX_POOL_TYPE) {
       this.dexPoolContractApprovalProgram(pageIndex).value = data;

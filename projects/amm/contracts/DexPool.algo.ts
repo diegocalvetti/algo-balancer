@@ -330,8 +330,10 @@ export class DexPool extends Contract {
     assert(txn.assetReceiver === this.app.address, 'deposit must be sent to the pool');
 
     this.optIn(assetId);
-    this.balances(assetId).value += amount;
 
+    // Escrow the deposit in `provided` only. It is folded into the pool balance
+    // (and thus becomes withdrawable) only when getLiquidity mints the matching
+    // LP, so a pending deposit can't be siphoned by another LP's burn.
     if (!this.provided(sender).exists) {
       this.provided(sender).create((this.assets.value.length + 1) * 8);
     }
@@ -350,14 +352,18 @@ export class DexPool extends Contract {
       // First deposit sets the initial pool; every asset must be seeded so the
       // pool never starts with a zero balance (which would break swaps and joins).
       for (let i = 0; i < this.assets.value.length; i += 1) {
-        assert(this.balances(this.assets.value[i]).value > 0, 'first deposit must seed every asset');
+        assert(this.provided(sender).value[i] > 0, 'first deposit must seed every asset');
       }
       amount = AMOUNT_LP_DEPLOYER;
     } else {
       amount = this.computeNAssetsLiquidity(sender);
     }
 
-    for (let i = 0; i < this.provided(sender).value.length; i += 1) {
+    // Fold the escrowed deposit into the pool now that LP is being minted, then
+    // clear the pending record.
+    for (let i = 0; i < this.assets.value.length; i += 1) {
+      const assetId = this.assets.value[i];
+      this.balances(assetId).value += this.provided(sender).value[i];
       this.provided(sender).value[i] = 0;
     }
 
@@ -368,6 +374,34 @@ export class DexPool extends Contract {
     });
 
     return amount;
+  }
+
+  /**
+   * Refund an escrowed deposit that was never converted to LP. Returns each
+   * pending asset amount to the sender and clears their record. Escrowed deposits
+   * are not part of the pool balance, so this cannot touch other LPs' funds.
+   */
+  cancelDeposit(): void {
+    this.assertIsBootstrapped();
+
+    const sender = this.txn.sender;
+    assert(this.provided(sender).exists, 'no pending deposit');
+
+    for (let b = 0; b < this.assets.value.length / 4 + 1; b += 1) {
+      increaseOpcodeBudget();
+    }
+
+    for (let i = 0; i < this.assets.value.length; i += 1) {
+      const amount = this.provided(sender).value[i];
+      if (amount > 0) {
+        sendAssetTransfer({
+          assetReceiver: sender,
+          assetAmount: amount,
+          xferAsset: this.assets.value[i],
+        });
+      }
+      this.provided(sender).value[i] = 0;
+    }
   }
 
   burnLiquidity(transferTxn: AssetTransferTxn) {
@@ -654,8 +688,9 @@ export class DexPool extends Contract {
 
       assert(poolBalance > 0, 'pool balance must be > 0');
 
-      // Fraction by which this asset's balance grows.
-      const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance - providedAmount]);
+      // Fraction by which this asset's balance will grow. The deposit is still
+      // escrowed (not yet in poolBalance), so poolBalance is the pre-deposit base.
+      const assetRatio = wideRatio([providedAmount, SCALE], [poolBalance]);
 
       // All assets must grow by the same fraction (0.5% tolerance for rounding),
       // otherwise the deposit is not invariant-preserving and is rejected — which
@@ -668,8 +703,6 @@ export class DexPool extends Contract {
           'deposit must be proportional to pool balances'
         );
       }
-
-      this.provided(sender).value[i] = 0;
     }
 
     // Proportional deposit grows every balance by k = referenceRatio, so LP grows

@@ -82,4 +82,29 @@ describe('AssetVault · pending liquidity', () => {
     // Escrow is not part of `balances`, so nothing that prices swaps has changed.
     expect(await poolBalances(pool)).toEqual(before);
   });
+
+  test("two providers' pending deposits are independent", async () => {
+    const alice = await newProvider(harness, pool);
+    const bob = await newProvider(harness, pool);
+    const bobBefore = await assetBalance(bob, pool.assetIds[0]);
+
+    await provide(bob, pool, 200); // bob escrows 200 (not minted)
+    await provideAndMint(alice, pool, 100); // alice deposits and mints
+
+    // Alice's mint did not consume bob's escrow: he recovers exactly his 200.
+    await cancelDeposit(bob, pool);
+    expect(await assetBalance(bob, pool.assetIds[0])).toBe(bobBefore);
+  });
+
+  test('cancelDeposit refunds only the assets that were escrowed', async () => {
+    const alice = await newProvider(harness, pool);
+    const before0 = await assetBalance(alice, pool.assetIds[0]);
+    const before1 = await assetBalance(alice, pool.assetIds[1]);
+
+    await provide(alice, pool, 100, [0]); // escrow asset 0 only
+
+    await cancelDeposit(alice, pool);
+    expect(await assetBalance(alice, pool.assetIds[0])).toBe(before0); // refunded
+    expect(await assetBalance(alice, pool.assetIds[1])).toBe(before1); // never touched
+  });
 });

@@ -11,7 +11,9 @@ import {
   newProvider,
   poolTimes,
   provide,
+  provideAndMint,
   storedWeights,
+  swap,
   VaultHarness,
   VaultPool,
 } from './support/vault';
@@ -123,5 +125,42 @@ describe('AssetVault · weights', () => {
     const stranger = await newProvider(harness, pool);
 
     await expect(changeWeights(stranger, pool, [0.5, 0.5], 0)).rejects.toThrow();
+  });
+
+  test('a swap during a weight transition prices at the interpolated weights', async () => {
+    // A 0→1 swap of the same size on three pools: static 0.8/0.2, a pool halfway
+    // through shifting 0.8/0.2 → 0.5/0.5, and static 0.5/0.5. Output falls as the
+    // weight ratio w0/w1 drops from 4 to 1, so the live (interpolated) pool must
+    // land strictly between the two static endpoints.
+    const poolStatic = await createVaultPool(harness, [0.8, 0.2]);
+    await provideAndMint(harness.manager, poolStatic, 1000);
+    const outStatic = await swap(await newProvider(harness, poolStatic), poolStatic, 0, 1, 1);
+
+    const poolMid = await createVaultPool(harness, [0.8, 0.2]);
+    await provideAndMint(harness.manager, poolMid, 1000);
+    await changeWeights(harness.manager, poolMid, [0.5, 0.5], 20);
+    await advanceRounds(harness.manager, poolMid, 10);
+    const outMid = await swap(await newProvider(harness, poolMid), poolMid, 0, 1, 1);
+
+    const poolTarget = await createVaultPool(harness, [0.5, 0.5]);
+    await provideAndMint(harness.manager, poolTarget, 1000);
+    const outTarget = await swap(await newProvider(harness, poolTarget), poolTarget, 0, 1, 1);
+
+    expect(outMid).toBeLessThan(outStatic);
+    expect(outMid).toBeGreaterThan(outTarget);
+  });
+
+  test('a new weight change can start once the previous one finalizes', async () => {
+    const livePool = await createVaultPool(harness, [0.8, 0.2]);
+    await provideAndMint(harness.manager, livePool, 1000);
+    const trader = await newProvider(harness, livePool);
+
+    await changeWeights(harness.manager, livePool, [0.5, 0.5], 3);
+    await advanceRounds(harness.manager, livePool, 5); // window elapsed
+    await swap(trader, livePool, 0, 1, 1); // any op finalizes the transition
+
+    // The transition window is cleared, so a fresh change is accepted.
+    await changeWeights(harness.manager, livePool, [0.6, 0.4], 0);
+    expect(await livePool.poolClient.getWeight({ args: [0] })).toBe(fixedWeights([0.6])[0]);
   });
 });

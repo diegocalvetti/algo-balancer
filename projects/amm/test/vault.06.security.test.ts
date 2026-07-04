@@ -5,6 +5,7 @@ import { commonAppCallTxParams, makeAssetTransferTxn } from '../helpers/generic'
 import {
   createVaultPool,
   deployVaultFactory,
+  mintLp,
   newProvider,
   provideAndMint,
   vaultClientFor,
@@ -91,5 +92,24 @@ describe('AssetVault · security', () => {
     group.burnLiquidity({ ...commonAppCallTxParams(attacker, (500_000).microAlgo()), args: [badTransfer] });
 
     await expect(group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true })).rejects.toThrow();
+  });
+
+  test('burnLiquidity rejects LP that is not sent to the pool', async () => {
+    const client = vaultClientFor(harness.manager, pool);
+
+    // Correct LP token, but the transfer pays the burner instead of the pool.
+    const badTransfer = await makeAssetTransferTxn(harness.manager, pool.lpId, harness.manager.sender, 1);
+
+    const group = client.newGroup();
+    group.opUp({ ...commonAppCallTxParams(harness.manager), args: [], note: new Uint8Array([0]) });
+    group.burnLiquidity({ ...commonAppCallTxParams(harness.manager, (500_000).microAlgo()), args: [badTransfer] });
+
+    await expect(group.send({ populateAppCallResources: true, coverAppCallInnerTransactionFees: true })).rejects.toThrow();
+  });
+
+  test('getLiquidity reverts when the caller has provided nothing', async () => {
+    // A stranger with no escrowed deposit cannot mint LP out of thin air.
+    const stranger = await newProvider(harness, pool);
+    await expect(mintLp(stranger, pool)).rejects.toThrow();
   });
 });

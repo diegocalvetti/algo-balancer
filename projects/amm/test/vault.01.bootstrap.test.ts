@@ -52,4 +52,19 @@ describe('AssetVault · bootstrap', () => {
     // 0.005 → 5_000 micro, under the 10_000 floor.
     await expect(createVaultPool(harness, [0.995, 0.005])).rejects.toThrow();
   });
+
+  test('a weight exactly at MIN_WEIGHT is accepted', async () => {
+    // 0.01 → 10_000 micro, the floor itself (the `>=` boundary must pass).
+    const pool = await createVaultPool(harness, [0.99, 0.01]);
+    expect(await pool.poolClient.getWeight({ args: [1] })).toBe(BigInt(10_000));
+  });
+
+  test('a 3-asset pool bootstraps with the requested weights', async () => {
+    const pool = await createVaultPool(harness, [0.5, 0.3, 0.2]);
+
+    expect(await pool.poolClient.getTotalAssets()).toBe(BigInt(3));
+    expect(await pool.poolClient.getWeight({ args: [0] })).toBe(fixedWeights([0.5])[0]);
+    expect(await pool.poolClient.getWeight({ args: [1] })).toBe(fixedWeights([0.3])[0]);
+    expect(await pool.poolClient.getWeight({ args: [2] })).toBe(fixedWeights([0.2])[0]);
+  });
 });

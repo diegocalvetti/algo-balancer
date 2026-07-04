@@ -1,3 +1,4 @@
+import { beforeEach, expect } from '@jest/globals';
 import { Config } from '@algorandfoundation/algokit-utils';
 
 /**
@@ -26,4 +27,12 @@ Config.configure({
     verbose: noop,
     debug: noop,
   },
+});
+
+// Integration tests can each take several seconds. Print the name of the test
+// that is about to run so a long suite streams progress instead of hanging
+// silently. Written to stderr so it shows even before the test's assertions run.
+beforeEach(() => {
+  const name = expect.getState().currentTestName;
+  if (name) process.stderr.write(`  ▶ ${name}\n`);
 });

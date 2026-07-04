@@ -96,4 +96,15 @@ describe('AssetVault · liquidity', () => {
     expect(await pool.poolClient.getBalance({ args: [0] })).toBe(BigInt(0));
     expect(await pool.poolClient.getBalance({ args: [1] })).toBe(BigInt(0));
   });
+
+  test('burning part of an LP position redeems a proportional share', async () => {
+    // Sole provider seeds 1000 of each asset.
+    const lp = await provideAndMint(harness.manager, pool, 1000);
+
+    // Burn exactly half the LP → half of each balance is redeemed.
+    await burn(harness.manager, pool, lp / BigInt(2));
+
+    expect(await pool.poolClient.getBalance({ args: [0] })).toBe(BigInt(500_000_000));
+    expect(await pool.poolClient.getBalance({ args: [1] })).toBe(BigInt(500_000_000));
+  });
 });

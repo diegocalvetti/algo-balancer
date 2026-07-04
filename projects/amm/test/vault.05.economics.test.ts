@@ -111,4 +111,41 @@ describe('AssetVault · economics', () => {
     // Volume left fees behind: the LP-owned pool is worth more than it was seeded.
     expect(vAfter).toBeGreaterThan(vSeed);
   });
+
+  test('two equal providers receive equal LP and redeem equally', async () => {
+    const alice = await newProvider(harness, pool);
+    const bob = await newProvider(harness, pool);
+
+    const lpA = await provideAndMint(alice, pool, 100);
+    const lpB = await provideAndMint(bob, pool, 100);
+    // Equal value added → equal LP, within integer-rounding dust.
+    const lpDiff = lpA > lpB ? lpA - lpB : lpB - lpA;
+    expect(lpDiff).toBeLessThan(ONE_TOKEN);
+
+    const aBefore = await assetBalance(alice, pool.assetIds[0]);
+    await burn(alice, pool, lpA);
+    const aRedeemed = (await assetBalance(alice, pool.assetIds[0])) - aBefore;
+
+    const bBefore = await assetBalance(bob, pool.assetIds[0]);
+    await burn(bob, pool, lpB);
+    const bRedeemed = (await assetBalance(bob, pool.assetIds[0])) - bBefore;
+
+    // Each recovers its ~100-token deposit, and the two shares match.
+    const redeemedDiff = aRedeemed > bRedeemed ? aRedeemed - bRedeemed : bRedeemed - aRedeemed;
+    expect(redeemedDiff).toBeLessThan(ONE_TOKEN);
+    expect(aRedeemed).toBeGreaterThan(BigInt(99) * ONE_TOKEN);
+  });
+
+  test('a small proportional deposit is minted and redeemed without leak', async () => {
+    const lp = await newProvider(harness, pool);
+    const before0 = await assetBalance(lp, pool.assetIds[0]);
+
+    // Add 50 to a 1000 pool → growth ratio 0.05, far below 1.
+    const minted = await provideAndMint(lp, pool, 50);
+    await burn(lp, pool, minted);
+
+    const net = before0 - (await assetBalance(lp, pool.assetIds[0]));
+    expect(net).toBeGreaterThanOrEqual(BigInt(0)); // no value extracted
+    expect(net).toBeLessThan(ONE_TOKEN); // only dust lost
+  });
 });

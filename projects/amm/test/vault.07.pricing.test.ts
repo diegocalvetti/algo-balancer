@@ -78,4 +78,30 @@ describe('AssetVault · pricing', () => {
     expect(received).toBeCloseTo(expected, 1);
     expect(received).toBeLessThan(1); // markedly cheaper than the reverse direction
   });
+
+  test('larger swaps get a worse per-unit price (monotonic slippage)', async () => {
+    const poolA = await createVaultPool(harness, [0.5, 0.5]);
+    await provideAndMint(harness.manager, poolA, 1000);
+    const smallPerUnit = Number(await swap(await newProvider(harness, poolA), poolA, 0, 1, 10)) / 10;
+
+    const poolB = await createVaultPool(harness, [0.5, 0.5]);
+    await provideAndMint(harness.manager, poolB, 1000);
+    const largePerUnit = Number(await swap(await newProvider(harness, poolB), poolB, 0, 1, 100)) / 100;
+
+    // A bigger trade moves the price against itself: worse output per unit in.
+    expect(largePerUnit).toBeLessThan(smallPerUnit);
+  });
+
+  test('a 3-asset pool prices a pair by its two weights', async () => {
+    const pool = await createVaultPool(harness, [0.6, 0.3, 0.1]);
+    await provideAndMint(harness.manager, pool, 1000);
+    const trader = await newProvider(harness, pool);
+
+    // asset 0 (weight 0.6) → asset 2 (weight 0.1): output scaled by w0/w2 = 6.
+    const received = Number(await swap(trader, pool, 0, 2, 1)) / 10 ** 6;
+    const expected = balancerOut(1000, 0.6, 1000, 0.1, 1);
+
+    expect(received).toBeCloseTo(expected, 1);
+    expect(received).toBeGreaterThan(5); // only the two involved weights shape the price
+  });
 });

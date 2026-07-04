@@ -343,6 +343,22 @@ export async function swap(
   return returns[returns.length - 1] as bigint;
 }
 
+/**
+ * The on-chain estimateSwap (readonly), quoting the output for `amount` micro of
+ * asset `from` into `to`. It runs the same pow-based math as swap, so its inner
+ * increaseOpcodeBudget needs the fee covered.
+ */
+export async function estimateSwap(pool: VaultPool, from: number, to: number, amount: bigint): Promise<bigint> {
+  const group = pool.poolClient.newGroup();
+  group.opUp({ args: [], maxFee: (100_000).microAlgo(), note: new Uint8Array([0]) });
+  group.opUp({ args: [], maxFee: (100_000).microAlgo(), note: new Uint8Array([1]) });
+  group.estimateSwap({ args: [from, to, amount], maxFee: (500_000).microAlgo() });
+
+  const result = await group.send({ coverAppCallInnerTransactionFees: true, populateAppCallResources: true });
+  const returns = result.returns!;
+  return returns[returns.length - 1] as bigint;
+}
+
 /** Burn `lpMicro` micro-LP held by `account`, redeeming the underlying assets. */
 export async function burn(account: AlgoParams, pool: VaultPool, lpMicro: bigint): Promise<void> {
   const client = vaultClientFor(account, pool);

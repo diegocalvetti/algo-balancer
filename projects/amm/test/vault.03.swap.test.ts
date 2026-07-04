@@ -4,6 +4,7 @@ import { algorandFixture } from '@algorandfoundation/algokit-utils/testing';
 import {
   createVaultPool,
   deployVaultFactory,
+  estimateSwap,
   newProvider,
   provideAndMint,
   swap,
@@ -90,5 +91,25 @@ describe('AssetVault · swap', () => {
     const trader = await newProvider(harness, pool);
     // Demand an absurdly high minimum output → must revert.
     await expect(swap(trader, pool, 0, 1, 10, Number(SEED_MICRO))).rejects.toThrow();
+  });
+
+  test('estimateSwap matches the executed swap output', async () => {
+    const trader = await newProvider(harness, pool);
+    // The readonly quote uses the same math as the swap, so it must match exactly.
+    const estimate = await estimateSwap(pool, 0, 1, BigInt(10 * 10 ** 6));
+    const actual = await swap(trader, pool, 0, 1, 10);
+    expect(actual).toBe(estimate);
+  });
+
+  test('the reverse-direction swap is symmetric on a balanced pool', async () => {
+    // Two identical 50/50 pools: swapping 0→1 in one equals swapping 1→0 in the other.
+    const poolA = await createVaultPool(harness, [0.5, 0.5]);
+    await provideAndMint(harness.manager, poolA, SEED);
+    const poolB = await createVaultPool(harness, [0.5, 0.5]);
+    await provideAndMint(harness.manager, poolB, SEED);
+
+    const out01 = await swap(await newProvider(harness, poolA), poolA, 0, 1, 10);
+    const out10 = await swap(await newProvider(harness, poolB), poolB, 1, 0, 10);
+    expect(out01).toBe(out10);
   });
 });
